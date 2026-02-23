@@ -4037,7 +4037,7 @@ function init() {
     window._todayExpectedCount = todayRange[1] - todayRange[0] + 1;
 
     // Badge text
-    let badgeText = "Jour " + dayOfMonth + " du mois hébraïque — ";
+    let badgeText = "Jour " + dayOfMonth + " — ";
     if (todaySection === "aleph-lamed") {
       badgeText += "Chapitre 119 · Aleph (א) à Lamed (ל)";
     } else if (todaySection === "mem-tav") {
