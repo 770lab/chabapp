@@ -6742,7 +6742,7 @@ function renderObjectives() {
   var homeFill = document.getElementById('obj-progress-home-fill');
   if (homeFill) { homeFill.style.width = (checked / TOTAL_OBJ * 100) + '%'; homeFill.style.background = checked === TOTAL_OBJ ? '#16a34a' : ''; }
   var homePct = document.getElementById('obj-progress-home-pct');
-  if (homePct) { homePct.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; homePct.style.color = checked === TOTAL_OBJ ? '#16a34a' : ''; }
+  if (homePct) { homePct.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; homePct.style.color = checked === TOTAL_OBJ ? '#16a34a' : '#fff'; }
   renderObjStoryBar();
 }
 
@@ -9255,4 +9255,3 @@ function showPatakhDirect(key) {
 
 // ====== START ======
 document.addEventListener("DOMContentLoaded", init);
-
