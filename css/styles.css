@@ -24,7 +24,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .splash-icon .icon-770 { width:120px; height:auto; color:var(--black); }
 .splash-title { font-family:'Noto Serif Hebrew',serif; font-size:52px; color:var(--black); font-weight:700; margin-bottom:4px; direction:rtl; }
 /* CHABAD ANIMATED TITLE */
-.splash-title-chabad { font-size:52px; color:var(--black); font-weight:800; margin-top:0; margin-bottom:16px; letter-spacing:2px; font-family:var(--font); display:flex; align-items:flex-end; justify-content:center; overflow:visible; line-height:1; }
+.splash-title-chabad { font-size:clamp(36px, 12vw, 52px); color:var(--black); font-weight:800; margin-top:0; margin-bottom:16px; letter-spacing:2px; font-family:var(--font); display:flex; align-items:flex-end; justify-content:center; overflow:visible; line-height:1; margin-right:-2px; }
 .sc-static { display:inline-block; opacity:0; animation:scFadeIn 0.4s ease forwards; line-height:1; }
 .sc-apos { display:inline-block; max-width:0; opacity:0; overflow:hidden; letter-spacing:0; animation:scInsert 0.6s cubic-bezier(0.25,0.1,0.25,1) 4.1s forwards; line-height:1; }
 .sc-letter-d { display:inline-block; opacity:0; animation:scD1 4.5s ease forwards; transform-origin:center 73%; position:relative; z-index:2; line-height:1; }
@@ -82,7 +82,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .bh-mark { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
 .home-header-top { text-align:center; }
 .app-footer { text-align:center; padding:40px 16px 32px; }
-.home-greeting { font-family:var(--font); font-size:28px; font-weight:800; color:var(--black); letter-spacing:1px; text-align:center; }
+.home-greeting { font-family:var(--font); font-size:28px; font-weight:800; color:var(--black); letter-spacing:1px; text-align:center; margin-right:-1px; }
 .home-badge { background:var(--gray-6); border:none; border-radius:20px; padding:6px 14px; font-size:12px; color:var(--gray-2); text-align:center; font-weight:500; }
 
 /* PROGRESS */
