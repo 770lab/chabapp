@@ -1,13 +1,16 @@
 {
-  "name": "Chab'app - Etudes & Prières",
+  "name": "Chab'app",
   "short_name": "Chab'app",
-  "description": "Application juive quotidienne : études, prières, horaires Chabbat",
+  "description": "Votre compagnon quotidien pour l'étude et la prière",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#1a1a2e",
-  "theme_color": "#e6c068",
   "orientation": "portrait",
+  "background_color": "#1a1a2e",
+  "theme_color": "#C5973E",
   "lang": "fr",
+  "dir": "ltr",
+  "categories": ["education", "lifestyle"],
   "icons": [
     {
       "src": "assets/favicon.png",
@@ -30,19 +33,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-  "categories": ["education", "lifestyle"],
-  "shortcuts": [
-    {
-      "name": "Hayom Yom",
-      "url": "/index.html#hayom-yom",
-      "description": "Étude du jour"
-    },
-    {
-      "name": "Tehilim",
-      "url": "/index.html#tehilim",
-      "description": "Psaumes"
     }
   ]
 }
