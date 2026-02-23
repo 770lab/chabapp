@@ -10,14 +10,15 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 
 /* SPLASH */
 #splash {
-  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
   background:var(--white); cursor:pointer; position:fixed; top:0; left:0; right:0; bottom:0; z-index:999;
   transition: opacity 0.8s ease, visibility 0.8s ease;
+  padding-bottom:env(safe-area-inset-bottom, 0px);
 }
 #splash.hidden { opacity:0; visibility:hidden; pointer-events:none; }
 .splash-bh { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
-.splash-content { text-align:center; padding:18vh 30px 0; max-width:440px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-@media (max-height:700px) { .splash-content { padding-top:10vh; } .splash-icon .icon-770 { width:90px; } .splash-footer { bottom:16px; } }
+.splash-content { text-align:center; padding:0 30px; max-width:440px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+@media (max-height:700px) { .splash-content { padding-top:0; } .splash-icon .icon-770 { width:90px; } .splash-footer { bottom:calc(16px + env(safe-area-inset-bottom, 0px)); } }
 .splash-icon { margin-bottom:12px; opacity:0; animation:scSubIn 0.5s ease 0s forwards; }
 .splash-icon img { max-width:50vw; }
 .splash-icon .icon-770 { width:120px; height:auto; color:var(--black); }
@@ -62,7 +63,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .splash-dots { display:flex; gap:6px; justify-content:center; margin-top:16px; cursor:pointer; padding:8px 0; opacity:0; animation:scSubIn 0.5s ease 6.7s forwards; }
 .splash-dot { height:6px; border-radius:3px; transition: all 0.4s ease; cursor:pointer; }
 .splash-tap { color:var(--gray-4); font-size:11px; margin-top:32px; letter-spacing:2px; opacity:0; animation: scSubIn 0.5s ease 6.9s forwards; }
-.splash-footer { position:absolute; bottom:24px; left:0; right:0; text-align:center; opacity:0; animation:scSubIn 0.5s ease 6.9s forwards; }
+.splash-footer { position:absolute; bottom:calc(24px + env(safe-area-inset-bottom, 0px)); left:0; right:0; text-align:center; opacity:0; animation:scSubIn 0.5s ease 6.9s forwards; }
 .footer-logo-wrap { display:inline-flex; align-items:center; gap:6px; opacity:0.7; transition:opacity 0.3s; }
 .footer-logo-wrap:hover { opacity:0.9; }
 .footer-logo-icon { width:28px; height:18px; }
