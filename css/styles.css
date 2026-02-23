@@ -63,7 +63,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .splash-dots { display:flex; gap:6px; justify-content:center; margin-top:16px; cursor:pointer; padding:8px 0; opacity:0; animation:scSubIn 0.5s ease 6.7s forwards; }
 .splash-dot { height:6px; border-radius:3px; transition: all 0.4s ease; cursor:pointer; }
 .splash-tap { color:var(--gray-4); font-size:11px; margin-top:32px; letter-spacing:2px; opacity:0; animation: scSubIn 0.5s ease 6.9s forwards; }
-.splash-footer { position:absolute; bottom:calc(24px + env(safe-area-inset-bottom, 0px)); left:0; right:0; text-align:center; opacity:0; animation:scSubIn 0.5s ease 6.9s forwards; }
+.splash-footer { position:absolute; bottom:calc(32px + env(safe-area-inset-bottom, 16px)); left:0; right:0; text-align:center; opacity:0; animation:scSubIn 0.5s ease 6.9s forwards; }
 .footer-logo-wrap { display:inline-flex; align-items:center; gap:6px; opacity:0.7; transition:opacity 0.3s; }
 .footer-logo-wrap:hover { opacity:0.9; }
 .footer-logo-icon { width:28px; height:18px; }
