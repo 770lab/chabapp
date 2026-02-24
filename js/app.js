@@ -7583,7 +7583,7 @@ function renderShabbatCard(data) {
     parashaEl.textContent = data.parasha;
     parashaHeEl.textContent = data.parashaHe || '';
     var houmashHero = document.getElementById('houmash-date-hero');
-    if (houmashHero) houmashHero.textContent = 'Parashat ' + getParashaFr(data.parasha);
+    if (houmashHero) houmashHero.textContent = 'Paracha ' + getParashaFr(data.parasha);
   } else {
     parashaEl.textContent = 'Chabbat';
     parashaHeEl.textContent = 'שבת';
