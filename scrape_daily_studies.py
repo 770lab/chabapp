@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """
-Scrape les 4 études quotidiennes depuis fr.chabad.org
-et met à jour hyy-data.json pour Chab'app.
+Scrape les 4 etudes quotidiennes depuis fr.chabad.org
+avec cloudscraper pour passer Cloudflare.
+
+Installation:
+  pip3 install --user cloudscraper beautifulsoup4
 
 Usage:
-  python scrape_daily_studies.py              # scrape aujourd'hui
-  python scrape_daily_studies.py 2026-02-24   # scrape une date spécifique
+  python3 scrape_daily_studies.py              # aujourd'hui
+  python3 scrape_daily_studies.py 2026-02-25   # date specifique
 """
 
 import sys
@@ -17,16 +20,17 @@ from datetime import datetime, date
 from pathlib import Path
 
 try:
-    import requests
-    from bs4 import BeautifulSoup
+    import cloudscraper
 except ImportError:
-    print("Installing dependencies...")
+    print("Installing cloudscraper...")
     import subprocess
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "beautifulsoup4", "--quiet"])
-    import requests
-    from bs4 import BeautifulSoup
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "cloudscraper", "beautifulsoup4", "--quiet"])
+    import cloudscraper
 
-# ─── Config ───────────────────────────────────────────────────────────────────
+from bs4 import BeautifulSoup
+
+
+# --- Config ---
 
 BASE_URL = "https://fr.chabad.org/dailystudy"
 PAGES = {
@@ -36,15 +40,10 @@ PAGES = {
     "houmash":   "torahreading.asp",
 }
 DATA_FILE = Path("hyy-data.json")
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.5",
-}
-DELAY = 2  # seconds between requests
+DELAY = 3
 
 
-# ─── Hebrew Date Converter (mirrors app.js gregToHebrew) ─────────────────────
+# --- Hebrew Date Converter (mirrors app.js gregToHebrew) ---
 
 def _floor(x):
     return math.floor(x)
@@ -92,28 +91,22 @@ def _greg_to_abs(gy, gm, gd):
     return b
 
 def greg_to_hebrew(gy, gm, gd):
-    """Convert Gregorian date to Hebrew date. Returns dict matching app.js format."""
     abs_day = _greg_to_abs(gy, gm, gd)
     hy = gy + 3760
     epoch = -1373427
-
     while _heb_elapsed_days(hy + 1) + epoch <= abs_day:
         hy += 1
     while _heb_elapsed_days(hy) + epoch > abs_day:
         hy -= 1
-
     day_in_year = abs_day - (_heb_elapsed_days(hy) + epoch) + 1
     hm = 1
-
     month_order = list(range(1, 14)) if _is_leap(hy) else [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13]
-
     for mo in month_order:
         md = _heb_month_days(hy, mo)
         if day_in_year <= md:
             hm = mo
             break
         day_in_year -= md
-
     hd = day_in_year
     names = {
         1: 'Tishrei', 2: 'Cheshvan', 3: 'Kislev', 4: 'Tevet',
@@ -123,21 +116,16 @@ def greg_to_hebrew(gy, gm, gd):
     m_name = names.get(hm, '')
     if hm == 6 and not _is_leap(hy):
         m_name = 'Adar'
-
     return {'hy': hy, 'hm': hm, 'hd': hd, 'mName': m_name}
 
 
-# ─── Scraping ────────────────────────────────────────────────────────────────
+# --- Content Extraction ---
 
-def extract_text(html: str) -> str | None:
-    """Extract main text content from a fr.chabad.org page (mirrors _extractChabadText)."""
+def extract_text(html):
     soup = BeautifulSoup(html, 'html.parser')
-
-    # Remove scripts, styles, navs
     for tag in soup.find_all(['script', 'style', 'nav', 'header', 'footer']):
         tag.decompose()
 
-    # Try known selectors
     selectors = [
         '#TextContent', '#textContent', '.article-text',
         '.page-text-content', '#contentArea', '#pageTextArea',
@@ -146,206 +134,176 @@ def extract_text(html: str) -> str | None:
         '.parsha-content', '#ContentPlaceHolder_TextContent',
         '.content-inner'
     ]
-
     for sel in selectors:
         el = soup.select_one(sel)
         if el and len(el.get_text(strip=True)) > 50:
             text = el.get_text(separator=' ', strip=True)
-            text = re.sub(r'\s+', ' ', text).strip()
-            return text
+            return re.sub(r'\s+', ' ', text).strip()
 
-    # Fallback: largest text block
     best, best_len = None, 0
-    for div in soup.find_all(['div', 'td']):
+    for div in soup.find_all(['div', 'td', 'section', 'main']):
         cls = ' '.join(div.get('class', [])).lower()
-        if any(x in cls for x in ('nav', 'footer', 'header', 'menu')):
+        if any(x in cls for x in ('nav', 'footer', 'header', 'menu', 'sidebar')):
             continue
         txt = div.get_text(strip=True)
-        if 100 < len(txt) < 10000 and len(txt) > best_len:
+        if 100 < len(txt) < 15000 and len(txt) > best_len:
             best = div
             best_len = len(txt)
-
     if best:
-        text = best.get_text(separator=' ', strip=True)
-        text = re.sub(r'\s+', ' ', text).strip()
-        return text
-
+        return re.sub(r'\s+', ' ', best.get_text(separator=' ', strip=True)).strip()
     return None
 
 
-def extract_title(html: str) -> str:
-    """Extract page title from HTML."""
+def extract_title(html):
     match = re.search(r'<title[^>]*>([^<]+)</title>', html, re.IGNORECASE)
     if match:
         title = match.group(1)
         title = re.sub(r'\s*-\s*fr\.chabad\.org.*', '', title, flags=re.IGNORECASE).strip()
+        if 'moment' in title.lower() or 'challenge' in title.lower():
+            return ''
         return title
     return ''
 
 
-def fetch_page(url: str) -> str | None:
-    """Fetch a page with retries."""
-    for attempt in range(3):
-        try:
-            r = requests.get(url, headers=HEADERS, timeout=15)
-            r.raise_for_status()
-            r.encoding = r.apparent_encoding or 'utf-8'
-            return r.text
-        except Exception as e:
-            print(f"  Attempt {attempt + 1} failed: {e}")
-            if attempt < 2:
-                time.sleep(3)
-    return None
+# --- Scraping with cloudscraper ---
 
-
-def scrape_studies(target_date: date) -> dict:
-    """Scrape all 4 daily studies for a given date."""
+def scrape_studies(target_date):
     m = target_date.month
     d = target_date.day
     y = target_date.year
-    tdate = f"{m}/{d}/{y}"
-
+    tdate = "%d/%d/%d" % (m, d, y)
     results = {}
 
-    for study, page in PAGES.items():
-        sep = '&' if '?' in page else '?'
-        url = f"{BASE_URL}/{page}{sep}tdate={tdate}"
-        print(f"Fetching {study}: {url}")
+    print("Creating cloudscraper session...")
+    scraper = cloudscraper.create_scraper(
+        browser={
+            'browser': 'chrome',
+            'platform': 'darwin',
+            'desktop': True,
+        },
+        delay=10,
+    )
 
-        html = fetch_page(url)
-        if not html:
-            print(f"  ✗ Failed to fetch {study}")
-            continue
+    for study, page_path in PAGES.items():
+        sep = '&' if '?' in page_path else '?'
+        url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
+        print("Fetching %s: %s" % (study, url))
 
-        text = extract_text(html)
-        if text and len(text) > 30:
-            title = extract_title(html)
-            results[study] = {'text': text, 'title': title}
-            print(f"  ✓ {study}: {len(text)} chars — {title[:60]}")
-        else:
-            print(f"  ✗ {study}: no content extracted")
+        for attempt in range(3):
+            try:
+                r = scraper.get(url, timeout=30)
+
+                # Check if still Cloudflare
+                if 'Just a moment' in r.text[:500] or r.status_code == 403:
+                    print("  Attempt %d: Cloudflare challenge (status %d)" % (attempt + 1, r.status_code))
+                    time.sleep(5)
+                    continue
+
+                r.raise_for_status()
+                html = r.text
+
+                text = extract_text(html)
+                if text and len(text) > 30:
+                    ttl = extract_title(html)
+                    results[study] = {'text': text, 'title': ttl}
+                    print("  OK %s: %d chars - %s" % (study, len(text), ttl[:60]))
+                else:
+                    print("  x %s: no content extracted" % study)
+                    # Save for debug
+                    debug_file = "debug_%s.html" % study
+                    with open(debug_file, "w", encoding="utf-8") as f:
+                        f.write(html)
+                    print("  (saved debug to %s)" % debug_file)
+                break
+
+            except Exception as e:
+                print("  Attempt %d failed: %s" % (attempt + 1, str(e)))
+                time.sleep(3)
 
         time.sleep(DELAY)
 
     return results
 
 
-# ─── Data file management ────────────────────────────────────────────────────
+# --- Data file management ---
 
-def load_data() -> dict:
-    """Load existing hyy-data.json or create empty structure."""
+def load_data():
     if DATA_FILE.exists():
         try:
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+                return json.load(f)
         except (json.JSONDecodeError, IOError):
-            data = {}
-    else:
-        data = {}
-
-    # Ensure all sections exist
+            pass
+    data = {}
     for key in ['hayom_yom', 'rambam', 'tanya', 'houmash']:
-        if key not in data:
-            data[key] = {}
-
+        data[key] = {}
     return data
 
-
-def save_data(data: dict):
-    """Save hyy-data.json."""
+def save_data(data):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"\n✓ Saved to {DATA_FILE}")
+    print("\nSaved to %s" % DATA_FILE)
 
-
-def update_data(data: dict, target_date: date, results: dict):
-    """Insert scraped results into data structure using app.js-compatible keys."""
-    y = target_date.year
-    m = target_date.month
-    d = target_date.day
-
-    # dateKey format: "2026-2-24" (no zero padding, matches app.js)
-    date_key = f"{y}-{m}-{d}"
-
-    # Hebrew date key for Hayom Yom: "Adar_7"
+def update_data(data, target_date, results):
+    y, m, d = target_date.year, target_date.month, target_date.day
+    date_key = "%d-%d-%d" % (y, m, d)
     heb = greg_to_hebrew(y, m, d)
-    hyy_key = f"{heb['mName'].replace(' ', '_')}_{heb['hd']}"
-
-    print(f"\nKeys: dateKey={date_key}, hyyKey={hyy_key} ({heb['mName']} {heb['hd']})")
+    hyy_key = "%s_%d" % (heb['mName'].replace(' ', '_'), heb['hd'])
+    print("\nKeys: dateKey=%s, hyyKey=%s (%s %d)" % (date_key, hyy_key, heb['mName'], heb['hd']))
 
     if 'hayom_yom' in results:
         data['hayom_yom'][hyy_key] = results['hayom_yom']['text']
-
     if 'rambam' in results:
-        data['rambam'][date_key] = {
-            'text': results['rambam']['text'],
-            'title': results['rambam']['title']
-        }
-
+        data['rambam'][date_key] = {'text': results['rambam']['text'], 'title': results['rambam']['title']}
     if 'tanya' in results:
-        data['tanya'][date_key] = {
-            'text': results['tanya']['text'],
-            'title': results['tanya']['title']
-        }
-
+        data['tanya'][date_key] = {'text': results['tanya']['text'], 'title': results['tanya']['title']}
     if 'houmash' in results:
-        data['houmash'][date_key] = {
-            'text': results['houmash']['text'],
-            'title': results['houmash']['title']
-        }
+        data['houmash'][date_key] = {'text': results['houmash']['text'], 'title': results['houmash']['title']}
 
-
-def cleanup_old_entries(data: dict, keep_days: int = 7):
-    """Remove entries older than keep_days to keep the file small."""
+def cleanup_old_entries(data, keep_days=7):
     today = date.today()
     for section in ['rambam', 'tanya', 'houmash']:
         if section not in data:
             continue
-        keys_to_remove = []
+        to_remove = []
         for key in data[section]:
             try:
                 parts = key.split('-')
-                entry_date = date(int(parts[0]), int(parts[1]), int(parts[2]))
-                if (today - entry_date).days > keep_days:
-                    keys_to_remove.append(key)
+                d = date(int(parts[0]), int(parts[1]), int(parts[2]))
+                if (today - d).days > keep_days:
+                    to_remove.append(key)
             except (ValueError, IndexError):
                 continue
-        for key in keys_to_remove:
+        for key in to_remove:
             del data[section][key]
-        if keys_to_remove:
-            print(f"Cleaned {len(keys_to_remove)} old entries from {section}")
+        if to_remove:
+            print("Cleaned %d old entries from %s" % (len(to_remove), section))
 
 
-# ─── Main ────────────────────────────────────────────────────────────────────
+# --- Main ---
 
 def main():
-    # Parse optional date argument
     if len(sys.argv) > 1:
         try:
             target_date = datetime.strptime(sys.argv[1], '%Y-%m-%d').date()
         except ValueError:
-            print(f"Invalid date format: {sys.argv[1]} (expected YYYY-MM-DD)")
+            print("Invalid date: %s (use YYYY-MM-DD)" % sys.argv[1])
             sys.exit(1)
     else:
         target_date = date.today()
 
-    print(f"═══ Scraping daily studies for {target_date} ═══\n")
-
-    # Scrape
+    print("=== Scraping daily studies for %s ===\n" % target_date)
     results = scrape_studies(target_date)
 
     if not results:
-        print("\n✗ No studies scraped. Exiting.")
+        print("\nx No studies scraped.")
         sys.exit(1)
 
-    # Load, update, cleanup, save
     data = load_data()
     update_data(data, target_date, results)
     cleanup_old_entries(data)
     save_data(data)
-
-    print(f"\n═══ Done: {len(results)}/4 studies scraped ═══")
-
+    print("\n=== Done: %d/4 studies scraped ===" % len(results))
 
 if __name__ == '__main__':
     main()
