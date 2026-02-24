@@ -8100,7 +8100,7 @@ function displayRambam(data) {
   var heroSub = document.getElementById('rambam-date-hero');
   if (!el) return;
   var content = '';
-  if (data.title && dateEl) { dateEl.textContent = data.title; if(heroSub) heroSub.textContent = data.title; }
+  if (data.title && dateEl) { dateEl.textContent = data.title; }
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
   } else {
@@ -8122,7 +8122,7 @@ function displayRambamFallback() {
   if (!el) return;
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
-  if (dateEl) { dateEl.textContent = heb.mName + ' ' + heb.hd; if(heroSub) heroSub.textContent = heb.mName + ' ' + heb.hd; }
+  if (dateEl) { dateEl.textContent = heb.mName + ' ' + heb.hd; }
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Rambam sera bientôt disponible</span>';
 }
 
@@ -8166,7 +8166,7 @@ function displayTanya(data) {
   if (!el) return;
   if (data.title && dateEl) dateEl.textContent = data.title;
   var heroSub = document.getElementById('tanya-date-hero');
-  if(heroSub && data.title) heroSub.textContent = data.title;
+  if(heroSub) {}
   var content = '';
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
@@ -8186,8 +8186,6 @@ function displayTanyaFallback() {
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
-  var heroSub = document.getElementById('tanya-date-hero');
-  if(heroSub) heroSub.textContent = heb.mName + ' ' + heb.hd;
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Tanya sera bientôt disponible</span>';
 }
 
