@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 """
-Scrape les 4 etudes quotidiennes depuis fr.chabad.org
-avec cloudscraper pour passer Cloudflare.
-
-Installation:
-  pip3 install --user cloudscraper beautifulsoup4
-
-Usage:
-  python3 scrape_daily_studies.py              # aujourd'hui
-  python3 scrape_daily_studies.py 2026-02-25   # date specifique
+Scrape les 4 etudes quotidiennes depuis fr.chabad.org.
+- Utilise Playwright (navigateur headless) si disponible (GitHub Action)
+- Sinon utilise cloudscraper (Mac local)
 """
 
 import sys
@@ -19,13 +13,30 @@ import math
 from datetime import datetime, date
 from pathlib import Path
 
+# Try to import scraping backends
+USE_PLAYWRIGHT = False
+USE_CLOUDSCRAPER = False
+
 try:
-    import cloudscraper
+    from playwright.sync_api import sync_playwright
+    USE_PLAYWRIGHT = True
+    print("[engine] Playwright disponible")
 except ImportError:
-    print("Installing cloudscraper...")
-    import subprocess
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "cloudscraper", "beautifulsoup4", "--quiet"])
-    import cloudscraper
+    pass
+
+if not USE_PLAYWRIGHT:
+    try:
+        import cloudscraper
+        USE_CLOUDSCRAPER = True
+        print("[engine] cloudscraper disponible")
+    except ImportError:
+        pass
+
+if not USE_PLAYWRIGHT and not USE_CLOUDSCRAPER:
+    print("Erreur: installer playwright ou cloudscraper")
+    print("  pip install playwright && python -m playwright install chromium")
+    print("  pip install cloudscraper")
+    sys.exit(1)
 
 from bs4 import BeautifulSoup
 
@@ -125,7 +136,6 @@ def extract_text(html):
     soup = BeautifulSoup(html, 'html.parser')
     for tag in soup.find_all(['script', 'style', 'nav', 'header', 'footer']):
         tag.decompose()
-
     selectors = [
         '#TextContent', '#textContent', '.article-text',
         '.page-text-content', '#contentArea', '#pageTextArea',
@@ -137,9 +147,7 @@ def extract_text(html):
     for sel in selectors:
         el = soup.select_one(sel)
         if el and len(el.get_text(strip=True)) > 50:
-            text = el.get_text(separator=' ', strip=True)
-            return re.sub(r'\s+', ' ', text).strip()
-
+            return re.sub(r'\s+', ' ', el.get_text(separator=' ', strip=True)).strip()
     best, best_len = None, 0
     for div in soup.find_all(['div', 'td', 'section', 'main']):
         cls = ' '.join(div.get('class', [])).lower()
@@ -153,7 +161,6 @@ def extract_text(html):
         return re.sub(r'\s+', ' ', best.get_text(separator=' ', strip=True)).strip()
     return None
 
-
 def extract_title(html):
     match = re.search(r'<title[^>]*>([^<]+)</title>', html, re.IGNORECASE)
     if match:
@@ -165,43 +172,39 @@ def extract_title(html):
     return ''
 
 
-# --- Scraping with cloudscraper ---
+# --- Playwright engine ---
 
-def scrape_studies(target_date):
-    m = target_date.month
-    d = target_date.day
-    y = target_date.year
+def scrape_playwright(target_date):
+    m, d, y = target_date.month, target_date.day, target_date.year
     tdate = "%d/%d/%d" % (m, d, y)
     results = {}
 
-    print("Creating cloudscraper session...")
-    scraper = cloudscraper.create_scraper(
-        browser={
-            'browser': 'chrome',
-            'platform': 'darwin',
-            'desktop': True,
-        },
-        delay=10,
-    )
+    with sync_playwright() as p:
+        print("Launching Chromium...")
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            locale="fr-FR",
+        )
+        page = context.new_page()
 
-    for study, page_path in PAGES.items():
-        sep = '&' if '?' in page_path else '?'
-        url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
-        print("Fetching %s: %s" % (study, url))
-
-        for attempt in range(3):
+        for study, page_path in PAGES.items():
+            sep = '&' if '?' in page_path else '?'
+            url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
+            print("Fetching %s: %s" % (study, url))
             try:
-                r = scraper.get(url, timeout=30)
-
-                # Check if still Cloudflare
-                if 'Just a moment' in r.text[:500] or r.status_code == 403:
-                    print("  Attempt %d: Cloudflare challenge (status %d)" % (attempt + 1, r.status_code))
-                    time.sleep(5)
+                page.goto(url, wait_until="networkidle", timeout=45000)
+                # Wait for Cloudflare
+                for _w in range(20):
+                    if 'moment' not in page.title().lower():
+                        break
+                    print("  Cloudflare... (%ds)" % ((_w + 1) * 2))
+                    time.sleep(2)
+                html = page.content()
+                if 'Just a moment' in html[:500]:
+                    print("  x %s: stuck on Cloudflare" % study)
+                    time.sleep(DELAY)
                     continue
-
-                r.raise_for_status()
-                html = r.text
-
                 text = extract_text(html)
                 if text and len(text) > 30:
                     ttl = extract_title(html)
@@ -209,17 +212,49 @@ def scrape_studies(target_date):
                     print("  OK %s: %d chars - %s" % (study, len(text), ttl[:60]))
                 else:
                     print("  x %s: no content extracted" % study)
-                    # Save for debug
-                    debug_file = "debug_%s.html" % study
-                    with open(debug_file, "w", encoding="utf-8") as f:
-                        f.write(html)
-                    print("  (saved debug to %s)" % debug_file)
-                break
-
             except Exception as e:
-                print("  Attempt %d failed: %s" % (attempt + 1, str(e)))
-                time.sleep(3)
+                print("  x %s: %s" % (study, str(e)))
+            time.sleep(DELAY)
 
+        browser.close()
+    return results
+
+
+# --- Cloudscraper engine ---
+
+def scrape_cloudscraper(target_date):
+    m, d, y = target_date.month, target_date.day, target_date.year
+    tdate = "%d/%d/%d" % (m, d, y)
+    results = {}
+
+    scraper = cloudscraper.create_scraper(
+        browser={'browser': 'chrome', 'platform': 'darwin', 'desktop': True},
+        delay=10,
+    )
+
+    for study, page_path in PAGES.items():
+        sep = '&' if '?' in page_path else '?'
+        url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
+        print("Fetching %s: %s" % (study, url))
+        for attempt in range(3):
+            try:
+                r = scraper.get(url, timeout=30)
+                if 'Just a moment' in r.text[:500] or r.status_code == 403:
+                    print("  Attempt %d: Cloudflare (status %d)" % (attempt + 1, r.status_code))
+                    time.sleep(5)
+                    continue
+                r.raise_for_status()
+                text = extract_text(r.text)
+                if text and len(text) > 30:
+                    ttl = extract_title(r.text)
+                    results[study] = {'text': text, 'title': ttl}
+                    print("  OK %s: %d chars - %s" % (study, len(text), ttl[:60]))
+                else:
+                    print("  x %s: no content extracted" % study)
+                break
+            except Exception as e:
+                print("  Attempt %d: %s" % (attempt + 1, str(e)))
+                time.sleep(3)
         time.sleep(DELAY)
 
     return results
@@ -234,10 +269,7 @@ def load_data():
                 return json.load(f)
         except (json.JSONDecodeError, IOError):
             pass
-    data = {}
-    for key in ['hayom_yom', 'rambam', 'tanya', 'houmash']:
-        data[key] = {}
-    return data
+    return {'hayom_yom': {}, 'rambam': {}, 'tanya': {}, 'houmash': {}}
 
 def save_data(data):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
@@ -250,7 +282,6 @@ def update_data(data, target_date, results):
     heb = greg_to_hebrew(y, m, d)
     hyy_key = "%s_%d" % (heb['mName'].replace(' ', '_'), heb['hd'])
     print("\nKeys: dateKey=%s, hyyKey=%s (%s %d)" % (date_key, hyy_key, heb['mName'], heb['hd']))
-
     if 'hayom_yom' in results:
         data['hayom_yom'][hyy_key] = results['hayom_yom']['text']
     if 'rambam' in results:
@@ -293,7 +324,11 @@ def main():
         target_date = date.today()
 
     print("=== Scraping daily studies for %s ===\n" % target_date)
-    results = scrape_studies(target_date)
+
+    if USE_PLAYWRIGHT:
+        results = scrape_playwright(target_date)
+    else:
+        results = scrape_cloudscraper(target_date)
 
     if not results:
         print("\nx No studies scraped.")
