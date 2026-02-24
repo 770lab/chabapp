@@ -2,9 +2,9 @@ name: Daily Studies Scraper
 
 on:
   schedule:
-    # Tous les jours à 4h00 UTC (5h00 heure de Paris en hiver, 6h00 en été)
+    # Tous les jours à 4h00 UTC (5h/6h Paris)
     - cron: '0 4 * * *'
-  workflow_dispatch: # Permet de lancer manuellement depuis GitHub
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -22,16 +22,17 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: |
+          pip install playwright beautifulsoup4
+          playwright install chromium --with-deps
 
       - name: Run scraper
         run: python scrape_daily_studies.py
 
-      - name: Commit & push updated data
+      - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add hyy-data.json
-          # Only commit if there are changes
-          git diff --cached --quiet || git commit -m "📚 Update daily studies $(date +%Y-%m-%d)"
+          git diff --cached --quiet || git commit -m "Update daily studies $(date +%Y-%m-%d)"
           git push
