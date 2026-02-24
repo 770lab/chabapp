@@ -22,9 +22,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: |
-          pip install playwright beautifulsoup4
-          playwright install chromium --with-deps
+        run: pip install cloudscraper beautifulsoup4
 
       - name: Run scraper
         run: python scrape_daily_studies.py
