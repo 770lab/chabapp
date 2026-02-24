@@ -1,109 +1,90 @@
-// sw.js — Service Worker pour Chab'app
-// À placer à la RACINE de /chabapp/
+// sw.js — Service Worker Chab'app
+// PWA Cache + Web Push natif (via Cloudflare Worker)
 
-const CACHE_NAME = 'chabapp-v1';
-const ASSETS_TO_CACHE = [
+// ═══ PWA CACHE ═══
+var CACHE_NAME = 'chabapp-v1';
+var ASSETS = [
   '/chabapp/',
   '/chabapp/index.html',
   '/chabapp/manifest.json',
-  '/chabapp/icons/icon-192x192.png',
-  '/chabapp/icons/icon-512x512.png'
+  '/chabapp/icons/icon-192x192.png'
 ];
 
-// Installation : mise en cache des fichiers essentiels
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
+self.addEventListener('install', function(e) {
+  e.waitUntil(caches.open(CACHE_NAME).then(function(c) { return c.addAll(ASSETS); }));
   self.skipWaiting();
 });
 
-// Activation : nettoyage des anciens caches
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      );
+self.addEventListener('activate', function(e) {
+  e.waitUntil(
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.filter(function(k) { return k !== CACHE_NAME; }).map(function(k) { return caches.delete(k); }));
     })
   );
   self.clients.claim();
 });
 
-// Fetch : stratégie Network First, fallback sur cache
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      })
-      .catch(() => caches.match(event.request))
+self.addEventListener('fetch', function(e) {
+  if (e.request.url.indexOf('workers.dev') !== -1) return; // ne pas cacher les appels au Worker
+  e.respondWith(
+    fetch(e.request).then(function(r) {
+      var cl = r.clone();
+      caches.open(CACHE_NAME).then(function(c) { c.put(e.request, cl); });
+      return r;
+    }).catch(function() { return caches.match(e.request); })
   );
 });
 
-// ============================================
-// PUSH NOTIFICATIONS
-// ============================================
-self.addEventListener('push', (event) => {
-  let data = {
+// ═══ PUSH NOTIFICATIONS ═══
+self.addEventListener('push', function(event) {
+  var data = {
     title: "Chab'app",
-    body: "Machia'h arrive, soyons prêt !",
+    body: "Machia'h arrive, soyons prêts !",
     icon: '/chabapp/icons/icon-192x192.png',
     badge: '/chabapp/icons/icon-72x72.png',
     url: '/chabapp/'
   };
 
-  // Si le push contient des données JSON
   if (event.data) {
     try {
-      const payload = event.data.json();
-      data = { ...data, ...payload };
+      var payload = event.data.json();
+      data.title = payload.title || data.title;
+      data.body = payload.body || data.body;
+      if (payload.data && payload.data.url) data.url = payload.data.url;
     } catch (e) {
       data.body = event.data.text();
     }
   }
 
-  const options = {
-    body: data.body,
-    icon: data.icon,
-    badge: data.badge,
-    vibrate: [200, 100, 200],
-    tag: 'chabapp-notification',
-    renotify: true,
-    data: { url: data.url || '/chabapp/' },
-    actions: [
-      { action: 'open', title: '📖 Ouvrir' },
-      { action: 'close', title: '✕ Fermer' }
-    ]
-  };
-
   event.waitUntil(
-    self.registration.showNotification(data.title, options)
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      badge: data.badge,
+      vibrate: [200, 100, 200],
+      tag: 'chabapp-notification',
+      renotify: true,
+      data: { url: data.url },
+      actions: [
+        { action: 'open', title: '📖 Ouvrir' },
+        { action: 'close', title: '✕ Fermer' }
+      ]
+    })
   );
 });
 
-// Clic sur la notification → ouvre l'app
-self.addEventListener('notificationclick', (event) => {
+// Clic sur notification → ouvre l'app
+self.addEventListener('notificationclick', function(event) {
   event.notification.close();
-
   if (event.action === 'close') return;
 
-  const urlToOpen = event.notification.data?.url || '/chabapp/';
-
+  var url = (event.notification.data && event.notification.data.url) || '/chabapp/';
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      // Si l'app est déjà ouverte, on la focus
-      for (const client of clientList) {
-        if (client.url.includes('/chabapp/') && 'focus' in client) {
-          return client.focus();
-        }
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(list) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].url.indexOf('/chabapp/') !== -1) return list[i].focus();
       }
-      // Sinon on ouvre un nouvel onglet
-      return clients.openWindow(urlToOpen);
+      return clients.openWindow(url);
     })
   );
 });

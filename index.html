@@ -7,6 +7,12 @@
 <title>Chab'app</title>
 <link href="assets/favicon.png" rel="icon" type="image/png"/>
 <link href="assets/apple-touch-icon.png" rel="apple-touch-icon"/>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#c9a84c"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Chab'app"/>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Noto+Serif+Hebrew:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
@@ -1458,5 +1464,190 @@ function shareObjectifs(e){
   window.addEventListener('shabbatLocChanged', loadZmanim);
 })();
 </script>
-<script src="js/app.js"></script></body>
+<script src="js/app.js"></script>
+
+<!-- ═══ PWA INSTALL ═══ -->
+<button id="install-btn" style="
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: linear-gradient(135deg, #c9a84c, #e8c860);
+  color: #0a0a2e;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'EB Garamond', serif;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  z-index: 9999;
+">📲 Installer l'app</button>
+
+<!-- ═══ BANDEAU iOS ═══ -->
+<div id="ios-install-banner" style="
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, #0f1628, #1a1a4e);
+  color: white;
+  padding: 16px 50px 16px 20px;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'EB Garamond', serif;
+  z-index: 9999;
+  border-top: 2px solid #c9a84c;
+">
+  📲 Appuie sur <strong style="color:#c9a84c;">Partager</strong> ↗ puis <strong style="color:#c9a84c;">"Sur l'écran d'accueil"</strong>
+  <button onclick="this.parentElement.style.display='none'" style="
+    position: absolute; top: 50%; transform: translateY(-50%); right: 12px;
+    background: none; border: none; color: #c9a84c; font-size: 22px; cursor: pointer;
+  ">✕</button>
+</div>
+
+<!-- ═══ BANDEAU NOTIFICATION ═══ -->
+<div id="push-banner" style="
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, #0f1628, #1a1a4e);
+  color: white;
+  padding: 16px;
+  z-index: 10000;
+  border-top: 2px solid #c9a84c;
+  font-family: 'EB Garamond', serif;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+">
+  <div style="font-size: 15px; text-align: center;">🕎 Recevez les rappels quotidiens de Chab'app !</div>
+  <div style="display: flex; gap: 10px;">
+    <button onclick="subscribePush()" style="
+      background: linear-gradient(135deg, #c9a84c, #e8c860); color: #0a0a2e;
+      border: none; border-radius: 10px; padding: 10px 24px;
+      font-size: 14px; font-weight: 700; font-family: 'EB Garamond', serif; cursor: pointer;
+    ">Oui, je veux !</button>
+    <button onclick="this.parentElement.parentElement.style.display='none'; localStorage.setItem('chabapp_push_later','1');" style="
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 10px;
+      padding: 10px 18px; font-size: 14px; font-family: 'EB Garamond', serif; cursor: pointer;
+    ">Plus tard</button>
+  </div>
+</div>
+
+<!-- ═══ SERVICE WORKER + PWA + PUSH ═══ -->
+<script>
+// ── CONFIG ──
+// REMPLACE par l'URL de ton Cloudflare Worker
+var PUSH_WORKER_URL = 'https://chabapp-push.chabadclub770.workers.dev';
+var VAPID_PUBLIC_KEY = 'BPCzvYHBwJ78-QKT67mfnRAyMwPqdiQO1gxlyQOFfb_L-W6jeWRS1WhPaO28DerABQvwx84xPbyq-MNLmyS0-vQ';
+
+// ── Service Worker ──
+var swRegistration = null;
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js', { scope: '/chabapp/' })
+      .then(function(reg) {
+        swRegistration = reg;
+        console.log('✅ SW enregistré');
+        checkPushSubscription();
+      })
+      .catch(function(err) { console.error('❌ SW erreur:', err); });
+  });
+}
+
+// ── Vérifie si déjà abonné ──
+function checkPushSubscription() {
+  if (!swRegistration || !('PushManager' in window)) return;
+
+  swRegistration.pushManager.getSubscription().then(function(sub) {
+    if (sub) {
+      console.log('✅ Déjà abonné aux notifications');
+    } else if (Notification.permission !== 'denied' && !localStorage.getItem('chabapp_push_later')) {
+      // Affiche le bandeau après 4 secondes
+      setTimeout(function() {
+        var banner = document.getElementById('push-banner');
+        if (banner) banner.style.display = 'flex';
+      }, 4000);
+    }
+  });
+}
+
+// ── S'abonner aux notifications ──
+function subscribePush() {
+  if (!swRegistration) { alert('Service Worker non prêt'); return; }
+
+  Notification.requestPermission().then(function(permission) {
+    if (permission !== 'granted') return;
+
+    // Convertir la clé VAPID en Uint8Array
+    var padding = '='.repeat((4 - VAPID_PUBLIC_KEY.length % 4) % 4);
+    var base64 = (VAPID_PUBLIC_KEY + padding).replace(/-/g, '+').replace(/_/g, '/');
+    var rawData = atob(base64);
+    var keyArray = new Uint8Array(rawData.length);
+    for (var i = 0; i < rawData.length; i++) keyArray[i] = rawData.charCodeAt(i);
+
+    swRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: keyArray
+    }).then(function(subscription) {
+      console.log('✅ Abonné !', subscription);
+
+      // Envoie l'abonnement au Worker Cloudflare
+      fetch(PUSH_WORKER_URL + '/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscription: subscription.toJSON() })
+      }).then(function(res) {
+        if (res.ok) {
+          console.log('✅ Abonnement sauvegardé sur le serveur');
+          var banner = document.getElementById('push-banner');
+          if (banner) banner.style.display = 'none';
+          localStorage.setItem('chabapp_push', 'granted');
+        }
+      }).catch(function(err) {
+        console.error('❌ Erreur sauvegarde:', err);
+      });
+    }).catch(function(err) {
+      console.error('❌ Erreur abonnement:', err);
+    });
+  });
+}
+
+// ── PWA Install prompt ──
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  var btn = document.getElementById('install-btn');
+  if (btn) {
+    btn.style.display = 'block';
+    btn.addEventListener('click', function() {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function() {
+        deferredPrompt = null;
+        btn.style.display = 'none';
+      });
+    });
+  }
+});
+window.addEventListener('appinstalled', function() {
+  var btn = document.getElementById('install-btn');
+  if (btn) btn.style.display = 'none';
+});
+
+// ── iOS banner ──
+(function() {
+  var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !isStandalone) {
+    var banner = document.getElementById('ios-install-banner');
+    if (banner) banner.style.display = 'block';
+  }
+})();
+</script>
+
+</body>
 </html>
