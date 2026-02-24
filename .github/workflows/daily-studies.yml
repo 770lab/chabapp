@@ -22,7 +22,9 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install cloudscraper beautifulsoup4
+        run: |
+          pip install playwright beautifulsoup4
+          playwright install chromium --with-deps
 
       - name: Run scraper
         run: python scrape_daily_studies.py
@@ -34,3 +36,4 @@ jobs:
           git add hyy-data.json
           git diff --cached --quiet || git commit -m "Update daily studies $(date +%Y-%m-%d)"
           git push
+          
