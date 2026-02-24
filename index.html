@@ -12,7 +12,246 @@
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </link><link href="css/styles.css" rel="stylesheet"/>
-<style>.big-card-title{display:block!important;width:100%!important;font-size:15px!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 6px rgba(0,0,0,0.7)!important;}.big-card-sub{display:block!important;width:100%!important;font-size:11px!important;font-weight:400!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 4px rgba(0,0,0,0.6)!important;margin-top:2px!important;}</style>
+<style>.big-card-title{display:block!important;width:100%!important;font-size:15px!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 6px rgba(0,0,0,0.7)!important;}.big-card-sub{display:block!important;width:100%!important;font-size:11px!important;font-weight:400!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 4px rgba(0,0,0,0.6)!important;margin-top:2px!important;}
+
+/* ─── ZMANIM SECTION ─── */
+.zmanim-card {
+  margin: 10px 16px 6px 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0f1628 0%, #1a1a2e 40%, #1e2a45 100%);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  position: relative;
+}
+.zmanim-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,200,80,0.3), transparent);
+}
+.zmanim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 0 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.zmanim-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.zmanim-header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1e3a5f, #2a4a7f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.zmanim-header-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'EB Garamond', serif;
+  letter-spacing: 0.3px;
+}
+.zmanim-header-sub {
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  margin-top: 1px;
+}
+.zmanim-chevron {
+  color: rgba(255,255,255,0.4);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.zmanim-card.open .zmanim-chevron {
+  transform: rotate(180deg);
+}
+
+/* Day progress bar */
+.zmanim-progress-wrap {
+  padding: 10px 16px 12px 16px;
+}
+.zmanim-progress-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.zmanim-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ffc850, #ff8c42);
+  transition: width 1s ease;
+  position: relative;
+}
+.zmanim-progress-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffc850;
+  box-shadow: 0 0 8px rgba(255,200,80,0.6);
+}
+.zmanim-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+}
+
+/* Zmanim list */
+.zmanim-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 16px;
+}
+.zmanim-card.open .zmanim-body {
+  max-height: 800px;
+  padding: 0 16px 14px 16px;
+}
+.zmanim-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.zmanim-item {
+  display: flex;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+}
+.zmanim-item:last-child {
+  border-bottom: none;
+}
+.zmanim-item.past {
+  opacity: 0.4;
+}
+.zmanim-item.current {
+  opacity: 1;
+}
+.zmanim-item.current::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(180deg, #ffc850, #ff8c42);
+  box-shadow: 0 0 8px rgba(255,200,80,0.3);
+}
+.zmanim-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: transparent;
+}
+.zmanim-item.past .zmanim-dot {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.15);
+}
+.zmanim-item.current .zmanim-dot {
+  background: #ffc850;
+  border-color: #ffc850;
+  box-shadow: 0 0 6px rgba(255,200,80,0.5);
+}
+.zmanim-label {
+  flex: 1;
+  min-width: 0;
+}
+.zmanim-label-fr {
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-weight: 500;
+}
+.zmanim-item.current .zmanim-label-fr {
+  color: #fff;
+  font-weight: 600;
+}
+.zmanim-label-he {
+  color: rgba(255,255,255,0.35);
+  font-size: 10px;
+  font-family: 'Noto Serif Hebrew', serif;
+  margin-top: 1px;
+}
+.zmanim-time {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+.zmanim-item.current .zmanim-time {
+  color: #ffc850;
+}
+.zmanim-item.past .zmanim-time {
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,0.15);
+}
+.zmanim-section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.25);
+  padding: 8px 0 4px 0;
+  margin-top: 4px;
+}
+.zmanim-share-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 4px;
+}
+.zmanim-share-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  font-size: 11px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+.zmanim-share-btn:active {
+  background: rgba(255,255,255,0.05);
+}
+.zmanim-next-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,200,80,0.12);
+  color: #ffc850;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+</style>
 </head>
 <body>
 <svg height="0" style="position:absolute;" width="0">
@@ -168,6 +407,47 @@
 </div>
 </div>
 </div>
+
+<!-- ZMANIM SECTION -->
+<div class="zmanim-card" id="zmanim-card">
+<div class="zmanim-header" onclick="toggleZmanim()">
+<div class="zmanim-header-left">
+<div class="zmanim-header-icon">🕐</div>
+<div>
+<div class="zmanim-header-title">Zmanim du jour</div>
+<div class="zmanim-header-sub" id="zmanim-city-label">Paris</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<div class="zmanim-next-badge" id="zmanim-next-badge" style="display:none;">
+<span id="zmanim-next-name">--</span>
+<span id="zmanim-next-time">--:--</span>
+</div>
+<svg class="zmanim-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</div>
+</div>
+<div class="zmanim-progress-wrap">
+<div class="zmanim-progress-bar">
+<div class="zmanim-progress-fill" id="zmanim-progress" style="width:0%"></div>
+</div>
+<div class="zmanim-progress-labels">
+<span id="zmanim-sunrise-label">--:--</span>
+<span id="zmanim-sunset-label">--:--</span>
+</div>
+</div>
+<div class="zmanim-body" id="zmanim-body">
+<div class="zmanim-list" id="zmanim-list">
+<!-- Populated by JS -->
+</div>
+<div class="zmanim-share-row">
+<button class="zmanim-share-btn" onclick="shareZmanim(event)">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+Partager
+</button>
+</div>
+</div>
+</div>
+
 <div class="home-big-cards">
 <!-- OBJECTIFS + TEHILIM GRID -->
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
@@ -934,6 +1214,225 @@ function shareObjectifs(e){
     }).catch(function(){});
   }
 }
+</script>
+<script>
+// ─── ZMANIM MODULE ───
+(function() {
+  const ZMANIM_DEFS = [
+    { key: 'alotHaShachar',      fr: 'Alot HaCha\'har',        he: 'עלות השחר',        section: 'matin',  icon: '🌑' },
+    { key: 'misheyakir',         fr: 'Michéyakir',             he: 'משיכיר',           section: 'matin',  icon: '🌒' },
+    { key: 'sunrise',            fr: 'Nets Ha\'Hama',          he: 'הנץ החמה',         section: 'matin',  icon: '🌅' },
+    { key: 'sofZmanShmaMGA',     fr: 'Sof Zman Shma (MGA)',    he: 'סוף זמן שמע (מג״א)', section: 'matin', icon: '📖' },
+    { key: 'sofZmanShma',        fr: 'Sof Zman Shma (GRA)',    he: 'סוף זמן שמע (גר״א)', section: 'matin', icon: '📖' },
+    { key: 'sofZmanTfillaMGA',   fr: 'Sof Zman Tefila (MGA)',  he: 'סוף זמן תפילה (מג״א)', section: 'matin', icon: '🙏' },
+    { key: 'sofZmanTfilla',      fr: 'Sof Zman Tefila (GRA)',  he: 'סוף זמן תפילה (גר״א)', section: 'matin', icon: '🙏' },
+    { key: 'chatzot',            fr: '\'Hatzot HaYom',         he: 'חצות היום',        section: 'midi',   icon: '☀️' },
+    { key: 'minchaGedola',       fr: 'Min\'ha Guedola',        he: 'מנחה גדולה',       section: 'apresmidi', icon: '🕑' },
+    { key: 'minchaKetana',       fr: 'Min\'ha Ketana',         he: 'מנחה קטנה',        section: 'apresmidi', icon: '🕓' },
+    { key: 'plagHaMincha',       fr: 'Plag HaMin\'ha',         he: 'פלג המנחה',        section: 'apresmidi', icon: '🌤' },
+    { key: 'sunset',             fr: 'Chki\'a',                he: 'שקיעה',            section: 'soir',   icon: '🌇' },
+    { key: 'tzeit7083deg',       fr: 'Tsèt HaKokhavim',       he: 'צאת הכוכבים',      section: 'soir',   icon: '⭐' },
+  ];
+
+  const SECTION_LABELS = {
+    matin: 'Matin',
+    midi: 'Mi-journée',
+    apresmidi: 'Après-midi',
+    soir: 'Soir'
+  };
+
+  function getShabbatCoords() {
+    try {
+      var saved = localStorage.getItem('shabbatLoc');
+      if (saved) {
+        var loc = JSON.parse(saved);
+        return { lat: loc.lat, lng: loc.lng, city: loc.name || loc.city || 'Paris' };
+      }
+    } catch(e) {}
+    return { lat: 48.8566, lng: 2.3522, city: 'Paris' };
+  }
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function fmtTime(isoStr) {
+    if (!isoStr) return '--:--';
+    var d = new Date(isoStr);
+    if (isNaN(d)) return '--:--';
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  function timeToMinutes(isoStr) {
+    if (!isoStr) return null;
+    var d = new Date(isoStr);
+    if (isNaN(d)) return null;
+    return d.getHours() * 60 + d.getMinutes();
+  }
+
+  function nowMinutes() {
+    var d = new Date();
+    return d.getHours() * 60 + d.getMinutes();
+  }
+
+  function loadZmanim() {
+    var coords = getShabbatCoords();
+    var cityLabel = document.getElementById('zmanim-city-label');
+    if (cityLabel) cityLabel.textContent = coords.city;
+
+    var cacheKey = 'zmanim_' + coords.lat.toFixed(2) + '_' + coords.lng.toFixed(2) + '_' + todayStr();
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(cacheKey)); } catch(e) {}
+
+    if (cached && cached.times) {
+      renderZmanim(cached.times);
+    } else {
+      var url = 'https://www.hebcal.com/zmanim?cfg=json&lat=' + coords.lat + '&lng=' + coords.lng + '&date=' + todayStr();
+      fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.times) {
+            try { localStorage.setItem(cacheKey, JSON.stringify(data)); } catch(e) {}
+            renderZmanim(data.times);
+          }
+        })
+        .catch(function(err) {
+          console.warn('Zmanim fetch error:', err);
+          document.getElementById('zmanim-list').innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:12px;padding:12px 0;text-align:center;">Impossible de charger les zmanim</div>';
+        });
+    }
+  }
+
+  function renderZmanim(times) {
+    var list = document.getElementById('zmanim-list');
+    if (!list) return;
+
+    var now = nowMinutes();
+    var html = '';
+    var lastSection = '';
+    var nextZman = null;
+    var sunriseMin = timeToMinutes(times.sunrise);
+    var sunsetMin = timeToMinutes(times.sunset);
+
+    // Progress bar
+    if (sunriseMin != null && sunsetMin != null) {
+      var progress = 0;
+      if (now < sunriseMin) progress = 0;
+      else if (now > sunsetMin) progress = 100;
+      else progress = Math.round(((now - sunriseMin) / (sunsetMin - sunriseMin)) * 100);
+      var bar = document.getElementById('zmanim-progress');
+      if (bar) bar.style.width = progress + '%';
+      var slbl = document.getElementById('zmanim-sunrise-label');
+      var elbl = document.getElementById('zmanim-sunset-label');
+      if (slbl) slbl.textContent = fmtTime(times.sunrise);
+      if (elbl) elbl.textContent = fmtTime(times.sunset);
+    }
+
+    ZMANIM_DEFS.forEach(function(z) {
+      var timeVal = times[z.key];
+      if (!timeVal) return;
+
+      var min = timeToMinutes(timeVal);
+      var isPast = min != null && min < now;
+      var isCurrent = false;
+
+      if (!isPast && !nextZman) {
+        nextZman = { name: z.fr, time: fmtTime(timeVal) };
+        isCurrent = true;
+      }
+
+      if (z.section !== lastSection) {
+        html += '<div class="zmanim-section-label">' + SECTION_LABELS[z.section] + '</div>';
+        lastSection = z.section;
+      }
+
+      var cls = 'zmanim-item';
+      if (isPast) cls += ' past';
+      if (isCurrent) cls += ' current';
+
+      html += '<div class="' + cls + '">';
+      html += '<div class="zmanim-dot"></div>';
+      html += '<div class="zmanim-label">';
+      html += '<div class="zmanim-label-fr">' + z.fr + '</div>';
+      html += '<div class="zmanim-label-he">' + z.he + '</div>';
+      html += '</div>';
+      html += '<div class="zmanim-time">' + fmtTime(timeVal) + '</div>';
+      html += '</div>';
+    });
+
+    list.innerHTML = html;
+
+    // Next zman badge
+    var badge = document.getElementById('zmanim-next-badge');
+    if (badge && nextZman) {
+      document.getElementById('zmanim-next-name').textContent = nextZman.name;
+      document.getElementById('zmanim-next-time').textContent = nextZman.time;
+      badge.style.display = 'inline-flex';
+    }
+  }
+
+  window.toggleZmanim = function() {
+    var card = document.getElementById('zmanim-card');
+    if (card) card.classList.toggle('open');
+  };
+
+  window.shareZmanim = function(e) {
+    if (e) e.stopPropagation();
+    var coords = getShabbatCoords();
+    var today = new Date();
+    var dateStr = today.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    var lines = ['🕐 Zmanim du jour', '📍 ' + coords.city, '📅 ' + dateStr, '─────────────────'];
+
+    var items = document.querySelectorAll('#zmanim-list .zmanim-item');
+    items.forEach(function(item) {
+      var label = item.querySelector('.zmanim-label-fr');
+      var time = item.querySelector('.zmanim-time');
+      if (label && time) {
+        var isPast = item.classList.contains('past');
+        var isCurrent = item.classList.contains('current');
+        var prefix = isCurrent ? '▶ ' : (isPast ? '  ' : '  ');
+        lines.push(prefix + label.textContent + '  ' + time.textContent);
+      }
+    });
+
+    lines.push('', '🕎 Chab\'app - chabapp.com');
+    var shareText = lines.join('\n');
+
+    if (navigator.share) {
+      navigator.share({ title: 'Zmanim - ' + coords.city, text: shareText }).catch(function(){});
+    } else {
+      navigator.clipboard.writeText(shareText).then(function() {
+        var btn = e && e.currentTarget;
+        if (btn) {
+          var orig = btn.innerHTML;
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Copié !';
+          setTimeout(function() { btn.innerHTML = orig; }, 1500);
+        }
+      }).catch(function(){});
+    }
+  };
+
+  // Load on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadZmanim);
+  } else {
+    loadZmanim();
+  }
+
+  // Refresh every minute for current zman highlighting
+  setInterval(function() {
+    try {
+      var coords = getShabbatCoords();
+      var cacheKey = 'zmanim_' + coords.lat.toFixed(2) + '_' + coords.lng.toFixed(2) + '_' + todayStr();
+      var cached = JSON.parse(localStorage.getItem(cacheKey));
+      if (cached && cached.times) renderZmanim(cached.times);
+    } catch(e) {}
+  }, 60000);
+
+  // Listen for shabbat location changes
+  window.addEventListener('shabbatLocChanged', loadZmanim);
+})();
 </script>
 <script src="js/app.js"></script></body>
 </html>
