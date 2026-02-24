@@ -7543,6 +7543,37 @@ function _formatHebcalTime(isoStr) {
   } catch(e) { return ''; }
 }
 
+var PARASHA_FR = {
+  'Bereshit':'Béréchit','Noach':'Noa\'h','Lech-Lecha':'Lekh Lekha',
+  'Vayera':'Vayéra','Chayei Sara':'\'Hayé Sarah','Toldot':'Toldot',
+  'Vayetzei':'Vayétsé','Vayishlach':'Vayichla\'h','Vayeshev':'Vayéchev',
+  'Miketz':'Mikéts','Vayigash':'Vayigach','Vayechi':'Vayé\'hi',
+  'Shemot':'Chémot','Vaera':'Vaéra','Bo':'Bo','Beshalach':'Béchala\'h',
+  'Yitro':'Yitro','Mishpatim':'Michpatim','Terumah':'Térouma',
+  'Tetzaveh':'Tétsavé','Ki Tisa':'Ki Tissa','Vayakhel':'Vayakhel',
+  'Pekudei':'Pékoudé','Vayikra':'Vayikra','Tzav':'Tsav',
+  'Shmini':'Chémini','Tazria':'Tazria','Metzora':'Métsora',
+  'Achrei Mot':'A\'haré Mot','Kedoshim':'Kédochim','Emor':'Émor',
+  'Behar':'Béhar','Bechukotai':'Bé\'houkotaï','Bamidbar':'Bamidbar',
+  'Nasso':'Nasso','Beha\'alotcha':'Béhaalotékha','Sh\'lach':'Chéla\'h Lékha',
+  'Korach':'Kora\'h','Chukat':'\'Houkat','Balak':'Balak',
+  'Pinchas':'Pin\'has','Matot':'Matot','Masei':'Massé',
+  'Devarim':'Dévarim','Vaetchanan':'Vaét\'hanane','Eikev':'Ékev',
+  'Re\'eh':'Réé','Shoftim':'Choftim','Ki Teitzei':'Ki Tétsé',
+  'Ki Tavo':'Ki Tavo','Nitzavim':'Nitsavim','Vayeilech':'Vayélekh',
+  'Ha\'azinu':'Haazinou','Vezot Habracha':'Vézot Habérakha'
+};
+
+function getParashaFr(name) {
+  if (!name) return name;
+  // Handle double parashiot like "Vayakhel-Pekudei"
+  var parts = name.split('-');
+  if (parts.length === 2 && PARASHA_FR[parts[0].trim()] && PARASHA_FR[parts[1].trim()]) {
+    return PARASHA_FR[parts[0].trim()] + '-' + PARASHA_FR[parts[1].trim()];
+  }
+  return PARASHA_FR[name] || name;
+}
+
 function renderShabbatCard(data) {
   var card = document.getElementById('shabbat-card');
   if (!card || !data) return;
@@ -7551,6 +7582,8 @@ function renderShabbatCard(data) {
   if (data.parasha) {
     parashaEl.textContent = data.parasha;
     parashaHeEl.textContent = data.parashaHe || '';
+    var houmashHero = document.getElementById('houmash-date-hero');
+    if (houmashHero) houmashHero.textContent = 'Parashat ' + getParashaFr(data.parasha);
   } else {
     parashaEl.textContent = 'Chabbat';
     parashaHeEl.textContent = 'שבת';
@@ -8221,8 +8254,6 @@ function displayHoumash(data) {
   var expEl = document.getElementById('houmash-expand');
   if (!el) return;
   if (data.title && dateEl) dateEl.textContent = data.title;
-  var heroSub = document.getElementById('houmash-date-hero');
-  if (heroSub && data.title) heroSub.textContent = data.title;
   var content = '';
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
@@ -8242,8 +8273,6 @@ function displayHoumashFallback() {
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
-  var heroSub = document.getElementById('houmash-date-hero');
-  if (heroSub) heroSub.textContent = heb.mName + ' ' + heb.hd;
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du \'Houmach sera bientôt disponible</span>';
 }
 
