@@ -728,8 +728,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .bday-close { background:var(--black); color:var(--white); border:none; padding:12px 32px; border-radius:var(--radius-sm); font-size:14px; font-weight:700; cursor:pointer; font-family:var(--font); margin-top:16px; }
 .siddur-toggle-btn.active { background:var(--black) !important; color:var(--white) !important; border-color:var(--black) !important; }
 .siddur-toggle-btn:not(.active) { background:var(--white) !important; color:var(--gray-2) !important; border-color:var(--gray-5) !important; }
-.home-big-cards > :nth-child(1) div:has(.big-card-title) { display:grid !important; grid-template-columns:1fr auto; gap:2px 4px; align-content:end; }
-.home-big-cards > :nth-child(1) .big-card-title { grid-column:1; grid-row:1; align-self:center; }
-.home-big-cards > :nth-child(1) .big-card-sub { grid-column:2; grid-row:1; margin-top:0; align-self:center; }
-.home-big-cards > :nth-child(1) .obj-progress-home { grid-column:1 / -1; grid-row:2; width:100%; }
-.home-big-cards > :nth-child(1) .obj-progress-home-pct { grid-column:1 / -1; grid-row:3; width:100%; }
+.home-big-cards > :nth-child(1) div:has(.big-card-title) { display:grid !important; grid-template-columns:1fr; gap:2px 0; align-content:end; }
+.home-big-cards > :nth-child(1) .big-card-title { grid-column:1; grid-row:1; }
+.home-big-cards > :nth-child(1) .big-card-sub { grid-column:1; grid-row:2; margin-top:0; }
+.home-big-cards > :nth-child(1) .obj-progress-home { grid-column:1; grid-row:3; width:100%; }
+.home-big-cards > :nth-child(1) .obj-progress-home-pct { grid-column:1; grid-row:4; width:100%; }
