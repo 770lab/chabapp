@@ -22,6 +22,7 @@
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   position: relative;
+  font-family: 'EB Garamond', serif;
 }
 .zmanim-card::before {
   content: '';
@@ -56,14 +57,15 @@
 }
 .zmanim-header-title {
   color: #fff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   font-family: 'EB Garamond', serif;
   letter-spacing: 0.3px;
 }
 .zmanim-header-sub {
   color: rgba(255,255,255,0.5);
-  font-size: 11px;
+  font-size: 12px;
+  font-family: 'EB Garamond', serif;
   margin-top: 1px;
 }
 .zmanim-chevron {
@@ -108,7 +110,8 @@
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
-  font-size: 9px;
+  font-size: 10px;
+  font-family: 'EB Garamond', serif;
   color: rgba(255,255,255,0.35);
 }
 
@@ -179,8 +182,9 @@
 }
 .zmanim-label-fr {
   color: rgba(255,255,255,0.85);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
+  font-family: 'EB Garamond', serif;
 }
 .zmanim-item.current .zmanim-label-fr {
   color: #fff;
@@ -188,14 +192,15 @@
 }
 .zmanim-label-he {
   color: rgba(255,255,255,0.35);
-  font-size: 10px;
+  font-size: 11px;
   font-family: 'Noto Serif Hebrew', serif;
   margin-top: 1px;
 }
 .zmanim-time {
   color: rgba(255,255,255,0.7);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
+  font-family: 'EB Garamond', serif;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.5px;
   flex-shrink: 0;
@@ -209,12 +214,13 @@
   text-decoration-color: rgba(255,255,255,0.15);
 }
 .zmanim-section-label {
-  font-size: 9px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: rgba(255,255,255,0.25);
   padding: 8px 0 4px 0;
   margin-top: 4px;
+  font-family: 'EB Garamond', serif;
 }
 .zmanim-share-row {
   display: flex;
@@ -228,7 +234,8 @@
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 8px;
   color: rgba(255,255,255,0.6);
-  font-size: 11px;
+  font-size: 12px;
+  font-family: 'EB Garamond', serif;
   padding: 5px 12px;
   cursor: pointer;
   display: flex;
@@ -245,8 +252,9 @@
   gap: 4px;
   background: rgba(255,200,80,0.12);
   color: #ffc850;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
+  font-family: 'EB Garamond', serif;
   padding: 2px 8px;
   border-radius: 10px;
   margin-left: 8px;
@@ -409,7 +417,7 @@
 </div>
 
 <!-- ZMANIM SECTION -->
-<div class="zmanim-card" id="zmanim-card">
+<div class="zmanim-card open" id="zmanim-card">
 <div class="zmanim-header" onclick="toggleZmanim()">
 <div class="zmanim-header-left">
 <div class="zmanim-header-icon">🕐</div>
@@ -1246,10 +1254,10 @@ function shareObjectifs(e){
       var saved = localStorage.getItem('shabbatLoc');
       if (saved) {
         var loc = JSON.parse(saved);
-        return { lat: loc.lat, lng: loc.lng, city: loc.name || loc.city || 'Paris' };
+        return { lat: loc.lat, lng: loc.lng, city: loc.name || loc.city || 'Paris', tzid: loc.tzid || 'Europe/Paris' };
       }
     } catch(e) {}
-    return { lat: 48.8566, lng: 2.3522, city: 'Paris' };
+    return { lat: 48.8566, lng: 2.3522, city: 'Paris', tzid: 'Europe/Paris' };
   }
 
   function todayStr() {
@@ -1281,6 +1289,9 @@ function shareObjectifs(e){
     var cityLabel = document.getElementById('zmanim-city-label');
     if (cityLabel) cityLabel.textContent = coords.city;
 
+    var list = document.getElementById('zmanim-list');
+    if (list) list.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:13px;padding:12px 0;text-align:center;font-family:EB Garamond,serif;">Chargement des zmanim…</div>';
+
     var cacheKey = 'zmanim_' + coords.lat.toFixed(2) + '_' + coords.lng.toFixed(2) + '_' + todayStr();
     var cached = null;
     try { cached = JSON.parse(localStorage.getItem(cacheKey)); } catch(e) {}
@@ -1288,18 +1299,23 @@ function shareObjectifs(e){
     if (cached && cached.times) {
       renderZmanim(cached.times);
     } else {
-      var url = 'https://www.hebcal.com/zmanim?cfg=json&lat=' + coords.lat + '&lng=' + coords.lng + '&date=' + todayStr();
+      var url = 'https://www.hebcal.com/zmanim?cfg=json&latitude=' + coords.lat + '&longitude=' + coords.lng + '&tzid=' + encodeURIComponent(coords.tzid || 'Europe/Paris') + '&date=' + todayStr();
       fetch(url)
-        .then(function(r) { return r.json(); })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
         .then(function(data) {
           if (data && data.times) {
             try { localStorage.setItem(cacheKey, JSON.stringify(data)); } catch(e) {}
             renderZmanim(data.times);
+          } else {
+            if (list) list.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:13px;padding:12px 0;text-align:center;font-family:EB Garamond,serif;">Aucune donnée disponible</div>';
           }
         })
         .catch(function(err) {
           console.warn('Zmanim fetch error:', err);
-          document.getElementById('zmanim-list').innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:12px;padding:12px 0;text-align:center;">Impossible de charger les zmanim</div>';
+          if (list) list.innerHTML = '<div style="color:rgba(255,255,255,0.4);font-size:13px;padding:12px 0;text-align:center;font-family:EB Garamond,serif;">Impossible de charger les zmanim</div>';
         });
     }
   }
