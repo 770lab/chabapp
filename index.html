@@ -11,7 +11,9 @@
 
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</link><link href="css/styles.css" rel="stylesheet"/></head>
+</link><link href="css/styles.css" rel="stylesheet"/>
+<style>.big-card-title{font-size:18px!important;font-weight:700!important;}.big-card-sub{font-size:15px!important;font-weight:400!important;}</style>
+</head>
 <body>
 <svg height="0" style="position:absolute;" width="0">
 <defs>
@@ -173,8 +175,7 @@
 <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);"></div>
 <div onclick="event.stopPropagation();shareObjectifs(event)" style="position:absolute;top:8px;right:8px;z-index:2;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg fill="none" height="15" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="15"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div>
 <div style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;width:100%;height:100%;box-sizing:border-box;">
-<div class="big-card-title" style="color:#fff;font-size:15px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Objectifs du jour</div>
-<div class="big-card-sub" id="big-obj-sub" style="color:rgba(255,255,255,0.85);font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,0.5);">0/13 accomplis</div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);display:flex;justify-content:space-between;align-items:baseline;">Objectifs du jour<span class="big-card-sub" id="big-obj-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">0/13 accomplis</span></div>
 <div class="obj-progress-home" style="margin-top:6px;"><div class="obj-progress-home-fill" id="obj-progress-home-fill"></div></div>
 <div class="obj-progress-home-pct" id="obj-progress-home-pct" style="color:rgba(255,255,255,0.7);font-size:10px;margin-top:2px;">0%</div>
 </div>
@@ -183,7 +184,7 @@
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.0) 100%);"></div>
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;">
-<div class="big-card-title" style="color:#fff;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Sidour</div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Téfila</div>
 <div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Tehilat Hachem · Patakh Eliyahou</div>
 </div>
 </div>
@@ -202,8 +203,8 @@
 <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);"></div>
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:12px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;">
-<div class="big-card-title" style="color:#fff;font-size:15px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,0.6);">Hayom Yom</div>
-<div class="big-card-sub hyy-date" id="hyy-date" style="color:rgba(255,255,255,0.85);font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,0.5);"></div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Hayom Yom</div>
+<div class="big-card-sub hyy-date" id="hyy-date" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Étude du jour</div>
 </div>
 
 </div>
@@ -242,7 +243,7 @@
 <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 100%);"></div>
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;">
-<div class="big-card-title" style="color:#fff;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">'Houmach</div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">'Houmach</div>
 <div class="big-card-sub" id="houmash-date-hero" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Parashat Hachavoua</div>
 <span id="houmash-date" style="display:none;"></span>
 <div id="houmash-text" style="display:none;"></div>
@@ -256,7 +257,7 @@
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%);"></div>
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;">
-<div class="big-card-title" style="color:#fff;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Beth Chabad</div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Beth Chabad</div>
 <div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Trouver un Beth Chabad près de moi</div>
 </div>
 </div>
@@ -265,7 +266,7 @@
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%);"></div>
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;">
-<div class="big-card-title" style="color:#fff;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Chabad Club</div>
+<div class="big-card-title" style="color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Chabad Club</div>
 <div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Éclaire le monde</div>
 </div>
 </div>
@@ -968,6 +969,47 @@ function shareObjectifs(e){
       var el=document.getElementById('big-teh-sub');
       if(el) el.textContent=frMonth+' '+hebDay+' — '+chapText;
     }
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var paraFr={
+    'Bereshit':'Béréchit','Noach':'Noa\'h','Lech-Lecha':'Lekh Lekha',
+    'Vayera':'Vayéra','Chayei Sara':'\'Hayé Sarah','Toldot':'Toldot',
+    'Vayetzei':'Vayétsé','Vayishlach':'Vayichla\'h','Vayeshev':'Vayéchev',
+    'Miketz':'Mikéts','Vayigash':'Vayigach','Vayechi':'Vayé\'hi',
+    'Shemot':'Chémot','Vaera':'Vaéra','Bo':'Bo','Beshalach':'Béchala\'h',
+    'Yitro':'Yitro','Mishpatim':'Michpatim','Terumah':'Térouma',
+    'Tetzaveh':'Tétsavé','Ki Tisa':'Ki Tissa','Vayakhel':'Vayakhel',
+    'Pekudei':'Pékoudé','Vayikra':'Vayikra','Tzav':'Tsav',
+    'Shmini':'Chémini','Tazria':'Tazria','Metzora':'Métsora',
+    'Achrei Mot':'A\'haré Mot','Kedoshim':'Kédochim','Emor':'Émor',
+    'Behar':'Béhar','Bechukotai':'Bé\'houkotaï','Bamidbar':'Bamidbar',
+    'Nasso':'Nasso','Beha\'alotcha':'Béhaalotékha','Sh\'lach':'Chéla\'h Lékha',
+    'Korach':'Kora\'h','Chukat':'\'Houkat','Balak':'Balak',
+    'Pinchas':'Pin\'has','Matot':'Matot','Masei':'Massé',
+    'Devarim':'Dévarim','Vaetchanan':'Vaét\'hanane','Eikev':'Ékev',
+    'Re\'eh':'Réé','Shoftim':'Choftim','Ki Teitzei':'Ki Tétsé',
+    'Ki Tavo':'Ki Tavo','Nitzavim':'Nitsavim','Vayeilech':'Vayélekh',
+    'Ha\'azinu':'Haazinou','Vezot Habracha':'Vézot Habérakha'
+  };
+  try{
+    fetch('https://www.hebcal.com/shabbat?cfg=json&geonameid=3037854&M=on')
+    .then(function(r){return r.json()})
+    .then(function(data){
+      var parasha='';
+      if(data&&data.items){
+        data.items.forEach(function(item){
+          if(item.category==='parashat') parasha=item.title.replace('Parashat ','');
+        });
+      }
+      if(parasha){
+        var fr=paraFr[parasha]||parasha;
+        var el=document.getElementById('houmash-date-hero');
+        if(el) el.textContent='Parashat '+fr;
+      }
+    }).catch(function(){});
   }catch(e){}
 })();
 </script>
