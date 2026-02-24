@@ -7849,20 +7849,45 @@ function syncEtudesPanel() {
   if (hSrcText && hDstText) hDstText.innerHTML = hSrcText.innerHTML;
 }
 
-// ============================================================================
-// PATCH app.js — Études du jour
-// Remplacer les fonctions de chargement (lignes ~7852 à ~8300)
-// par le code ci-dessous.
-//
-// Changements :
-//   1. PRIORITÉ 1 = hyy-data.json (alimenté par GitHub Action)
-//   2. PRIORITÉ 2 = fr.chabad.org via CORS proxy (fallback)
-//   3. PRIORITÉ 3 = localStorage cache
-//   4. Tanya et Houmash lisent aussi hyy-data.json
-// ============================================================================
+function loadHayomYom() {
+  var d = new Date();
+  var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+  var cacheKey = 'tehilim_hyy8_' + dateKey;
+  var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
+  var hyyKey = heb.mName.replace(' ', '_') + '_' + heb.hd;
+  console.log('HYY: Hebrew date =', heb.mName, heb.hd, 'key=', hyyKey);
 
+  // PRIORITY 0: Cache (instant)
+  try {
+    var cached = JSON.parse(localStorage.getItem(cacheKey));
+    if (cached && cached.fr) { displayHyy(cached); return; }
+  } catch(e) {}
 
-// ====== FR.CHABAD.ORG CORS PROXY (inchangé) ======
+  // PRIORITY 1: hyy-data.json (GitHub Action)
+  _hyyLoadJson(heb, dateKey, cacheKey, hyyKey);
+}
+
+function _hyyLoadJson(heb, dateKey, cacheKey, hyyKey) {
+  fetch('hyy-data.json?_=' + dateKey)
+    .then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(data) {
+      if (data.hayom_yom && data.hayom_yom[hyyKey]) {
+        console.log('HYY: Found in hyy-data.json!');
+        var result = { fr: data.hayom_yom[hyyKey], heDate: heb.mName + ' ' + heb.hd, fetched: dateKey, source: 'json' };
+        try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
+        displayHyy(result);
+        return;
+      }
+      console.log('HYY: not in hyy-data.json, trying fr.chabad.org');
+      _hyyLoadFrChabad(heb, dateKey, cacheKey, hyyKey);
+    })
+    .catch(function(err) {
+      console.log('HYY: hyy-data.json failed:', err.message);
+      _hyyLoadFrChabad(heb, dateKey, cacheKey, hyyKey);
+    });
+}
+
+// ====== FR.CHABAD.ORG AUTO-FETCH ======
 var _corsProxies = [
   function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
   function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
@@ -7887,6 +7912,7 @@ function _extractChabadText(html) {
   try {
     var parser = new DOMParser();
     var doc = parser.parseFromString(html, 'text/html');
+    // Try multiple selectors for chabad.org content
     var selectors = [
       '#TextContent', '#textContent', '.article-text',
       '.page-text-content', '#contentArea', '#pageTextArea',
@@ -7901,12 +7927,14 @@ function _extractChabadText(html) {
       if (contentEl && contentEl.textContent.trim().length > 50) break;
       contentEl = null;
     }
+    // Fallback: find largest text block in main area
     if (!contentEl) {
       var divs = doc.querySelectorAll('div, td');
       var best = null, bestLen = 0;
       for (var j = 0; j < divs.length; j++) {
         var txt = divs[j].textContent.trim();
         if (txt.length > bestLen && txt.length > 100 && txt.length < 10000) {
+          var tag = divs[j].tagName;
           var cls = (divs[j].className || '').toLowerCase();
           if (cls.indexOf('nav') === -1 && cls.indexOf('footer') === -1 && cls.indexOf('header') === -1 && cls.indexOf('menu') === -1) {
             best = divs[j]; bestLen = txt.length;
@@ -7932,46 +7960,10 @@ function _extractChabadText(html) {
   }
 }
 
-
-// ====== HAYOM YOM ======
-function loadHayomYom() {
-  var d = new Date();
-  var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-  var cacheKey = 'tehilim_hyy8_' + dateKey;
-  var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
-  var hyyKey = heb.mName.replace(' ', '_') + '_' + heb.hd;
-  console.log('HYY: Hebrew date =', heb.mName, heb.hd, 'key=', hyyKey);
-
-  // Check cache first (instant display)
-  try {
-    var cached = JSON.parse(localStorage.getItem(cacheKey));
-    if (cached && cached.fr) { displayHyy(cached); return; }
-  } catch(e) {}
-
-  // PRIORITY 1: hyy-data.json (GitHub Action)
-  fetch('hyy-data.json?_=' + dateKey)
-    .then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-    .then(function(data) {
-      if (data.hayom_yom && data.hayom_yom[hyyKey]) {
-        console.log('HYY: Found in hyy-data.json!');
-        var result = { fr: data.hayom_yom[hyyKey], heDate: heb.mName + ' ' + heb.hd, fetched: dateKey, source: 'json' };
-        try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
-        displayHyy(result);
-        return;
-      }
-      // Not in JSON → try CORS proxy
-      _hyyLoadCors(heb, dateKey, cacheKey);
-    })
-    .catch(function(err) {
-      console.log('HYY: hyy-data.json failed:', err.message);
-      _hyyLoadCors(heb, dateKey, cacheKey);
-    });
-}
-
-function _hyyLoadCors(heb, dateKey, cacheKey) {
+function _hyyLoadFrChabad(heb, dateKey, cacheKey, hyyKey) {
   var d = new Date();
   var url = 'https://fr.chabad.org/dailystudy/hayomyom.asp?tdate=' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
-  console.log('HYY: Trying fr.chabad.org via CORS:', url);
+  console.log('HYY: Trying fr.chabad.org:', url);
   _fetchViaCors(url, 0, function(html) {
     var text = _extractChabadText(html);
     if (text && text.length > 30) {
@@ -7980,12 +7972,42 @@ function _hyyLoadCors(heb, dateKey, cacheKey) {
       try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
       displayHyy(result);
     } else {
+      console.log('HYY: fr.chabad.org - could not extract text');
       displayHyyFallback();
     }
   }, function() {
-    console.log('HYY: CORS failed');
+    console.log('HYY: fr.chabad.org unreachable');
     displayHyyFallback();
   });
+}
+
+function displayHyy(data) {
+  var el=document.getElementById('hyy-text');
+  var dateEl=document.getElementById('hyy-date');
+  var expEl=document.getElementById('hyy-expand');
+  if(!el) return;
+  var content='';
+  if(data.fr) {
+    content='<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">'+data.fr.replace(/\n/g,'<br>')+'</div>';
+  } else if(data.en) {
+    content='<div style="font-size:14.5px;line-height:1.8;color:var(--gray-1);font-family:\'EB Garamond\',Georgia,serif;">'+data.en+'</div>';
+  }
+  if(data.he && !data.fr) content='<div style="direction:rtl;text-align:right;font-family:\'Noto Serif Hebrew\',serif;line-height:1.9;margin-bottom:10px;">'+data.he+'</div>'+content;
+  if(content){
+    el.innerHTML=content;
+    expEl.style.display='block';
+  } else { displayHyyFallback(); return; }
+  if(dateEl) dateEl.textContent=data.heDate||'';
+}
+
+function displayHyyFallback() {
+  var el=document.getElementById('hyy-text');
+  var dateEl=document.getElementById('hyy-date');
+  if(!el) return;
+  var d=new Date();
+  var heb=gregToHebrew(d.getFullYear(),d.getMonth()+1,d.getDate());
+  if(dateEl) dateEl.textContent=heb.mName+' '+heb.hd;
+  el.innerHTML='<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Hayom Yom sera bientôt disponible</span>';
 }
 
 
@@ -7998,7 +8020,7 @@ function openRambam(e) {
   _rambamExpanded = !_rambamExpanded;
   if (_rambamExpanded) {
     txt.classList.add('expanded');
-    exp.textContent = 'Réduire \u25b4';
+    exp.textContent = 'R\u00e9duire \u25b4';
   } else {
     txt.classList.remove('expanded');
     exp.textContent = 'Lire la suite \u25be';
@@ -8010,13 +8032,17 @@ function loadRambam() {
   var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
   var cacheKey = 'tehilim_rambam3_' + dateKey;
 
-  // Check cache first
+  // PRIORITY 0: Cache (instant)
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey));
     if (cached && cached.fr) { displayRambam(cached); return; }
   } catch(e) {}
 
-  // PRIORITY 1: hyy-data.json
+  // PRIORITY 1: hyy-data.json (GitHub Action)
+  _rambamLoadJson(dateKey, cacheKey);
+}
+
+function _rambamLoadJson(dateKey, cacheKey) {
   fetch('hyy-data.json?_=' + dateKey)
     .then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(data) {
@@ -8028,64 +8054,88 @@ function loadRambam() {
         displayRambam(result);
         return;
       }
-      _rambamLoadCors(dateKey, cacheKey);
+      console.log('Rambam: not in hyy-data.json, trying fr.chabad.org');
+      _rambamLoadFrChabad(dateKey, cacheKey);
     })
     .catch(function(err) {
       console.log('Rambam: hyy-data.json failed:', err.message);
-      _rambamLoadCors(dateKey, cacheKey);
+      _rambamLoadFrChabad(dateKey, cacheKey);
     });
 }
 
-function _rambamLoadCors(dateKey, cacheKey) {
+function _rambamLoadFrChabad(dateKey, cacheKey) {
   var d = new Date();
   var url = 'https://fr.chabad.org/dailystudy/rambam.asp?rambamChapters=1&tdate=' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
-  console.log('Rambam: Trying fr.chabad.org via CORS:', url);
+  console.log('Rambam: Trying fr.chabad.org:', url);
   _fetchViaCors(url, 0, function(html) {
     var text = _extractChabadText(html);
     if (text && text.length > 30) {
+      console.log('Rambam: French text from fr.chabad.org! (' + text.length + ' chars)');
       var titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
       var title = titleMatch ? titleMatch[1].replace(/\s*-\s*fr\.chabad\.org.*/i, '').trim() : '';
       var result = { fr: text, title: title, fetched: dateKey, source: 'fr.chabad.org' };
       try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
       displayRambam(result);
     } else {
+      console.log('Rambam: fr.chabad.org - could not extract text');
       displayRambamFallback();
     }
   }, function() {
-    console.log('Rambam: CORS failed');
+    console.log('Rambam: fr.chabad.org unreachable');
     displayRambamFallback();
   });
 }
 
-
-// ====== TANYA ======
-var _tanyaExpanded = false;
-function openTanya(e) {
-  var txt = document.getElementById('tanya-text');
-  var exp = document.getElementById('tanya-expand');
-  if (!txt || txt.querySelector('.hyy-loading')) return;
-  _tanyaExpanded = !_tanyaExpanded;
-  if (_tanyaExpanded) {
-    txt.classList.add('expanded');
-    exp.textContent = 'Réduire \u25b4';
+function displayRambam(data) {
+  var el = document.getElementById('rambam-text');
+  var dateEl = document.getElementById('rambam-date');
+  var expEl = document.getElementById('rambam-expand');
+  var heroSub = document.getElementById('rambam-date-hero');
+  if (!el) return;
+  var content = '';
+  if (data.title && dateEl) { dateEl.textContent = data.title; }
+  if (data.fr) {
+    content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
   } else {
-    txt.classList.remove('expanded');
-    exp.textContent = 'Lire la suite \u25be';
+    if (data.he) content += '<div style="direction:rtl;text-align:right;font-family:\'Noto Serif Hebrew\',serif;line-height:1.9;margin-bottom:10px;">' + data.he + '</div>';
+    if (data.en) content += '<div style="color:var(--gray-2);font-size:14px;line-height:1.7;">' + data.en + '</div>';
+  }
+  if (content) {
+    el.innerHTML = content;
+    expEl.style.display = 'block';
+  } else {
+    displayRambamFallback();
   }
 }
 
+function displayRambamFallback() {
+  var el = document.getElementById('rambam-text');
+  var dateEl = document.getElementById('rambam-date');
+  var heroSub = document.getElementById('rambam-date-hero');
+  if (!el) return;
+  var d = new Date();
+  var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
+  if (dateEl) { dateEl.textContent = heb.mName + ' ' + heb.hd; }
+  el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Rambam sera bientôt disponible</span>';
+}
+
+// ====== TANYA ======
 function loadTanya() {
   var d = new Date();
   var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
   var cacheKey = 'tehilim_tanya_' + dateKey;
 
-  // Check cache first
+  // PRIORITY 0: Cache (instant)
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey));
     if (cached && cached.fr) { displayTanya(cached); return; }
   } catch(e) {}
 
-  // PRIORITY 1: hyy-data.json (NEW — Tanya now in JSON too)
+  // PRIORITY 1: hyy-data.json (GitHub Action)
+  _tanyaLoadJson(dateKey, cacheKey);
+}
+
+function _tanyaLoadJson(dateKey, cacheKey) {
   fetch('hyy-data.json?_=' + dateKey)
     .then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(data) {
@@ -8097,64 +8147,109 @@ function loadTanya() {
         displayTanya(result);
         return;
       }
-      _tanyaLoadCors(dateKey, cacheKey);
+      console.log('Tanya: not in hyy-data.json, trying fr.chabad.org');
+      _tanyaLoadFrChabad(dateKey, cacheKey);
     })
     .catch(function(err) {
       console.log('Tanya: hyy-data.json failed:', err.message);
-      _tanyaLoadCors(dateKey, cacheKey);
+      _tanyaLoadFrChabad(dateKey, cacheKey);
     });
 }
 
-function _tanyaLoadCors(dateKey, cacheKey) {
+function _tanyaLoadFrChabad(dateKey, cacheKey) {
   var d = new Date();
   var url = 'https://fr.chabad.org/dailystudy/tanya.asp?tdate=' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
-  console.log('Tanya: Trying fr.chabad.org via CORS:', url);
+  console.log('Tanya: Trying fr.chabad.org:', url);
   _fetchViaCors(url, 0, function(html) {
     var text = _extractChabadText(html);
     if (text && text.length > 30) {
+      console.log('Tanya: French text from fr.chabad.org! (' + text.length + ' chars)');
       var titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
       var title = titleMatch ? titleMatch[1].replace(/\s*-\s*fr\.chabad\.org.*/i, '').trim() : '';
       var result = { fr: text, title: title, fetched: dateKey, source: 'fr.chabad.org' };
       try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
       displayTanya(result);
     } else {
+      console.log('Tanya: fr.chabad.org - could not extract text');
       displayTanyaFallback();
     }
   }, function() {
-    console.log('Tanya: CORS failed');
+    console.log('Tanya: fr.chabad.org unreachable');
     displayTanyaFallback();
   });
 }
 
+function displayTanya(data) {
+  var el = document.getElementById('tanya-text');
+  var dateEl = document.getElementById('tanya-date');
+  var expEl = document.getElementById('tanya-expand');
+  if (!el) return;
+  if (data.title && dateEl) dateEl.textContent = data.title;
+  var heroSub = document.getElementById('tanya-date-hero');
+  if(heroSub) {}
+  var content = '';
+  if (data.fr) {
+    content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
+  }
+  if (content) {
+    el.innerHTML = content;
+    if (expEl) expEl.style.display = 'block';
+  } else {
+    displayTanyaFallback();
+  }
+}
 
-// ====== 'HOUMASH ======
-var _houmashExpanded = false;
-function openHoumash(e) {
-  var txt = document.getElementById('houmash-text');
-  var exp = document.getElementById('houmash-expand');
+function displayTanyaFallback() {
+  var el = document.getElementById('tanya-text');
+  var dateEl = document.getElementById('tanya-date');
+  if (!el) return;
+  var d = new Date();
+  var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
+  if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
+  el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Tanya sera bientôt disponible</span>';
+}
+
+var _tanyaExpanded = false;
+function openTanya(e) {
+  var txt = document.getElementById('tanya-text');
+  var exp = document.getElementById('tanya-expand');
   if (!txt || txt.querySelector('.hyy-loading')) return;
-  _houmashExpanded = !_houmashExpanded;
-  if (_houmashExpanded) {
+  _tanyaExpanded = !_tanyaExpanded;
+  if (_tanyaExpanded) {
     txt.classList.add('expanded');
-    exp.textContent = 'Réduire \u25b4';
+    exp.textContent = 'R\u00e9duire \u25b4';
   } else {
     txt.classList.remove('expanded');
     exp.textContent = 'Lire la suite \u25be';
   }
 }
 
+function shareTanya(e) {
+  if (e) e.stopPropagation();
+  var date = document.getElementById('tanya-date').textContent || '';
+  var text = document.getElementById('tanya-text');
+  var content = text ? (text.innerText || text.textContent || '').replace('Chargement\u2026','').replace('Lire la suite \u25be','').trim() : '';
+  var msg = '\ud83d\udcd6 Tanya' + (date ? ' \u2014 ' + date : '') + '\n\n' + content;
+  appShare('Tanya', msg);
+}
+
+// ====== 'HOUMASH ======
 function loadHoumash() {
   var d = new Date();
   var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
   var cacheKey = 'tehilim_houmash_' + dateKey;
 
-  // Check cache first
+  // PRIORITY 0: Cache (instant)
   try {
     var cached = JSON.parse(localStorage.getItem(cacheKey));
     if (cached && cached.fr) { displayHoumash(cached); return; }
   } catch(e) {}
 
-  // PRIORITY 1: hyy-data.json (NEW — Houmash now in JSON too)
+  // PRIORITY 1: hyy-data.json (GitHub Action)
+  _houmashLoadJson(dateKey, cacheKey);
+}
+
+function _houmashLoadJson(dateKey, cacheKey) {
   fetch('hyy-data.json?_=' + dateKey)
     .then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(data) {
@@ -8166,40 +8261,88 @@ function loadHoumash() {
         displayHoumash(result);
         return;
       }
-      _houmashLoadCors(dateKey, cacheKey);
+      console.log('Houmash: not in hyy-data.json, trying fr.chabad.org');
+      _houmashLoadFrChabad(dateKey, cacheKey);
     })
     .catch(function(err) {
       console.log('Houmash: hyy-data.json failed:', err.message);
-      _houmashLoadCors(dateKey, cacheKey);
+      _houmashLoadFrChabad(dateKey, cacheKey);
     });
 }
 
-function _houmashLoadCors(dateKey, cacheKey) {
+function _houmashLoadFrChabad(dateKey, cacheKey) {
   var d = new Date();
   var url = 'https://fr.chabad.org/dailystudy/torahreading.asp?tdate=' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
-  console.log('Houmash: Trying fr.chabad.org via CORS:', url);
+  console.log('Houmash: Trying fr.chabad.org:', url);
   _fetchViaCors(url, 0, function(html) {
     var text = _extractChabadText(html);
     if (text && text.length > 30) {
+      console.log('Houmash: French text from fr.chabad.org! (' + text.length + ' chars)');
       var titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
       var title = titleMatch ? titleMatch[1].replace(/\s*-\s*fr\.chabad\.org.*/i, '').trim() : '';
       var result = { fr: text, title: title, fetched: dateKey, source: 'fr.chabad.org' };
       try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
       displayHoumash(result);
     } else {
+      console.log('Houmash: fr.chabad.org - could not extract text');
       displayHoumashFallback();
     }
   }, function() {
-    console.log('Houmash: CORS failed');
+    console.log('Houmash: fr.chabad.org unreachable');
     displayHoumashFallback();
   });
 }
 
+function displayHoumash(data) {
+  var el = document.getElementById('houmash-text');
+  var dateEl = document.getElementById('houmash-date');
+  var expEl = document.getElementById('houmash-expand');
+  if (!el) return;
+  if (data.title && dateEl) dateEl.textContent = data.title;
+  var content = '';
+  if (data.fr) {
+    content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
+  }
+  if (content) {
+    el.innerHTML = content;
+    if (expEl) expEl.style.display = 'block';
+  } else {
+    displayHoumashFallback();
+  }
+}
 
-// ====== DISPLAY FUNCTIONS (inchangées) ======
-// displayHyy, displayHyyFallback, displayRambam, displayRambamFallback,
-// displayTanya, displayTanyaFallback, displayHoumash, displayHoumashFallback
-// → garder telles quelles dans ton app.js
+function displayHoumashFallback() {
+  var el = document.getElementById('houmash-text');
+  var dateEl = document.getElementById('houmash-date');
+  if (!el) return;
+  var d = new Date();
+  var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
+  if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
+  el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du \'Houmach sera bient\u00f4t disponible</span>';
+}
+
+var _houmashExpanded = false;
+function openHoumash(e) {
+  var txt = document.getElementById('houmash-text');
+  var exp = document.getElementById('houmash-expand');
+  if (!txt || txt.querySelector('.hyy-loading')) return;
+  _houmashExpanded = !_houmashExpanded;
+  if (_houmashExpanded) {
+    txt.classList.add('expanded');
+    exp.textContent = 'R\u00e9duire \u25b4';
+  } else {
+    txt.classList.remove('expanded');
+    exp.textContent = 'Lire la suite \u25be';
+  }
+}
+
+function shareHoumash(e) {
+  if (e) e.stopPropagation();
+  var date = document.getElementById('houmash-date').textContent || '';
+  var text = document.getElementById('houmash-text');
+  var content = text ? (text.innerText || text.textContent || '').replace('Chargement\u2026','').replace('Lire la suite \u25be','').trim() : '';
+  var msg = "\ud83d\udcd6 'Houmach" + (date ? ' \u2014 ' + date : '') + '\n\n' + content;
+  appShare("'Houmach", msg);
   if (e) e.stopPropagation();
   var date = document.getElementById('houmash-date').textContent || '';
   var text = document.getElementById('houmash-text');
