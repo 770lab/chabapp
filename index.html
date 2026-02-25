@@ -1637,7 +1637,8 @@ var _kchmInterval=setInterval(function(){
           c.innerHTML='<div style="text-align:center;color:var(--gray-3);padding:20px;font-size:13px;">Chargement…</div>';
         }
         loadKchmData().then(function(data){
-          if(data){renderKchm();renderKchmLaws();}
+          if(!data)return;
+          renderKchm();renderKchmLaws();
           setTimeout(function(){
             var first=document.getElementById('kchm-s-'+data.sections[0].id);
             if(first&&!first.classList.contains('open'))first.classList.add('open');
