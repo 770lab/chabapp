@@ -1,0 +1,323 @@
+{
+  "title": "Kiriat Chéma al Hamita",
+  "title_hebrew": "קריאת שמע על המיטה",
+  "title_french": "Prière du coucher",
+  "description": "Prière complète récitée avant de se coucher selon le rite Chabad (Noussakhe Ari).",
+  "source": "Siddur Tehilat Hachem - Kehot Publication Society",
+  "sections": [
+    {
+      "id": "ribono_chel_olam",
+      "order": 1,
+      "title": "Ribono Chèl Olam",
+      "title_hebrew": "רבונו של עולם",
+      "title_french": "Maître du Monde - Déclaration de pardon",
+      "omit_on": ["shabbat", "yom_tov"],
+      "instruction": "On déclare pardonner à quiconque nous a offensé. Ce paragraphe est omis le Chabbat et les jours de fête.",
+      "phonetic": "Ribono chèle 'olam haréni mo'héle lékhal-mi chéhikh'isse véhikenite oti o chékhata kénèguedi bène bégoufi bène bémamoni bène bikhevodi bène békhol achère li bène béonèsse bène bératsone bène béchoguéguè bène bémézide bène bédiboure bène béma'assé bène béguilegoule zé bène béguilegoule a'hère lékhol bène-adame vélo yéanèche choume adame béssibati. Yéhi ratsone miléfanékha Ado-naï élohaï vé-élohé avotaï chélo è'héta 'ode vélo è'hézore bahème vélo achouve 'ode léhakh'isékha vélo è'èssé harà bé'énékha ouma chékhatati léfanékha mé'hoke béra'hamékha harabbime aval lo 'al yédé yissourime vé'holayime ra'ime. Yihyou lératsone imré fi véhèguyone libi léfanékha Ado-naï tsouri végoali.",
+      "hebrew": "רִבּוֹנוֹ שֶׁל עוֹלָם הֲרֵינִי מוֹחֵל לְכָל מִי שֶׁהִכְעִיס וְהִקְנִיט אוֹתִי אוֹ שֶׁחָטָא כְּנֶגְדִּי בֵּין בְּגוּפִי בֵּין בְּמָמוֹנִי בֵּין בִּכְבוֹדִי בֵּין בְּכָל אֲשֶׁר לִי בֵּין בְּאוֹנֶס בֵּין בְּרָצוֹן בֵּין בְּשׁוֹגֵג בֵּין בְּמֵזִיד בֵּין בְּדִבּוּר בֵּין בְּמַעֲשֶׂה בֵּין בְּגִלְגּוּל זֶה בֵּין בְּגִלְגּוּל אַחֵר לְכָל בֶּן אָדָם וְלֹא יֵעָנֵשׁ שׁוּם אָדָם בְּסִבָּתִי. יְהִי רָצוֹן מִלְּפָנֶיךָ יְיָ אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי שֶׁלֹּא אֶחֱטָא עוֹד וְלֹא אֶחֱזוֹר בָּהֶם וְלֹא אָשׁוּב עוֹד לְהַכְעִיסְךָ וְלֹא אֶעֱשֶׂה הָרַע בְּעֵינֶיךָ וּמַה שֶׁחָטָאתִי לְפָנֶיךָ מְחוֹק בְּרַחֲמֶיךָ הָרַבִּים אֲבָל לֹא עַל יְדֵי יִסּוּרִים וְחֳלָיִם רָעִים. יִהְיוּ לְרָצוֹן אִמְרֵי פִי וְהֶגְיוֹן לִבִּי לְפָנֶיךָ יְיָ צוּרִי וְגוֹאֲלִי.",
+      "french": "Maître du monde, je pardonne à quiconque m'a irrité ou provoqué, ou a fauté envers moi, que ce soit contre mon corps, mes biens, mon honneur, ou tout ce qui m'appartient, par contrainte ou volontairement, par inadvertance ou intentionnellement, par la parole ou par l'action, dans cette incarnation ou dans une autre – à tout être humain. Que personne ne soit puni à cause de moi. Que ce soit Ta volonté, Éternel mon D.ieu et D.ieu de mes pères, que je ne pèche plus, que je ne retourne pas à mes fautes, que je ne recommence pas à T'irriter, et que je ne fasse plus le mal à Tes yeux. Ce que j'ai fauté devant Toi, efface-le par Ta grande miséricorde, mais pas par des souffrances ni de mauvaises maladies. Que les paroles de ma bouche et la méditation de mon cœur trouvent grâce devant Toi, Éternel, mon Rocher et mon Libérateur."
+    },
+    {
+      "id": "hashkivenou",
+      "order": 2,
+      "title": "Hachkivénou",
+      "title_hebrew": "הַשְׁכִּיבֵנוּ",
+      "title_french": "Notre Père, couche-nous en paix",
+      "instruction": "La fin de ce paragraphe (à partir de 'Véhaguèn') est omise le Chabbat et Yom Tov.",
+      "phonetic": "Hachkivénou avinou léchalom, véha'amidénou malquénou lé'hayim tovim ouléchalom. Vétakénou bé'étsa tova miléfanékha, véhochi'énou méhéra léma'ane chémékha, oufross 'alénou soukat chélomékha. Véhaguèn ba'adénou, véhassèr mé'alénou oyèv dévèr vé'hérèv véra'av vé-yagone. Véhassèr satane miléfanénou ouméa'harénou, ouvétsel kénafékha tastérénou. Ouchmor tsétéinou ouvoanénou lé'hayim tovim ouléchalom mé'ata vé'ad 'olam. Ki El chomérénou oumtsilénou ata.",
+      "hebrew": "הַשְׁכִּיבֵנוּ אָבִינוּ לְשָׁלוֹם, וְהַעֲמִידֵנוּ מַלְכֵּנוּ לְחַיִּים טוֹבִים וּלְשָׁלוֹם. וְתַקְּנֵנוּ בְּעֵצָה טוֹבָה מִלְּפָנֶיךָ, וְהוֹשִׁיעֵנוּ מְהֵרָה לְמַעַן שְׁמֶךָ, וּפְרוֹשׂ עָלֵינוּ סֻכַּת שְׁלוֹמֶךָ. וְהָגֵן בַּעֲדֵנוּ, וְהָסֵר מֵעָלֵינוּ אוֹיֵב דֶּבֶר וְחֶרֶב וְרָעָב וְיָגוֹן. וְהָסֵר שָׂטָן מִלְּפָנֵינוּ וּמֵאַחֲרֵינוּ, וּבְצֵל כְּנָפֶיךָ תַּסְתִּירֵנוּ. וּשְׁמוֹר צֵאתֵנוּ וּבוֹאֵנוּ לְחַיִּים טוֹבִים וּלְשָׁלוֹם מֵעַתָּה וְעַד עוֹלָם. כִּי אֵל שׁוֹמְרֵנוּ וּמַצִּילֵנוּ אָתָּה.",
+      "french": "Notre Père, couche-nous en paix ; notre Roi, relève-nous pour une bonne vie et la paix. Améliore-nous par Ton bon conseil, aide-nous promptement pour l'amour de Ton Nom, et étends sur nous l'abri de Ta paix. Protège-nous et éloigne de nous l'ennemi, la peste, l'épée, la famine et le chagrin. Éloigne l'adversaire de devant nous et de derrière nous, abrite-nous à l'ombre de Tes ailes, et garde notre sortie et notre entrée pour une bonne vie et la paix, dès maintenant et à jamais. Car Tu es D.ieu, notre Gardien et notre Libérateur."
+    },
+    {
+      "id": "shema",
+      "order": 3,
+      "title": "Chéma Israël",
+      "title_hebrew": "שְׁמַע יִשְׂרָאֵל",
+      "title_french": "Écoute Israël - Les trois paragraphes",
+      "instruction": "On récite le Chéma avec grande concentration, la main droite sur les yeux pour le premier verset.",
+      "paragraphs": [
+        {
+          "id": "shema_verset",
+          "title": "Premier verset",
+          "phonetic": "Chéma' Yisraèl Ado-naï Élo-hénou Ado-naï É'had.",
+          "hebrew": "שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד.",
+          "french": "Écoute Israël, l'Éternel est notre D.ieu, l'Éternel est Un.",
+          "instruction_after": "À voix basse :",
+          "response_phonetic": "Baroukh Chem Kévod Malkhouto lé'olam vaèd.",
+          "response_hebrew": "בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.",
+          "response_french": "Béni soit le Nom de la gloire de Sa royauté à tout jamais."
+        },
+        {
+          "id": "veahavta",
+          "title": "Véahavta - Premier paragraphe",
+          "source": "Dévarim 6:5-9",
+          "phonetic": "Véahavta ète Ado-naï Élo-hékha békhol lévavékha ouvkhol nafchékha ouvkhol méodékha. Véhayou hadévarim haélé achèr anokhi métsavékha hayom 'al lévavékha. Véchinanetam lévanékha védibarta bam béchivtékha bévétékha ouvlèkhtékha badérèkh ouvchokhbékha ouvkoumékha. Oukchartam léote 'al yadékha véhayou létotafote bène 'énékha. Oukhtavtam 'al mézouzote bétékha ouvich'arékha.",
+          "hebrew": "וְאָהַבְתָּ אֵת יְיָ אֱלֹהֶיךָ בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.",
+          "french": "Tu aimeras l'Éternel ton D.ieu de tout ton cœur, de toute ton âme, avec tout ton pouvoir. Que les paroles que Je t'adresse aujourd'hui soient sur ton cœur. Tu les enseigneras à tes fils, tu en parleras assis dans ta maison, en marchant sur le chemin, à ton coucher et à ton lever. Tu les attacheras en signe sur ta main et elles seront comme fronteaux entre tes yeux. Tu les écriras sur les poteaux de ta maison et à tes portes."
+        },
+        {
+          "id": "vehaya",
+          "title": "Véhaya - Deuxième paragraphe",
+          "source": "Dévarim 11:13-21",
+          "phonetic": "Véhaya im chamoa'e tichmé'ou èl mitsvotaï achèr Anokhi métsavé étkhèm hayom léahava èt Ado-naï Élo-hékhèm oul'ovdo békhol lévavkhèm ouvkhol nafchékhèm. Vénatati métar artsékhem bé'ito yoré oumalkoche véassafta déganékha vétirochekha véits-harékha. Vénatati 'éssèv béssadékha livhémétékha véakhalta véssava'eta. Hichamérou lakhèm pène yifté lévavkhèm véssartèm va'avadtèm élo-him a'hérim véhichta'havitèm lahèm. Vé'hara af Ado-naï bakhèm vé'atsar ète hachamaïm vélo yihyé matar véhaadama lo titène ète yévoula va-avadtèm méhéra mé'al haarèts hatova achère Ado-naï noténe lakhèm. Véssamtèm èt dévaraï élé 'al lévavkhèm vé'al nafchékhèm oukchartèm otam léote 'al yédékhèm véhayou létotafote bène 'énékhèm. Vélimadtèm otam ète bénékhèm lédabère bam béchivtékha bévétékha ouvlèkhtékha vadérèkh ouvchokhbékha ouvkoumékha. Oukhtavtam 'al mézouzote bétékha ouvicha'arékha. Léma'ane yirbou yémékhèm vimé vénékhèm 'al haadama achère nichba' Ado-naï laavotékhèm latète lahème kimé hachamaïm 'al haarèts.",
+          "hebrew": "וְהָיָה אִם שָׁמֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם לְאַהֲבָה אֶת יְיָ אֱלֹהֵיכֶם וּלְעָבְדוֹ בְּכָל לְבַבְכֶם וּבְכָל נַפְשְׁכֶם. וְנָתַתִּי מְטַר אַרְצְכֶם בְּעִתּוֹ יוֹרֶה וּמַלְקוֹשׁ וְאָסַפְתָּ דְגָנֶךָ וְתִירֹשְׁךָ וְיִצְהָרֶךָ. וְנָתַתִּי עֵשֶׂב בְּשָׂדְךָ לִבְהֶמְתֶּךָ וְאָכַלְתָּ וְשָׂבָעְתָּ. הִשָּׁמְרוּ לָכֶם פֶּן יִפְתֶּה לְבַבְכֶם וְסַרְתֶּם וַעֲבַדְתֶּם אֱלֹהִים אֲחֵרִים וְהִשְׁתַּחֲוִיתֶם לָהֶם. וְחָרָה אַף יְיָ בָּכֶם וְעָצַר אֶת הַשָּׁמַיִם וְלֹא יִהְיֶה מָטָר וְהָאֲדָמָה לֹא תִתֵּן אֶת יְבוּלָהּ וַאֲבַדְתֶּם מְהֵרָה מֵעַל הָאָרֶץ הַטֹּבָה אֲשֶׁר יְיָ נֹתֵן לָכֶם. וְשַׂמְתֶּם אֶת דְּבָרַי אֵלֶּה עַל לְבַבְכֶם וְעַל נַפְשְׁכֶם וּקְשַׁרְתֶּם אֹתָם לְאוֹת עַל יֶדְכֶם וְהָיוּ לְטוֹטָפֹת בֵּין עֵינֵיכֶם. וְלִמַּדְתֶּם אֹתָם אֶת בְּנֵיכֶם לְדַבֵּר בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ. וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ. לְמַעַן יִרְבּוּ יְמֵיכֶם וִימֵי בְנֵיכֶם עַל הָאֲדָמָה אֲשֶׁר נִשְׁבַּע יְיָ לַאֲבֹתֵיכֶם לָתֵת לָהֶם כִּימֵי הַשָּׁמַיִם עַל הָאָרֶץ.",
+          "french": "Et ce sera, si vous écoutez bien Mes commandements que Je vous ordonne aujourd'hui, d'aimer l'Éternel votre D.ieu et Le servir de tout votre cœur et de toute votre âme. Je donnerai la pluie de votre terre en son temps, averse et ondée, et tu récolteras ton blé, ton vin et ton huile. Je donnerai l'herbe dans ton champ pour ton bétail, tu mangeras et tu seras rassasié. Gardez-vous de laisser séduire votre cœur, de vous écarter et de servir d'autres dieux, de vous prosterner devant eux. La colère de l'Éternel s'enflammerait contre vous. Il fermerait les cieux, il n'y aurait plus de pluie et la terre ne donnerait plus sa récolte, et vous disparaîtriez bientôt du bon pays que l'Éternel vous donne. Mettez ces paroles dans votre cœur et dans votre âme, attachez-les en signe sur votre main et qu'elles soient en fronteau entre vos yeux. Vous les enseignerez à vos fils, assis dans votre maison, en marchant sur le chemin, en se couchant et en se levant. Vous les écrirez sur les poteaux de votre maison et sur vos portes. Afin que soient multipliés vos jours et les jours de vos enfants sur la terre que l'Éternel a juré à vos pères de leur donner, comme les jours du ciel sur la terre."
+        },
+        {
+          "id": "vayomer",
+          "title": "Vayomèr - Troisième paragraphe",
+          "source": "Bamidbar 15:37-41",
+          "phonetic": "Vayomèr Ado-naï èl Moché lémor. Dabèr èl béné Yisraèl véamarta aléhèm vé'assou lahèm tsitsit 'al kanfé vigdéhèm lédorotam vénaténou 'al tsitsit hakanaf pétil tékhélète. Véhaya lakhèm létsitsit ouritèm oto ouzkhartem ète kol mitsvote Ado-naï va'assitèm otam vélo tatourou a'haré lévavkhèm véa'haré 'énékhèm achère atèm zonim a'haréhèm. Léma'ane tizkérou va'assitèm ète kol mitsvotaï vihyitèm kédochim lélo-hékhèm. Ani Ado-naï Élo-hékhèm achère hotséti étkhèm mé-érèts Mitsraïm lihyote lakhèm lélo-him ani Ado-naï Élo-hékhèm. Émèt.",
+          "hebrew": "וַיֹּאמֶר יְיָ אֶל מֹשֶׁה לֵּאמֹר. דַּבֵּר אֶל בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת. וְהָיָה לָכֶם לְצִיצִת וּרְאִיתֶם אֹתוֹ וּזְכַרְתֶּם אֶת כָּל מִצְוֹת יְיָ וַעֲשִׂיתֶם אֹתָם וְלֹא תָתוּרוּ אַחֲרֵי לְבַבְכֶם וְאַחֲרֵי עֵינֵיכֶם אֲשֶׁר אַתֶּם זֹנִים אַחֲרֵיהֶם. לְמַעַן תִּזְכְּרוּ וַעֲשִׂיתֶם אֶת כָּל מִצְוֹתָי וִהְיִיתֶם קְדֹשִׁים לֵאלֹהֵיכֶם. אֲנִי יְיָ אֱלֹהֵיכֶם אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם לִהְיוֹת לָכֶם לֵאלֹהִים אֲנִי יְיָ אֱלֹהֵיכֶם. אֱמֶת.",
+          "french": "L'Éternel parla à Moïse en disant : Parle aux enfants d'Israël et dis-leur de se faire des franges aux coins de leurs vêtements, pour leurs générations, et de mettre sur la frange du coin un fil d'azur. Ce sera pour vous une frange, vous la verrez et vous vous souviendrez de tous les commandements de l'Éternel, et vous ne vous égarerez pas après votre cœur et vos yeux. Afin que vous vous souveniez et accomplissiez tous Mes commandements et soyez saints pour votre D.ieu. Je suis l'Éternel votre D.ieu qui vous ai fait sortir du pays d'Égypte pour être votre D.ieu, Je suis l'Éternel votre D.ieu. Vrai."
+        }
+      ]
+    },
+    {
+      "id": "yalezu_hassidim",
+      "order": 4,
+      "title": "Yalézou 'Hassidim",
+      "title_hebrew": "יַעְלְזוּ חֲסִידִים",
+      "source": "Tehilim 149:5-6",
+      "phonetic": "Yalézou 'hassidim békhavod, yéranénou 'al michkévotam. Romémot El bigronam, vé'hérèv pifiyot béyadam.",
+      "hebrew": "יַעְלְזוּ חֲסִידִים בְּכָבוֹד, יְרַנְּנוּ עַל מִשְׁכְּבוֹתָם. רוֹמְמוֹת אֵל בִּגְרוֹנָם, וְחֶרֶב פִּיפִיּוֹת בְּיָדָם.",
+      "french": "Les fidèles exulteront dans la gloire, ils chanteront sur leurs couches. L'exaltation de D.ieu sera dans leur gorge, et une épée à double tranchant dans leur main."
+    },
+    {
+      "id": "hineh_mitato",
+      "order": 5,
+      "title": "Hiné Mitato Chèl Chlomo",
+      "title_hebrew": "הִנֵּה מִטָּתוֹ שֶׁלִּשְׁלֹמֹה",
+      "source": "Chir Hachirim 3:7-8",
+      "repeat": 3,
+      "phonetic": "Hiné mitato chélichlomo chichim guiborim saviv la, miguiboré Yisraèl. Koulam a'houzé 'hérèv mélomédé mil'hama, ich 'harbo 'al yérekho mipa'had balélot.",
+      "hebrew": "הִנֵּה מִטָּתוֹ שֶׁלִּשְׁלֹמֹה שִׁשִּׁים גִּבֹּרִים סָבִיב לָהּ, מִגִּבֹּרֵי יִשְׂרָאֵל. כֻּלָּם אֲחֻזֵי חֶרֶב מְלֻמְּדֵי מִלְחָמָה, אִישׁ חַרְבּוֹ עַל יְרֵכוֹ מִפַּחַד בַּלֵּילוֹת.",
+      "french": "Voici le lit de Salomon, soixante guerriers l'entourent, parmi les vaillants d'Israël. Tous sont armés d'épées, experts en guerre, chacun son épée sur sa cuisse, contre la terreur de la nuit."
+    },
+    {
+      "id": "birkat_kohanim",
+      "order": 6,
+      "title": "Yévarékhékha - Bénédiction des Cohanim",
+      "title_hebrew": "יְבָרֶכְךָ",
+      "source": "Bamidbar 6:24-26",
+      "repeat": 3,
+      "phonetic": "Yévarékhékha Ado-naï véyichmérékha. Yaèr Ado-naï panaïv éléikha vi'hounéka. Yissa Ado-naï panaïv éléikha véyassème lékha chalom.",
+      "hebrew": "יְבָרֶכְךָ יְיָ וְיִשְׁמְרֶךָ. יָאֵר יְיָ פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ. יִשָּׂא יְיָ פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם.",
+      "french": "Que l'Éternel te bénisse et te protège. Que l'Éternel fasse briller Sa face vers toi et te gratifie. Que l'Éternel tourne Sa face vers toi et t'accorde la paix."
+    },
+    {
+      "id": "yoshev_beseter",
+      "order": 7,
+      "title": "Yoshèv Bésétèr - Psaume 91",
+      "title_hebrew": "יוֹשֵׁב בְּסֵתֶר עֶלְיוֹן",
+      "source": "Tehilim 91:1-9",
+      "phonetic": "Yoshèv bésétèr 'élyonè bétsel Cha-daï yitlonane. Omar laAdo-naï ma'hassi oumétsouda-ti Élo-haï èvta'h bo. Ki hou yatsilékha mipa'h yakouche midévèr havote. Bé-èvrato yassèkh lakh vétakh'at kénafav tè'hssé, tsina vésso'héra amito. Lo tira mipa'had layla, mé'héts ya'ouf yomam. Midévèr baofèl yahalokh, mikétèv yachoude tsohoraïm. Yipol mitsidékha élèf ourvava miyminékha, éléikha lo yiguache. Rak bé'énékha tabit, véchiloumat réchaïm tiré. Ki ata Ado-naï ma'hassi, 'élyonè samta mé'onékha.",
+      "hebrew": "יוֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן. אֹמַר לַייָ מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח בּוֹ. כִּי הוּא יַצִּילְךָ מִפַּח יָקוּשׁ מִדֶּבֶר הַוּוֹת. בְּאֶבְרָתוֹ יָסֶךְ לָךְ וְתַחַת כְּנָפָיו תֶּחְסֶה, צִנָּה וְסֹחֵרָה אֲמִתּוֹ. לֹא תִירָא מִפַּחַד לָיְלָה, מֵחֵץ יָעוּף יוֹמָם. מִדֶּבֶר בָּאֹפֶל יַהֲלֹךְ, מִקֶּטֶב יָשׁוּד צָהֳרָיִם. יִפֹּל מִצִּדְּךָ אֶלֶף וּרְבָבָה מִימִינֶךָ, אֵלֶיךָ לֹא יִגָּשׁ. רַק בְּעֵינֶיךָ תַבִּיט, וְשִׁלֻּמַת רְשָׁעִים תִּרְאֶה. כִּי אַתָּה יְיָ מַחְסִי, עֶלְיוֹן שַׂמְתָּ מְעוֹנֶךָ.",
+      "french": "Celui qui demeure sous l'abri du Très-Haut repose à l'ombre du Tout-Puissant. Je dis de l'Éternel : Il est mon refuge et ma forteresse, mon D.ieu en qui je me confie. Car c'est Lui qui te délivrera du filet de l'oiseleur, de la peste destructrice. Il te couvrira de Ses plumes, et tu trouveras refuge sous Ses ailes ; Sa vérité est bouclier et armure. Tu ne craindras ni la terreur de la nuit, ni la flèche qui vole le jour, ni la peste qui rôde dans l'obscurité, ni la destruction qui ravage en plein midi. Mille tomberont à ton côté et dix mille à ta droite, mais toi, rien ne t'atteindra. Tu n'auras qu'à regarder de tes yeux, et tu verras la rétribution des méchants. Car toi, l'Éternel est ton refuge, le Très-Haut, tu en as fait ta demeure."
+    },
+    {
+      "id": "viduy",
+      "order": 8,
+      "title": "Vidouï - Confession",
+      "title_hebrew": "וידוי",
+      "title_french": "Confession des fautes",
+      "omit_on": ["shabbat", "yom_tov", "no_tachanun_days"],
+      "instruction": "Se dit debout. Omis le Chabbat, Yom Tov et les jours où l'on ne dit pas le Ta'hanoun.",
+      "phonetic": "Élo-hénou vé-élohé avotéinou, tavo léfanékha téfilatéinou, vé-al tit'alèm mité'hinatéinou, ché-ène anou 'azé fanim oukché 'oref lomar léfanékha Ado-naï Élo-hénou vé-élohé avotéinou tsadikim ana'hnou vélo 'hatanoú, aval ana'hnou va-avotéinou 'hatanou. Achamnou, bagadnou, gazalnou, dibarnou dofi. Hé'évinou, véhircha'nou, zadnou, 'hamasnou, tafalnou chèkèr. Ya'atsnou ra', kizavnou, latsnou, maradnou, niatsnou, sararnou, 'avinou, pacha'nou, tsararnou, kichinou 'oref. Racha'nou, chi'hatnou, ti'avnou, ta'inou, tit'anou.",
+      "hebrew": "אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, תָּבוֹא לְפָנֶיךָ תְּפִלָּתֵנוּ, וְאַל תִּתְעַלַּם מִתְּחִנָּתֵנוּ, שֶׁאֵין אָנוּ עַזֵּי פָנִים וּקְשֵׁי עֹרֶף לוֹמַר לְפָנֶיךָ יְיָ אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ צַדִּיקִים אֲנַחְנוּ וְלֹא חָטָאנוּ, אֲבָל אֲנַחְנוּ וַאֲבוֹתֵינוּ חָטָאנוּ. אָשַׁמְנוּ, בָּגַדְנוּ, גָּזַלְנוּ, דִּבַּרְנוּ דֹפִי. הֶעֱוִינוּ, וְהִרְשַׁעְנוּ, זַדְנוּ, חָמַסְנוּ, טָפַלְנוּ שֶׁקֶר. יָעַצְנוּ רָע, כִּזַּבְנוּ, לַצְנוּ, מָרַדְנוּ, נִאַצְנוּ, סָרַרְנוּ, עָוִינוּ, פָּשַׁעְנוּ, צָרַרְנוּ, קִשִּׁינוּ עֹרֶף. רָשַׁעְנוּ, שִׁחַתְנוּ, תִּעַבְנוּ, תָּעִינוּ, תִּתְעָנוּ.",
+      "french": "Notre D.ieu et D.ieu de nos pères, que notre prière vienne devant Toi, et ne Te détourne pas de notre supplication, car nous ne sommes pas assez effrontés ni obstinés pour dire devant Toi que nous sommes justes et que nous n'avons pas fauté. En vérité, nous et nos pères avons fauté. Nous avons été coupables, nous avons trahi, nous avons volé, nous avons calomnié. Nous avons dévié, nous avons agi méchamment, nous avons agi avec malveillance, nous avons été violents, nous avons forgé le mensonge. Nous avons donné de mauvais conseils, nous avons menti, nous avons moqué, nous nous sommes rebellés, nous avons provoqué, nous avons désobéi, nous avons fauté, nous avons transgressé, nous avons opprimé, nous avons été obstinés. Nous avons agi méchamment, nous avons corrompu, nous avons été abominables, nous nous sommes égarés, nous avons induit en erreur."
+    },
+    {
+      "id": "ana_bekhoakh",
+      "order": 9,
+      "title": "Ana Békhoakh",
+      "title_hebrew": "אָנָּא בְּכֹחַ",
+      "title_french": "Nous T'implorons",
+      "phonetic": "Ana békhoakh guédoulat yéminékha tatir tseroura. Kabèl rinat 'amékha, saguévénou tahérénou nora. Na guibor dorché yi'houdékha kévavat chomrèm. Barkhèm taharèm ra'hamé tsidkatékha tamid gomlèm. 'Hassine kadoch bérov touvékha nahèl 'adatékha. Ya'hid gué-é lé'amékha péné zokhrè kédouchatékha. Chav'atéinou kabèl ouchma' tsa'akatéinou yodéa' ta'aloumot. Baroukh chèm kévod malkhouto lé'olam vaèd.",
+      "hebrew": "אָנָּא בְּכֹחַ גְּדֻלַּת יְמִינְךָ תַּתִּיר צְרוּרָה. קַבֵּל רִנַּת עַמְּךָ, שַׂגְּבֵנוּ טַהֲרֵנוּ נוֹרָא. נָא גִבּוֹר דּוֹרְשֵׁי יִחוּדְךָ כְּבָבַת שָׁמְרֵם. בָּרְכֵם טַהֲרֵם רַחֲמֵי צִדְקָתְךָ תָּמִיד גָּמְלֵם. חֲסִין קָדוֹשׁ בְּרוֹב טוּבְךָ נַהֵל עֲדָתֶךָ. יָחִיד גֵּאֶה לְעַמְּךָ פְּנֵה זוֹכְרֵי קְדֻשָּׁתֶךָ. שַׁוְעָתֵנוּ קַבֵּל וּשְׁמַע צַעֲקָתֵנוּ יוֹדֵעַ תַּעֲלוּמוֹת. בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.",
+      "french": "Nous T'implorons, par la grande puissance de Ta main droite, libère le captif. Accepte la prière de Ton peuple ; renforce-nous, purifie-nous, Ô Redoutable. Puissant, nous T'en prions, garde comme la prunelle de l'œil ceux qui recherchent Ton unité. Bénis-les, purifie-les ; accorde-leur toujours Ta miséricorde et Ta justice. Puissant et Saint, dans Ton immense bonté, guide Ta communauté. Unique et Exalté, tourne-Toi vers Ton peuple qui se souvient de Ta sainteté. Accepte notre supplication et entends notre cri, Toi qui connais les pensées secrètes. Béni soit le Nom de la gloire de Sa royauté à tout jamais."
+    },
+    {
+      "id": "lamnatseakh",
+      "order": 10,
+      "title": "Lamnatséa'h - Psaume 51",
+      "title_hebrew": "לַמְנַצֵּחַ מִזְמוֹר לְדָוִד",
+      "source": "Tehilim 51",
+      "omit_on": ["shabbat", "yom_tov"],
+      "instruction": "Ce psaume est omis le Chabbat et les jours de fête.",
+      "phonetic": "Lamnatséa'h mizmor lédavid. Bévo élav natane hanavi kaachèr ba èl bat chéva'. 'Honéni Élo-him kékhassédékha, kérov ra'hamékha mé'hé fécha'aï. Hérèv kabéssèni mé'avoni, oumékhatatiaéni tahéréni. Ki fécha'aï ani éda', vé'hatatiaéni nèguedi tamid. Lékha lévadékha 'hatati, véhara' bé'énékha 'assiti, léma'ane titsdak bédavrékha, tizkè béchoftékha. Hène bé'avone 'holalti, ouvé'hète yé'hématni imi. Hène émète 'hafatsta batou'hot, ouvéssatoum 'hokhma todié'ni. Té'haténi vé-ézov vé-èthar, tékhabéssèni oumichélèg albin. Tachmi'éni sassone véssim'ha, taguélna 'atsamot dikita. Hastèr panékha mé'hataïe, vékhol 'avonotaï mé'hé. Lèv tahor béra li Élo-him, vérou'a'h nakhone 'hadèch békiirbi. Al tachlikhéni miléfanékha, vérou'a'h kodchékha al tika'h miméni. Hachiva li ssessone yich'ékha, vérou'a'h nédiva tismkhéni. Alaméda foch'im dérakékha, vé'hataïm éléikha yachouvou. Hatsiléni midamim Élo-him Élo-hé téchouati, téranèn léchoni tsidkatékha. Ado-naï sefataï tifta'h, oufi yaguid téhilatékha. Ki lo ta'hpots zéva'h vé-éténa, 'ola lo tirtsa. Ziv'hé Élo-him rou'a'h nichbara, lèv nichbar vénidké Élo-him lo tivzé. Hétiva virtsnoékha ète Tsione, tivné 'homot Yérouchalaim. Az ta'hpots ziv'hé tsédèk 'ola vékalil, az ya'alou 'al mizbé'hakha farim.",
+      "hebrew": "לַמְנַצֵּחַ מִזְמוֹר לְדָוִד. בְּבוֹא אֵלָיו נָתָן הַנָּבִיא כַּאֲשֶׁר בָּא אֶל בַּת שָׁבַע. חָנֵּנִי אֱלֹהִים כְּחַסְדֶּךָ, כְּרֹב רַחֲמֶיךָ מְחֵה פְשָׁעָי. הֶרֶב כַּבְּסֵנִי מֵעֲוֹנִי, וּמֵחַטָּאתִי טַהֲרֵנִי...",
+      "french": "Pour le chef des chantres. Psaume de David, quand Nathan le prophète vint à lui après qu'il fut allé vers Bat Chéva. Fais-moi grâce, Ô D.ieu, selon Ta bonté ; selon Ta grande miséricorde, efface mes transgressions. Lave-moi abondamment de mon iniquité, et purifie-moi de mon péché..."
+    },
+    {
+      "id": "shir_hamaalot_121",
+      "order": 11,
+      "title": "Chir Lama'alot - Psaume 121",
+      "title_hebrew": "שִׁיר לַמַּעֲלוֹת",
+      "source": "Tehilim 121",
+      "phonetic": "Chir lama'alot, éssa 'énaï èl héharim méaïne yavo 'ézri. 'Ézri mé'im Ado-naï 'ossé chamaïm vaérèts. Al yitène lamote raglékha, al yanoume chomrékha. Hiné lo yanoume vélo yichane chomèr Yisraèl. Ado-naï chomrékha, Ado-naï tsilékha 'al yad yéminékha. Yomam hachémèche lo yakèka, véyaréa'h balaïla. Ado-naï yichmorékha mikol ra', yichmor ète nafchékha. Ado-naï yichmor tsétékha ouvoékha mé'ata vé'ad 'olam.",
+      "hebrew": "שִׁיר לַמַּעֲלוֹת, אֶשָּׂא עֵינַי אֶל הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי. עֶזְרִי מֵעִם יְיָ עֹשֵׂה שָׁמַיִם וָאָרֶץ. אַל יִתֵּן לַמּוֹט רַגְלֶךָ, אַל יָנוּם שׁוֹמְרֶךָ. הִנֵּה לֹא יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל. יְיָ שׁוֹמְרֶךָ, יְיָ צִלְּךָ עַל יַד יְמִינֶךָ. יוֹמָם הַשֶּׁמֶשׁ לֹא יַכֶּכָּה, וְיָרֵחַ בַּלָּיְלָה. יְיָ יִשְׁמָרְךָ מִכָּל רָע, יִשְׁמוֹר אֶת נַפְשֶׁךָ. יְיָ יִשְׁמוֹר צֵאתְךָ וּבוֹאֶךָ מֵעַתָּה וְעַד עוֹלָם.",
+      "french": "Cantique des degrés. Je lève mes yeux vers les montagnes : d'où viendra mon secours ? Mon secours vient de l'Éternel, qui a fait le ciel et la terre. Il ne permettra pas que ton pied chancelle ; ton gardien ne sommeille pas. Non, il ne sommeille ni ne dort, le Gardien d'Israël. L'Éternel est ton gardien, l'Éternel est ton ombre protectrice à ta main droite. Le soleil ne te frappera pas le jour, ni la lune la nuit. L'Éternel te gardera de tout mal, Il gardera ton âme. L'Éternel gardera ton départ et ton arrivée, dès maintenant et à jamais."
+    },
+    {
+      "id": "gad_gedoud",
+      "order": 12,
+      "title": "Gad Guédoud",
+      "title_hebrew": "גָּד גְּדוּד",
+      "source": "Béréchit 49:19",
+      "repeat": 3,
+      "instruction": "Se dit 3 fois, puis 3 fois à l'envers.",
+      "phonetic": "Gad guédoud yégoudénou véhou yagoud 'akèv.",
+      "hebrew": "גָּד גְּדוּד יְגוּדֶנּוּ וְהוּא יָגֻד עָקֵב.",
+      "french": "Gad sera attaqué par des troupes, mais lui les refoulera sur leurs talons."
+    },
+    {
+      "id": "im_tishkav",
+      "order": 13,
+      "title": "Im Tichkav",
+      "title_hebrew": "אִם תִּשְׁכַּב",
+      "source": "Michlé (Proverbes) 3:24",
+      "repeat": 3,
+      "phonetic": "Im tichkav lo tif'had véchakhavta vé'arva chénatékha.",
+      "hebrew": "אִם תִּשְׁכַּב לֹא תִפְחָד וְשָׁכַבְתָּ וְעָרְבָה שְׁנָתֶךָ.",
+      "french": "Quand tu te coucheras, tu n'auras pas peur ; tu te coucheras, et ton sommeil sera doux."
+    },
+    {
+      "id": "batuv_elin",
+      "order": 14,
+      "title": "Bétov Éline",
+      "repeat": 3,
+      "phonetic": "Bétov éline, béra'hamim akitsa.",
+      "hebrew": "בְּטוֹב אֵלִינָה, בְּרַחֲמִים אָקִיצָה.",
+      "french": "Que je m'endorme bien ; que je me réveille avec miséricorde."
+    },
+    {
+      "id": "lishouatekha",
+      "order": 15,
+      "title": "Lichouatékha Kiviti",
+      "source": "Béréchit 49:18",
+      "repeat": 3,
+      "phonetic": "Lichouatékha kiviti Ado-naï.",
+      "hebrew": "לִישׁוּעָתְךָ קִוִּיתִי יְיָ.",
+      "french": "J'espère en Ton salut, Éternel."
+    },
+    {
+      "id": "ata_seter",
+      "order": 16,
+      "title": "Ata Sétèr Li",
+      "source": "Tehilim 32:7",
+      "repeat": 3,
+      "phonetic": "Ata sétèr li mitssar titséréni, rané falète tésovévéni séla.",
+      "hebrew": "אַתָּה סֵתֶר לִי מִצַּר תִּצְּרֵנִי, רָנֵּי פַלֵּט תְּסוֹבְבֵנִי סֶלָה.",
+      "french": "Tu es un refuge pour moi ; protège-moi de la détresse ; entoure-moi de chants de délivrance, pour toujours."
+    },
+    {
+      "id": "todieni",
+      "order": 17,
+      "title": "Todié'ni Ora'h 'Hayim",
+      "source": "Tehilim 16:11",
+      "repeat": 3,
+      "phonetic": "Todié'ni ora'h 'hayim, sova' sma'hot ète panékha, né'imot biminékha nétsa'h.",
+      "hebrew": "תּוֹדִיעֵנִי אֹרַח חַיִּים, שֹׂבַע שְׂמָחוֹת אֶת פָּנֶיךָ, נְעִמוֹת בִּימִינְךָ נֶצַח.",
+      "french": "Tu me feras connaître le chemin de la vie ; la plénitude des joies est en Ta présence, les délices sont dans Ta droite pour toujours."
+    },
+    {
+      "id": "ata_takum",
+      "order": 18,
+      "title": "Ata Takoum Téra'hèm Tsione",
+      "title_hebrew": "אַתָּה תָקוּם תְּרַחֵם צִיּוֹן",
+      "source": "Tehilim 102:14",
+      "phonetic": "Ata takoum téra'hèm Tsione, ki 'ète lé'hénana ki va mo'èd.",
+      "hebrew": "אַתָּה תָקוּם תְּרַחֵם צִיּוֹן, כִּי עֵת לְחֶנְנָהּ כִּי בָא מוֹעֵד.",
+      "french": "Lève-Toi et aie pitié de Sion, car il est temps de lui faire grâce, car le moment fixé est venu."
+    },
+    {
+      "id": "kedna",
+      "order": 19,
+      "title": "Kédna - En araméen",
+      "title_hebrew": "כִּדְנָה",
+      "source": "Yirméya (Jérémie) 10:11",
+      "instruction": "Ce verset est en araméen.",
+      "phonetic": "Kidna tèmroun léhome : élahaya di chémaya vé-ar'a la 'avadou, yévadou mé-ar'a oumine tè'hote chémaya élè.",
+      "hebrew": "כִּדְנָה תֵּאמְרוּן לְהוֹם: אֱלָהַיָּא דִי שְׁמַיָּא וְאַרְקָא לָא עֲבַדוּ, יֵאבַדוּ מֵאַרְעָא וּמִן תְּחוֹת שְׁמַיָּא אֵלֶּה.",
+      "french": "Ainsi leur direz-vous : Les dieux qui n'ont fait ni les cieux ni la terre périront de la terre et de dessous ces cieux."
+    },
+    {
+      "id": "beyadekha",
+      "order": 20,
+      "title": "Béyadékha Afkid Rou'hi",
+      "title_hebrew": "בְּיָדְךָ אַפְקִיד רוּחִי",
+      "source": "Tehilim 31:6",
+      "phonetic": "Béyadékha afkid rou'hi, padita oti Ado-naï El émèt.",
+      "hebrew": "בְּיָדְךָ אַפְקִיד רוּחִי, פָּדִיתָה אוֹתִי יְיָ אֵל אֱמֶת.",
+      "french": "Entre Tes mains je confie mon esprit ; Tu m'as libéré, Éternel, D.ieu de vérité."
+    },
+    {
+      "id": "ribon_haolamim",
+      "order": 21,
+      "title": "Ribone Ha'olamim",
+      "title_hebrew": "רִבּוֹן הָעוֹלָמִים",
+      "title_french": "Maître des mondes",
+      "phonetic": "Ribone ha'olamim, ata barata 'olamékha birtsnonékha, kaasher 'ala bémakhchavtékha hakédouma, ouvérata hachamaïm vékhol tsva'am véha'arèts vékhol achèr 'aléha, véadam 'aléha, ouvérata vénapha'hta bé-apo nichmat 'hayim léma'ane yakir goudlékha vétif'artékha, véata mé'hayé ète koulam, ki ata néchama lékhol hanéchamot vé'hayout lékhol 'haï. Véata Ado-naï Élo-haï — hiné afkid nafchi véroul'hi vénichmatii béyadékha hathora véhané-émana, véata Ado-naï Élo-haï — téta'haréme mikol toum'a vé'holi ché-nidbak bahèm 'al yédé ma'assaï haraïm, véta'hazirème li béna'hat ouvchèlva ouvèta'h... ki ata choméa' téfilat 'amékha Yisraèl béra'hamim. Baroukh choméa' téfila.",
+      "hebrew": "רִבּוֹן הָעוֹלָמִים, אַתָּה בָרָאתָ עוֹלָמְךָ בִּרְצוֹנְךָ כַּאֲשֶׁר עָלָה בְּמַחֲשַׁבְתְּךָ הַקְּדוּמָה, וּבָרָאתָ הַשָּׁמַיִם וְכָל צְבָאָם וְהָאָרֶץ וְכָל אֲשֶׁר עָלֶיהָ, וְאָדָם עָלֶיהָ, וּבָרָאתָ וְנָפַחְתָּ בְּאַפּוֹ נִשְׁמַת חַיִּים לְמַעַן יַכִּיר גָּדְלְךָ וְתִפְאַרְתְּךָ, וְאַתָּה מְחַיֶּה אֶת כֻּלָּם, כִּי אַתָּה נְשָׁמָה לְכָל הַנְּשָׁמוֹת וְחַיּוּת לְכָל חָי. וְאַתָּה יְיָ אֱלֹהַי — הִנֵּה אַפְקִיד נַפְשִׁי וְרוּחִי וְנִשְׁמָתִי בְּיָדְךָ הַטָּהוֹרָה וְהַנֶּאֱמָנָה, וְאַתָּה יְיָ אֱלֹהַי — תְּטַהֲרֵם מִכָּל טֻמְאָה וְחֹלִי שֶׁנִּדְבַּק בָּהֶם עַל יְדֵי מַעֲשַׂי הָרָעִים, וְתַחֲזִירֵם לִי בְּנַחַת וּבְשֶׁלְוָה וּבֶטַח... כִּי אַתָּה שׁוֹמֵעַ תְּפִלַּת עַמְּךָ יִשְׂרָאֵל בְּרַחֲמִים. בָּרוּךְ שׁוֹמֵעַ תְּפִלָּה.",
+      "french": "Maître des mondes, Tu as créé Ton monde par Ta volonté, tel qu'il s'est élevé dans Ta pensée primordiale, et Tu as créé les cieux et toutes leurs armées, et la terre et tout ce qui s'y trouve. Tu as créé l'homme et soufflé dans ses narines une âme vivante, afin qu'il reconnaisse Ta grandeur et Ta gloire. Tu donnes la vie à tous, car Tu es l'Âme de toutes les âmes et la Vie de tout ce qui vit. Et Toi, Éternel mon D.ieu, je confie mon néfèch, mon roua'h et ma néchama entre Tes mains pures et fidèles ; et Toi, Éternel mon D.ieu, purifie-les de toute impureté et maladie qui s'est attachée à elles par mes mauvaises actions, et rends-les moi dans le calme, la quiétude et la sécurité... Car Tu entends la prière de Ton peuple Israël avec miséricorde. Béni soit Celui qui entend la prière."
+    },
+    {
+      "id": "oura_kevodi",
+      "order": 22,
+      "title": "'Oura Khévodi",
+      "source": "Tehilim 57:9",
+      "phonetic": "'Oura khévodi, 'oura hanévèl vékinor, a'ira cha'har.",
+      "hebrew": "עוּרָה כְבוֹדִי, עוּרָה הַנֵּבֶל וְכִנּוֹר, אָעִירָה שָׁחַר.",
+      "french": "Éveille-toi, mon âme ! Réveillez-vous, harpe et lyre ! Je vais réveiller l'aurore."
+    },
+    {
+      "id": "torah_tsiva",
+      "order": 23,
+      "title": "Torah Tsiva",
+      "source": "Dévarim 33:4",
+      "phonetic": "Torah tsiva lanou Moché, morasha kéhilat Ya'akov.",
+      "hebrew": "תּוֹרָה צִוָּה לָנוּ מֹשֶׁה, מוֹרָשָׁה קְהִלַּת יַעֲקֹב.",
+      "french": "La Torah que Moïse nous a ordonnée est l'héritage de la communauté de Jacob."
+    },
+    {
+      "id": "hamapil",
+      "order": 24,
+      "title": "Hamapil - Bénédiction du sommeil",
+      "title_hebrew": "הַמַּפִּיל",
+      "title_french": "Bénédiction du coucher",
+      "instruction": "Se récite juste avant de s'endormir. On ne doit plus manger, boire ni parler après cette bénédiction.",
+      "note_hatsot": "Avant 'Hatsot, on prononce le Nom d'Hachem. Après 'Hatsot, certains l'omettent.",
+      "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam hamapil 'hévlé chéna 'al 'énaï outénouma 'al 'af'apaï ouméir lé-ichone bat 'aïne. Vihi ratsone miléfanékha Ado-naï Élo-haï vé-élohé avotaï chétachkivéni léchalom véta'amidéni lé'hayim tovim ouléchalom. Vé-al yévahalouní ra'yonaï va'halomot raïm véhirhourim raïm outéhé mitati chéléma léfanékha. Véha'ère 'énaï pène ichane hamavète. Baroukh Ata Ado-naï haméir la'olam koulo bikhvodo.",
+      "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם הַמַּפִּיל חֶבְלֵי שֵׁנָה עַל עֵינָי וּתְנוּמָה עַל עַפְעַפָּי וּמֵאִיר לְאִישׁוֹן בַּת עָיִן. וִיהִי רָצוֹן מִלְּפָנֶיךָ יְיָ אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי שֶׁתַּשְׁכִּיבֵנִי לְשָׁלוֹם וְתַעֲמִידֵנִי לְחַיִּים טוֹבִים וּלְשָׁלוֹם. וְאַל יְבַהֲלוּנִי רַעְיוֹנַי וַחֲלוֹמוֹת רָעִים וְהִרְהוּרִים רָעִים וּתְהֵא מִטָּתִי שְׁלֵמָה לְפָנֶיךָ. וְהָאֵר עֵינַי פֶּן אִישַׁן הַמָּוֶת. בָּרוּךְ אַתָּה יְיָ הַמֵּאִיר לָעוֹלָם כֻּלּוֹ בִּכְבוֹדוֹ.",
+      "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui fait tomber les liens du sommeil sur mes yeux et l'assoupissement sur mes paupières, et qui éclaire la pupille de l'œil. Que ce soit Ta volonté, Éternel mon D.ieu et D.ieu de mes pères, de me coucher en paix et de me relever pour une bonne vie et la paix. Que mes pensées ne me troublent pas, ni les mauvais rêves, ni les mauvaises réflexions, et que ma couche soit intègre devant Toi. Éclaire mes yeux de peur que je ne m'endorme de la mort. Béni sois-Tu, Éternel, qui éclaire le monde entier de Sa gloire."
+    }
+  ],
+  "laws": {
+    "when": "Chaque soir avant de se coucher, idéalement avant 'Hatsot (minuit halakhique).",
+    "position": "L'usage Chabad est de réciter debout (sauf Hamapil, allongé). Certains récitent allongé sur le côté.",
+    "shabbat_yom_tov": "On omet : Ribono Chèl Olam (pardon), Vidouï/Confession, Lamnatséa'h (Psaume 51), et le paragraphe 'Véhaguèn' dans Hachkivénou.",
+    "first_night_pesach": "Première nuit de Pessa'h : on ne récite que le premier paragraphe du Chéma (jusqu'à ouvich'arékha) et Hamapil.",
+    "after_hamapil": "On ne doit plus manger, boire ni parler après Hamapil.",
+    "three_paragraphs": "L'usage Chabad est de réciter les trois paragraphes du Chéma. D'autres communautés ne récitent que le premier.",
+    "248_words": "On répète 'Ani Ado-naï Élo-hékhèm' pour compléter les 248 mots correspondant aux 248 membres du corps."
+  },
+  "sources": [
+    {
+      "name": "Siddur Tehilat Hachem (Kehot)",
+      "url": "https://w2.chabad.org/media/pdf/1253/rDiy12533882.pdf"
+    },
+    {
+      "name": "Torah-Box - Phonétique Kriat Chéma",
+      "url": "https://www.torah-box.com/question/cherche-kriat-chema-al-hamita-en-phonetique_38998.html"
+    },
+    {
+      "name": "Chabad.org - Le Chéma en phonétique",
+      "url": "https://fr.chabad.org/library/article_cdo/aid/2447872/jewish/Le-Chma-en-phontique.htm"
+    },
+    {
+      "name": "ShulchanAruchHarav.com - Laws of Bedtime Shema",
+      "url": "https://shulchanaruchharav.com/halacha/chapter-38-kerias-shema-sheal-hamita/"
+    }
+  ]
+}
