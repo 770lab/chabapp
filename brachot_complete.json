@@ -1,0 +1,484 @@
+{
+  "title": "Brakhot",
+  "title_hebrew": "ברכות",
+  "title_french": "Bénédictions",
+  "description": "Recueil complet des bénédictions quotidiennes selon la Halakha et le Choul'han Aroukh HaRav.",
+  "categories": [
+    {
+      "id": "shachar",
+      "title": "Birkot HaCha'har",
+      "title_hebrew": "ברכות השחר",
+      "title_french": "Bénédictions du matin",
+      "icon": "🌅",
+      "description": "Bénédictions récitées chaque matin au réveil.",
+      "brachot": [
+        {
+          "id": "netilat_yadayim_shachar",
+          "name": "Nétilat Yadaïm du matin",
+          "situation": "Après s'être lavé les mains au réveil",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל נְטִילַת יָדָיִם.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam achèr kidéchanou bémitsvotav vétsivanou 'al nétilat yadaïm.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné le lavage des mains."
+        },
+        {
+          "id": "asher_yatsar_shachar",
+          "name": "Achèr Yatsar",
+          "situation": "Après être allé aux toilettes le matin",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשַׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ אֲפִילוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְיָ, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam achèr yatsar ète ha-adam bé'hokhma, ouvara vo nékavim nékavim 'haloulim 'haloulim. Galouy véyadoua' lifné kissé khévodékha, ché-im yipatéa'h é'had méhèm o yissatèm é'had méhèm, i efchar léhitkayèm véla'amod léfanékha afilou cha'a é'hat. Baroukh Ata Ado-naï, rofé khol bassar oumaflii la'assot.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui a formé l'homme avec sagesse et a créé en lui des orifices et des cavités. Il est révélé et connu devant le trône de Ta gloire que si l'un d'eux s'ouvrait ou se bouchait, il serait impossible de subsister devant Toi ne serait-ce qu'une heure. Béni sois-Tu, Éternel, qui guérit toute chair et agit merveilleusement."
+        },
+        {
+          "id": "elohai_neshama",
+          "name": "Élohaï Néchama",
+          "situation": "Remercier D.ieu pour avoir rendu l'âme au réveil",
+          "hebrew": "אֱלֹהַי, נְשָׁמָה שֶׁנָּתַתָּ בִּי טְהוֹרָה הִיא. אַתָּה בְרָאתָהּ, אַתָּה יְצַרְתָּהּ, אַתָּה נְפַחְתָּהּ בִּי, וְאַתָּה מְשַׁמְּרָהּ בְּקִרְבִּי, וְאַתָּה עָתִיד לִטְּלָהּ מִמֶּנִּי, וּלְהַחֲזִירָהּ בִּי לֶעָתִיד לָבוֹא. כָּל זְמַן שֶׁהַנְּשָׁמָה בְקִרְבִּי, מוֹדֶה אֲנִי לְפָנֶיךָ, יְיָ אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי, רִבּוֹן כָּל הַמַּעֲשִׂים, אֲדוֹן כָּל הַנְּשָׁמוֹת. בָּרוּךְ אַתָּה יְיָ, הַמַּחֲזִיר נְשָׁמוֹת לִפְגָרִים מֵתִים.",
+          "phonetic": "Élohaï, néchama chénatata bi téhora hi. Ata vératah, ata yétsartah, ata néfa'htah bi, véata méchamrah békir'bi, véata 'atid litélah miméni, oulha'hazirah bi lé'atid lavo. Kol zéman chéhanéchama békir'bi, modé ani léfanékha, Ado-naï Élohaï vé-Élohé avotaï, ribon kol hama'assim, adon kol hanéchamot. Baroukh Ata Ado-naï, hama'hazir néchamot lifgarim métim.",
+          "french": "Mon D.ieu, l'âme que Tu as placée en moi est pure. Tu l'as créée, Tu l'as formée, Tu l'as insufflée en moi, Tu la préserves en moi, et Tu la reprendras de moi pour me la rendre dans le futur. Tant que l'âme est en moi, je Te remercie, Éternel mon D.ieu et D.ieu de mes pères, Maître de toutes les œuvres, Seigneur de toutes les âmes. Béni sois-Tu, Éternel, qui rend les âmes aux corps sans vie."
+        },
+        {
+          "id": "birkat_hatorah",
+          "name": "Birkot HaTorah",
+          "situation": "Avant d'étudier la Torah",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לַעֲסוֹק בְּדִבְרֵי תוֹרָה. וְהַעֲרֶב נָא יְיָ אֱלֹהֵינוּ אֶת דִּבְרֵי תוֹרָתְךָ בְּפִינוּ וּבְפִיּוֹת עַמְּךָ בֵּית יִשְׂרָאֵל. וְנִהְיֶה אֲנַחְנוּ וְצֶאֱצָאֵינוּ וְצֶאֱצָאֵי עַמְּךָ בֵּית יִשְׂרָאֵל כֻּלָּנוּ יוֹדְעֵי שְׁמֶךָ וְלוֹמְדֵי תוֹרָתֶךָ לִשְׁמָהּ. בָּרוּךְ אַתָּה יְיָ, הַמְלַמֵּד תּוֹרָה לְעַמּוֹ יִשְׂרָאֵל. בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בָּחַר בָּנוּ מִכָּל הָעַמִּים וְנָתַן לָנוּ אֶת תּוֹרָתוֹ. בָּרוּךְ אַתָּה יְיָ, נוֹתֵן הַתּוֹרָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam achèr kidéchanou bémitsvotav vétsivanou la'assok bédivré Torah. Véha'arèv na Ado-naï Élo-hénou ète divré Toratékha béfinou ouvéfiyot 'amékha bèt Yisraèl. Vénihyé ana'hnou vétséètsaénou vétséètsaé 'amékha bèt Yisraèl koulanou yodé'é chémékha vélomédé Toratékha lichma. Baroukh Ata Ado-naï, hamélamèd Torah lé'amo Yisraèl. Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr ba'har banou mikol ha'amim vénatan lanou ète Torato. Baroukh Ata Ado-naï, notène haTorah.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné de nous occuper des paroles de Torah. Rends douces, Éternel notre D.ieu, les paroles de Ta Torah dans notre bouche et dans la bouche de Ton peuple la maison d'Israël. Que nous soyons, nous, nos descendants et les descendants de Ton peuple la maison d'Israël, tous connaisseurs de Ton Nom et étudiants de Ta Torah pour elle-même. Béni sois-Tu, Éternel, qui enseigne la Torah à Son peuple Israël. Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a choisis parmi tous les peuples et nous a donné Sa Torah. Béni sois-Tu, Éternel, qui donne la Torah."
+        },
+        {
+          "id": "pokeach_ivrim",
+          "name": "Poké'ah 'Ivrim",
+          "situation": "En ouvrant les yeux",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, פּוֹקֵחַ עִוְרִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, poké'ah 'ivrim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui ouvre les yeux des aveugles."
+        },
+        {
+          "id": "matir_assurim",
+          "name": "Matir Assourim",
+          "situation": "En s'étirant / se redressant",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַתִּיר אֲסוּרִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, matir assourim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui libère les captifs."
+        },
+        {
+          "id": "zokef_kefufim",
+          "name": "Zokèf Kéfoufim",
+          "situation": "En se tenant debout",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹקֵף כְּפוּפִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, zokèf kéfoufim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui redresse ceux qui sont courbés."
+        },
+        {
+          "id": "malbish_arumim",
+          "name": "Malbich 'Aroumim",
+          "situation": "En s'habillant",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַלְבִּישׁ עֲרוּמִּים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, malbich 'aroumim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui habille ceux qui sont nus."
+        },
+        {
+          "id": "roka_haarets",
+          "name": "Roka' HaArèts",
+          "situation": "En posant les pieds par terre",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, רוֹקַע הָאָרֶץ עַל הַמָּיִם.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, roka' ha-arèts 'al hamaïm.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui étend la terre sur les eaux."
+        },
+        {
+          "id": "hamekhin_mitsadei",
+          "name": "Hamékhin Mits'adé Gavèr",
+          "situation": "En commençant à marcher",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמֵּכִין מִצְעֲדֵי גָבֶר.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hamékhin mits'adé gavèr.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui affermit les pas de l'homme."
+        },
+        {
+          "id": "ozer_yisrael",
+          "name": "Ozèr Yisraèl",
+          "situation": "En mettant la ceinture",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אוֹזֵר יִשְׂרָאֵל בִּגְבוּרָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, ozèr Yisraèl biguévoura.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui ceint Israël de puissance."
+        },
+        {
+          "id": "oter_yisrael",
+          "name": "Otèr Yisraèl",
+          "situation": "En se couvrant la tête",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹטֵר יִשְׂרָאֵל בְּתִפְאָרָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, otèr Yisraèl bétif-ara.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui couronne Israël de gloire."
+        },
+        {
+          "id": "hanoten_layaef",
+          "name": "HaNotène LaYa'èf",
+          "situation": "Pour la force renouvelée",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַיָּעֵף כֹּחַ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hanotène laya'èf koa'h.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui donne de la force à celui qui est fatigué."
+        },
+        {
+          "id": "shelo_asani_goy",
+          "name": "Chélo 'Assani Goï",
+          "situation": "Remerciement d'être juif",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי גּוֹי.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chélo 'assani goï.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui ne m'a pas fait non-juif."
+        },
+        {
+          "id": "shelo_asani_aved",
+          "name": "Chélo 'Assani 'Avèd",
+          "situation": "Remerciement d'être libre",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי עָבֶד.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chélo 'assani 'avèd.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui ne m'a pas fait esclave."
+        },
+        {
+          "id": "shelo_asani_isha",
+          "name": "Chélo 'Assani Icha (Hommes) / Ché'assani Kirtsono (Femmes)",
+          "situation": "Hommes : remerciement. Femmes : qui m'a faite selon Sa volonté.",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי אִשָּׁה. / בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשַׂנִי כִּרְצוֹנוֹ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chélo 'assani icha. / Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, ché'assani kirtsono.",
+          "french": "Béni sois-Tu… qui ne m'a pas fait femme. / Béni sois-Tu… qui m'a faite selon Sa volonté."
+        }
+      ]
+    },
+    {
+      "id": "food_before",
+      "title": "Brakhot avant de manger",
+      "title_hebrew": "ברכות לפני אכילה",
+      "title_french": "Bénédictions avant de manger",
+      "icon": "🍽️",
+      "description": "Bénédictions à réciter avant de consommer un aliment ou une boisson.",
+      "brachot": [
+        {
+          "id": "hamotsi",
+          "name": "HaMotsi",
+          "situation": "Avant de manger du pain (blé, orge, épeautre, seigle, avoine)",
+          "examples": "'Halla, pain, pita, bagel, matsa",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hamotsi lé'hèm mine ha-arèts.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui fait sortir le pain de la terre.",
+          "note": "Après HaMotsi, on ne dit plus de brakha sur les autres aliments du repas (sauf le vin et les fruits qui ne font pas partie du repas)."
+        },
+        {
+          "id": "mezonot",
+          "name": "Mézonot",
+          "situation": "Avant de manger des pâtisseries ou gâteaux à base de céréales",
+          "examples": "Gâteau, biscuit, pâtes, couscous, pizza (si peu de pâte), crackers",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא מִינֵי מְזוֹנוֹת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré miné mézonot.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée différentes sortes de nourritures."
+        },
+        {
+          "id": "hagefen",
+          "name": "HaGuéfène",
+          "situation": "Avant de boire du vin ou du jus de raisin",
+          "examples": "Vin, jus de raisin, Kiddouch",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré péri haguéfène.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée le fruit de la vigne."
+        },
+        {
+          "id": "haetz",
+          "name": "Ha'Èts",
+          "situation": "Avant de manger un fruit qui pousse sur un arbre",
+          "examples": "Pomme, orange, banane, datte, olive, raisin, figue, grenade, mangue",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָעֵץ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré péri ha'èts.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée le fruit de l'arbre."
+        },
+        {
+          "id": "haadama",
+          "name": "HaAdama",
+          "situation": "Avant de manger un légume ou un fruit qui pousse dans le sol",
+          "examples": "Carotte, tomate, concombre, pomme de terre, pastèque, fraise, cacahuète, maïs",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הָאֲדָמָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré péri haadama.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée le fruit de la terre."
+        },
+        {
+          "id": "shehakol",
+          "name": "Chéhakol",
+          "situation": "Avant de manger ou boire tout autre aliment",
+          "examples": "Eau, jus de fruit, viande, poisson, œuf, fromage, lait, chocolat, bonbons, soupe",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁהַכֹּל נִהְיָה בִּדְבָרוֹ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chéhakol nihya bidvaro.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, par la parole duquel tout existe."
+        }
+      ]
+    },
+    {
+      "id": "food_after",
+      "title": "Brakhot après manger",
+      "title_hebrew": "ברכות אחרי אכילה",
+      "title_french": "Bénédictions après manger",
+      "icon": "✨",
+      "description": "Bénédictions récitées après avoir mangé.",
+      "brachot": [
+        {
+          "id": "birkat_hamazon_short",
+          "name": "Birkat HaMazone (résumé)",
+          "situation": "Après un repas avec pain",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַזָּן אֶת הָעוֹלָם כֻּלּוֹ בְּטוּבוֹ בְּחֵן בְּחֶסֶד וּבְרַחֲמִים...",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hazane ète ha'olam koulo bétouvo bé'hène bé'hèssèd ouvra'hamim...",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nourrit le monde entier par Sa bonté, avec grâce, bonté et miséricorde...",
+          "note": "Le Birkat HaMazone complet comprend 4 bénédictions. Il se trouve dans le Siddour."
+        },
+        {
+          "id": "al_hamichya",
+          "name": "Al HaMi'hya (Mé'ène Chaloch)",
+          "situation": "Après avoir mangé des pâtisseries mézonot, ou des fruits des 7 espèces, ou du vin",
+          "examples": "Après gâteau, biscuits / Après raisin, figue, grenade, olive, datte / Après vin",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה וְעַל תְּנוּבַת הַשָּׂדֶה, וְעַל אֶרֶץ חֶמְדָּה טוֹבָה וּרְחָבָה שֶׁרָצִיתָ וְהִנְחַלְתָּ לַאֲבוֹתֵינוּ לֶאֱכוֹל מִפִּרְיָהּ וְלִשְׂבּוֹעַ מִטּוּבָהּ. רַחֵם נָא יְיָ אֱלֹהֵינוּ עַל יִשְׂרָאֵל עַמֶּךָ וְעַל יְרוּשָׁלַיִם עִירֶךָ וְעַל צִיּוֹן מִשְׁכַּן כְּבוֹדֶךָ וְעַל מִזְבְּחֶךָ וְעַל הֵיכָלֶךָ. וּבְנֵה יְרוּשָׁלַיִם עִיר הַקֹּדֶשׁ בִּמְהֵרָה בְיָמֵינוּ, וְהַעֲלֵנוּ לְתוֹכָהּ וְשַׂמְּחֵנוּ בְּבִנְיָנָהּ וְנֹאכַל מִפִּרְיָהּ וְנִשְׂבַּע מִטּוּבָהּ, וּנְבָרֶכְךָ עָלֶיהָ בִּקְדֻשָּׁה וּבְטָהֳרָה. כִּי אַתָּה יְיָ טוֹב וּמֵטִיב לַכֹּל, וְנוֹדֶה לְּךָ עַל הָאָרֶץ וְעַל הַמִּחְיָה. בָּרוּךְ אַתָּה יְיָ, עַל הָאָרֶץ וְעַל הַמִּחְיָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, 'al hami'hya vé'al hakalkala vé'al ténouvat hassadé, vé'al érèts 'hemda tova our'hava chératsita véhin'halta laavotéinou léèkhol mipirya vélisboa' mitouvah. Ra'hèm na Ado-naï Élo-hénou 'al Yisraèl 'amékha vé'al Yérouchalaim 'irékha vé'al Tsione michkan kévodékha vé'al mizbé'hékha vé'al hékhalékha. Ouvné Yérouchalaim 'ir hakodèch biméhéra véyaménou, véha'alénou létokhah véssam'hénou bévinyyanah vénokhalmipirya vénisba' mitouvah, ounévarèkhékha 'aléha bikdoucha ouvtohora. Ki Ata Ado-naï tov oumetiv lakol, vénodé lékha 'al ha-arèts vé'al hami'hya. Baroukh Ata Ado-naï, 'al ha-arèts vé'al hami'hya.",
+          "french": "Béni sois-Tu... pour la nourriture et pour la subsistance, et pour le produit des champs, et pour la terre précieuse, bonne et vaste que Tu as voulu donner en héritage à nos pères... Aie pitié, Éternel, d'Israël Ton peuple et de Jérusalem Ta ville... Béni sois-Tu, Éternel, pour la terre et pour la nourriture.",
+          "note": "Pour les fruits des 7 espèces, remplacer 'al hami'hya' par 'al hapérot'. Pour le vin, remplacer par 'al haguéfène vé'al péri haguéfène'."
+        },
+        {
+          "id": "bore_nefashot",
+          "name": "Boré Néfachot",
+          "situation": "Après avoir mangé des fruits/légumes (hors 7 espèces), de la viande, du poisson, ou avoir bu (hors vin)",
+          "examples": "Après pomme, eau, viande, chocolat, bonbon",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא נְפָשׁוֹת רַבּוֹת וְחֶסְרוֹנָן, עַל כָּל מַה שֶּׁבָּרָאתָ לְהַחֲיוֹת בָּהֶם נֶפֶשׁ כָּל חָי. בָּרוּךְ חֵי הָעוֹלָמִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré néfachot rabot vé'hèsronan, 'al kol ma chébarata léha'hayot bahèm néfèch kol 'haï. Baroukh 'Héï ha'olamim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée de nombreuses âmes et leurs besoins, pour tout ce que Tu as créé afin de vivifier par eux toute âme vivante. Béni soit Celui qui est la vie des mondes."
+        }
+      ]
+    },
+    {
+      "id": "toilettes",
+      "title": "Achèr Yatsar",
+      "title_hebrew": "אשר יצר",
+      "title_french": "Après les toilettes",
+      "icon": "🚻",
+      "description": "Bénédiction récitée après être allé aux toilettes.",
+      "brachot": [
+        {
+          "id": "asher_yatsar",
+          "name": "Achèr Yatsar",
+          "situation": "Chaque fois qu'on sort des toilettes",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשַׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ אֲפִילוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְיָ, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam achèr yatsar ète ha-adam bé'hokhma, ouvara vo nékavim nékavim 'haloulim 'haloulim. Galouy véyadoua' lifné kissé khévodékha, ché-im yipatéa'h é'had méhèm o yissatèm é'had méhèm, i efchar léhitkayèm véla'amod léfanékha afilou cha'a é'hat. Baroukh Ata Ado-naï, rofé khol bassar oumaflii la'assot.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui a formé l'homme avec sagesse et a créé en lui des orifices et des cavités. Il est révélé et connu devant le trône de Ta gloire que si l'un d'eux s'ouvrait ou se bouchait, il serait impossible de subsister devant Toi ne serait-ce qu'une heure. Béni sois-Tu, Éternel, qui guérit toute chair et agit merveilleusement."
+        }
+      ]
+    },
+    {
+      "id": "mitsvot",
+      "title": "Brakhot sur les Mitsvot",
+      "title_hebrew": "ברכות על מצוות",
+      "title_french": "Bénédictions sur les commandements",
+      "icon": "📿",
+      "description": "Bénédictions récitées avant d'accomplir une mitsva.",
+      "brachot": [
+        {
+          "id": "tsitsit",
+          "name": "Tsitsit",
+          "situation": "Avant de mettre le Talit Katane (tsitsit)",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל מִצְוַת צִיצִת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou 'al mitsvat tsitsit.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné la mitsva des tsitsit."
+        },
+        {
+          "id": "talit",
+          "name": "Talit Gadol",
+          "situation": "Avant de s'envelopper du Talit de prière",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהִתְעַטֵּף בַּצִּיצִת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou léhit'atèf batsitsit.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné de nous envelopper des tsitsit."
+        },
+        {
+          "id": "tefilin_yad",
+          "name": "Téfiline du bras",
+          "situation": "Avant de mettre les Téfiline du bras",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou léhania'h téfiline.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné de poser les Téfiline."
+        },
+        {
+          "id": "tefilin_rosh",
+          "name": "Téfiline de la tête",
+          "situation": "Avant de mettre les Téfiline de la tête",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou 'al mitsvat téfiline.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné la mitsva des Téfiline."
+        },
+        {
+          "id": "mezuza",
+          "name": "Mézouza",
+          "situation": "En fixant une Mézouza",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לִקְבּוֹעַ מְזוּזָה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou likboa' mézouza.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné de fixer une Mézouza."
+        },
+        {
+          "id": "netilat_yadayim",
+          "name": "Nétilat Yadaïm",
+          "situation": "Avant de manger du pain",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל נְטִילַת יָדָיִם.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou 'al nétilat yadaïm.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné le lavage des mains."
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "title": "Brakhot sur la nature",
+      "title_hebrew": "ברכות על הטבע",
+      "title_french": "Bénédictions sur les phénomènes naturels",
+      "icon": "🌈",
+      "description": "Bénédictions récitées en voyant des phénomènes naturels.",
+      "brachot": [
+        {
+          "id": "thunder",
+          "name": "Tonnerre",
+          "situation": "En entendant le tonnerre",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁכֹּחוֹ וּגְבוּרָתוֹ מָלֵא עוֹלָם.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chéko'ho ougvourato malé 'olam.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, dont la puissance et la force emplissent le monde."
+        },
+        {
+          "id": "lightning",
+          "name": "Éclair",
+          "situation": "En voyant un éclair",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹשֶׂה מַעֲשֵׂה בְרֵאשִׁית.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, 'ossé ma'assé véréchit.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui reproduit l'œuvre de la création."
+        },
+        {
+          "id": "rainbow",
+          "name": "Arc-en-ciel",
+          "situation": "En voyant un arc-en-ciel",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹכֵר הַבְּרִית וְנֶאֱמָן בִּבְרִיתוֹ וְקַיָּם בְּמַאֲמָרוֹ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, zokhèr habrit véné-émane bivrito vékayam béma-amaro.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui se souvient de l'alliance, qui est fidèle à Son alliance et qui maintient Sa parole."
+        },
+        {
+          "id": "sea",
+          "name": "La mer",
+          "situation": "En voyant la mer (après 30 jours sans la voir)",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה אֶת הַיָּם הַגָּדוֹל.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, ché'assa ète hayam hagadol.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui a fait la grande mer."
+        },
+        {
+          "id": "trees_blooming",
+          "name": "Arbres en fleur",
+          "situation": "En voyant des arbres fruitiers fleurir au printemps (une fois par an)",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא חִסֵּר בְּעוֹלָמוֹ כְלוּם, וּבָרָא בוֹ בְּרִיּוֹת טוֹבוֹת וְאִילָנוֹת טוֹבוֹת לֵהָנוֹת בָּהֶם בְּנֵי אָדָם.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, chélo 'hissèr bé'olamo kéloum, ouvara vo briyot tovot vé-ilanot tovot léhanot bahèm béné adam.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui n'a rien fait manquer dans Son monde, et y a créé de bonnes créatures et de bons arbres pour le plaisir des hommes."
+        },
+        {
+          "id": "fragrance_tree",
+          "name": "Parfum d'arbre",
+          "situation": "En sentant le parfum d'un arbre ou d'une écorce aromatique",
+          "examples": "Cannelle, clou de girofle",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא עֲצֵי בְשָׂמִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré 'atsé véssamim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée les arbres aromatiques."
+        },
+        {
+          "id": "fragrance_herb",
+          "name": "Parfum d'herbe",
+          "situation": "En sentant le parfum d'une plante herbacée",
+          "examples": "Menthe, basilic",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא עִשְׂבֵי בְשָׂמִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, boré 'isvé véssamim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui crée les herbes aromatiques."
+        }
+      ]
+    },
+    {
+      "id": "occasions",
+      "title": "Brakhot occasionnelles",
+      "title_hebrew": "ברכות שונות",
+      "title_french": "Bénédictions diverses",
+      "icon": "🎉",
+      "description": "Bénédictions récitées lors d'occasions particulières.",
+      "brachot": [
+        {
+          "id": "shehecheyanu",
+          "name": "Ché'hé'héyanou",
+          "situation": "Nouveau fruit de la saison, nouveau vêtement, fête, événement joyeux",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, ché'hé'héyanou vékiyémanou véhiguianou lazémane hazé.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a fait vivre, nous a maintenus, et nous a fait parvenir à ce moment."
+        },
+        {
+          "id": "hagomel",
+          "name": "HaGomèl",
+          "situation": "Après un danger : voyage en avion/mer, maladie, emprisonnement, accident",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַגּוֹמֵל לְחַיָּבִים טוֹבוֹת, שֶׁגְּמָלַנִי כָּל טוֹב.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hagomèl lé'hayavim tovot, chéguemalani kol tov.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui accorde des bienfaits à ceux qui Lui sont redevables, et qui m'a comblé de tout bien.",
+          "note": "Se dit devant un Séfèr Torah en présence d'un miniane (10 hommes). L'assemblée répond : Mi chéguemalékha kol tov, Hou yiguémalékha kol tov, séla."
+        },
+        {
+          "id": "hadlakat_nerot_shabbat",
+          "name": "Allumage des bougies de Chabbat",
+          "situation": "Avant l'entrée du Chabbat (les femmes allument)",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת קֹדֶשׁ.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou léhadlik nèr chèl Chabbat kodèch.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné d'allumer la bougie du saint Chabbat."
+        },
+        {
+          "id": "hatov_vehametiv",
+          "name": "HaTov VéHaMétiv",
+          "situation": "En apprenant une bonne nouvelle qui profite à soi et à d'autres",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַטּוֹב וְהַמֵּטִיב.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, hatov véhamétiv.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui est bon et qui fait le bien."
+        },
+        {
+          "id": "dayan_haemet",
+          "name": "Dayane HaÉmèt",
+          "situation": "En apprenant un décès ou une mauvaise nouvelle",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, דַּיַּן הָאֱמֶת.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, dayane ha-émèt.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, le Juge de vérité."
+        },
+        {
+          "id": "talmid_hakham",
+          "name": "En voyant un grand érudit en Torah",
+          "situation": "En voyant un grand Rav / Talmid 'Hakham",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁחָלַק מֵחָכְמָתוֹ לִירֵאָיו.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, ché'halak mé'hokhmato liréav.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui a partagé Sa sagesse avec ceux qui Le craignent."
+        },
+        {
+          "id": "new_house",
+          "name": "Nouvelle maison / Nouvel objet",
+          "situation": "En achetant une nouvelle maison ou un objet important",
+          "note": "On dit Ché'hé'héyanou. Si d'autres en profitent aussi, on dit HaTov VéHaMétiv."
+        },
+        {
+          "id": "tevilat_kelim",
+          "name": "Immersion de vaisselle",
+          "situation": "Avant d'immerger de la vaisselle neuve au Mikvé",
+          "hebrew": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל טְבִילַת כֵּלִים.",
+          "phonetic": "Baroukh Ata Ado-naï Élo-hénou Mélèkh ha'olam, achèr kidéchanou bémitsvotav vétsivanou 'al tévilat kélim.",
+          "french": "Béni sois-Tu, Éternel notre D.ieu, Roi de l'univers, qui nous a sanctifiés par Ses commandements et nous a ordonné l'immersion des ustensiles."
+        }
+      ]
+    },
+    {
+      "id": "voyage",
+      "title": "Téfilat HaDérèkh",
+      "title_hebrew": "תפילת הדרך",
+      "title_french": "Prière du voyageur",
+      "icon": "🚗",
+      "description": "Prière récitée lors d'un voyage.",
+      "brachot": [
+        {
+          "id": "tefilat_haderekh",
+          "name": "Téfilat HaDérèkh",
+          "situation": "En partant pour un voyage (hors de la ville, à partir d'environ 4 km)",
+          "hebrew": "יְהִי רָצוֹן מִלְּפָנֶיךָ יְיָ אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁתּוֹלִיכֵנוּ לְשָׁלוֹם, וְתַצְעִידֵנוּ לְשָׁלוֹם, וְתִסְמְכֵנוּ לְשָׁלוֹם, וְתַדְרִיכֵנוּ לְשָׁלוֹם, וְתַגִּיעֵנוּ לִמְחוֹז חֶפְצֵנוּ לְחַיִּים וּלְשִׂמְחָה וּלְשָׁלוֹם. וְתִשְׁלַח בְּרָכָה בְּמַעֲשֵׂה יָדֵינוּ, וְתִתְּנֵנוּ לְחֵן וּלְחֶסֶד וּלְרַחֲמִים בְּעֵינֶיךָ וּבְעֵינֵי כָל רוֹאֵינוּ, וְתִשְׁמַע קוֹל תַּחֲנוּנֵינוּ, כִּי אֵל שׁוֹמֵעַ תְּפִלָּה וְתַחֲנוּן אָתָּה. בָּרוּךְ אַתָּה יְיָ, שׁוֹמֵעַ תְּפִלָּה.",
+          "phonetic": "Yéhi ratsone miléfanékha Ado-naï Élo-hénou vé-Élohé avotéinou, chétolkhénou léchalom, vétats'idénou léchalom, vétismkhénou léchalom, vétadrikhénou léchalom, vétaguié'nou lim'hoz 'hèftsénou lé'hayim oulésim'ha ouléchalom. Vétichlakh brakha béma'assé yadéinou, vétitéménou lé'hèn oulé'hèssèd oulra'hamim bé'énékha ouvé'éné kol roéinou, vétichma' kol ta'hanounéinou, ki El choméa' téfila véta'hanoun Ata. Baroukh Ata Ado-naï, choméa' téfila.",
+          "french": "Que ce soit Ta volonté, Éternel notre D.ieu et D.ieu de nos pères, de nous conduire en paix, de diriger nos pas en paix, de nous soutenir en paix, de nous guider en paix, et de nous faire arriver à notre destination en vie, dans la joie et en paix. Envoie la bénédiction dans l'œuvre de nos mains, et accorde-nous grâce, bonté et miséricorde à Tes yeux et aux yeux de tous ceux qui nous voient, et entends la voix de nos supplications, car Tu es D.ieu qui écoute la prière et la supplication. Béni sois-Tu, Éternel, qui écoute la prière."
+        }
+      ]
+    }
+  ]
+}
