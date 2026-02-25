@@ -2,7 +2,7 @@
 """
 Scrape les 4 etudes quotidiennes depuis fr.chabad.org.
 - Playwright (GitHub Action) ou cloudscraper (Mac local)
-- Extraction ciblee: texte francais uniquement, pas d'hebreu ni de nav
+- Warm-up Cloudflare puis scrape les 4 pages
 """
 
 import sys
@@ -104,35 +104,23 @@ def greg_to_hebrew(gy, gm, gd):
 
 
 # --- Playwright extraction JS ---
-# Key improvement: detect language and prefer French text
 
 EXTRACT_JS = """
 () => {
-    // Remove noise
     document.querySelectorAll('script, style, nav, iframe, noscript').forEach(el => el.remove());
 
-    // Helper: count Hebrew characters in a string
     function hebrewRatio(text) {
         if (!text || text.length === 0) return 0;
-        const hebrewChars = (text.match(/[\\u0590-\\u05FF\\uFB1D-\\uFB4F]/g) || []).length;
-        return hebrewChars / text.length;
+        return (text.match(/[\\u0590-\\u05FF\\uFB1D-\\uFB4F]/g) || []).length / text.length;
     }
-
-    // Helper: count Latin characters (French)
     function latinRatio(text) {
         if (!text || text.length === 0) return 0;
-        const latinChars = (text.match(/[a-zA-Z\\u00C0-\\u024F]/g) || []).length;
-        return latinChars / text.length;
+        return (text.match(/[a-zA-Z\\u00C0-\\u024F]/g) || []).length / text.length;
     }
-
-    // Helper: is this navigation content?
     function isNavContent(text) {
-        // Navigation has lots of country/city names or menu items
-        const navPatterns = /S'abonner|Connexion|sélectionner un pays|Trouver un centre|Magazine|Afrique du Sud|Allemagne|Andorre/i;
-        return navPatterns.test(text);
+        return /S'abonner|Connexion|sélectionner un pays|Trouver un centre|Magazine|Afrique du Sud|Allemagne|Andorre/i.test(text);
     }
 
-    // Try known content selectors first
     const selectors = [
         '#TextContent', '#textContent', '.article-text',
         '.page-text-content', '#contentArea', '#pageTextArea',
@@ -140,86 +128,71 @@ EXTRACT_JS = """
         '.article_body', '#article', '.parsha-content',
         '#ContentPlaceHolder_TextContent', '.content-inner'
     ];
-
     for (const sel of selectors) {
         const el = document.querySelector(sel);
         if (!el) continue;
         const text = el.innerText.trim();
-        // Must be substantial, French, and not navigation
         if (text.length > 50 && latinRatio(text) > 0.3 && !isNavContent(text)) {
             return { text: text, method: 'selector-fr:' + sel };
         }
     }
 
-    // Collect ALL text blocks
     const allBlocks = [];
     const candidates = document.querySelectorAll('div, td, section, main, article, p');
-
     for (const el of candidates) {
         const cls = (el.className || '').toLowerCase();
         const id = (el.id || '').toLowerCase();
         if (/nav|footer|header|menu|sidebar|cookie|banner|popup|modal|search|breadcrumb/.test(cls + ' ' + id)) continue;
-
         const text = el.innerText || '';
         const trimmed = text.trim();
         if (trimmed.length < 50) continue;
-
-        // Count links
         const links = el.querySelectorAll('a');
         const linkText = Array.from(links).reduce((s, a) => s + (a.innerText || '').length, 0);
         if (trimmed.length > 0 && linkText / trimmed.length > 0.3) continue;
-
-        const latin = latinRatio(trimmed);
-        const hebrew = hebrewRatio(trimmed);
-
         allBlocks.push({
-            el: el,
-            text: trimmed,
-            len: trimmed.length,
-            latin: latin,
-            hebrew: hebrew,
-            isNav: isNavContent(trimmed),
-            tag: el.tagName
+            text: trimmed, len: trimmed.length,
+            latin: latinRatio(trimmed), hebrew: hebrewRatio(trimmed),
+            isNav: isNavContent(trimmed), tag: el.tagName
         });
     }
 
-    // PRIORITY 1: Find largest French block (latin > 0.3, not nav)
-    let bestFr = null;
-    let bestFrLen = 0;
+    // PRIORITY 1: largest French block
+    let bestFr = null, bestFrLen = 0;
     for (const b of allBlocks) {
         if (b.latin > 0.3 && !b.isNav && b.len > bestFrLen && b.len < 50000) {
-            bestFr = b;
-            bestFrLen = b.len;
+            bestFr = b; bestFrLen = b.len;
         }
     }
-
     if (bestFr && bestFrLen > 100) {
         return { text: bestFr.text, method: 'largest-french', latin: bestFr.latin, hebrew: bestFr.hebrew, len: bestFrLen };
     }
 
-    // PRIORITY 2: If no French block, take largest block that's not nav
-    let bestAny = null;
-    let bestAnyLen = 0;
+    // PRIORITY 2: any non-nav block
+    let bestAny = null, bestAnyLen = 0;
     for (const b of allBlocks) {
         if (!b.isNav && b.len > bestAnyLen && b.len < 50000) {
-            bestAny = b;
-            bestAnyLen = b.len;
+            bestAny = b; bestAnyLen = b.len;
         }
     }
-
     if (bestAny && bestAnyLen > 100) {
         return { text: bestAny.text, method: 'largest-any', latin: bestAny.latin, hebrew: bestAny.hebrew, len: bestAnyLen };
     }
 
-    // Debug: report what we found
-    const summary = allBlocks.slice(0, 5).map(b => ({
-        len: b.len, latin: b.latin.toFixed(2), hebrew: b.hebrew.toFixed(2), isNav: b.isNav, tag: b.tag,
-        preview: b.text.substring(0, 80)
-    }));
-
-    return { text: '', method: 'none', debug: summary };
+    return { text: '', method: 'none', debug: allBlocks.slice(0,5).map(b => ({len:b.len, lat:b.latin.toFixed(2), heb:b.hebrew.toFixed(2), nav:b.isNav, preview:b.text.substring(0,80)})) };
 }
 """
+
+
+def wait_for_cloudflare(page, max_wait=60):
+    """Wait for Cloudflare challenge to resolve."""
+    for _w in range(max_wait // 2):
+        title = page.title()
+        if 'moment' not in title.lower() and 'challenge' not in title.lower() and 'attention' not in title.lower():
+            return True
+        if _w % 5 == 0:
+            print("  Cloudflare... (%ds)" % ((_w+1)*2))
+        time.sleep(2)
+    return False
 
 
 def scrape_playwright(target_date):
@@ -236,24 +209,33 @@ def scrape_playwright(target_date):
         )
         page = context.new_page()
 
+        # === WARM-UP: visit fr.chabad.org to solve Cloudflare challenge first ===
+        print("Warm-up: solving Cloudflare on fr.chabad.org...")
+        try:
+            page.goto("https://fr.chabad.org/dailystudy/", wait_until="networkidle", timeout=90000)
+            if wait_for_cloudflare(page, max_wait=60):
+                print("  Cloudflare resolved! Cookies set.")
+            else:
+                print("  Warning: Cloudflare may not be fully resolved")
+            time.sleep(3)
+        except Exception as e:
+            print("  Warm-up error: %s (continuing anyway)" % str(e))
+            time.sleep(3)
+
+        # === Now scrape each study page (cookies already set) ===
         for study, page_path in PAGES.items():
             sep = '&' if '?' in page_path else '?'
             url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
             print("Fetching %s: %s" % (study, url))
             try:
-                page.goto(url, wait_until="networkidle", timeout=45000)
-                for _w in range(20):
-                    title = page.title()
-                    if 'moment' not in title.lower() and 'challenge' not in title.lower():
-                        break
-                    print("  Cloudflare... (%ds)" % ((_w+1)*2))
-                    time.sleep(2)
+                page.goto(url, wait_until="networkidle", timeout=90000)
 
-                time.sleep(2)
-                title = page.title()
-                if 'moment' in title.lower():
+                # Short wait for any remaining challenge
+                if not wait_for_cloudflare(page, max_wait=20):
                     print("  x %s: stuck on Cloudflare" % study)
                     time.sleep(DELAY); continue
+
+                time.sleep(2)
 
                 result = page.evaluate(EXTRACT_JS)
                 text = result.get('text', '')
@@ -261,10 +243,11 @@ def scrape_playwright(target_date):
 
                 if method == 'none':
                     debug = result.get('debug', [])
-                    print("  x %s: no content found. Debug:" % study)
+                    print("  x %s: no content. Debug:" % study)
                     for d_item in debug:
                         print("    %s" % d_item)
                 elif text and len(text) > 50:
+                    title = page.title()
                     clean_title = re.sub(r'\s*-\s*fr\.chabad\.org.*', '', title, flags=re.IGNORECASE).strip()
                     latin = result.get('latin', 0)
                     hebrew = result.get('hebrew', 0)
@@ -308,8 +291,6 @@ def extract_text_bs(html):
             text = re.sub(r'\s+', ' ', el.get_text(separator=' ', strip=True)).strip()
             if len(text) > 50 and is_french_text(text) and not is_nav_text(text):
                 return text
-
-    # Largest French block
     best, best_len = None, 0
     for div in soup.find_all(['div','td','section','main']):
         cls = ' '.join(div.get('class', [])).lower()
