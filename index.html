@@ -16,6 +16,30 @@
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </link><link href="css/styles.css" rel="stylesheet"/>
+<style>
+/* KRIAT CHEMA AL HAMITA */
+.kchm-section{background:var(--white);border:1px solid var(--gray-5);border-radius:16px;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s;}
+.kchm-section.open{box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+.kchm-section-header{display:flex;align-items:center;padding:14px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;gap:10px;}
+.kchm-section-num{min-width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#ffc850;flex-shrink:0;}
+.kchm-section-info{flex:1;min-width:0;}
+.kchm-section-title{font-size:14px;font-weight:700;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kchm-section-sub{font-size:11px;color:var(--gray-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kchm-section-chevron{color:var(--gray-4);transition:transform .3s;flex-shrink:0;}
+.kchm-section.open .kchm-section-chevron{transform:rotate(180deg);}
+.kchm-section-body{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;padding:0 16px;}
+.kchm-section.open .kchm-section-body{max-height:5000px;padding:0 16px 16px;}
+.kchm-instruction{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 12px;font-size:12px;color:#92400e;margin-bottom:12px;line-height:1.5;}
+.kchm-omit-badge{display:inline-block;background:#fee2e2;color:#991b1b;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;margin-left:6px;}
+.kchm-repeat-badge{display:inline-block;background:#dbeafe;color:#1e40af;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;margin-left:6px;}
+.kchm-he{font-family:'Noto Serif Hebrew',serif;font-size:20px;line-height:1.9;direction:rtl;text-align:right;color:var(--black);margin-bottom:10px;}
+.kchm-ph{font-size:14px;line-height:1.7;color:#6366f1;font-style:italic;margin-bottom:10px;}
+.kchm-fr{font-size:13px;line-height:1.7;color:var(--gray-2);margin-bottom:10px;}
+.kchm-source{font-size:11px;color:var(--gray-4);font-style:italic;margin-bottom:8px;}
+.kchm-para-title{font-size:13px;font-weight:700;color:var(--black);margin:14px 0 6px;padding-top:10px;border-top:1px solid var(--gray-5);}
+.kchm-response{background:#f0fdf4;border-left:3px solid #22c55e;padding:10px 12px;border-radius:0 10px 10px 0;margin:8px 0;}
+.kchm-lang-toggles-wrap{position:sticky;top:0;z-index:10;background:var(--bg);padding:8px 0;}
+</style>
 <style>.big-card-title{display:block!important;width:100%!important;font-size:15px!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 6px rgba(0,0,0,0.7)!important;}.big-card-sub{display:block!important;width:100%!important;font-size:11px!important;font-weight:400!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-shadow:0 1px 4px rgba(0,0,0,0.6)!important;margin-top:2px!important;}
 
 /* ─── ZMANIM SECTION ─── */
@@ -745,6 +769,19 @@ Partager
 <a href="https://www.sefaria.org/Siddur_Tehilat_Hashem" style="display:block;padding:12px;border:1px solid var(--gray-5);border-radius:var(--radius);background:var(--white);font-size:13px;font-weight:600;text-decoration:none;color:var(--black);" target="_blank">📚 Siddur Sefaria (Hébreu) ↗</a>
 </div>
 </div>
+<!-- Kriat Chéma al Hamita -->
+<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:var(--radius);padding:16px;margin-bottom:12px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+<span style="font-size:24px;">🌙</span>
+<div>
+<div style="font-size:15px;font-weight:700;color:var(--black);">Kriat Chéma al Hamita</div>
+<div style="font-size:11px;color:var(--gray-3);">קריאת שמע על המיטה · Prière du coucher</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<button onclick="switchTab('sub-tefila-chema-hamita')" style="padding:12px;border:1px solid var(--gray-5);border-radius:var(--radius);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;text-align:left;">🌙 Ouvrir la prière du coucher</button>
+</div>
+</div>
 </div>
 </div>
 <!-- SUB-PANEL: TEFILA PATAKH ELIYAHOU (Prayers) -->
@@ -765,6 +802,31 @@ Partager
 <button class="patakh-tab" data-key="birkat" onclick="showPatakh('birkat')">Birkat</button>
 </div>
 <div id="patakh-content" style="background:var(--white);border:1px solid var(--gray-5);border-radius:var(--radius);padding:16px;max-height:60vh;overflow-y:auto;"></div>
+</div>
+</div>
+<!-- SUB-PANEL: KRIAT CHEMA AL HAMITA -->
+<div id="panel-sub-tefila-chema-hamita" style="display:none">
+<div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('sub-tefila')">← Tefila</button></div>
+<div style="padding:0 16px 16px;">
+<div style="text-align:center;margin-bottom:16px;">
+<div style="font-size:28px;margin-bottom:4px;">🌙</div>
+<div style="font-size:18px;font-weight:800;color:var(--black);">Kriat Chéma al Hamita</div>
+<div style="font-size:16px;font-weight:600;color:var(--gray-2);font-family:'Noto Serif Hebrew',serif;margin-top:2px;">קריאת שמע על המיטה</div>
+<div style="font-size:12px;color:var(--gray-3);margin-top:4px;">Prière du coucher · Noussakhe Ari</div>
+</div>
+<!-- Language toggles -->
+<div id="kchm-lang-toggles" style="display:flex;gap:6px;margin-bottom:16px;justify-content:center;">
+<button onclick="kchmToggle('he')" class="kchm-lang active" data-lang="he" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--black);background:var(--black);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Serif Hebrew',serif;">עברית</button>
+<button onclick="kchmToggle('ph')" class="kchm-lang active" data-lang="ph" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--black);background:var(--black);color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Phonétique</button>
+<button onclick="kchmToggle('fr')" class="kchm-lang" data-lang="fr" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--gray-5);background:var(--white);color:var(--gray-3);font-size:12px;font-weight:600;cursor:pointer;">Français</button>
+</div>
+<!-- Content -->
+<div id="kchm-content"></div>
+<!-- Laws -->
+<div id="kchm-laws" style="margin-top:16px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:16px;color:rgba(255,255,255,0.85);font-size:13px;line-height:1.6;">
+<div style="font-size:14px;font-weight:700;color:#ffc850;margin-bottom:10px;">📜 Halakhot</div>
+<div id="kchm-laws-content"></div>
+</div>
 </div>
 </div>
 <!-- SUB-PANEL: ÉTUDES -->
@@ -1460,6 +1522,132 @@ function shareObjectifs(e){
 
   // Listen for shabbat location changes
   window.addEventListener('shabbatLocChanged', loadZmanim);
+})();
+</script>
+<script>
+// ─── KRIAT CHEMA AL HAMITA MODULE ───
+(function(){
+var KCHM_DATA=null;
+
+var kchmLangs={he:true,ph:true,fr:false};
+
+function loadKchmData(){
+  if(KCHM_DATA)return Promise.resolve(KCHM_DATA);
+  return fetch('kriat_chema_complete.json')
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(data){KCHM_DATA=data;return data;})
+    .catch(function(err){
+      console.warn('Kriat Chema fetch error:',err);
+      var c=document.getElementById('kchm-content');
+      if(c)c.innerHTML='<div style="text-align:center;color:var(--gray-3);padding:20px;font-size:13px;">Impossible de charger la prière. Vérifiez votre connexion.</div>';
+      return null;
+    });
+}
+
+window.kchmToggle=function(lang){
+  kchmLangs[lang]=!kchmLangs[lang];
+  var btns=document.querySelectorAll('#kchm-lang-toggles .kchm-lang');
+  btns.forEach(function(b){
+    var l=b.getAttribute('data-lang');
+    if(kchmLangs[l]){b.classList.add('active');b.style.background='var(--black)';b.style.color='#fff';b.style.borderColor='var(--black)';}
+    else{b.classList.remove('active');b.style.background='var(--white)';b.style.color='var(--gray-3)';b.style.borderColor='var(--gray-5)';}
+  });
+  renderKchm();
+};
+
+window.kchmToggleSection=function(id){
+  var el=document.getElementById('kchm-s-'+id);
+  if(el)el.classList.toggle('open');
+};
+
+function renderKchm(){
+  var c=document.getElementById('kchm-content');
+  if(!c||!KCHM_DATA)return;
+  var html='';
+  KCHM_DATA.sections.forEach(function(s,i){
+    var hasOmit=s.omit_on&&s.omit_on.length>0;
+    var sub=s.title_hebrew||s.title_french||'';
+    html+='<div class="kchm-section" id="kchm-s-'+s.id+'">';
+    html+='<div class="kchm-section-header" onclick="kchmToggleSection(\''+s.id+'\')">';
+    html+='<div class="kchm-section-num">'+(i+1)+'</div>';
+    html+='<div class="kchm-section-info">';
+    html+='<div class="kchm-section-title">'+s.title;
+    if(hasOmit)html+=' <span class="kchm-omit-badge">Chabbat ✗</span>';
+    if(s.repeat)html+=' <span class="kchm-repeat-badge">×'+s.repeat+'</span>';
+    html+='</div>';
+    if(sub)html+='<div class="kchm-section-sub">'+sub+'</div>';
+    html+='</div>';
+    html+='<svg class="kchm-section-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    html+='</div>';
+    html+='<div class="kchm-section-body">';
+    if(s.instruction)html+='<div class="kchm-instruction">📋 '+s.instruction+'</div>';
+    if(s.paragraphs){
+      s.paragraphs.forEach(function(p){
+        html+='<div class="kchm-para-title">'+p.title+(p.source?' <span style="font-weight:400;color:var(--gray-4);font-size:11px;">('+p.source+')</span>':'')+'</div>';
+        if(kchmLangs.he)html+='<div class="kchm-he">'+p.hebrew+'</div>';
+        if(kchmLangs.ph)html+='<div class="kchm-ph">'+p.phonetic+'</div>';
+        if(kchmLangs.fr)html+='<div class="kchm-fr">'+p.french+'</div>';
+        if(p.instruction_after){
+          html+='<div style="font-size:12px;color:var(--gray-3);font-style:italic;margin:6px 0;">'+p.instruction_after+'</div>';
+        }
+        if(p.response_hebrew||p.response_phonetic){
+          html+='<div class="kchm-response">';
+          if(kchmLangs.he&&p.response_hebrew)html+='<div class="kchm-he" style="margin-bottom:4px;">'+p.response_hebrew+'</div>';
+          if(kchmLangs.ph&&p.response_phonetic)html+='<div class="kchm-ph" style="margin-bottom:4px;">'+p.response_phonetic+'</div>';
+          if(kchmLangs.fr&&p.response_french)html+='<div class="kchm-fr" style="margin-bottom:0;">'+p.response_french+'</div>';
+          html+='</div>';
+        }
+      });
+    }else{
+      if(s.source)html+='<div class="kchm-source">📖 '+s.source+'</div>';
+      if(kchmLangs.he)html+='<div class="kchm-he">'+s.hebrew+'</div>';
+      if(kchmLangs.ph)html+='<div class="kchm-ph">'+s.phonetic+'</div>';
+      if(kchmLangs.fr)html+='<div class="kchm-fr">'+s.french+'</div>';
+    }
+    html+='</div></div>';
+  });
+  c.innerHTML=html;
+}
+
+function renderKchmLaws(){
+  var c=document.getElementById('kchm-laws-content');
+  if(!c||!KCHM_DATA||!KCHM_DATA.laws)return;
+  var laws=KCHM_DATA.laws;
+  var html='';
+  var icons={'when':'🕐','position':'🧍','shabbat_yom_tov':'✡️','first_night_pesach':'🍷','after_hamapil':'🤫','three_paragraphs':'📖','248_words':'🔢'};
+  for(var k in laws){
+    html+='<div style="margin-bottom:10px;display:flex;gap:8px;align-items:flex-start;">';
+    html+='<span style="flex-shrink:0;">'+(icons[k]||'•')+'</span>';
+    html+='<span>'+laws[k]+'</span>';
+    html+='</div>';
+  }
+  c.innerHTML=html;
+}
+
+// Hook into switchTab after app.js loads
+var _kchmInterval=setInterval(function(){
+  if(window.switchTab&&!window._kchmHooked){
+    window._kchmHooked=true;
+    var _origST=window.switchTab;
+    window.switchTab=function(t){
+      _origST(t);
+      if(t==='sub-tefila-chema-hamita'){
+        var c=document.getElementById('kchm-content');
+        if(c&&!KCHM_DATA){
+          c.innerHTML='<div style="text-align:center;color:var(--gray-3);padding:20px;font-size:13px;">Chargement…</div>';
+        }
+        loadKchmData().then(function(data){
+          if(data){renderKchm();renderKchmLaws();}
+          setTimeout(function(){
+            var first=document.getElementById('kchm-s-'+data.sections[0].id);
+            if(first&&!first.classList.contains('open'))first.classList.add('open');
+          },100);
+        });
+      }
+    };
+    clearInterval(_kchmInterval);
+  }
+},200);
 })();
 </script>
 <script src="js/app.js"></script></body>
