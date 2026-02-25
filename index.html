@@ -809,7 +809,7 @@ Partager
 </div>
 <!-- Language toggles -->
 <div id="brachot-lang-toggles" style="display:flex;gap:6px;margin-bottom:16px;justify-content:center;">
-<button onclick="brachotToggle('he')" class="brachot-lang active" data-lang="he" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--black);background:var(--black);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Serif Hebrew',serif;">עברית</button>
+<button onclick="brachotToggle('he')" class="brachot-lang active" data-lang="he" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--black);background:var(--black);color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:'Noto Serif Hebrew',serif;">עברית</button>
 <button onclick="brachotToggle('ph')" class="brachot-lang active" data-lang="ph" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--black);background:var(--black);color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Phonétique</button>
 <button onclick="brachotToggle('fr')" class="brachot-lang" data-lang="fr" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--gray-5);background:var(--white);color:var(--gray-3);font-size:12px;font-weight:600;cursor:pointer;">Français</button>
 </div>
@@ -1712,7 +1712,7 @@ function renderBrachot(){
       if(b.examples&&b.examples.length){
         html+='<div style="font-size:11px;color:var(--gray-4);margin-bottom:8px;font-style:italic;">Ex : '+(Array.isArray(b.examples)?b.examples.join(', '):b.examples)+'</div>';
       }
-      if(brachotLangs.he)html+='<div class="kchm-he">'+b.hebrew+'</div>';
+      if(brachotLangs.he)html+='<div class="kchm-he" style="font-size:26px;">'+b.hebrew+'</div>';
       if(brachotLangs.ph)html+='<div class="kchm-ph">'+b.phonetic+'</div>';
       if(brachotLangs.fr)html+='<div class="kchm-fr">'+b.french+'</div>';
       if(b.note){
@@ -1754,10 +1754,6 @@ var _kchmInterval=setInterval(function(){
         loadBrachotData().then(function(data){
           if(!data)return;
           renderBrachot();
-          setTimeout(function(){
-            var first=document.getElementById('brachot-cat-'+data.categories[0].id);
-            if(first&&!first.classList.contains('open'))first.classList.add('open');
-          },100);
         });
       }
     };
