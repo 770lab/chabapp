@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Scrape les 4 etudes quotidiennes depuis fr.chabad.org.
-- Utilise Playwright (navigateur headless) si disponible (GitHub Action)
-- Sinon utilise cloudscraper (Mac local)
+- Playwright (GitHub Action) ou cloudscraper (Mac local)
+- Extraction ciblee: texte francais uniquement, pas d'hebreu ni de nav
 """
 
 import sys
@@ -103,14 +103,36 @@ def greg_to_hebrew(gy, gm, gd):
     return {'hy':hy, 'hm':hm, 'hd':hd, 'mName':m_name}
 
 
-# --- Playwright extraction (runs JS in browser context) ---
+# --- Playwright extraction JS ---
+# Key improvement: detect language and prefer French text
 
 EXTRACT_JS = """
 () => {
-    // Remove noise elements
+    // Remove noise
     document.querySelectorAll('script, style, nav, iframe, noscript').forEach(el => el.remove());
 
-    // Try known content selectors (same as app.js)
+    // Helper: count Hebrew characters in a string
+    function hebrewRatio(text) {
+        if (!text || text.length === 0) return 0;
+        const hebrewChars = (text.match(/[\\u0590-\\u05FF\\uFB1D-\\uFB4F]/g) || []).length;
+        return hebrewChars / text.length;
+    }
+
+    // Helper: count Latin characters (French)
+    function latinRatio(text) {
+        if (!text || text.length === 0) return 0;
+        const latinChars = (text.match(/[a-zA-Z\\u00C0-\\u024F]/g) || []).length;
+        return latinChars / text.length;
+    }
+
+    // Helper: is this navigation content?
+    function isNavContent(text) {
+        // Navigation has lots of country/city names or menu items
+        const navPatterns = /S'abonner|Connexion|sélectionner un pays|Trouver un centre|Magazine|Afrique du Sud|Allemagne|Andorre/i;
+        return navPatterns.test(text);
+    }
+
+    // Try known content selectors first
     const selectors = [
         '#TextContent', '#textContent', '.article-text',
         '.page-text-content', '#contentArea', '#pageTextArea',
@@ -121,49 +143,81 @@ EXTRACT_JS = """
 
     for (const sel of selectors) {
         const el = document.querySelector(sel);
-        if (el) {
-            const text = el.innerText.trim();
-            if (text.length > 50) {
-                return { text: text, method: 'selector:' + sel };
-            }
+        if (!el) continue;
+        const text = el.innerText.trim();
+        // Must be substantial, French, and not navigation
+        if (text.length > 50 && latinRatio(text) > 0.3 && !isNavContent(text)) {
+            return { text: text, method: 'selector-fr:' + sel };
         }
     }
 
-    // Fallback: find the article/main content area
-    // On chabad.org, the main text is usually in a large div
-    // that does NOT contain navigation links
-    const candidates = document.querySelectorAll('div, td, section, main, article');
-    let best = null;
-    let bestLen = 0;
+    // Collect ALL text blocks
+    const allBlocks = [];
+    const candidates = document.querySelectorAll('div, td, section, main, article, p');
 
     for (const el of candidates) {
         const cls = (el.className || '').toLowerCase();
         const id = (el.id || '').toLowerCase();
+        if (/nav|footer|header|menu|sidebar|cookie|banner|popup|modal|search|breadcrumb/.test(cls + ' ' + id)) continue;
 
-        // Skip navigation, header, footer, sidebar
-        if (/nav|footer|header|menu|sidebar|cookie|banner|popup|modal|search/.test(cls + ' ' + id)) continue;
-
-        // Skip elements with lots of links (navigation)
-        const links = el.querySelectorAll('a');
         const text = el.innerText || '';
-        if (links.length > 20 && text.length < 5000) continue;
+        const trimmed = text.trim();
+        if (trimmed.length < 50) continue;
 
-        // Calculate text density (text vs links)
+        // Count links
+        const links = el.querySelectorAll('a');
         const linkText = Array.from(links).reduce((s, a) => s + (a.innerText || '').length, 0);
-        const textLen = text.trim().length;
-        if (textLen > 0 && linkText / textLen > 0.5) continue; // Skip link-heavy blocks
+        if (trimmed.length > 0 && linkText / trimmed.length > 0.3) continue;
 
-        if (textLen > bestLen && textLen > 200 && textLen < 50000) {
-            best = el;
-            bestLen = textLen;
+        const latin = latinRatio(trimmed);
+        const hebrew = hebrewRatio(trimmed);
+
+        allBlocks.push({
+            el: el,
+            text: trimmed,
+            len: trimmed.length,
+            latin: latin,
+            hebrew: hebrew,
+            isNav: isNavContent(trimmed),
+            tag: el.tagName
+        });
+    }
+
+    // PRIORITY 1: Find largest French block (latin > 0.3, not nav)
+    let bestFr = null;
+    let bestFrLen = 0;
+    for (const b of allBlocks) {
+        if (b.latin > 0.3 && !b.isNav && b.len > bestFrLen && b.len < 50000) {
+            bestFr = b;
+            bestFrLen = b.len;
         }
     }
 
-    if (best) {
-        return { text: best.innerText.trim(), method: 'largest-block' };
+    if (bestFr && bestFrLen > 100) {
+        return { text: bestFr.text, method: 'largest-french', latin: bestFr.latin, hebrew: bestFr.hebrew, len: bestFrLen };
     }
 
-    return { text: '', method: 'none' };
+    // PRIORITY 2: If no French block, take largest block that's not nav
+    let bestAny = null;
+    let bestAnyLen = 0;
+    for (const b of allBlocks) {
+        if (!b.isNav && b.len > bestAnyLen && b.len < 50000) {
+            bestAny = b;
+            bestAnyLen = b.len;
+        }
+    }
+
+    if (bestAny && bestAnyLen > 100) {
+        return { text: bestAny.text, method: 'largest-any', latin: bestAny.latin, hebrew: bestAny.hebrew, len: bestAnyLen };
+    }
+
+    // Debug: report what we found
+    const summary = allBlocks.slice(0, 5).map(b => ({
+        len: b.len, latin: b.latin.toFixed(2), hebrew: b.hebrew.toFixed(2), isNav: b.isNav, tag: b.tag,
+        preview: b.text.substring(0, 80)
+    }));
+
+    return { text: '', method: 'none', debug: summary };
 }
 """
 
@@ -188,8 +242,6 @@ def scrape_playwright(target_date):
             print("Fetching %s: %s" % (study, url))
             try:
                 page.goto(url, wait_until="networkidle", timeout=45000)
-
-                # Wait for Cloudflare
                 for _w in range(20):
                     title = page.title()
                     if 'moment' not in title.lower() and 'challenge' not in title.lower():
@@ -197,45 +249,48 @@ def scrape_playwright(target_date):
                     print("  Cloudflare... (%ds)" % ((_w+1)*2))
                     time.sleep(2)
 
-                # Extra wait for dynamic content to load
                 time.sleep(2)
-
-                # Check title
                 title = page.title()
                 if 'moment' in title.lower():
                     print("  x %s: stuck on Cloudflare" % study)
-                    time.sleep(DELAY)
-                    continue
+                    time.sleep(DELAY); continue
 
-                # Extract content using browser JS
                 result = page.evaluate(EXTRACT_JS)
                 text = result.get('text', '')
                 method = result.get('method', '')
 
-                if text and len(text) > 50:
-                    # Clean title
+                if method == 'none':
+                    debug = result.get('debug', [])
+                    print("  x %s: no content found. Debug:" % study)
+                    for d_item in debug:
+                        print("    %s" % d_item)
+                elif text and len(text) > 50:
                     clean_title = re.sub(r'\s*-\s*fr\.chabad\.org.*', '', title, flags=re.IGNORECASE).strip()
+                    latin = result.get('latin', 0)
+                    hebrew = result.get('hebrew', 0)
                     results[study] = {'text': text, 'title': clean_title}
-                    print("  OK %s: %d chars [%s] - %s" % (study, len(text), method, clean_title[:60]))
+                    print("  OK %s: %d chars [%s] lat=%.0f%% heb=%.0f%% - %s" % (
+                        study, len(text), method, latin*100, hebrew*100, clean_title[:60]))
                 else:
-                    print("  x %s: no content (method=%s, len=%d)" % (study, method, len(text)))
-                    # Debug: save screenshot
-                    try:
-                        page.screenshot(path="debug_%s.png" % study)
-                        print("  (saved screenshot debug_%s.png)" % study)
-                    except:
-                        pass
+                    print("  x %s: empty (method=%s)" % (study, method))
 
             except Exception as e:
                 print("  x %s: %s" % (study, str(e)))
-
             time.sleep(DELAY)
 
         browser.close()
     return results
 
 
-# --- Cloudscraper extraction (for Mac local) ---
+# --- Cloudscraper engine (Mac local) ---
+
+def is_french_text(text):
+    if not text: return False
+    latin = len(re.findall(r'[a-zA-Z\u00C0-\u024F]', text))
+    return latin / max(len(text), 1) > 0.3
+
+def is_nav_text(text):
+    return bool(re.search(r"S'abonner|Connexion|sélectionner un pays|Trouver un centre|Afrique du Sud|Allemagne|Andorre", text, re.IGNORECASE))
 
 def extract_text_bs(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -249,10 +304,12 @@ def extract_text_bs(html):
     ]
     for sel in selectors:
         el = soup.select_one(sel)
-        if el and len(el.get_text(strip=True)) > 50:
-            return re.sub(r'\s+', ' ', el.get_text(separator=' ', strip=True)).strip()
+        if el:
+            text = re.sub(r'\s+', ' ', el.get_text(separator=' ', strip=True)).strip()
+            if len(text) > 50 and is_french_text(text) and not is_nav_text(text):
+                return text
 
-    # Fallback with link density check
+    # Largest French block
     best, best_len = None, 0
     for div in soup.find_all(['div','td','section','main']):
         cls = ' '.join(div.get('class', [])).lower()
@@ -260,11 +317,11 @@ def extract_text_bs(html):
         links = div.find_all('a')
         link_text = sum(len(a.get_text(strip=True)) for a in links)
         txt = div.get_text(strip=True)
-        txt_len = len(txt)
-        if txt_len > 0 and link_text / txt_len > 0.5: continue  # Skip nav-heavy blocks
-        if 200 < txt_len < 15000 and txt_len > best_len:
-            best = div
-            best_len = txt_len
+        if len(txt) > 0 and link_text / len(txt) > 0.3: continue
+        if not is_french_text(txt): continue
+        if is_nav_text(txt): continue
+        if 100 < len(txt) < 50000 and len(txt) > best_len:
+            best = div; best_len = len(txt)
     if best:
         return re.sub(r'\s+', ' ', best.get_text(separator=' ', strip=True)).strip()
     return None
@@ -294,7 +351,7 @@ def scrape_cloudscraper(target_date):
                     results[study] = {'text': text, 'title': title}
                     print("  OK %s: %d chars - %s" % (study, len(text), title[:60]))
                 else:
-                    print("  x %s: no content" % study)
+                    print("  x %s: no French content" % study)
                 break
             except Exception as e:
                 print("  Attempt %d: %s" % (attempt+1, str(e)))
@@ -341,8 +398,8 @@ def cleanup_old_entries(data, keep_days=7):
         for key in data[section]:
             try:
                 parts = key.split('-')
-                d = date(int(parts[0]), int(parts[1]), int(parts[2]))
-                if (today - d).days > keep_days: to_remove.append(key)
+                entry_date = date(int(parts[0]), int(parts[1]), int(parts[2]))
+                if (today - entry_date).days > keep_days: to_remove.append(key)
             except: continue
         for key in to_remove: del data[section][key]
         if to_remove: print("Cleaned %d old from %s" % (len(to_remove), section))
