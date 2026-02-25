@@ -4133,7 +4133,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-etudes","sub-don","jour","perek","birthday","chains","chain-detail","t119","cemetery"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-etudes","sub-don","jour","perek","birthday","chains","chain-detail","t119","cemetery"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
