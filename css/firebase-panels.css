@@ -1,0 +1,362 @@
+/* ============================================================
+   firebase-panels.css  —  Styles Auth, Feed, Profil
+   Utilise les CSS vars existantes de Chab'app :
+     --black, --white, --gray-1 à --gray-5
+   ============================================================ */
+
+/* ─── Shared Components ───────────────────────────────────── */
+.chab-panel { padding-bottom: 80px; }
+
+.chab-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--gray-4, #d1d5db);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--white, #fff);
+  color: var(--black, #000);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color .2s;
+}
+.chab-input:focus { border-color: var(--black, #000); }
+.chab-input-sm { padding: 8px 10px; font-size: 13px; }
+
+.chab-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 20px;
+  border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all .2s;
+  width: 100%;
+}
+.chab-btn-sm { padding: 8px 14px; font-size: 13px; width: auto; }
+.chab-btn-primary { background: var(--black, #000); color: var(--white, #fff); }
+.chab-btn-primary:hover { opacity: .85; }
+.chab-btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--gray-4, #d1d5db);
+  color: var(--black, #000);
+}
+.chab-btn-outline:hover { border-color: var(--black, #000); }
+.chab-btn-danger {
+  background: transparent;
+  border: 1.5px solid #ef4444;
+  color: #ef4444;
+}
+.chab-btn-danger:hover { background: #fef2f2; }
+.chab-btn-social {
+  background: var(--white, #fff);
+  border: 1.5px solid var(--gray-4, #d1d5db);
+  color: var(--black, #000);
+}
+.chab-btn-social:hover { background: var(--gray-5, #f3f4f6); }
+.chab-btn-apple { color: #000; }
+
+.panel-top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  position: sticky; top: 0; z-index: 10;
+  background: var(--white, #fff);
+  border-bottom: 1px solid var(--gray-5, #f0f0f0);
+}
+.panel-back {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer; color: var(--black, #000);
+}
+.panel-title {
+  font-size: 15px; font-weight: 700; color: var(--black, #000);
+  letter-spacing: -.2px;
+}
+.panel-profile-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer;
+}
+
+
+/* ─── AUTH PANEL ───────────────────────────────────────────── */
+.auth-container {
+  max-width: 380px; margin: 0 auto;
+  padding: 24px 20px;
+}
+.auth-logo {
+  text-align: center; margin-bottom: 28px;
+}
+.auth-logo-icon {
+  font-size: 40px; margin-bottom: 6px;
+}
+.auth-logo-text {
+  font-size: 22px; font-weight: 800; color: var(--black, #000);
+  letter-spacing: -.5px;
+}
+.auth-logo-sub {
+  font-size: 13px; color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+
+#auth-form-area { display: flex; flex-direction: column; gap: 10px; }
+#auth-form-area .chab-input { margin-bottom: 2px; }
+
+.auth-roles {
+  display: flex; gap: 10px; margin: 4px 0 8px;
+}
+.auth-role-label {
+  flex: 1; display: flex; align-items: center; gap: 6px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--gray-4, #d1d5db);
+  border-radius: 10px;
+  font-size: 13px; cursor: pointer;
+  transition: border-color .2s;
+}
+.auth-role-label:has(input:checked) {
+  border-color: var(--black, #000);
+  background: var(--gray-5, #fafafa);
+}
+.auth-role-label input { display: none; }
+
+.auth-separator {
+  display: flex; align-items: center; gap: 12px;
+  margin: 8px 0;
+  color: var(--gray-3, #9ca3af); font-size: 12px;
+}
+.auth-separator::before,
+.auth-separator::after {
+  content: ""; flex: 1; height: 1px;
+  background: var(--gray-4, #e5e7eb);
+}
+
+.auth-toggle {
+  text-align: center; font-size: 13px;
+  color: var(--gray-3, #6b7280);
+  margin-top: 8px;
+}
+.auth-toggle span {
+  color: var(--black, #000); font-weight: 600;
+  cursor: pointer; text-decoration: underline;
+}
+
+.auth-forgot {
+  text-align: center; font-size: 12px;
+  color: var(--gray-3, #6b7280);
+  cursor: pointer; margin: -2px 0 4px;
+}
+.auth-forgot:hover { color: var(--black, #000); }
+
+.auth-error {
+  background: #fef2f2; border: 1px solid #fecaca;
+  color: #dc2626; border-radius: 8px;
+  padding: 10px 14px; font-size: 13px;
+  text-align: center; margin-top: 8px;
+}
+
+
+/* ─── PROFILE PANEL ───────────────────────────────────────── */
+.profile-container { padding: 24px 20px; max-width: 420px; margin: 0 auto; }
+
+.profile-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+}
+.profile-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  object-fit: cover; cursor: pointer;
+  border: 2px solid var(--gray-4, #e5e7eb);
+}
+.profile-avatar-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gray-5, #f3f4f6);
+  font-size: 28px; font-weight: 700; color: var(--gray-3, #6b7280);
+}
+.profile-info { flex: 1; }
+.profile-name {
+  font-size: 18px; font-weight: 700; color: var(--black, #000);
+}
+.profile-email {
+  font-size: 13px; color: var(--gray-3, #6b7280);
+  margin-top: 2px;
+}
+.profile-role-badge {
+  display: inline-block; margin-top: 6px;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: var(--gray-5, #f3f4f6);
+  color: var(--gray-2, #4b5563);
+}
+
+.profile-section {
+  margin-bottom: 16px;
+}
+.profile-section-title {
+  font-size: 12px; font-weight: 600;
+  color: var(--gray-3, #9ca3af);
+  text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 8px;
+}
+
+
+/* ─── FEED PANEL ──────────────────────────────────────────── */
+.feed-composer {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray-5, #f0f0f0);
+  background: var(--white, #fff);
+}
+.feed-composer-row { margin-bottom: 8px; }
+.feed-compose-input {
+  resize: none; min-height: 48px; max-height: 120px;
+  line-height: 1.5;
+}
+.feed-composer-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.feed-toolbar-btn {
+  background: none; border: none;
+  font-size: 13px; color: var(--gray-2, #4b5563);
+  cursor: pointer; padding: 4px 8px; border-radius: 6px;
+  font-family: inherit;
+}
+.feed-toolbar-btn:hover { background: var(--gray-5, #f3f4f6); }
+
+/* Media preview */
+.feed-preview-wrap { position: relative; display: inline-block; margin-top: 6px; }
+.feed-preview-thumb {
+  width: 80px; height: 80px; object-fit: cover;
+  border-radius: 8px; border: 1px solid var(--gray-4, #e5e7eb);
+}
+.feed-preview-remove {
+  position: absolute; top: -6px; right: -6px;
+  width: 22px; height: 22px;
+  background: var(--black, #000); color: var(--white, #fff);
+  border-radius: 50%; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+/* Post list */
+.feed-list { padding: 0 0 16px; }
+.feed-loading, .feed-empty {
+  text-align: center; padding: 40px 20px;
+  color: var(--gray-3, #9ca3af); font-size: 14px;
+}
+.feed-load-more { text-align: center; padding: 16px; }
+
+/* Post card */
+.feed-post {
+  padding: 16px;
+  border-bottom: 1px solid var(--gray-5, #f0f0f0);
+}
+.feed-post-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.feed-post-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  object-fit: cover;
+}
+.feed-post-avatar-ph {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gray-5, #f3f4f6);
+  font-size: 15px; font-weight: 700; color: var(--gray-3, #6b7280);
+}
+.feed-post-meta { flex: 1; }
+.feed-post-author {
+  font-size: 14px; font-weight: 600; color: var(--black, #000);
+}
+.feed-post-time {
+  font-size: 11px; color: var(--gray-3, #9ca3af);
+  margin-top: 1px;
+}
+.feed-post-menu {
+  cursor: pointer; font-size: 16px; padding: 4px;
+  opacity: .5; transition: opacity .2s;
+}
+.feed-post-menu:hover { opacity: 1; }
+
+.feed-badge-pro {
+  display: inline-block;
+  padding: 1px 6px; border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  background: var(--black, #000); color: var(--white, #fff);
+  vertical-align: middle; margin-left: 4px;
+}
+
+.feed-post-text {
+  font-size: 14px; line-height: 1.55;
+  color: var(--black, #000);
+  margin-bottom: 10px;
+  white-space: pre-wrap; word-break: break-word;
+}
+.feed-post-text a { color: #2563eb; text-decoration: underline; }
+
+.feed-post-media {
+  width: 100%; max-height: 400px;
+  object-fit: cover; border-radius: 10px;
+  margin-bottom: 10px; cursor: pointer;
+  background: var(--gray-5, #f3f4f6);
+}
+video.feed-post-media { cursor: default; }
+
+/* Actions */
+.feed-post-actions {
+  display: flex; gap: 16px;
+}
+.feed-action-btn {
+  background: none; border: none;
+  font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; gap: 4px;
+  color: var(--gray-2, #6b7280);
+  font-family: inherit; padding: 4px 0;
+}
+.feed-action-btn:hover { color: var(--black, #000); }
+.feed-action-btn.feed-liked { color: #ef4444; }
+
+/* Comments */
+.feed-comments {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--gray-5, #f0f0f0);
+}
+.feed-comment {
+  display: flex; gap: 8px;
+  margin-bottom: 10px;
+}
+.feed-comment-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0;
+}
+.feed-comment-avatar-ph {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gray-5, #f3f4f6);
+  font-size: 11px; font-weight: 700; color: var(--gray-3, #6b7280);
+}
+.feed-comment-body { flex: 1; }
+.feed-comment-author {
+  font-size: 13px; font-weight: 600; color: var(--black, #000);
+}
+.feed-comment-text {
+  font-size: 13px; color: var(--black, #000);
+}
+.feed-comment-time {
+  font-size: 11px; color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+.feed-no-comments, .feed-loading-sm {
+  font-size: 13px; color: var(--gray-3, #9ca3af);
+  padding: 6px 0;
+}
+.feed-comment-compose {
+  display: flex; gap: 6px; margin-top: 8px;
+}
+
+/* Image zoom overlay */
+.feed-zoom-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.9);
+  display: flex; align-items: center; justify-content: center;
+  cursor: zoom-out; padding: 20px;
+}
+.feed-zoom-overlay img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; border-radius: 4px;
+}
