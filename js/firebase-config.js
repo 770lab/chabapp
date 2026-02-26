@@ -67,7 +67,8 @@ function fbId() {
  */
 function fbUpload(file, path) {
   var ref = fbStore.ref(path);
-  return ref.put(file).then(function (snap) {
+  var metadata = { contentType: file.type || "application/octet-stream" };
+  return ref.put(file, metadata).then(function (snap) {
     return snap.ref.getDownloadURL();
   });
 }

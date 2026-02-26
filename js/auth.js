@@ -133,7 +133,13 @@ function profileChangePhoto() {
   input.onchange = function () {
     var file = input.files[0];
     if (!file || !chabUser) return;
-    var path = "avatars/" + chabUser.uid + "/" + file.name;
+    // Vérifier la taille (max 5 Mo)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image trop lourde (max 5 Mo).");
+      return;
+    }
+    var ext = file.name.split('.').pop() || "jpg";
+    var path = "avatars/" + chabUser.uid + "/avatar." + ext;
     fbUpload(file, path).then(function (url) {
       return fbAuth.currentUser.updateProfile({ photoURL: url }).then(function () {
         return usersCol.doc(chabUser.uid).update({ photoURL: url });
@@ -141,7 +147,16 @@ function profileChangePhoto() {
         chabUser.photoURL = url;
         _renderProfile();
       });
-    }).catch(function (err) { alert("Erreur photo : " + err.message); });
+    }).catch(function (err) {
+      console.error("[Chab'app] Photo upload error:", err);
+      if (err.code === "storage/unauthorized") {
+        alert("Erreur photo : Vous n'avez pas la permission. Vérifiez les règles Storage.");
+      } else if (err.code === "storage/unknown") {
+        alert("Erreur photo : Échec de l'envoi. Vérifiez votre connexion et les règles Firebase Storage.");
+      } else {
+        alert("Erreur photo : " + err.message);
+      }
+    });
   };
   input.click();
 }
