@@ -32,7 +32,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 @keyframes scInsert { to { max-width:0.6em; opacity:1; letter-spacing:2px; } }
 /* Phase 1: D1 fades in WITH "CHABAD" (0-0.4s) */
 /* Phase 2: waits while D2 emerges */
-/* Phase 3: both D's rotate 180Â° to become P's (2.5-3.2s) */
+/* Phase 3: both D's rotate 180° to become P's (2.5-3.2s) */
 @keyframes scD1 {
   0%   { opacity:0; transform:translateY(-0.23em) rotate(0deg); }
   9%   { opacity:1; transform:translateY(0) rotate(0deg); }
@@ -41,7 +41,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
   100% { opacity:1; transform:translateY(-0.23em) rotate(180deg); }
 }
 /* Phase 1: hidden behind D1 */
-/* Phase 2: slides out from D1 (1.2-2.1s) â CHABADD */
+/* Phase 2: slides out from D1 (1.2-2.1s) → CHABADD */
 /* Phase 3: rotates with D1 to become P */
 @keyframes scD2 {
   0%   { margin-left:-0.62em; opacity:0; transform:translateY(0) rotate(0deg); }
@@ -520,7 +520,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .card-jour { }
 .card-perek { }
 .menu-card.coming-soon { opacity:0.5; }
-.menu-card.coming-soon .menu-card-title::after { content:' Â· BientÃ´t'; font-weight:400; font-size:9px; color:var(--gray-4); }
+.menu-card.coming-soon .menu-card-title::after { content:' · Bientôt'; font-weight:400; font-size:9px; color:var(--gray-4); }
 
 /* Chains */
 .chain-header { padding:16px; text-align:center; }
