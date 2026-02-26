@@ -160,6 +160,7 @@ function _createUserDoc(firebaseUser, role, name) {
     displayName: name || firebaseUser.displayName || "",
     photoURL:    firebaseUser.photoURL || "",
     role:        role || AUTH_ROLES.PERSO,
+    following:   [],
     createdAt:   fbTimestamp()
   }, { merge: true });
 }
@@ -168,6 +169,7 @@ function _loadUserProfile(firebaseUser) {
   usersCol.doc(firebaseUser.uid).get().then(function (doc) {
     if (doc.exists) {
       chabUser = doc.data();
+      if (!chabUser.following) chabUser.following = [];
     } else {
       // Premier login social → créer le doc
       chabUser = {
@@ -175,7 +177,8 @@ function _loadUserProfile(firebaseUser) {
         email:       firebaseUser.email || "",
         displayName: firebaseUser.displayName || "",
         photoURL:    firebaseUser.photoURL || "",
-        role:        AUTH_ROLES.PERSO
+        role:        AUTH_ROLES.PERSO,
+        following:   []
       };
       _createUserDoc(firebaseUser, AUTH_ROLES.PERSO);
     }

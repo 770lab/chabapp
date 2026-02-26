@@ -278,6 +278,26 @@
 }
 .feed-post-menu:hover { opacity: 1; }
 
+.feed-follow-btn {
+  background: transparent;
+  border: 1.5px solid var(--gray-4, #d1d5db);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 12px; font-weight: 600;
+  color: var(--black, #000);
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.feed-follow-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+.feed-follow-btn.feed-following {
+  background: #1a73e8; border-color: #1a73e8;
+  color: #fff;
+}
+.feed-follow-btn.feed-following:hover {
+  background: #c0392b; border-color: #c0392b;
+}
+
 .feed-badge-pro {
   display: inline-block;
   padding: 1px 6px; border-radius: 4px;

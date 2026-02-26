@@ -157,6 +157,31 @@ function feedToggleLike(postId) {
   });
 }
 
+// ─── Suivre / Ne plus suivre ─────────────────────────────────
+function feedToggleFollow(authorUid) {
+  if (!chabUser) return alert("Connectez-vous pour suivre.");
+  if (authorUid === chabUser.uid) return;
+
+  var ref = usersCol.doc(chabUser.uid);
+  var following = chabUser.following || [];
+  var idx = following.indexOf(authorUid);
+
+  if (idx === -1) {
+    // Suivre
+    ref.update({
+      following: firebase.firestore.FieldValue.arrayUnion(authorUid)
+    });
+    chabUser.following.push(authorUid);
+  } else {
+    // Ne plus suivre
+    ref.update({
+      following: firebase.firestore.FieldValue.arrayRemove(authorUid)
+    });
+    chabUser.following.splice(idx, 1);
+  }
+  _renderFeed();
+}
+
 // ─── Supprimer un post (auteur seulement) ───────────────────
 function feedDeletePost(postId) {
   if (!confirm("Supprimer ce post ?")) return;
@@ -242,6 +267,7 @@ function _renderFeed() {
 function _renderPost(p) {
   var isOwner = chabUser && chabUser.uid === p.authorUid;
   var isLiked = chabUser && (p.likedBy || []).indexOf(chabUser.uid) !== -1;
+  var isFollowing = chabUser && (chabUser.following || []).indexOf(p.authorUid) !== -1;
   var timeAgo = _timeAgo(p.createdAt);
   var roleBadge = p.authorRole === "pro" ? '<span class="feed-badge-pro">PRO</span>' : '';
 
@@ -258,6 +284,10 @@ function _renderPost(p) {
   html += '</div>';
   if (isOwner) {
     html += '<div class="feed-post-menu" onclick="feedDeletePost(\'' + p.id + '\')" title="Supprimer">🗑</div>';
+  } else if (chabUser) {
+    html += '<button class="feed-follow-btn' + (isFollowing ? ' feed-following' : '') + '" onclick="feedToggleFollow(\'' + p.authorUid + '\')">';
+    html += isFollowing ? '✓ Suivi' : '+ Suivre';
+    html += '</button>';
   }
   html += '</div>';
 
