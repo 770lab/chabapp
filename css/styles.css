@@ -79,7 +79,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 #home > .insta-bottom-nav { position:sticky; bottom:0; }
 .home-header { background:var(--white); padding:48px 16px 8px; position:relative; }
 .bh-mark { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
-.login-btn { position:absolute; top:16px; left:16px; color:var(--black) !important; border-color:rgba(0,0,0,0.3) !important; }
+.login-btn { position:absolute; top:16px; left:16px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888) !important; border:none !important; color:#fff !important; border-radius:20px; }
 .home-header-top { text-align:center; }
 .app-footer { text-align:center; padding:40px 16px 32px; }
 .home-greeting { font-family:var(--font); font-size:28px; font-weight:800; color:var(--black); letter-spacing:1px; text-align:center; margin-right:-1px; }
