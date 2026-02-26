@@ -82,7 +82,7 @@
   max-width: 380px; margin: 0 auto;
   padding: 24px 20px;
 }
-#panel-auth .chab-panel-body { background: #fff; }
+#panel-auth { background: #fff !important; }
 .auth-crown-logo { mix-blend-mode: multiply; }
 .auth-logo {
   text-align: center; margin-bottom: 28px;
