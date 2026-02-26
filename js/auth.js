@@ -184,14 +184,13 @@ function _loadUserProfile(firebaseUser) {
 }
 
 function _onLogin() {
-  // Cacher le panel auth, montrer le menu
-  var authPanel = document.getElementById("panel-auth");
-  if (authPanel) authPanel.style.display = "none";
+  // Retourner au menu principal
+  if (typeof switchTab === "function") switchTab("menu");
   var homeEl2 = document.getElementById("home");
   if (homeEl2) homeEl2.classList.remove("auth-open");
   // Actualiser le profil si visible
   _renderProfile();
-  // Mettre à jour les boutons nav
+  // Mettre à jour les boutons nav avec le nom de l'utilisateur
   _updateAuthNav(true);
   // Montrer le compositeur de posts
   var composer = document.getElementById("feed-composer");
@@ -209,12 +208,23 @@ function _onLogout() {
 }
 
 function _updateAuthNav(loggedIn) {
-  // Bouton profil dans la nav
+  // Bouton profil dans la nav du feed
   var navProfile = document.getElementById("nav-profile-btn");
   if (navProfile) navProfile.style.display = loggedIn ? "" : "none";
-  // Bouton login dans la nav  
+  // Bouton login / nom utilisateur dans le header
   var navLogin = document.getElementById("nav-login-btn");
-  if (navLogin) navLogin.style.display = loggedIn ? "none" : "";
+  if (navLogin) {
+    if (loggedIn && chabUser) {
+      var displayName = chabUser.displayName || chabUser.email || "Mon profil";
+      navLogin.textContent = displayName;
+      navLogin.onclick = function() { switchTab("profile"); };
+      navLogin.style.display = "";
+    } else {
+      navLogin.textContent = "Connexion";
+      navLogin.onclick = function() { switchTab("auth"); };
+      navLogin.style.display = "";
+    }
+  }
 }
 
 // ─── Render le panel auth (login / inscription) ─────────────

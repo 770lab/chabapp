@@ -13,15 +13,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Noto+Serif+Hebrew:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 
-<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</link><link href="css/styles.css?v=4" rel="stylesheet"/>
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+<link href="css/styles.css?v=4" rel="stylesheet"/>
 <link href="css/inline.css" rel="stylesheet"/>
-<!-- Firebase SDKs (compat pour vanilla JS) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <link href="css/firebase-panels.css" rel="stylesheet"/>
 </head>
 <body>
@@ -35,7 +29,7 @@
 </defs>
 </svg>
 <!-- SPLASH SCREEN -->
-<div id="splash" onclick="skipSplash()">
+<div id="splash" onclick="skipSplash()" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#fff;position:fixed;top:0;left:0;right:0;bottom:0;z-index:999">
 <div class="splash-bh">ב״ה</div>
 <div class="splash-content" id="splash-content">
 <div class="splash-icon"><img alt="770 Lab" src="assets/splash-logo.png" style="width:180px;height:auto;opacity:0;animation:scFadeIn 0.6s ease 0s forwards;"/></div>
@@ -49,7 +43,7 @@
 </div>
 <!-- NOTIFICATION -->
 <!-- HOME SCREEN -->
-<div id="home">
+<div id="home" style="display:none">
 <div class="home-header">
 <div class="bh-mark">ב״ה</div>
 <div class="home-header-top">
@@ -1077,6 +1071,13 @@ Partager
 </div>
 
 
+<!-- CDN libs (moved from <head> to avoid render-blocking white page) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<!-- App scripts -->
 <script src="js/share.js"></script>
 <script src="js/zmanim.js"></script>
 <script src="js/tefila.js"></script>
