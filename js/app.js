@@ -4133,7 +4133,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","jour","perek","birthday","chains","chain-detail","t119","cemetery"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
@@ -4147,6 +4147,9 @@ function switchTab(tab) {
   if (tab === "sub-etudes") { syncEtudesPanel(); }
   if (tab === "sub-tefila-patakh") { showPatakhDirect('shaharit'); }
   if (tab === "menu") { renderObjStoryBar(); updateBigObjSub(); }
+  if (tab === "auth")    { if (typeof _renderAuth === "function") _renderAuth(); }
+  if (tab === "feed")    { if (typeof feedLoad === "function") feedLoad(); }
+  if (tab === "profile") { if (typeof _renderProfile === "function") _renderProfile(); }
   window.scrollTo(0, 0);
   document.getElementById("reading").scrollTop = 0;
   updateHomeNav(tab);
@@ -7239,7 +7242,7 @@ function updateHomeNav(activeTab) {
   if (!nav) return;
   var items = nav.querySelectorAll('.insta-nav-item, .insta-nav-center');
   items.forEach(function(item) { item.classList.remove('active'); });
-  var tabMap = { menu: 0, 'sub-tefila': 1, 'sub-tefila-patakh': 1, 'sub-objectifs': 2, 'sub-tehilim': 3, 'sub-etudes': 4, 'sub-club': 0, 'sub-beth': 0, jour: 0, chains: 0, 'chain-detail': 0, perek: 3, birthday: 0 };
+  var tabMap = { menu: 0, 'sub-tefila': 1, 'sub-tefila-patakh': 1, 'sub-objectifs': 2, 'sub-tehilim': 3, 'sub-etudes': 4, 'sub-club': 0, 'sub-beth': 0, jour: 0, chains: 0, 'chain-detail': 0, perek: 3, birthday: 0, auth: 0, profile: 0, feed: 0 };
   var idx = tabMap[activeTab];
   if (idx !== undefined && items[idx]) items[idx].classList.add('active');
 }
