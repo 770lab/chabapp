@@ -234,16 +234,27 @@ function _onLogout() {
 function _updateAuthNav(loggedIn) {
   // Bouton profil dans la nav du feed
   var navProfile = document.getElementById("nav-profile-btn");
-  if (navProfile) navProfile.style.display = loggedIn ? "" : "none";
-  // Bouton login / nom utilisateur dans le header
+  if (navProfile) {
+    navProfile.style.display = loggedIn ? "" : "none";
+    if (loggedIn && chabUser && chabUser.photoURL) {
+      navProfile.innerHTML = '<img src="' + chabUser.photoURL + '" class="nav-avatar" />';
+    } else {
+      navProfile.textContent = "👤";
+    }
+  }
+  // Bouton login / avatar utilisateur dans le header
   var navLogin = document.getElementById("nav-login-btn");
   if (navLogin) {
     if (loggedIn && chabUser) {
-      var displayName = chabUser.displayName || chabUser.email || "Mon profil";
-      navLogin.textContent = displayName;
+      if (chabUser.photoURL) {
+        navLogin.innerHTML = '<img src="' + chabUser.photoURL + '" class="nav-avatar" />';
+      } else {
+        navLogin.textContent = (chabUser.displayName || "?").charAt(0).toUpperCase();
+      }
       navLogin.onclick = function() { switchTab("profile"); };
       navLogin.style.display = "";
     } else {
+      navLogin.innerHTML = "";
       navLogin.textContent = "Connexion";
       navLogin.onclick = function() { switchTab("auth"); };
       navLogin.style.display = "";
