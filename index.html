@@ -1013,12 +1013,33 @@ Partager
 </div>
 <div id="profile-content" class="profile-container"></div>
 </div>
+<!-- ═══ PANEL NOTIFICATIONS ═══ -->
+<div id="panel-notifs" style="display:none;" class="chab-panel">
+<div class="panel-top-bar">
+<div class="panel-back" onclick="switchTab('feed')">‹</div>
+<div class="panel-title">Notifications</div>
+<div style="width:32px;"></div>
+</div>
+<div id="notifs-list" class="notifs-container"></div>
+</div>
+<!-- ═══ PANEL ABONNEMENTS ═══ -->
+<div id="panel-following" style="display:none;" class="chab-panel">
+<div class="panel-top-bar">
+<div class="panel-back" onclick="switchTab('profile')">‹</div>
+<div class="panel-title">Mes abonnements</div>
+<div style="width:32px;"></div>
+</div>
+<div id="following-list" class="following-container"></div>
+</div>
 <!-- ═══ PANEL FEED (fil d'actualité) ═══ -->
 <div id="panel-feed" style="display:none;" class="chab-panel">
 <div class="panel-top-bar">
 <div class="panel-back" onclick="switchTab('menu')">‹</div>
 <div class="panel-title">Actualités</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<div id="nav-notif-btn" class="panel-profile-btn" onclick="switchTab('notifs')" style="display:none;"><span style="position:relative;">🔔<span id="notif-badge" class="notif-badge" style="display:none;"></span></span></div>
 <div id="nav-profile-btn" class="panel-profile-btn" onclick="switchTab('profile')" style="display:none;">👤</div>
+</div>
 </div>
 <div class="feed-composer" id="feed-composer" style="display:none;">
 <div class="feed-composer-row">

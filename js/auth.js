@@ -221,6 +221,8 @@ function _onLogin() {
   if (composer) composer.style.display = "";
   // Charger le feed
   if (typeof feedLoad === "function") feedLoad();
+  // Écouter les notifications
+  if (typeof notifListen === "function") notifListen();
 }
 
 function _onLogout() {
@@ -232,6 +234,9 @@ function _onLogout() {
 }
 
 function _updateAuthNav(loggedIn) {
+  // Bouton notifications dans la nav du feed
+  var navNotif = document.getElementById("nav-notif-btn");
+  if (navNotif) navNotif.style.display = loggedIn ? "" : "none";
   // Bouton profil dans la nav du feed
   var navProfile = document.getElementById("nav-profile-btn");
   if (navProfile) {
@@ -356,6 +361,14 @@ function _renderProfile() {
   html += '<input id="profile-name-input" type="text" class="chab-input" value="' + (chabUser.displayName || '') + '" style="flex:1" />';
   html += '<button class="chab-btn chab-btn-sm" onclick="profileUpdateName()">OK</button>';
   html += '</div>';
+  html += '</div>';
+
+  // Mes abonnements
+  var followCount = (chabUser.following || []).length;
+  html += '<div class="profile-section">';
+  html += '<button class="chab-btn chab-btn-outline" onclick="switchTab(\'following\')">';
+  html += 'Mes abonnements (' + followCount + ')';
+  html += '</button>';
   html += '</div>';
 
   // Changer de rôle
