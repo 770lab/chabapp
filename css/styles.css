@@ -81,7 +81,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .bh-mark { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
 .login-btn { position:absolute; top:16px; left:16px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888) !important; border:none !important; color:#fff !important; border-radius:20px; }
 #panel-auth.visible { background:#fff !important; }
-#home:has(#panel-auth.visible) .app-footer { display:none !important; }
+#home.auth-open .app-footer { display:none !important; }
 .home-header-top { text-align:center; }
 .app-footer { text-align:center; padding:40px 16px 32px; }
 .home-greeting { font-family:var(--font); font-size:28px; font-weight:800; color:var(--black); letter-spacing:1px; text-align:center; margin-right:-1px; }
