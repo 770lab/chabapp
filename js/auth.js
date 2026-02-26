@@ -247,7 +247,7 @@ function _renderAuth() {
     html += '</div>';
   }
 
-  html += '<button class="chab-btn chab-btn-primary" onclick="' + (isSignup ? 'authSignup()' : 'authLogin()') + '">';
+  html += '<button class="chab-btn chab-btn-primary chab-btn-insta" onclick="' + (isSignup ? 'authSignup()' : 'authLogin()') + '">';
   html += isSignup ? "Créer mon compte" : "Se connecter";
   html += '</button>';
 
