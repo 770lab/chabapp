@@ -365,3 +365,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 console.log("[Chab'app] Auth module chargé ✓");
+
+
+// ─── Gestion classe auth-open sur #home ───────────────────────
+// Intercepte switchTab pour masquer/afficher le footer selon le panel
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof switchTab === "function") {
+    var _origSwitchTab = switchTab;
+    window.switchTab = function (tab) {
+      var home = document.getElementById("home");
+      if (home) {
+        if (tab === "auth") {
+          home.classList.add("auth-open");
+        } else {
+          home.classList.remove("auth-open");
+        }
+      }
+      return _origSwitchTab.apply(this, arguments);
+    };
+  }
+});
