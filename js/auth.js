@@ -133,7 +133,13 @@ function profileChangePhoto() {
   input.onchange = function () {
     var file = input.files[0];
     if (!file || !chabUser) return;
-    var path = "avatars/" + chabUser.uid + "/" + file.name;
+    // Vérifier la taille (max 5 Mo)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image trop lourde (max 5 Mo).");
+      return;
+    }
+    var ext = file.name.split('.').pop() || "jpg";
+    var path = "avatars/" + chabUser.uid + "/avatar." + ext;
     fbUpload(file, path).then(function (url) {
       return fbAuth.currentUser.updateProfile({ photoURL: url }).then(function () {
         return usersCol.doc(chabUser.uid).update({ photoURL: url });
@@ -141,7 +147,16 @@ function profileChangePhoto() {
         chabUser.photoURL = url;
         _renderProfile();
       });
-    }).catch(function (err) { alert("Erreur photo : " + err.message); });
+    }).catch(function (err) {
+      console.error("[Chab'app] Photo upload error:", err);
+      if (err.code === "storage/unauthorized") {
+        alert("Erreur photo : Vous n'avez pas la permission. Vérifiez les règles Storage.");
+      } else if (err.code === "storage/unknown") {
+        alert("Erreur photo : Échec de l'envoi. Vérifiez votre connexion et les règles Firebase Storage.");
+      } else {
+        alert("Erreur photo : " + err.message);
+      }
+    });
   };
   input.click();
 }
@@ -206,6 +221,8 @@ function _onLogin() {
   if (composer) composer.style.display = "";
   // Charger le feed
   if (typeof feedLoad === "function") feedLoad();
+  // Écouter les notifications
+  if (typeof notifListen === "function") notifListen();
 }
 
 function _onLogout() {
@@ -217,18 +234,32 @@ function _onLogout() {
 }
 
 function _updateAuthNav(loggedIn) {
+  // Bouton notifications dans la nav du feed
+  var navNotif = document.getElementById("nav-notif-btn");
+  if (navNotif) navNotif.style.display = loggedIn ? "" : "none";
   // Bouton profil dans la nav du feed
   var navProfile = document.getElementById("nav-profile-btn");
-  if (navProfile) navProfile.style.display = loggedIn ? "" : "none";
-  // Bouton login / nom utilisateur dans le header
+  if (navProfile) {
+    navProfile.style.display = loggedIn ? "" : "none";
+    if (loggedIn && chabUser && chabUser.photoURL) {
+      navProfile.innerHTML = '<img src="' + chabUser.photoURL + '" class="nav-avatar" />';
+    } else {
+      navProfile.textContent = "👤";
+    }
+  }
+  // Bouton login / avatar utilisateur dans le header
   var navLogin = document.getElementById("nav-login-btn");
   if (navLogin) {
     if (loggedIn && chabUser) {
-      var displayName = chabUser.displayName || chabUser.email || "Mon profil";
-      navLogin.textContent = displayName;
+      if (chabUser.photoURL) {
+        navLogin.innerHTML = '<img src="' + chabUser.photoURL + '" class="nav-avatar" />';
+      } else {
+        navLogin.textContent = (chabUser.displayName || "?").charAt(0).toUpperCase();
+      }
       navLogin.onclick = function() { switchTab("profile"); };
       navLogin.style.display = "";
     } else {
+      navLogin.innerHTML = "";
       navLogin.textContent = "Connexion";
       navLogin.onclick = function() { switchTab("auth"); };
       navLogin.style.display = "";
@@ -330,6 +361,14 @@ function _renderProfile() {
   html += '<input id="profile-name-input" type="text" class="chab-input" value="' + (chabUser.displayName || '') + '" style="flex:1" />';
   html += '<button class="chab-btn chab-btn-sm" onclick="profileUpdateName()">OK</button>';
   html += '</div>';
+  html += '</div>';
+
+  // Mes abonnements
+  var followCount = (chabUser.following || []).length;
+  html += '<div class="profile-section">';
+  html += '<button class="chab-btn chab-btn-outline" onclick="switchTab(\'following\')">';
+  html += 'Mes abonnements (' + followCount + ')';
+  html += '</button>';
   html += '</div>';
 
   // Changer de rôle

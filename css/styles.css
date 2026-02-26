@@ -79,7 +79,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 #home > .insta-bottom-nav { position:sticky; bottom:0; }
 .home-header { background:var(--white); padding:48px 16px 8px; position:relative; }
 .bh-mark { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
-.login-btn { position:absolute; top:16px; left:16px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888) !important; border:none !important; color:#fff !important; border-radius:20px; }
+.login-btn { position:absolute; top:16px; left:16px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888) !important; border:none !important; color:#fff !important; border-radius:20px; overflow:hidden; }
+.login-btn:has(.nav-avatar) { padding:2px !important; border-radius:50% !important; background:none !important; border:1.5px solid var(--gray-4, #e5e7eb) !important; }
 #panel-auth.visible { background:#fff !important; }
 #home.auth-open .app-footer { display:none !important; }
 .home-header-top { text-align:center; }

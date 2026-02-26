@@ -41,6 +41,7 @@ fbDb.enablePersistence({ synchronizeTabs: true }).catch(function (err) {
 // ─── Collections refs (réutilisés dans auth.js & feed.js) ───
 var usersCol   = fbDb.collection("users");
 var postsCol   = fbDb.collection("posts");
+var notifsCol  = fbDb.collection("notifications");
 
 // ─── Helpers partagés ────────────────────────────────────────
 
@@ -67,7 +68,8 @@ function fbId() {
  */
 function fbUpload(file, path) {
   var ref = fbStore.ref(path);
-  return ref.put(file).then(function (snap) {
+  var metadata = { contentType: file.type || "application/octet-stream" };
+  return ref.put(file, metadata).then(function (snap) {
     return snap.ref.getDownloadURL();
   });
 }
