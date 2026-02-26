@@ -2,7 +2,7 @@
 // PWA Cache + Web Push natif (via Cloudflare Worker)
 
 // ═══ PWA CACHE ═══
-var CACHE_NAME = 'chabapp-v3';
+var CACHE_NAME = 'chabapp-v4';
 var ASSETS = [
   '/chabapp/',
   '/chabapp/index.html',
