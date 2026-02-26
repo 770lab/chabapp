@@ -92,7 +92,9 @@ function authResetPassword() {
 
 // ─── Déconnexion ────────────────────────────────────────────
 function authLogout() {
-  fbAuth.signOut();
+  fbAuth.signOut().catch(function (err) {
+    alert("Erreur déconnexion : " + err.message);
+  });
 }
 
 // ─── Profil : changer le rôle ───────────────────────────────
@@ -102,7 +104,9 @@ function profileSwitchRole(newRole) {
     .then(function () {
       chabUser.role = newRole;
       _renderProfile();
-    });
+      alert("Rôle mis à jour !");
+    })
+    .catch(function (err) { alert("Erreur : " + err.message); });
 }
 
 // ─── Profil : changer le nom ────────────────────────────────
@@ -117,7 +121,9 @@ function profileUpdateName() {
   }).then(function () {
     chabUser.displayName = name;
     _renderProfile();
-  });
+    _updateAuthNav(true);
+    alert("Nom mis à jour !");
+  }).catch(function (err) { alert("Erreur : " + err.message); });
 }
 
 // ─── Profil : changer la photo ──────────────────────────────
@@ -135,7 +141,7 @@ function profileChangePhoto() {
         chabUser.photoURL = url;
         _renderProfile();
       });
-    });
+    }).catch(function (err) { alert("Erreur photo : " + err.message); });
   };
   input.click();
 }
