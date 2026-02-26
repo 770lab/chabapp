@@ -187,6 +187,8 @@ function _onLogin() {
   // Cacher le panel auth, montrer le menu
   var authPanel = document.getElementById("panel-auth");
   if (authPanel) authPanel.style.display = "none";
+  var homeEl2 = document.getElementById("home");
+  if (homeEl2) homeEl2.classList.remove("auth-open");
   // Actualiser le profil si visible
   _renderProfile();
   // Mettre à jour les boutons nav
@@ -224,6 +226,8 @@ function authSwitchMode(mode) {
 }
 
 function showAuthPanel() {
+  var homeEl = document.getElementById("home");
+  if (homeEl) homeEl.classList.add("auth-open");
   switchTab("auth");
 }
 
