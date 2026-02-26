@@ -21,7 +21,7 @@ var FIREBASE_CONFIG = {
   apiKey:            "AIzaSyBRVG8tGej-3EGI2AXH1Gmpa10GTVA22tk",
   authDomain:        "chabapp-5fc3b.firebaseapp.com",
   projectId:         "chabapp-5fc3b",
-  storageBucket:     "chabapp-5fc3b-storage",
+  storageBucket:     "chabapp-5fc3b.firebasestorage.app",
   messagingSenderId: "587299342390",
   appId:             "1:587299342390:web:278a1c63936d6a14e7b097",
   measurementId:     "G-X59DDH09CV"
