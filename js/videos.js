@@ -5,18 +5,20 @@
 
 // ─── Vidéos par défaut (fallback si Firestore vide) ────────
 var YT_DEFAULT_VIDEOS = [
-  { id: "dQw4w9WgXcQ", title: "Le Rabbi de Loubavitch - Farbrenguen", channel: "JEM Français" },
-  { id: "3JZ_D3ELwOQ", title: "Le Rabbi parle aux enfants", channel: "JEM Français" },
-  { id: "ZbZSe6N_BXs", title: "Dollars du Rabbi - Moments uniques", channel: "JEM Français" },
-  { id: "tgbNymZ7vqY", title: "Le sens de la prière", channel: "Torah-Box" },
-  { id: "kJQP7kiw5Fk", title: "Étude du Tanya - Chapitre 1", channel: "Loubavitch.fr" },
-  { id: "RgKAFK5djSk", title: "La force du Chabbat", channel: "Torah-Box" },
-  { id: "09R8_2nJtjg", title: "Comprendre les Tehilim", channel: "Torah-Box" },
-  { id: "CevxZvSJLk8", title: "Les Mitsvot au quotidien", channel: "Loubavitch.fr" },
-  { id: "hT_nvWreIhg", title: "Machia'h : qui est-il ?", channel: "Torah-Box" },
-  { id: "JGwWNGJdvx8", title: "L'importance de la Tsédaka", channel: "Torah-Box" },
-  { id: "OPf0YbXqDm0", title: "Histoires 'hassidiques", channel: "JEM Français" },
-  { id: "60ItHLz5WEA", title: "La Paracha de la semaine", channel: "Torah-Box" }
+  // JEM - Jewish Educational Media
+  { id: "iHUjCKdS63E", title: "How to Bring More Blessing Into Your Life", channel: "JEM" },
+  { id: "swOXU9s-joc", title: "Rebbe, You're AMAZING!", channel: "JEM" },
+  { id: "gD1kOqonLOk", title: "What the Rebbe Told Him After 19 Years", channel: "JEM" },
+  { id: "PFZ8kcvQsCo", title: "Warning: Extreme Joy Ahead", channel: "JEM" },
+  { id: "nUEYatkSOYA", title: "The Sincerity of a Child", channel: "JEM" },
+  { id: "zs2FLYhj3xE", title: "A Declaration of Absolute Faith", channel: "JEM" },
+  // Torah-Box
+  { id: "LxBD5FpAIMU", title: "Écouter la Méguila sur internet ???", channel: "Torah-Box" },
+  { id: "k1VZ2Rtsz24", title: "L'amour par le corps... pas conseillé (Rav Sitruk)", channel: "Torah-Box" },
+  { id: "OGlZy9l4QS8", title: "Ali, le cruel passeur des Juifs iraniens", channel: "Torah-Box" },
+  { id: "vZyIxfD3Mwg", title: "Toulal - Le Film", channel: "Torah-Box" },
+  { id: "mtuprbt6_SU", title: "Comment critiquer ? Rav Cremisi", channel: "Torah-Box" },
+  { id: "eU2ty_yndR8", title: "La moquerie n'est pas dans l'ADN du Juif", channel: "Torah-Box" }
 ];
 
 var _ytVideos    = [];
