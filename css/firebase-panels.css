@@ -76,7 +76,7 @@
   font-size: 18px; cursor: pointer;
 }
 .nav-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 38px; height: 38px; border-radius: 50%;
   object-fit: cover; border: 1.5px solid var(--gray-4, #e5e7eb);
 }
 
