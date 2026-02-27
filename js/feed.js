@@ -469,11 +469,15 @@ function _renderPost(p) {
     html += '<div class="feed-post-text">' + _linkify(_escHtml(p.text)) + '</div>';
   }
   if (p.mediaURL) {
+    html += '<div class="feed-media-wrap">';
     if (p.mediaType === "video") {
-      html += '<video src="' + p.mediaURL + '" class="feed-post-media" controls preload="metadata"></video>';
+      html += '<video src="' + p.mediaURL + '" class="feed-post-media feed-media-916" controls preload="metadata"></video>';
+      html += '<button class="feed-media-fullscreen" onclick="feedFullscreen(this)" title="Plein écran">⛶</button>';
     } else {
-      html += '<img src="' + p.mediaURL + '" class="feed-post-media" loading="lazy" onclick="_feedZoomImage(this)" />';
+      html += '<img src="' + p.mediaURL + '" class="feed-post-media feed-media-916" loading="lazy" onclick="_feedZoomImage(this)" />';
+      html += '<button class="feed-media-fullscreen" onclick="_feedZoomImage(this.previousElementSibling)" title="Agrandir">⛶</button>';
     }
+    html += '</div>';
   }
 
   // Actions
@@ -484,6 +488,14 @@ function _renderPost(p) {
   html += '<button class="feed-action-btn" onclick="feedToggleComments(\'' + p.id + '\')">';
   html += '💬 <span>' + (p.commentsCount || 0) + '</span>';
   html += '</button>';
+  if (p.mediaURL) {
+    html += '<button class="feed-action-btn" onclick="feedShare(\'' + p.id + '\', \'' + _escHtml(p.authorName) + '\')" title="Partager">';
+    html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+    html += '</button>';
+    html += '<button class="feed-action-btn" onclick="feedDownload(\'' + p.mediaURL + '\', \'' + (p.mediaType || 'image') + '\')" title="Télécharger">';
+    html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    html += '</button>';
+  }
   html += '</div>';
 
   // Section commentaires (masquée par défaut)
@@ -544,6 +556,87 @@ function _timeAgo(ts) {
   if (diff < 86400) return Math.floor(diff / 3600) + " h";
   if (diff < 604800) return Math.floor(diff / 86400) + " j";
   return date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+}
+
+// ─── Plein écran vidéo ──────────────────────────────────────
+function feedFullscreen(btn) {
+  var video = btn.previousElementSibling;
+  if (!video) return;
+  if (video.requestFullscreen) video.requestFullscreen();
+  else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+  else if (video.webkitEnterFullScreen) video.webkitEnterFullScreen();
+}
+
+// ─── Partage (Web Share API) ────────────────────────────────
+function feedShare(postId, authorName) {
+  var text = "Regarde ce post de " + authorName + " sur Chab'app !";
+  var url = window.location.origin + window.location.pathname + "#post-" + postId;
+  if (navigator.share) {
+    navigator.share({ title: "Chab'app", text: text, url: url }).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(text + "\n" + url).then(function() {
+      alert("Lien copié !");
+    }).catch(function(){});
+  }
+}
+
+// ─── Télécharger avec watermark Chabapp ─────────────────────
+function feedDownload(mediaURL, mediaType) {
+  if (mediaType === "video") {
+    // Pour les vidéos, téléchargement direct (watermark complexe côté client)
+    var a = document.createElement("a");
+    a.href = mediaURL; a.download = "chabapp_video.mp4";
+    a.target = "_blank"; a.click();
+    return;
+  }
+  // Pour les images : canvas + watermark
+  var img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Badge Chabapp en bas à droite
+    var badgeH = Math.max(28, canvas.height * 0.04);
+    var padX = badgeH * 0.6;
+    var padY = badgeH * 0.25;
+    var fontSize = badgeH * 0.55;
+    ctx.font = "bold " + fontSize + "px sans-serif";
+    var text = "Chab'app";
+    var tw = ctx.measureText(text).width;
+    var bw = tw + padX * 2;
+    var bh = badgeH;
+    var bx = canvas.width - bw - badgeH * 0.5;
+    var by = canvas.height - bh - badgeH * 0.5;
+
+    ctx.globalAlpha = 0.85;
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.roundRect(bx, by, bw, bh, bh / 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "#fff";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, bx + padX, by + bh / 2);
+
+    canvas.toBlob(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "chabapp_photo.jpg";
+      a.click();
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    }, "image/jpeg", 0.92);
+  };
+  img.onerror = function() {
+    // Fallback si CORS bloqué
+    var a = document.createElement("a");
+    a.href = mediaURL; a.download = "chabapp_photo.jpg";
+    a.target = "_blank"; a.click();
+  };
+  img.src = mediaURL;
 }
 
 // ─── Integration avec switchTab ─────────────────────────────

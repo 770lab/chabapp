@@ -365,21 +365,42 @@ function _renderProfile() {
     : avatarInner;
 
   var _casherSvg = '<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0l2.47 3.33L17.1 2.2l.44 4.1 4.1.44-1.13 3.63L23.84 11l-3.33 2.47 1.13 3.63-4.1.44-.44 4.1-3.63-1.13L11 23.84l-2.47-3.33-3.63 1.13-.44-4.1-4.1-.44 1.13-3.63L-1.84 11l3.33-2.47L.36 4.9l4.1-.44.44-4.1 3.63 1.13L11 0z" fill="#0095f6"/><path d="M9.5 13.38l-2.12-2.12a.75.75 0 10-1.06 1.06l2.65 2.65a.75.75 0 001.06 0l5.15-5.15a.75.75 0 10-1.06-1.06L9.5 13.38z" fill="#fff"/></svg>';
-  var roleLabel = chabUser.role === AUTH_ROLES.PRO ? '<span class="casher-badge">' + _casherSvg + '</span> <span style="font-size:12px;font-weight:700;color:#0095f6;vertical-align:middle;">Casher</span>' : "👤 Personnel";
-  var switchRole = chabUser.role === AUTH_ROLES.PRO ? AUTH_ROLES.PERSO : AUTH_ROLES.PRO;
-  var switchLabel = chabUser.role === AUTH_ROLES.PRO ? "Passer en Personnel" : "Passer en Professionnel";
+
+  // Compteurs profil style Instagram
+  var myPostsCount = _feedPosts ? _feedPosts.filter(function(p) { return p.authorUid === chabUser.uid; }).length : 0;
+  var followCount = (chabUser.following || []).length;
+  var followersCount = chabUser.followersCount || 0;
 
   var html = '';
-  html += '<div class="profile-header">';
+
+  // ─── Header style Instagram ───
+  html += '<div class="ig-profile-header">';
+  html += '<div class="ig-profile-avatar-wrap">';
   html += avatar;
-  html += '<div class="profile-info">';
-  html += '<div class="profile-name">' + (chabUser.displayName || "Sans nom") + '</div>';
-  html += '<div class="profile-email">' + (chabUser.email || "") + '</div>';
-  html += '<div class="profile-role-badge">' + roleLabel + '</div>';
+  html += '</div>';
+  html += '<div class="ig-profile-stats">';
+  html += '<div class="ig-stat"><span class="ig-stat-num">' + myPostsCount + '</span><span class="ig-stat-label">Publications</span></div>';
+  html += '<div class="ig-stat" onclick="switchTab(\'following\')" style="cursor:pointer;"><span class="ig-stat-num">' + followCount + '</span><span class="ig-stat-label">Abonnements</span></div>';
+  html += '<div class="ig-stat"><span class="ig-stat-num">' + followersCount + '</span><span class="ig-stat-label">Abonnés</span></div>';
   html += '</div>';
   html += '</div>';
 
-  // Modifier le nom
+  // Nom + badge casher
+  html += '<div class="ig-profile-name-row">';
+  html += '<span class="ig-profile-name">' + (chabUser.displayName || "Sans nom") + '</span>';
+  if (chabUser.role === AUTH_ROLES.PRO) {
+    html += ' <span class="casher-badge">' + _casherSvg + '</span>';
+  }
+  html += '</div>';
+  html += '<div class="ig-profile-email">' + (chabUser.email || "") + '</div>';
+
+  // Bouton Modifier le profil style Instagram
+  html += '<div class="ig-profile-actions">';
+  html += '<button class="ig-edit-btn" onclick="document.getElementById(\'ig-edit-section\').style.display=document.getElementById(\'ig-edit-section\').style.display===\'none\'?\'block\':\'none\'">Modifier le profil</button>';
+  html += '</div>';
+
+  // Section d'édition (masquée par défaut)
+  html += '<div id="ig-edit-section" style="display:none;margin-top:16px;">';
   html += '<div class="profile-section">';
   html += '<div class="profile-section-title">Modifier le nom</div>';
   html += '<div style="display:flex;gap:8px;">';
@@ -387,22 +408,33 @@ function _renderProfile() {
   html += '<button class="chab-btn chab-btn-sm" onclick="profileUpdateName()">OK</button>';
   html += '</div>';
   html += '</div>';
-
-  // Mes abonnements
-  var followCount = (chabUser.following || []).length;
   html += '<div class="profile-section">';
-  html += '<button class="chab-btn chab-btn-outline" onclick="switchTab(\'following\')">';
-  html += 'Mes abonnements (' + followCount + ')';
-  html += '</button>';
+  html += '<button class="chab-btn chab-btn-outline" onclick="profileChangePhoto()">Changer la photo</button>';
+  html += '</div>';
   html += '</div>';
 
-  // Changer de rôle
-  html += '<div class="profile-section">';
-  html += '<button class="chab-btn chab-btn-outline" onclick="profileSwitchRole(\'' + switchRole + '\')">' + switchLabel + '</button>';
+  // Grille des posts de l'utilisateur
+  html += '<div class="ig-profile-grid-title">Mes publications</div>';
+  html += '<div class="ig-profile-grid">';
+  if (_feedPosts) {
+    var myPosts = _feedPosts.filter(function(p) { return p.authorUid === chabUser.uid; });
+    myPosts.forEach(function(p) {
+      if (p.mediaURL) {
+        if (p.mediaType === "video") {
+          html += '<div class="ig-grid-item" onclick="switchTab(\'feed\')"><video src="' + p.mediaURL + '" muted preload="metadata"></video><div class="ig-grid-play">▶</div></div>';
+        } else {
+          html += '<div class="ig-grid-item" onclick="switchTab(\'feed\')"><img src="' + p.mediaURL + '" /></div>';
+        }
+      }
+    });
+    if (myPosts.length === 0 || !myPosts.some(function(p) { return p.mediaURL; })) {
+      html += '<div style="grid-column:1/-1;text-align:center;padding:32px 0;color:#9ca3af;font-size:14px;">Aucune publication</div>';
+    }
+  }
   html += '</div>';
 
   // Déconnexion
-  html += '<div class="profile-section">';
+  html += '<div class="profile-section" style="margin-top:24px;">';
   html += '<button class="chab-btn chab-btn-danger" onclick="authLogout()">Se déconnecter</button>';
   html += '</div>';
 

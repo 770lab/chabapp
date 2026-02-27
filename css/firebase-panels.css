@@ -844,3 +844,144 @@ select.yt-admin-input { appearance: auto; }
   border: 2px solid #fff;
   border-radius: 50%;
 }
+
+/* ─── PROFIL STYLE INSTAGRAM ─────────────────────────────── */
+.ig-profile-header {
+  display: flex; align-items: center; gap: 20px;
+  padding: 16px 0 12px;
+}
+.ig-profile-avatar-wrap { flex-shrink: 0; }
+.ig-profile-stats {
+  flex: 1;
+  display: flex; justify-content: space-around; text-align: center;
+}
+.ig-stat { display: flex; flex-direction: column; gap: 2px; }
+.ig-stat-num { font-size: 17px; font-weight: 800; color: var(--black, #000); }
+.ig-stat-label { font-size: 12px; color: var(--gray-3, #6b7280); }
+.ig-profile-name-row {
+  font-size: 16px; font-weight: 700; color: var(--black, #000);
+  margin-top: 8px;
+}
+.ig-profile-email {
+  font-size: 13px; color: var(--gray-3, #6b7280);
+  margin-top: 2px;
+}
+.ig-profile-actions {
+  display: flex; gap: 8px; margin-top: 14px;
+}
+.ig-edit-btn {
+  flex: 1; padding: 8px 16px;
+  background: var(--gray-5, #f3f4f6);
+  border: none; border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  color: var(--black, #000);
+  cursor: pointer; font-family: inherit;
+}
+.ig-edit-btn:active { background: #e5e7eb; }
+.ig-profile-grid-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--gray-3, #6b7280);
+  text-transform: uppercase; letter-spacing: .5px;
+  margin: 20px 0 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gray-5, #f0f0f0);
+}
+.ig-profile-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+}
+.ig-grid-item {
+  position: relative; aspect-ratio: 1;
+  overflow: hidden; cursor: pointer;
+  background: var(--gray-5, #f3f4f6);
+  border-radius: 2px;
+}
+.ig-grid-item img, .ig-grid-item video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.ig-grid-play {
+  position: absolute; top: 6px; right: 6px;
+  font-size: 12px; color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* ─── FEED MEDIA 9:16 ────────────────────────────────────── */
+.feed-media-wrap {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+.feed-media-916 {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.feed-media-fullscreen {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  color: #fff; font-size: 16px;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5;
+}
+.feed-media-fullscreen:active { background: rgba(0,0,0,0.8); }
+
+/* ─── JEWBUZZ ────────────────────────────────────────────── */
+.jewbuzz-container {
+  padding: 0 16px 32px;
+}
+.jewbuzz-hero {
+  text-align: center; padding: 32px 16px 24px;
+}
+.jewbuzz-logo {
+  font-size: 36px; font-weight: 900;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; letter-spacing: -1px;
+}
+.jewbuzz-desc {
+  font-size: 14px; color: var(--gray-3, #6b7280);
+  margin-top: 4px;
+}
+.jewbuzz-links {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.jewbuzz-link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #fff; font-weight: 600; font-size: 15px;
+  transition: transform .15s, box-shadow .15s;
+}
+.jewbuzz-link:active { transform: scale(0.97); }
+.jewbuzz-link svg { flex-shrink: 0; }
+.jewbuzz-handle {
+  margin-left: auto;
+  font-size: 12px; font-weight: 400;
+  opacity: 0.7;
+}
+.jewbuzz-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.jewbuzz-tiktok { background: #000; }
+.jewbuzz-youtube { background: #FF0000; }
+.jewbuzz-facebook { background: #1877F2; }
+.jewbuzz-x { background: #000; }
+.jewbuzz-linkedin { background: #0A66C2; }
+.jewbuzz-footer {
+  text-align: center; margin-top: 24px;
+}
+.jewbuzz-website-btn {
+  display: inline-block; padding: 12px 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: #fff; font-weight: 700; font-size: 14px;
+  text-decoration: none;
+}

@@ -4133,7 +4133,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","sub-videos","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","sub-videos","sub-jewbuzz","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
