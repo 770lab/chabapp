@@ -10,6 +10,9 @@ var _feedLastDoc   = null;   // pagination cursor
 var _feedLoading   = false;
 var _feedPageSize  = 15;
 var _feedMediaFile = null;   // File en attente d'upload
+var _mentionQuery  = "";     // texte après @ pour recherche
+var _mentionStart  = -1;     // position du @ dans le textarea
+var _mentionUsers  = [];     // cache des utilisateurs pour @mention
 
 // ─── Charger le feed (temps réel) ───────────────────────────
 function feedLoad() {
@@ -57,9 +60,10 @@ function feedLoadMore() {
 // ─── Publier un post ────────────────────────────────────────
 function feedPublish() {
   if (!chabUser) return alert("Connectez-vous pour publier.");
+  if (!_feedMediaFile) return;
+
   var input = document.getElementById("feed-compose-text");
   var text  = input ? input.value.trim() : "";
-  if (!text && !_feedMediaFile) return;
 
   var btn = document.getElementById("feed-publish-btn");
   if (btn) { btn.disabled = true; btn.textContent = "Publication…"; }
@@ -78,24 +82,16 @@ function feedPublish() {
     createdAt:   fbTimestamp()
   };
 
-  var promise;
-  if (_feedMediaFile) {
-    var ext  = _feedMediaFile.name.split('.').pop();
-    var path = "posts/" + fbId() + "." + ext;
-    var type = _feedMediaFile.type.startsWith("video") ? "video" : "image";
-    promise = fbUpload(_feedMediaFile, path).then(function (url) {
-      postData.mediaURL  = url;
-      postData.mediaType = type;
-      return postsCol.add(postData);
-    });
-  } else {
-    promise = postsCol.add(postData);
-  }
+  var ext  = _feedMediaFile.name.split('.').pop();
+  var path = "posts/" + fbId() + "." + ext;
+  var type = _feedMediaFile.type.startsWith("video") ? "video" : "image";
 
-  promise.then(function () {
-    if (input) input.value = "";
-    _feedMediaFile = null;
-    _renderComposerPreview();
+  fbUpload(_feedMediaFile, path).then(function (url) {
+    postData.mediaURL  = url;
+    postData.mediaType = type;
+    return postsCol.add(postData);
+  }).then(function () {
+    feedCloseComposer();
     if (btn) { btn.disabled = false; btn.textContent = "Publier"; }
   }).catch(function (err) {
     alert("Erreur : " + err.message);
@@ -103,21 +99,55 @@ function feedPublish() {
   });
 }
 
-// ─── Sélection média ────────────────────────────────────────
+// ─── Sélection média (ouvre le picker puis le panneau) ──────
 function feedSelectMedia() {
+  if (!chabUser) return alert("Connectez-vous pour publier.");
   var inp = document.createElement("input");
   inp.type = "file";
   inp.accept = "image/*,video/*";
   inp.onchange = function () {
-    _feedMediaFile = inp.files[0] || null;
-    _renderComposerPreview();
+    if (!inp.files[0]) return;
+    _feedMediaFile = inp.files[0];
+    _openComposerPanel();
   };
   inp.click();
 }
 
-function feedClearMedia() {
-  _feedMediaFile = null;
+// ─── Panneau de composition ────────────────────────────────
+function _openComposerPanel() {
   _renderComposerPreview();
+  var overlay = document.getElementById("feed-compose-overlay");
+  var panel   = document.getElementById("feed-compose-panel");
+  var input   = document.getElementById("feed-compose-text");
+  if (overlay) overlay.style.display = "";
+  if (panel)   panel.style.display   = "flex";
+  if (input)   { input.value = ""; input.focus(); }
+  // Activer la détection des @mentions
+  if (input) {
+    input.addEventListener("input", _onCaptionInput);
+    input.addEventListener("keydown", _onCaptionKeydown);
+  }
+}
+
+function feedCloseComposer() {
+  _feedMediaFile = null;
+  var overlay = document.getElementById("feed-compose-overlay");
+  var panel   = document.getElementById("feed-compose-panel");
+  var input   = document.getElementById("feed-compose-text");
+  var preview = document.getElementById("feed-media-preview");
+  var suggestions = document.getElementById("feed-mention-suggestions");
+  if (overlay)     overlay.style.display     = "none";
+  if (panel)       panel.style.display       = "none";
+  if (input)       input.value               = "";
+  if (preview)     preview.innerHTML         = "";
+  if (suggestions) suggestions.style.display = "none";
+  _mentionStart = -1;
+  _mentionQuery = "";
+  // Retirer les listeners
+  if (input) {
+    input.removeEventListener("input", _onCaptionInput);
+    input.removeEventListener("keydown", _onCaptionKeydown);
+  }
 }
 
 function _renderComposerPreview() {
@@ -126,10 +156,114 @@ function _renderComposerPreview() {
   if (!_feedMediaFile) { el.innerHTML = ""; return; }
   var url = URL.createObjectURL(_feedMediaFile);
   if (_feedMediaFile.type.startsWith("video")) {
-    el.innerHTML = '<div class="feed-preview-wrap"><video src="' + url + '" class="feed-preview-thumb" muted></video><span class="feed-preview-remove" onclick="feedClearMedia()">✕</span></div>';
+    el.innerHTML = '<video src="' + url + '" muted controls preload="metadata"></video>';
   } else {
-    el.innerHTML = '<div class="feed-preview-wrap"><img src="' + url + '" class="feed-preview-thumb" /><span class="feed-preview-remove" onclick="feedClearMedia()">✕</span></div>';
+    el.innerHTML = '<img src="' + url + '" />';
   }
+}
+
+// ─── @Mentions ─────────────────────────────────────────────
+function _onCaptionInput(e) {
+  var input = e.target;
+  var val   = input.value;
+  var pos   = input.selectionStart;
+
+  // Chercher le @ le plus récent avant le curseur
+  var lastAt = val.lastIndexOf("@", pos - 1);
+  if (lastAt === -1 || (lastAt > 0 && val[lastAt - 1] !== " " && val[lastAt - 1] !== "\n")) {
+    _hideMentionSuggestions();
+    return;
+  }
+
+  var query = val.substring(lastAt + 1, pos);
+  // S'il y a un espace dans la query, on n'est plus en mode mention
+  if (query.indexOf(" ") !== -1) {
+    _hideMentionSuggestions();
+    return;
+  }
+
+  _mentionStart = lastAt;
+  _mentionQuery = query.toLowerCase();
+  _searchMentionUsers(_mentionQuery);
+}
+
+function _onCaptionKeydown(e) {
+  // Fermer les suggestions sur Escape
+  if (e.key === "Escape") {
+    _hideMentionSuggestions();
+  }
+}
+
+function _searchMentionUsers(query) {
+  if (query.length < 1) {
+    _hideMentionSuggestions();
+    return;
+  }
+
+  // Chercher dans Firestore les utilisateurs dont le nom contient la query
+  usersCol.orderBy("displayName").limit(50).get().then(function (snap) {
+    _mentionUsers = [];
+    snap.forEach(function (doc) {
+      var u = Object.assign({ uid: doc.id }, doc.data());
+      if (u.uid === chabUser.uid) return; // pas soi-même
+      var name = (u.displayName || "").toLowerCase();
+      if (name.indexOf(query) !== -1) {
+        _mentionUsers.push(u);
+      }
+    });
+    _renderMentionSuggestions();
+  });
+}
+
+function _renderMentionSuggestions() {
+  var el = document.getElementById("feed-mention-suggestions");
+  if (!el) return;
+
+  if (!_mentionUsers.length) {
+    el.style.display = "none";
+    return;
+  }
+
+  var html = "";
+  _mentionUsers.slice(0, 5).forEach(function (u, i) {
+    var avatar = u.photoURL
+      ? '<img src="' + u.photoURL + '" class="feed-mention-avatar" />'
+      : '<div class="feed-mention-avatar feed-mention-avatar-ph">' + (u.displayName || "?").charAt(0).toUpperCase() + '</div>';
+    html += '<div class="feed-mention-item" onclick="_selectMention(' + i + ')">';
+    html += avatar;
+    html += '<span class="feed-mention-name">' + _escHtml(u.displayName || "Sans nom") + '</span>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+  el.style.display = "";
+}
+
+function _selectMention(index) {
+  var user  = _mentionUsers[index];
+  if (!user) return;
+  var input = document.getElementById("feed-compose-text");
+  if (!input) return;
+
+  var val   = input.value;
+  var pos   = input.selectionStart;
+  var before = val.substring(0, _mentionStart);
+  var after  = val.substring(pos);
+  var mention = "@" + user.displayName + " ";
+
+  input.value = before + mention + after;
+  var newPos = before.length + mention.length;
+  input.setSelectionRange(newPos, newPos);
+  input.focus();
+
+  _hideMentionSuggestions();
+}
+
+function _hideMentionSuggestions() {
+  var el = document.getElementById("feed-mention-suggestions");
+  if (el) el.style.display = "none";
+  _mentionStart = -1;
+  _mentionQuery = "";
 }
 
 // ─── Like / Unlike ──────────────────────────────────────────
@@ -371,7 +505,9 @@ function _escHtml(s) {
 }
 
 function _linkify(text) {
-  return text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  text = text.replace(/@([\w\s]+?)(?=\s@|\s|$)/g, '<span class="feed-mention-tag">@$1</span>');
+  return text;
 }
 
 function _timeAgo(ts) {
