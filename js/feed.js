@@ -13,6 +13,7 @@ var _feedMediaFile = null;   // File en attente d'upload
 var _mentionQuery  = "";     // texte après @ pour recherche
 var _mentionStart  = -1;     // position du @ dans le textarea
 var _mentionUsers  = [];     // cache des utilisateurs pour @mention
+var _mentionedUsers = [];    // { uid, displayName } sélectionnés dans la composition en cours
 
 // ─── Charger le feed (temps réel) ───────────────────────────
 function feedLoad() {
@@ -86,11 +87,19 @@ function feedPublish() {
   var path = "posts/" + fbId() + "." + ext;
   var type = _feedMediaFile.type.startsWith("video") ? "video" : "image";
 
+  var _mentionSnapshot = _mentionedUsers.slice(); // copie avant le reset du close
   fbUpload(_feedMediaFile, path).then(function (url) {
     postData.mediaURL  = url;
     postData.mediaType = type;
     return postsCol.add(postData);
-  }).then(function () {
+  }).then(function (postRef) {
+    // Notifier les utilisateurs mentionnés (seulement si la mention est encore dans le texte)
+    var postId = postRef ? postRef.id : "";
+    _mentionSnapshot.forEach(function (u) {
+      if (text.indexOf("@" + u.displayName) !== -1) {
+        _sendNotif(u.uid, "mention", postId, text);
+      }
+    });
     feedCloseComposer();
     if (btn) { btn.disabled = false; btn.textContent = "Publier"; }
   }).catch(function (err) {
@@ -143,6 +152,7 @@ function feedCloseComposer() {
   if (suggestions) suggestions.style.display = "none";
   _mentionStart = -1;
   _mentionQuery = "";
+  _mentionedUsers = [];
   // Retirer les listeners
   if (input) {
     input.removeEventListener("input", _onCaptionInput);
@@ -256,6 +266,10 @@ function _selectMention(index) {
   input.setSelectionRange(newPos, newPos);
   input.focus();
 
+  // Tracker l'UID pour la notification à la publication
+  if (!_mentionedUsers.some(function(u) { return u.uid === user.uid; })) {
+    _mentionedUsers.push({ uid: user.uid, displayName: user.displayName });
+  }
   _hideMentionSuggestions();
 }
 
@@ -619,6 +633,7 @@ function _renderNotif(n) {
   if (n.type === "follow")  msg = '<b>' + _escHtml(n.fromName) + '</b> vous suit';
   if (n.type === "like")    msg = '<b>' + _escHtml(n.fromName) + '</b> a aimé votre publication';
   if (n.type === "comment") msg = '<b>' + _escHtml(n.fromName) + '</b> a commenté : "' + _escHtml(n.text) + '"';
+  if (n.type === "mention") msg = '<b>' + _escHtml(n.fromName) + '</b> vous a mentionné dans une publication';
 
   var cls = n.read ? "notif-item" : "notif-item notif-unread";
   var time = _timeAgo(n.createdAt);
