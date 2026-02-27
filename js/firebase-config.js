@@ -39,9 +39,11 @@ fbDb.enablePersistence({ synchronizeTabs: true }).catch(function (err) {
 });
 
 // ─── Collections refs (réutilisés dans auth.js & feed.js) ───
-var usersCol   = fbDb.collection("users");
-var postsCol   = fbDb.collection("posts");
-var notifsCol  = fbDb.collection("notifications");
+var usersCol     = fbDb.collection("users");
+var postsCol     = fbDb.collection("posts");
+var notifsCol    = fbDb.collection("notifications");
+var ytVideosCol  = fbDb.collection("yt_videos");
+var ytChannelsCol = fbDb.collection("yt_channels");
 
 // ─── Helpers partagés ────────────────────────────────────────
 
