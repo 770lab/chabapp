@@ -267,15 +267,15 @@
 .feed-fab {
   position: fixed; bottom: 90px; right: 20px;
   width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(135deg, #c9a84c, #e8c96a);
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   color: #fff; font-size: 32px; font-weight: 300;
-  border: none; box-shadow: 0 4px 16px rgba(201,168,76,0.4);
+  border: none; box-shadow: 0 4px 16px rgba(225,48,108,0.4);
   cursor: pointer; z-index: 100;
   display: flex; align-items: center; justify-content: center;
   transition: transform 0.2s, box-shadow 0.2s;
   line-height: 1;
 }
-.feed-fab:active { transform: scale(0.92); box-shadow: 0 2px 8px rgba(201,168,76,0.3); }
+.feed-fab:active { transform: scale(0.92); box-shadow: 0 2px 8px rgba(225,48,108,0.3); }
 
 /* Overlay sombre */
 .feed-compose-overlay {
