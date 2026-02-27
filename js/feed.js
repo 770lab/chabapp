@@ -431,7 +431,8 @@ function _renderPost(p) {
   var isLiked = chabUser && (p.likedBy || []).indexOf(chabUser.uid) !== -1;
   var isFollowing = chabUser && (chabUser.following || []).indexOf(p.authorUid) !== -1;
   var timeAgo = _timeAgo(p.createdAt);
-  var roleBadge = p.authorRole === "pro" ? '<span class="casher-badge casher-badge-sm">Casher</span>' : '';
+  var _casherSvg = '<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0l2.47 3.33L17.1 2.2l.44 4.1 4.1.44-1.13 3.63L23.84 11l-3.33 2.47 1.13 3.63-4.1.44-.44 4.1-3.63-1.13L11 23.84l-2.47-3.33-3.63 1.13-.44-4.1-4.1-.44 1.13-3.63L-1.84 11l3.33-2.47L.36 4.9l4.1-.44.44-4.1 3.63 1.13L11 0z" fill="#0095f6"/><path d="M9.5 13.38l-2.12-2.12a.75.75 0 10-1.06 1.06l2.65 2.65a.75.75 0 001.06 0l5.15-5.15a.75.75 0 10-1.06-1.06L9.5 13.38z" fill="#fff"/></svg>';
+  var roleBadge = p.authorRole === "pro" ? '<span class="casher-badge casher-badge-sm">' + _casherSvg + '</span>' : '';
 
   var html = '<div class="feed-post" id="post-' + p.id + '">';
 

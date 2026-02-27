@@ -364,7 +364,8 @@ function _renderProfile() {
     ? '<div class="profile-avatar-story-ring">' + avatarInner + '</div>'
     : avatarInner;
 
-  var roleLabel = chabUser.role === AUTH_ROLES.PRO ? '<span class="casher-badge">Casher</span>' : "👤 Personnel";
+  var _casherSvg = '<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0l2.47 3.33L17.1 2.2l.44 4.1 4.1.44-1.13 3.63L23.84 11l-3.33 2.47 1.13 3.63-4.1.44-.44 4.1-3.63-1.13L11 23.84l-2.47-3.33-3.63 1.13-.44-4.1-4.1-.44 1.13-3.63L-1.84 11l3.33-2.47L.36 4.9l4.1-.44.44-4.1 3.63 1.13L11 0z" fill="#0095f6"/><path d="M9.5 13.38l-2.12-2.12a.75.75 0 10-1.06 1.06l2.65 2.65a.75.75 0 001.06 0l5.15-5.15a.75.75 0 10-1.06-1.06L9.5 13.38z" fill="#fff"/></svg>';
+  var roleLabel = chabUser.role === AUTH_ROLES.PRO ? '<span class="casher-badge">' + _casherSvg + '</span> <span style="font-size:12px;font-weight:700;color:#0095f6;vertical-align:middle;">Casher</span>' : "👤 Personnel";
   var switchRole = chabUser.role === AUTH_ROLES.PRO ? AUTH_ROLES.PERSO : AUTH_ROLES.PRO;
   var switchLabel = chabUser.role === AUTH_ROLES.PRO ? "Passer en Personnel" : "Passer en Professionnel";
 

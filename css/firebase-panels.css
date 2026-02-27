@@ -789,22 +789,17 @@ select.yt-admin-input { appearance: auto; }
 
 /* ─── Badge Casher (vérifié style Meta) ───────────────────── */
 .casher-badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0095f6, #00c6ff);
-  color: #fff; font-size: 11px; font-weight: 800;
-  padding: 3px 10px; border-radius: 20px;
-  letter-spacing: .3px;
+  display: inline-block;
+  width: 18px; height: 18px;
   vertical-align: middle;
-  position: relative;
-  box-shadow: 0 1px 4px rgba(0,149,246,0.3);
-}
-.casher-badge::before {
-  content: "✓ ";
-  font-weight: 900;
-}
-.casher-badge-sm {
-  font-size: 9px; padding: 1px 7px;
   margin-left: 4px;
+  background: none;
+  position: relative;
+}
+.casher-badge svg { width: 100%; height: 100%; display: block; }
+.casher-badge-sm {
+  width: 16px; height: 16px;
+  margin-left: 3px;
 }
 
 /* ─── Lien discret suppression compte ─────────────────────── */
@@ -817,29 +812,35 @@ select.yt-admin-input { appearance: auto; }
 
 /* ─── Story ring Instagram (avatar) ───────────────────────── */
 .profile-avatar-story-ring {
-  padding: 3px;
+  width: 120px; height: 120px;
   border-radius: 50%;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  display: inline-block;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
 .profile-avatar-story-ring .profile-avatar {
+  width: 110px; height: 110px;
   border: 3px solid #fff;
+  border-radius: 50%;
 }
 .feed-post-avatar-story-ring {
-  padding: 2px;
+  width: 42px; height: 42px;
   border-radius: 50%;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  display: inline-flex;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
 .feed-post-avatar-story-ring .feed-post-avatar {
+  width: 34px; height: 34px;
   border: 2px solid #fff;
+  border-radius: 50%;
 }
 .panel-profile-btn.has-story {
   border: none;
-  padding: 2px;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
 }
 .panel-profile-btn.has-story .nav-avatar {
+  width: 34px; height: 34px;
   border: 2px solid #fff;
+  border-radius: 50%;
 }
