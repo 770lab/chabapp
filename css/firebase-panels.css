@@ -169,14 +169,14 @@
   margin-bottom: 28px;
 }
 .profile-avatar {
-  width: 72px; height: 72px; border-radius: 50%;
+  width: 110px; height: 110px; border-radius: 50%;
   object-fit: cover; cursor: pointer;
-  border: 2px solid var(--gray-4, #e5e7eb);
+  border: 3px solid var(--gray-4, #e5e7eb);
 }
 .profile-avatar-placeholder {
   display: flex; align-items: center; justify-content: center;
   background: var(--gray-5, #f3f4f6);
-  font-size: 28px; font-weight: 700; color: var(--gray-3, #6b7280);
+  font-size: 42px; font-weight: 700; color: var(--gray-3, #6b7280);
 }
 .profile-info { flex: 1; }
 .profile-name {
