@@ -786,3 +786,60 @@ select.yt-admin-input { appearance: auto; }
 .auth-770-img { height: 40px; width: auto; opacity: 0.85; }
 .auth-770-text { font-size: 28px; font-weight: 900; color: var(--black, #000); letter-spacing: -1px; }
 .auth-770-lab { font-size: 14px; font-weight: 600; color: var(--gray-3, #9ca3af); margin-left: 3px; text-transform: lowercase; }
+
+/* ─── Badge Casher (vérifié style Meta) ───────────────────── */
+.casher-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0095f6, #00c6ff);
+  color: #fff; font-size: 11px; font-weight: 800;
+  padding: 3px 10px; border-radius: 20px;
+  letter-spacing: .3px;
+  vertical-align: middle;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0,149,246,0.3);
+}
+.casher-badge::before {
+  content: "✓ ";
+  font-weight: 900;
+}
+.casher-badge-sm {
+  font-size: 9px; padding: 1px 7px;
+  margin-left: 4px;
+}
+
+/* ─── Lien discret suppression compte ─────────────────────── */
+.profile-delete-link {
+  font-size: 12px; color: var(--gray-3, #9ca3af);
+  cursor: pointer; text-decoration: underline;
+  transition: color .2s;
+}
+.profile-delete-link:hover { color: #ef4444; }
+
+/* ─── Story ring Instagram (avatar) ───────────────────────── */
+.profile-avatar-story-ring {
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  display: inline-block;
+}
+.profile-avatar-story-ring .profile-avatar {
+  border: 3px solid #fff;
+}
+.feed-post-avatar-story-ring {
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.feed-post-avatar-story-ring .feed-post-avatar {
+  border: 2px solid #fff;
+}
+.panel-profile-btn.has-story {
+  border: none;
+  padding: 2px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+.panel-profile-btn.has-story .nav-avatar {
+  border: 2px solid #fff;
+}

@@ -241,6 +241,17 @@ function _updateAuthNav(loggedIn) {
   var navProfile = document.getElementById("nav-profile-btn");
   if (navProfile) {
     navProfile.style.display = loggedIn ? "" : "none";
+    // Vérifier si l'utilisateur a publié dans les 24h
+    var _hasNavStory = loggedIn && chabUser && typeof _feedPosts !== "undefined" && _feedPosts && _feedPosts.some(function(p) {
+      if (p.authorUid !== chabUser.uid) return false;
+      var t = p.createdAt ? (p.createdAt.toDate ? p.createdAt.toDate().getTime() : (p.createdAt.seconds ? p.createdAt.seconds * 1000 : 0)) : 0;
+      return (Date.now() - t) < 86400000;
+    });
+    if (_hasNavStory) {
+      navProfile.classList.add("has-story");
+    } else {
+      navProfile.classList.remove("has-story");
+    }
     if (loggedIn && chabUser && chabUser.photoURL) {
       navProfile.innerHTML = '<img src="' + chabUser.photoURL + '" class="nav-avatar" />';
     } else {
@@ -336,11 +347,24 @@ function _renderProfile() {
   var el = document.getElementById("profile-content");
   if (!el || !chabUser) return;
 
-  var avatar = chabUser.photoURL
+  var avatarInner = chabUser.photoURL
     ? '<img src="' + chabUser.photoURL + '" class="profile-avatar" onclick="profileChangePhoto()" />'
     : '<div class="profile-avatar profile-avatar-placeholder" onclick="profileChangePhoto()">' + (chabUser.displayName || "?").charAt(0).toUpperCase() + '</div>';
 
-  var roleLabel = chabUser.role === AUTH_ROLES.PRO ? "🏢 Professionnel" : "👤 Personnel";
+  // Vérifier si l'utilisateur a publié dans les 24h
+  var _now = Date.now();
+  var _24h = 24 * 60 * 60 * 1000;
+  var hasStory = _feedPosts && _feedPosts.some(function(p) {
+    if (p.authorUid !== chabUser.uid) return false;
+    var t = p.createdAt ? (p.createdAt.toDate ? p.createdAt.toDate().getTime() : (p.createdAt.seconds ? p.createdAt.seconds * 1000 : 0)) : 0;
+    return (_now - t) < _24h;
+  });
+
+  var avatar = hasStory
+    ? '<div class="profile-avatar-story-ring">' + avatarInner + '</div>'
+    : avatarInner;
+
+  var roleLabel = chabUser.role === AUTH_ROLES.PRO ? '<span class="casher-badge">Casher</span>' : "👤 Personnel";
   var switchRole = chabUser.role === AUTH_ROLES.PRO ? AUTH_ROLES.PERSO : AUTH_ROLES.PRO;
   var switchLabel = chabUser.role === AUTH_ROLES.PRO ? "Passer en Personnel" : "Passer en Professionnel";
 
@@ -378,12 +402,12 @@ function _renderProfile() {
 
   // Déconnexion
   html += '<div class="profile-section">';
-  html += '<button class="chab-btn chab-btn-outline" onclick="authLogout()">Se déconnecter</button>';
+  html += '<button class="chab-btn chab-btn-danger" onclick="authLogout()">Se déconnecter</button>';
   html += '</div>';
 
-  // Supprimer le compte
-  html += '<div class="profile-section" style="margin-top:32px;">';
-  html += '<button class="chab-btn chab-btn-danger" onclick="profileDeleteAccount()">Supprimer mon compte</button>';
+  // Supprimer le compte (discret, tout en bas)
+  html += '<div style="text-align:center;margin-top:48px;padding-bottom:24px;">';
+  html += '<span class="profile-delete-link" onclick="profileDeleteAccount()">Supprimer mon compte</span>';
   html += '</div>';
 
   el.innerHTML = html;

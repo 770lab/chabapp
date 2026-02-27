@@ -431,15 +431,25 @@ function _renderPost(p) {
   var isLiked = chabUser && (p.likedBy || []).indexOf(chabUser.uid) !== -1;
   var isFollowing = chabUser && (chabUser.following || []).indexOf(p.authorUid) !== -1;
   var timeAgo = _timeAgo(p.createdAt);
-  var roleBadge = p.authorRole === "pro" ? '<span class="feed-badge-pro">PRO</span>' : '';
+  var roleBadge = p.authorRole === "pro" ? '<span class="casher-badge casher-badge-sm">Casher</span>' : '';
 
   var html = '<div class="feed-post" id="post-' + p.id + '">';
 
-  // Header
-  html += '<div class="feed-post-header">';
-  html += p.authorPhoto
+  // Vérifier si l'auteur a publié dans les 24h (story ring)
+  var _now24 = Date.now();
+  var _hasStory = _feedPosts && _feedPosts.some(function(fp) {
+    if (fp.authorUid !== p.authorUid) return false;
+    var t = fp.createdAt ? (fp.createdAt.toDate ? fp.createdAt.toDate().getTime() : (fp.createdAt.seconds ? fp.createdAt.seconds * 1000 : 0)) : 0;
+    return (_now24 - t) < 86400000;
+  });
+
+  var avatarHtml = p.authorPhoto
     ? '<img src="' + p.authorPhoto + '" class="feed-post-avatar" />'
     : '<div class="feed-post-avatar feed-post-avatar-ph">' + (p.authorName || "?").charAt(0).toUpperCase() + '</div>';
+
+  // Header
+  html += '<div class="feed-post-header">';
+  html += _hasStory ? '<div class="feed-post-avatar-story-ring">' + avatarHtml + '</div>' : avatarHtml;
   html += '<div class="feed-post-meta">';
   html += '<div class="feed-post-author">' + _escHtml(p.authorName) + ' ' + roleBadge + '</div>';
   html += '<div class="feed-post-time">' + timeAgo + '</div>';
