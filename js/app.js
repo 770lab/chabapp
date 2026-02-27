@@ -4152,7 +4152,7 @@ function switchTab(tab) {
   if (tab === "feed")    { if (typeof feedLoad === "function") feedLoad(); }
   // Afficher/masquer le bouton + selon le panel
   var fab = document.getElementById("feed-fab");
-  if (fab) fab.style.display = (tab === "feed" && typeof chabUser !== "undefined" && chabUser) ? "" : "none";
+  if (fab) fab.style.display = (tab === "feed") ? "" : "none";
   if (tab === "profile") { if (typeof _renderProfile === "function") _renderProfile(); }
   if (tab === "notifs")  { if (typeof notifLoad === "function") notifLoad(); }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
