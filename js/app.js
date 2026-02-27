@@ -4133,7 +4133,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","sub-videos","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
@@ -4148,6 +4148,7 @@ function switchTab(tab) {
   if (tab === "sub-tefila-patakh") { showPatakhDirect('shaharit'); }
   if (tab === "menu") { renderObjStoryBar(); updateBigObjSub(); }
   if (tab === "auth")    { if (typeof _renderAuth === "function") _renderAuth(); }
+  if (tab === "sub-videos") { if (typeof ytLoadVideos === "function") ytLoadVideos(); }
   if (tab === "feed")    { if (typeof feedLoad === "function") feedLoad(); }
   // Afficher/masquer le bouton + selon le panel
   var fab = document.getElementById("feed-fab");

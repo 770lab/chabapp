@@ -279,6 +279,19 @@
 </div>
 </div>
 
+<!-- BLOC VIDÉOS -->
+<div onclick="switchTab('sub-videos')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;height:110px;margin-top:10px;background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+<div style="position:absolute;inset:0;display:flex;align-items:center;padding:20px;">
+<div style="width:52px;height:52px;border-radius:50%;background:rgba(255,0,0,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:16px;">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><polygon points="10,8 16,12 10,16" fill="#FF0000"/><rect x="2" y="4" width="20" height="16" rx="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none"/></svg>
+</div>
+<div>
+<div class="big-card-title" style="color:#fff;text-shadow:none;">Vidéos</div>
+<div class="big-card-sub" style="color:rgba(255,255,255,0.6);text-shadow:none;">Torah · Cours · Inspirations</div>
+</div>
+</div>
+</div>
+
 </div>
 <!-- DONATION BLOCKS -->
 <div style="display:flex;gap:10px;margin:12px 16px 0;">
@@ -1031,6 +1044,24 @@ Partager
 </div>
 <div id="following-list" class="following-container"></div>
 </div>
+<!-- ═══ PANEL VIDÉOS ═══ -->
+<div id="panel-sub-videos" style="display:none;" class="chab-panel">
+<div class="panel-top-bar">
+<div class="panel-back" onclick="switchTab('menu')">‹</div>
+<div class="panel-title">Vidéos</div>
+<div style="width:32px;"></div>
+</div>
+<!-- Lecteur vidéo intégré -->
+<div class="yt-player-wrap" id="yt-player-wrap" style="display:none;">
+<div class="yt-player-close" onclick="ytClosePlayer()">✕</div>
+<div class="yt-player-container" id="yt-player-container"></div>
+<div class="yt-player-title" id="yt-player-title"></div>
+</div>
+<!-- Grille de vignettes -->
+<div class="yt-grid" id="yt-grid">
+<div class="feed-loading">Chargement des vidéos…</div>
+</div>
+</div>
 <!-- ═══ PANEL FEED (fil d'actualité) ═══ -->
 <div id="panel-feed" style="display:none;" class="chab-panel">
 <div class="panel-top-bar">
@@ -1112,5 +1143,6 @@ Partager
 <script src="js/firebase-config.js"></script>
 <script src="js/auth.js?v=4"></script>
 <script src="js/feed.js"></script>
+<script src="js/videos.js"></script>
 </body>
 </html>
