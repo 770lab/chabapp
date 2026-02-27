@@ -1041,14 +1041,20 @@ Partager
 <div id="nav-profile-btn" class="panel-profile-btn" onclick="switchTab('profile')" style="display:none;">👤</div>
 </div>
 </div>
-<div class="feed-composer" id="feed-composer" style="display:none;">
-<div class="feed-composer-row">
-<textarea id="feed-compose-text" class="chab-input feed-compose-input" placeholder="Partagez avec la communauté…" rows="2"></textarea>
+<!-- Bouton + flottant -->
+<button class="feed-fab" id="feed-fab" style="display:none;" onclick="feedSelectMedia()">+</button>
+<!-- Panneau de composition (après sélection média) -->
+<div class="feed-compose-overlay" id="feed-compose-overlay" style="display:none;" onclick="feedCloseComposer()"></div>
+<div class="feed-compose-panel" id="feed-compose-panel" style="display:none;">
+<div class="feed-compose-panel-header">
+<button class="feed-compose-close" onclick="feedCloseComposer()">✕</button>
+<span class="feed-compose-panel-title">Nouvelle publication</span>
+<button id="feed-publish-btn" class="feed-compose-publish" onclick="feedPublish()">Publier</button>
 </div>
-<div id="feed-media-preview"></div>
-<div class="feed-composer-toolbar">
-<button class="feed-toolbar-btn" onclick="feedSelectMedia()" title="Photo / Vidéo">📷 Média</button>
-<button id="feed-publish-btn" class="chab-btn chab-btn-primary chab-btn-sm" onclick="feedPublish()">Publier</button>
+<div class="feed-compose-preview" id="feed-media-preview"></div>
+<div class="feed-compose-caption-wrap">
+<textarea id="feed-compose-text" class="feed-compose-caption" placeholder="Ajouter une légende… (@utilisateur pour tagger)" rows="3"></textarea>
+<div class="feed-mention-suggestions" id="feed-mention-suggestions" style="display:none;"></div>
 </div>
 </div>
 <div id="feed-list" class="feed-list">

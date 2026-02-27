@@ -216,9 +216,9 @@ function _onLogin() {
   _renderProfile();
   // Mettre à jour les boutons nav avec le nom de l'utilisateur
   _updateAuthNav(true);
-  // Montrer le compositeur de posts
-  var composer = document.getElementById("feed-composer");
-  if (composer) composer.style.display = "";
+  // Montrer le bouton + pour créer un post
+  var fab = document.getElementById("feed-fab");
+  if (fab) fab.style.display = "";
   // Charger le feed
   if (typeof feedLoad === "function") feedLoad();
   // Écouter les notifications
@@ -229,8 +229,8 @@ function _onLogout() {
   _updateAuthNav(false);
   var profilePanel = document.getElementById("panel-profile");
   if (profilePanel) profilePanel.style.display = "none";
-  var composer = document.getElementById("feed-composer");
-  if (composer) composer.style.display = "none";
+  var fab = document.getElementById("feed-fab");
+  if (fab) fab.style.display = "none";
 }
 
 function _updateAuthNav(loggedIn) {

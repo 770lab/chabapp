@@ -206,40 +206,126 @@
 
 
 /* ─── FEED PANEL ──────────────────────────────────────────── */
-.feed-composer {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--gray-5, #f0f0f0);
-  background: var(--white, #fff);
-}
-.feed-composer-row { margin-bottom: 8px; }
-.feed-compose-input {
-  resize: none; min-height: 48px; max-height: 120px;
-  line-height: 1.5;
-}
-.feed-composer-toolbar {
-  display: flex; align-items: center; justify-content: space-between;
-}
-.feed-toolbar-btn {
-  background: none; border: none;
-  font-size: 13px; color: var(--gray-2, #4b5563);
-  cursor: pointer; padding: 4px 8px; border-radius: 6px;
-  font-family: inherit;
-}
-.feed-toolbar-btn:hover { background: var(--gray-5, #f3f4f6); }
 
-/* Media preview */
-.feed-preview-wrap { position: relative; display: inline-block; margin-top: 6px; }
-.feed-preview-thumb {
-  width: 80px; height: 80px; object-fit: cover;
-  border-radius: 8px; border: 1px solid var(--gray-4, #e5e7eb);
-}
-.feed-preview-remove {
-  position: absolute; top: -6px; right: -6px;
-  width: 22px; height: 22px;
-  background: var(--black, #000); color: var(--white, #fff);
-  border-radius: 50%; font-size: 12px;
+/* Bouton + flottant */
+.feed-fab {
+  position: fixed; bottom: 90px; right: 20px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, #c9a84c, #e8c96a);
+  color: #fff; font-size: 32px; font-weight: 300;
+  border: none; box-shadow: 0 4px 16px rgba(201,168,76,0.4);
+  cursor: pointer; z-index: 100;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  line-height: 1;
+}
+.feed-fab:active { transform: scale(0.92); box-shadow: 0 2px 8px rgba(201,168,76,0.3); }
+
+/* Overlay sombre */
+.feed-compose-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+}
+
+/* Panneau de composition */
+.feed-compose-panel {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  z-index: 201;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+  animation: feedPanelSlideUp 0.3s ease-out;
+}
+@keyframes feedPanelSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.feed-compose-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.feed-compose-close {
+  background: none; border: none;
+  font-size: 20px; color: #666;
+  cursor: pointer; padding: 4px 8px;
+}
+.feed-compose-panel-title {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 16px; font-weight: 700; color: #1a1a2e;
+}
+.feed-compose-publish {
+  background: linear-gradient(135deg, #c9a84c, #e8c96a);
+  color: #fff; border: none; border-radius: 20px;
+  padding: 8px 20px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.feed-compose-publish:disabled {
+  opacity: 0.5; cursor: not-allowed;
+}
+
+/* Preview média dans le panneau */
+.feed-compose-preview {
+  padding: 12px 16px; text-align: center;
+  max-height: 45vh; overflow: hidden;
+}
+.feed-compose-preview img,
+.feed-compose-preview video {
+  max-width: 100%; max-height: 40vh;
+  border-radius: 12px; object-fit: contain;
+}
+
+/* Zone légende */
+.feed-compose-caption-wrap {
+  padding: 0 16px 16px; position: relative;
+}
+.feed-compose-caption {
+  width: 100%; border: 1px solid #e5e7eb;
+  border-radius: 12px; padding: 12px 14px;
+  font-size: 15px; font-family: inherit;
+  resize: none; outline: none; line-height: 1.5;
+  box-sizing: border-box;
+}
+.feed-compose-caption:focus {
+  border-color: #c9a84c;
+}
+
+/* Suggestions @mention */
+.feed-mention-suggestions {
+  position: absolute; left: 16px; right: 16px;
+  bottom: 100%; margin-bottom: 4px;
+  background: #fff; border: 1px solid #e5e7eb;
+  border-radius: 12px; max-height: 180px;
+  overflow-y: auto; box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+  z-index: 210;
+}
+.feed-mention-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; cursor: pointer;
+  transition: background 0.15s;
+}
+.feed-mention-item:hover,
+.feed-mention-item:active {
+  background: #f9f5eb;
+}
+.feed-mention-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  object-fit: cover; background: #e5e7eb;
+}
+.feed-mention-avatar-ph {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; color: #666;
+}
+.feed-mention-name {
+  font-size: 14px; font-weight: 600; color: #1a1a2e;
+}
+
+/* @mention tag dans les posts */
+.feed-mention-tag {
+  color: #c9a84c; font-weight: 600;
 }
 
 /* Post list */
