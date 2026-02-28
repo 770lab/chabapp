@@ -37,8 +37,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
   0%   { opacity:0; transform:translateY(-0.23em) rotate(0deg); }
   9%   { opacity:1; transform:translateY(0) rotate(0deg); }
   53%  { opacity:1; transform:translateY(0) rotate(0deg); }
-  69%  { opacity:1; transform:translateY(-0.23em) rotate(180deg); }
-  100% { opacity:1; transform:translateY(-0.23em) rotate(180deg); }
+  69%  { opacity:1; transform:translateY(0) rotate(180deg); }
+  100% { opacity:1; transform:translateY(0) rotate(180deg); }
 }
 /* Phase 1: hidden behind D1 */
 /* Phase 2: slides out from D1 (1.2-2.1s) → CHABADD */
@@ -49,8 +49,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
   29%  { margin-left:-0.62em; opacity:1; transform:translateY(0) rotate(0deg); }
   47%  { margin-left:0; opacity:1; transform:translateY(0) rotate(0deg); }
   53%  { margin-left:0; opacity:1; transform:translateY(0) rotate(0deg); }
-  69%  { margin-left:0; opacity:1; transform:translateY(-0.23em) rotate(180deg); }
-  100% { margin-left:0; opacity:1; transform:translateY(-0.23em) rotate(180deg); }
+  69%  { margin-left:0; opacity:1; transform:translateY(0) rotate(180deg); }
+  100% { margin-left:0; opacity:1; transform:translateY(0) rotate(180deg); }
 }
 .splash-subtitle { font-family:'Noto Serif Hebrew',serif; font-size:22px; color:var(--gray-2); letter-spacing:6px; font-weight:700; margin-bottom:28px; opacity:0; animation:scSubIn 0.8s ease 5.5s forwards; direction:rtl; }
 @keyframes scSubIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
