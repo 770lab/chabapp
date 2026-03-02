@@ -120,6 +120,9 @@ EXTRACT_JS = """
     function isNavContent(text) {
         return /S'abonner|Connexion|sélectionner un pays|Trouver un centre|Magazine|Afrique du Sud|Allemagne|Andorre/i.test(text);
     }
+    function isBoilerplate(text) {
+        return /forthcoming English Chumash|Chabad House Publications|Lessons In Tanya|Plus d'options d'abonnement|email_placeholder|Nous ne communiquerons pas/i.test(text);
+    }
 
     const selectors = [
         '#TextContent', '#textContent', '.article-text',
@@ -132,7 +135,7 @@ EXTRACT_JS = """
         const el = document.querySelector(sel);
         if (!el) continue;
         const text = el.innerText.trim();
-        if (text.length > 50 && latinRatio(text) > 0.3 && !isNavContent(text)) {
+        if (text.length > 50 && latinRatio(text) > 0.3 && !isNavContent(text) && !isBoilerplate(text)) {
             return { text: text, method: 'selector-fr:' + sel };
         }
     }
@@ -152,14 +155,14 @@ EXTRACT_JS = """
         allBlocks.push({
             text: trimmed, len: trimmed.length,
             latin: latinRatio(trimmed), hebrew: hebrewRatio(trimmed),
-            isNav: isNavContent(trimmed), tag: el.tagName
+            isNav: isNavContent(trimmed), isBoiler: isBoilerplate(trimmed), tag: el.tagName
         });
     }
 
-    // PRIORITY 1: largest French block
+    // PRIORITY 1: largest French block (not boilerplate)
     let bestFr = null, bestFrLen = 0;
     for (const b of allBlocks) {
-        if (b.latin > 0.3 && !b.isNav && b.len > bestFrLen && b.len < 50000) {
+        if (b.latin > 0.3 && !b.isNav && !b.isBoiler && b.len > bestFrLen && b.len < 50000) {
             bestFr = b; bestFrLen = b.len;
         }
     }
@@ -167,10 +170,10 @@ EXTRACT_JS = """
         return { text: bestFr.text, method: 'largest-french', latin: bestFr.latin, hebrew: bestFr.hebrew, len: bestFrLen };
     }
 
-    // PRIORITY 2: any non-nav block
+    // PRIORITY 2: any non-nav, non-boilerplate block
     let bestAny = null, bestAnyLen = 0;
     for (const b of allBlocks) {
-        if (!b.isNav && b.len > bestAnyLen && b.len < 50000) {
+        if (!b.isNav && !b.isBoiler && b.len > bestAnyLen && b.len < 50000) {
             bestAny = b; bestAnyLen = b.len;
         }
     }
@@ -178,7 +181,7 @@ EXTRACT_JS = """
         return { text: bestAny.text, method: 'largest-any', latin: bestAny.latin, hebrew: bestAny.hebrew, len: bestAnyLen };
     }
 
-    return { text: '', method: 'none', debug: allBlocks.slice(0,5).map(b => ({len:b.len, lat:b.latin.toFixed(2), heb:b.hebrew.toFixed(2), nav:b.isNav, preview:b.text.substring(0,80)})) };
+    return { text: '', method: 'none', debug: allBlocks.slice(0,5).map(b => ({len:b.len, lat:b.latin.toFixed(2), heb:b.hebrew.toFixed(2), nav:b.isNav, boiler:b.isBoiler, preview:b.text.substring(0,80)})) };
 }
 """
 
@@ -356,6 +359,40 @@ def save_data(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
     print("\nSaved to %s" % DATA_FILE)
 
+def _clean_scraped_text(text):
+    """Strip known fr.chabad.org boilerplate from scraped text."""
+    if not text:
+        return text
+    # Strip header boilerplate (Rambam/Tanya/Houmash page headers)
+    text = re.sub(r'^Calendrier juif[\s\S]*?Aujourd.hui\s*\n', '', text)
+    # Strip footer: date repetition + navigation
+    text = re.sub(r'\n[A-Za-zÀ-ÿ]+ \d+ [A-Za-zÀ-ÿ]+ \d{4} / \d+ [a-zà-ÿ]+ \d{4}\nAujourd.hui[\s\S]*$', '', text)
+    text = re.sub(r'\nTéléchargez le calendrier[\s\S]*$', '', text)
+    text = re.sub(r'\nAbout the book[\s\S]*$', '', text)
+    text = re.sub(r'\nCette page comporte des textes sacrés[\s\S]*$', '', text)
+    text = re.sub(r'\nEtudes quotidiennes[\s\S]*$', '', text)
+    text = re.sub(r'\nAu sujet de l.éditeur[\s\S]*$', '', text)
+    return text.strip()
+
+def _is_garbage_text(text):
+    """Detect garbage text (subscription forms, publisher info, etc)."""
+    if not text or len(text) < 50:
+        return True
+    garbage = [
+        "S'abonner", "Restez connecté", "Chaque semaine, dans votre boîte mail",
+        "forthcoming English Chumash", "Chabad House Publications",
+        "Lessons In Tanya", "Plus d'options d'abonnement",
+        "email_placeholder", "Nous ne communiquerons pas votre adresse"
+    ]
+    for g in garbage:
+        if g in text:
+            return True
+    footer_markers = ["Au sujet de l'éditeur", "Acheter le livre", "Voir le site", "Kehot Publication Society"]
+    footer_hits = sum(1 for m in footer_markers if m in text)
+    if footer_hits >= 2 and len(text) < 800:
+        return True
+    return False
+
 def update_data(data, target_date, results):
     y, m, d = target_date.year, target_date.month, target_date.day
     date_key = "%d-%d-%d" % (y, m, d)
@@ -364,12 +401,14 @@ def update_data(data, target_date, results):
     print("\nKeys: dateKey=%s, hyyKey=%s (%s %d)" % (date_key, hyy_key, heb['mName'], heb['hd']))
     if 'hayom_yom' in results:
         data['hayom_yom'][hyy_key] = results['hayom_yom']['text']
-    if 'rambam' in results:
-        data['rambam'][date_key] = {'text': results['rambam']['text'], 'title': results['rambam']['title']}
-    if 'tanya' in results:
-        data['tanya'][date_key] = {'text': results['tanya']['text'], 'title': results['tanya']['title']}
-    if 'houmash' in results:
-        data['houmash'][date_key] = {'text': results['houmash']['text'], 'title': results['houmash']['title']}
+    for study in ['rambam', 'tanya', 'houmash']:
+        if study in results:
+            raw = results[study]['text']
+            cleaned = _clean_scraped_text(raw)
+            if _is_garbage_text(cleaned):
+                print("  SKIP %s: garbage after cleaning (%d chars)" % (study, len(cleaned)))
+                continue
+            data.setdefault(study, {})[date_key] = {'text': cleaned, 'title': results[study]['title']}
 
 def cleanup_old_entries(data, keep_days=30):
     today = date.today()
@@ -572,7 +611,13 @@ def bulk_scrape_all(days_ahead):
                         if study == 'hayom_yom':
                             data.setdefault('hayom_yom', {})[hyy_key] = text
                         else:
-                            data.setdefault(study, {})[date_key] = {'text': text, 'title': clean_title}
+                            cleaned = _clean_scraped_text(text)
+                            if _is_garbage_text(cleaned):
+                                print("    x %s: garbage after cleaning" % study)
+                                total_failed += 1
+                                time.sleep(DELAY)
+                                continue
+                            data.setdefault(study, {})[date_key] = {'text': cleaned, 'title': clean_title}
 
                         total_scraped += 1
                         print("    OK: %d chars - %s" % (len(text), clean_title[:50]))
