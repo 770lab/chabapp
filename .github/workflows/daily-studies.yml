@@ -26,8 +26,8 @@ jobs:
           pip install playwright beautifulsoup4
           playwright install chromium --with-deps
 
-      - name: Run scraper
-        run: python scrape_daily_studies.py
+      - name: Run scraper (14 days ahead)
+        run: python scrape_daily_studies.py --days 14
 
       - name: Commit & push
         run: |

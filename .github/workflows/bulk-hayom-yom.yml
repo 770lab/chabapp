@@ -1,12 +1,22 @@
-name: Bulk Hayom Yom Scraper
+name: Bulk Studies Scraper
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Mode: bulk-hyy (Hayom Yom year entier) ou days-60 (toutes etudes 60j)'
+        required: true
+        default: 'days-60'
+        type: choice
+        options:
+          - days-60
+          - bulk-hyy
+          - days-30
 
 jobs:
   bulk-scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     permissions:
       contents: write
 
@@ -24,13 +34,21 @@ jobs:
           pip install playwright beautifulsoup4
           playwright install chromium --with-deps
 
-      - name: Run bulk Hayom Yom scraper
-        run: python scrape_daily_studies.py --bulk-hyy
+      - name: Run bulk scraper
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          if [ "$MODE" = "bulk-hyy" ]; then
+            python scrape_daily_studies.py --bulk-hyy
+          elif [ "$MODE" = "days-30" ]; then
+            python scrape_daily_studies.py --days 30
+          else
+            python scrape_daily_studies.py --days 60
+          fi
 
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add hyy-data.json
-          git diff --cached --quiet || git commit -m "Bulk load all Hayom Yom entries $(date +%Y-%m-%d)"
+          git diff --cached --quiet || git commit -m "Bulk studies scrape (${{ github.event.inputs.mode }}) $(date +%Y-%m-%d)"
           git push
