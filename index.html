@@ -1176,7 +1176,13 @@ Partager
 </div>
 </div>
 <!-- Bouton + flottant (hors panel-feed pour position:fixed) -->
-<button class="feed-fab" id="feed-fab" style="display:none;" onclick="feedSelectMedia()">+</button>
+<button class="feed-fab" id="feed-fab" style="display:none;" onclick="feedShowTypeChoice()">+</button>
+<!-- Choix Post / Story -->
+<div id="feed-type-overlay" class="feed-compose-overlay" style="display:none;" onclick="feedCloseTypeChoice()"></div>
+<div id="feed-type-menu" style="display:none;position:fixed;bottom:160px;right:20px;z-index:110;background:var(--card-bg,#232338);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4);padding:8px 0;min-width:180px;">
+<button onclick="feedStartPost()" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 20px;border:none;background:none;color:#fff;font-size:15px;font-family:var(--font);cursor:pointer;"><span style="font-size:20px;">📷</span> Publication</button>
+<button onclick="feedStartStory()" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 20px;border:none;background:none;color:#fff;font-size:15px;font-family:var(--font);cursor:pointer;"><span style="font-size:20px;">⏳</span> Story</button>
+</div>
 <!-- Panneau de composition (après sélection média) -->
 <div class="feed-compose-overlay" id="feed-compose-overlay" style="display:none;" onclick="feedCloseComposer()"></div>
 <div class="feed-compose-panel" id="feed-compose-panel" style="display:none;">

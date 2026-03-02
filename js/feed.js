@@ -10,10 +10,39 @@ var _feedLastDoc   = null;   // pagination cursor
 var _feedLoading   = false;
 var _feedPageSize  = 15;
 var _feedMediaFile = null;   // File en attente d'upload
+var _feedPostType  = "post"; // "post" ou "story"
 var _mentionQuery  = "";     // texte après @ pour recherche
 var _mentionStart  = -1;     // position du @ dans le textarea
 var _mentionUsers  = [];     // cache des utilisateurs pour @mention
 var _mentionedUsers = [];    // { uid, displayName } sélectionnés dans la composition en cours
+
+// ─── Choix Post / Story ─────────────────────────────────────
+function feedShowTypeChoice() {
+  if (!chabUser) return alert("Connectez-vous pour publier.");
+  var overlay = document.getElementById("feed-type-overlay");
+  var menu = document.getElementById("feed-type-menu");
+  if (overlay) overlay.style.display = "";
+  if (menu) menu.style.display = "";
+}
+
+function feedCloseTypeChoice() {
+  var overlay = document.getElementById("feed-type-overlay");
+  var menu = document.getElementById("feed-type-menu");
+  if (overlay) overlay.style.display = "none";
+  if (menu) menu.style.display = "none";
+}
+
+function feedStartPost() {
+  feedCloseTypeChoice();
+  _feedPostType = "post";
+  feedSelectMedia();
+}
+
+function feedStartStory() {
+  feedCloseTypeChoice();
+  _feedPostType = "story";
+  feedSelectMedia();
+}
 
 // ─── Charger le feed (temps réel) ───────────────────────────
 function feedLoad() {
@@ -77,6 +106,7 @@ function feedPublish() {
     text:        text,
     mediaURL:    "",
     mediaType:   "",   // "image" | "video" | ""
+    postType:    _feedPostType || "post",  // "post" | "story"
     likesCount:  0,
     likedBy:     [],
     commentsCount: 0,
@@ -128,6 +158,8 @@ function _openComposerPanel() {
   var overlay = document.getElementById("feed-compose-overlay");
   var panel   = document.getElementById("feed-compose-panel");
   var input   = document.getElementById("feed-compose-text");
+  var title   = document.querySelector(".feed-compose-panel-title");
+  if (title) title.textContent = _feedPostType === "story" ? "Nouvelle story" : "Nouvelle publication";
   if (overlay) overlay.style.display = "";
   if (panel)   panel.style.display   = "flex";
   if (input)   { input.value = ""; input.focus(); }
@@ -140,6 +172,7 @@ function _openComposerPanel() {
 
 function feedCloseComposer() {
   _feedMediaFile = null;
+  _feedPostType = "post";
   var overlay = document.getElementById("feed-compose-overlay");
   var panel   = document.getElementById("feed-compose-panel");
   var input   = document.getElementById("feed-compose-text");
@@ -415,8 +448,41 @@ function _renderFeed() {
     return;
   }
 
+  // Séparer stories (< 24h, postType=story) et posts
+  var now = Date.now();
+  var stories = [];
+  var seenAuthors = {};
+  _feedPosts.forEach(function (p) {
+    if (p.postType !== "story") return;
+    var t = p.createdAt ? (p.createdAt.toDate ? p.createdAt.toDate().getTime() : (p.createdAt.seconds ? p.createdAt.seconds * 1000 : 0)) : 0;
+    if ((now - t) < 86400000 && !seenAuthors[p.authorUid]) {
+      seenAuthors[p.authorUid] = true;
+      stories.push(p);
+    }
+  });
+
   var html = "";
+
+  // Barre de stories en haut
+  if (stories.length > 0) {
+    html += '<div class="feed-stories-bar" style="display:flex;gap:12px;padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;">';
+    stories.forEach(function (s) {
+      var avatar = s.authorPhoto
+        ? '<img src="' + s.authorPhoto + '" style="width:56px;height:56px;border-radius:50%;object-fit:cover;" />'
+        : '<div style="width:56px;height:56px;border-radius:50%;background:var(--gray-5);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;">' + (s.authorName || "?").charAt(0).toUpperCase() + '</div>';
+      html += '<div onclick="_feedViewStory(\'' + s.id + '\')" style="flex-shrink:0;text-align:center;cursor:pointer;">';
+      html += '<div style="padding:2px;border-radius:50%;background:conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34);display:inline-block;">';
+      html += '<div style="padding:2px;border-radius:50%;background:var(--card-bg,#232338);">' + avatar + '</div>';
+      html += '</div>';
+      html += '<div style="font-size:11px;color:var(--gray-3);margin-top:4px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + _escHtml(s.authorName || "").split(" ")[0] + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Posts (exclure stories)
   _feedPosts.forEach(function (post) {
+    if (post.postType === "story") return;
     html += _renderPost(post);
   });
 
@@ -424,6 +490,63 @@ function _renderFeed() {
   html += '<div class="feed-load-more"><button class="chab-btn chab-btn-outline" onclick="feedLoadMore()">Voir plus</button></div>';
 
   el.innerHTML = html;
+}
+
+// ─── Viewer de story plein écran ─────────────────────────────
+function _feedViewStory(postId) {
+  var post = _feedPosts.find(function(p) { return p.id === postId; });
+  if (!post) return;
+
+  var overlay = document.createElement("div");
+  overlay.style.cssText = "position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;";
+
+  // Header
+  var header = '<div style="position:absolute;top:0;left:0;right:0;padding:16px;display:flex;align-items:center;gap:10px;z-index:201;">';
+  var avatar = post.authorPhoto
+    ? '<img src="' + post.authorPhoto + '" style="width:32px;height:32px;border-radius:50%;object-fit:cover;" />'
+    : '<div style="width:32px;height:32px;border-radius:50%;background:var(--gray-5);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;">' + (post.authorName || "?").charAt(0).toUpperCase() + '</div>';
+  header += avatar;
+  header += '<div style="color:#fff;font-size:14px;font-weight:600;">' + _escHtml(post.authorName) + '</div>';
+  header += '<div style="color:rgba(255,255,255,0.5);font-size:12px;">' + _timeAgo(post.createdAt) + '</div>';
+  header += '<div style="margin-left:auto;color:#fff;font-size:24px;cursor:pointer;" onclick="this.closest(\'div[style*=position\\\\:fixed]\').remove()">✕</div>';
+  header += '</div>';
+
+  // Progress bar
+  var progress = '<div style="position:absolute;top:8px;left:8px;right:8px;height:3px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:201;"><div style="height:100%;background:#fff;border-radius:2px;animation:storyProgress 6s linear forwards;"></div></div>';
+
+  // Media
+  var media = '';
+  if (post.mediaURL) {
+    if (post.mediaType === "video") {
+      media = '<video src="' + post.mediaURL + '" style="max-width:100%;max-height:100%;object-fit:contain;" autoplay muted playsinline></video>';
+    } else {
+      media = '<img src="' + post.mediaURL + '" style="max-width:100%;max-height:100%;object-fit:contain;" />';
+    }
+  }
+
+  // Text
+  var textHtml = post.text ? '<div style="position:absolute;bottom:60px;left:16px;right:16px;color:#fff;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,0.7);">' + _escHtml(post.text) + '</div>' : '';
+
+  overlay.innerHTML = progress + header + media + textHtml;
+
+  // Auto-close after 6s
+  var timer = setTimeout(function() { if (overlay.parentNode) overlay.remove(); }, 6000);
+  overlay.onclick = function(e) {
+    if (e.target === overlay || e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+      clearTimeout(timer);
+      overlay.remove();
+    }
+  };
+
+  // Add animation keyframes if not already present
+  if (!document.getElementById('story-progress-style')) {
+    var style = document.createElement('style');
+    style.id = 'story-progress-style';
+    style.textContent = '@keyframes storyProgress { from { width: 0%; } to { width: 100%; } }';
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(overlay);
 }
 
 function _renderPost(p) {

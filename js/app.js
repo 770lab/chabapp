@@ -4102,6 +4102,27 @@ function showHome() {
   setTimeout(checkSharedChain, 500);
   // autoShowObjStory disabled — user taps the glowing ring instead
   currentScreen = "home";
+
+  // Auto-refresh daily studies at midnight
+  _scheduleMidnightRefresh();
+}
+
+var _midnightTimer = null;
+function _scheduleMidnightRefresh() {
+  if (_midnightTimer) clearTimeout(_midnightTimer);
+  var now = new Date();
+  var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
+  var ms = tomorrow.getTime() - now.getTime();
+  _midnightTimer = setTimeout(function() {
+    console.log('Midnight refresh: reloading daily studies');
+    loadHayomYom();
+    loadRambam();
+    loadTanya();
+    loadHoumash();
+    renderObjStoryBar();
+    updateBigObjSub();
+    _scheduleMidnightRefresh();
+  }, ms);
 }
 
 function goHome() {
@@ -4431,32 +4452,32 @@ function openPersoTehilim(chap) {
 var COMPLETION_MESSAGES = [
   {
     emoji: '👑',
-    hebrew: 'כÖ¸Ö¼ל יÖ´שÖ°ׂרָאֵל יÖµשׁ לÖ¸הֶם חÖµלÖ¶ק לÖ¸עוÖ¹לָם הÖ·בָּא',
+    hebrew: 'כָּל יִשְׂרָאֵל יֵשׁ לָהֶם חֵלֶק לָעוֹלָם הַבָּא',
     text: 'Chaque mot de Tehilim que tu prononces <strong>brise un voile</strong> entre ce monde et la Guéoula. Aujourd\'hui, tu as fait ta part pour rapprocher la venue du <strong>Machia\'h</strong>.'
   },
   {
     emoji: '🕊️',
-    hebrew: 'אֲנÖ´י מַאֲמÖ´ין בֶּאֱמוÖ¼נÖ¸ה שְׁלÖµמÖ¸ה בÖ°Ö¼בÖ´יאַת הÖ·מÖ¸Ö¼שִׁיחÖ·',
+    hebrew: 'אֲנִי מַאֲמִין בֶּאֱמוּנָה שְׁלֵמָה בְּבִיאַת הַמָּשִׁיחַ',
     text: 'Le Rabbi de Loubavitch enseigne que <strong>chaque chapitre de Tehilim</strong> a le pouvoir de transformer le monde. Aujourd\'hui, tu as planté des graines de <strong>Guéoula</strong>.'
   },
   {
     emoji: '✨',
-    hebrew: 'בÖ°Ö¼זÖ¸כוÖ¼ת הÖ·תÖ°Ö¼הÖ´לÖ´Ö¼ים יÖ¸בוֹא מÖ¸שִׁיחÖ· צÖ´דÖ°קÖµנוÖ¼',
+    hebrew: 'בְּזָכוּת הַתְּהִלִּים יָבוֹא מָשִׁיחַ צִדְקֵנוּ',
     text: 'Le Ba\'al Shem Tov a dit : <strong>Les Tehilim peuvent tout.</strong> Ta lecture d\'aujourd\'hui a ouvert des portes dans le Ciel. Demain, continue — <strong>Machia\'h arrive</strong>.'
   },
   {
     emoji: '🔥',
-    hebrew: 'עוÖ¹ד מÖ°עÖ·ט וÖ°נÖ´זÖ°כÖ¶Ö¼ה לÖ´גְאֻלÖ¸Ö¼ה שְׁלÖµמÖ¸ה',
+    hebrew: 'עוֹד מְעַט וְנִזְכֶּה לִגְאֻלָּה שְׁלֵמָה',
     text: 'Chaque Tehilim est une <strong>prière qui monte directement</strong> devant le Trône Céleste. Le mérite de ta lecture protège tout le <strong>Klal Israël</strong>.'
   },
   {
     emoji: '💎',
-    hebrew: 'גÖ¸Ö¼דוÖ¹ל הÖ·מÖ·Ö¼עÖ²שÖ¶ׂה יוÖ¹תÖµר מÖ´ן הÖ·מÖ°Ö¼דÖ·בÖµÖ¼ר',
+    hebrew: 'גָּדוֹל הַמַּעֲשֶׂה יוֹתֵר מִן הַמְּדַבֵּר',
     text: 'Tu ne l\'as peut-être pas senti, mais tes Tehilim ont <strong>ébranlé des mondes</strong> aujourd\'hui. Le Zohar dit que la voix de celui qui lit les Tehilim est <strong>la plus douce devant Hachem</strong>.'
   },
   {
     emoji: '🌅',
-    hebrew: 'הÖ·בÖ¼וÖ¹טÖµחÖ· בÖ·Ö¼יהוה חÖ¶סÖ¶ד יÖ°סוÖ¹בÖ°בÖ¶נÖ¼וÖ¼',
+    hebrew: 'הַבּוֹטֵחַ בַּיהוה חֶסֶד יְסוֹבְבֶנּוּ',
     text: 'Aujourd\'hui tu as choisi de <strong>te connecter à Hachem</strong> par les mots du Roi David. Ce mérite t\'accompagnera et celui de tes proches. <strong>Bientôt la Guéoula !</strong>'
   }
 ];
@@ -6279,7 +6300,7 @@ function renderT119Results(letters, hebrewName) {
 
 // ====== 10 OBJECTIFS QUOTIDIENS ======
 var DAILY_PERIODS = [
-  { id: 'matin', emoji: '🌅', label: 'Matin', hebrew: 'שַׁחÖ²רÖ´ית', h0: 5, h1: 12,
+  { id: 'matin', emoji: '🌅', label: 'Matin', hebrew: 'שַׁחֲרִית', h0: 5, h1: 12,
     bg: 'linear-gradient(135deg,#667eea,#764ba2)', dark: true,
     msg: 'Le matin est le fondement de la journée. Commence par remercier Hachem, donner la Tsédaka et prier avec ferveur.',
     items: [
@@ -6291,7 +6312,7 @@ var DAILY_PERIODS = [
       { id: 'etude_am', emoji: '📚', label: 'Étude de Torah', bg: 'linear-gradient(135deg,#f9a8d4,#ec4899)' }
     ]
   },
-  { id: 'aprem', emoji: '🌤️', label: 'Après-midi', hebrew: 'מÖ´נÖ°חÖ¸ה', h0: 12, h1: 19,
+  { id: 'aprem', emoji: '🌤️', label: 'Après-midi', hebrew: 'מִנְחָה', h0: 12, h1: 19,
     bg: 'linear-gradient(135deg,#f6d365,#fda085)', dark: false,
     msg: 'Min\'ha est la prière la plus précieuse : elle interrompt nos occupations pour se tourner vers Hachem.',
     items: [
@@ -6300,7 +6321,7 @@ var DAILY_PERIODS = [
       { id: 'minha', emoji: '🙏', label: 'Min\'ha', bg: 'linear-gradient(135deg,#c084fc,#9333ea)' }
     ]
   },
-  { id: 'soir', emoji: '🌙', label: 'Soir', hebrew: 'עÖ·רÖ°בÖ´ית', h0: 19, h1: 5,
+  { id: 'soir', emoji: '🌙', label: 'Soir', hebrew: 'עַרְבִית', h0: 19, h1: 5,
     bg: 'linear-gradient(135deg,#0c3483,#a2b6df)', dark: true,
     msg: 'Le soir clôture la journée dans la sainteté. Prie, étudie, et transmets l\'amour de la Torah à tes proches.',
     items: [

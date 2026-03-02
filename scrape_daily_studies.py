@@ -386,10 +386,117 @@ def cleanup_old_entries(data, keep_days=7):
         if to_remove: print("Cleaned %d old from %s" % (len(to_remove), section))
 
 
+# --- Bulk Hayom Yom Scraper ---
+
+def bulk_scrape_hayom_yom():
+    """Scrape ALL Hayom Yom entries for the entire Hebrew year.
+    Iterates through 400 Gregorian days to cover all Hebrew dates.
+    Stores entries by Hebrew date key (e.g., 'Adar_8') in hyy-data.json.
+    """
+    from datetime import timedelta
+
+    if not USE_PLAYWRIGHT:
+        print("Bulk scrape requires Playwright. Install: pip install playwright && playwright install chromium")
+        sys.exit(1)
+
+    data = load_data()
+    existing = set(data.get('hayom_yom', {}).keys())
+    print("=== Bulk Hayom Yom Scrape ===")
+    print("Existing entries: %d" % len(existing))
+
+    # Generate all dates for the next 400 days to cover a full Hebrew year
+    start = date.today()
+    all_dates = []
+    seen_keys = set(existing)
+
+    for i in range(400):
+        d = start + timedelta(days=i)
+        heb = greg_to_hebrew(d.year, d.month, d.day)
+        hyy_key = "%s_%d" % (heb['mName'].replace(' ', '_'), heb['hd'])
+        if hyy_key not in seen_keys:
+            all_dates.append((d, hyy_key, heb))
+            seen_keys.add(hyy_key)
+
+    print("New entries to scrape: %d" % len(all_dates))
+    if not all_dates:
+        print("All entries already present!")
+        return
+
+    scraped = 0
+    failed = 0
+
+    with sync_playwright() as p:
+        print("Launching Chromium...")
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            locale="fr-FR",
+        )
+        page = context.new_page()
+
+        # Warm-up Cloudflare
+        print("Warm-up: solving Cloudflare...")
+        try:
+            page.goto("https://fr.chabad.org/dailystudy/", wait_until="networkidle", timeout=90000)
+            if wait_for_cloudflare(page, max_wait=60):
+                print("  Cloudflare resolved!")
+            time.sleep(3)
+        except Exception as e:
+            print("  Warm-up error: %s" % str(e))
+            time.sleep(3)
+
+        for idx, (target_date, hyy_key, heb) in enumerate(all_dates):
+            m, d, y = target_date.month, target_date.day, target_date.year
+            tdate = "%d/%d/%d" % (m, d, y)
+            url = "%s/hayomyom.asp?tdate=%s" % (BASE_URL, tdate)
+
+            print("[%d/%d] %s -> %s (%s %d)" % (idx+1, len(all_dates), target_date, hyy_key, heb['mName'], heb['hd']))
+
+            try:
+                page.goto(url, wait_until="networkidle", timeout=90000)
+                if not wait_for_cloudflare(page, max_wait=20):
+                    print("  x Cloudflare stuck")
+                    failed += 1
+                    time.sleep(DELAY)
+                    continue
+
+                time.sleep(2)
+                result = page.evaluate(EXTRACT_JS)
+                text = result.get('text', '')
+
+                if text and len(text) > 50:
+                    data.setdefault('hayom_yom', {})[hyy_key] = text
+                    scraped += 1
+                    print("  OK: %d chars" % len(text))
+
+                    # Save every 10 entries
+                    if scraped % 10 == 0:
+                        save_data(data)
+                        print("  [checkpoint saved: %d entries]" % len(data['hayom_yom']))
+                else:
+                    print("  x No content")
+                    failed += 1
+
+            except Exception as e:
+                print("  x Error: %s" % str(e))
+                failed += 1
+
+            time.sleep(DELAY)
+
+        browser.close()
+
+    save_data(data)
+    print("\n=== Bulk done: %d scraped, %d failed, %d total entries ===" % (scraped, failed, len(data.get('hayom_yom', {}))))
+
+
 # --- Main ---
 
 def main():
-    if len(sys.argv) > 1:
+    if '--bulk-hyy' in sys.argv:
+        bulk_scrape_hayom_yom()
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] != '--bulk-hyy':
         try:
             target_date = datetime.strptime(sys.argv[1], '%Y-%m-%d').date()
         except ValueError:
