@@ -4086,7 +4086,7 @@ function showHome() {
   window._homeShown = true;
   document.getElementById("home").style.display = "block";
   document.getElementById("reading").style.display = "none";
-  switchTab("menu");
+  switchTab("sub-tefila-siddur");
   setTimeout(() => document.getElementById("home").classList.add("visible"), 50);
   renderHome();
   renderObjStoryBar();
