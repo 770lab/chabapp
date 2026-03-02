@@ -8057,6 +8057,46 @@ function openRambam(e) {
   }
 }
 
+// ====== STUDY TEXT QUALITY HELPERS ======
+function _isGarbageStudyText(text) {
+  if (!text || text.length < 50) return true;
+  var garbage = [
+    "S'abonner", "Restez connecté", "Chaque semaine, dans votre boîte mail",
+    "forthcoming English Chumash", "Chabad House Publications",
+    "Lessons In Tanya", "Plus d'options d'abonnement",
+    "email_placeholder", "Nous ne communiquerons pas votre adresse"
+  ];
+  for (var i = 0; i < garbage.length; i++) {
+    if (text.indexOf(garbage[i]) !== -1) return true;
+  }
+  // If >50% is boilerplate footer
+  var footerMarkers = ["Au sujet de l'éditeur", "Acheter le livre", "Voir le site", "Kehot Publication Society"];
+  var footerHits = 0;
+  for (var j = 0; j < footerMarkers.length; j++) {
+    if (text.indexOf(footerMarkers[j]) !== -1) footerHits++;
+  }
+  if (footerHits >= 2 && text.length < 800) return true;
+  return false;
+}
+
+function _cleanRambamText(text) {
+  if (!text) return text;
+  // Strip header boilerplate
+  text = text.replace(/^Calendrier juif[\s\S]*?Aujourd'hui\s*\n/m, '');
+  // Strip footer: everything after the repetition of the date or navigation
+  var footerPatterns = [
+    /\n[A-Za-zÀ-ÿ]+ \d+ [A-Za-zÀ-ÿ]+ \d{4} \/ \d+ [a-zà-ÿ]+ \d{4}\nAujourd'hui[\s\S]*$/,
+    /\nTéléchargez le calendrier[\s\S]*$/,
+    /\nAbout the book[\s\S]*$/,
+    /\nCette page comporte des textes sacrés[\s\S]*$/,
+    /\nEtudes quotidiennes[\s\S]*$/
+  ];
+  for (var i = 0; i < footerPatterns.length; i++) {
+    text = text.replace(footerPatterns[i], '');
+  }
+  return text.trim();
+}
+
 function loadRambam() {
   var d = new Date();
   var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
@@ -8078,8 +8118,15 @@ function _rambamLoadJson(dateKey, cacheKey) {
     .then(function(data) {
       if (data.rambam && data.rambam[dateKey]) {
         var entry = data.rambam[dateKey];
-        var result = { fr: entry.text || entry, title: entry.title || '', fetched: dateKey, source: 'json' };
-        console.log('Rambam: Found in hyy-data.json!');
+        var rawText = entry.text || entry;
+        if (_isGarbageStudyText(rawText)) {
+          console.log('Rambam: hyy-data.json text is garbage, trying fr.chabad.org');
+          _rambamLoadFrChabad(dateKey, cacheKey);
+          return;
+        }
+        var cleanText = _cleanRambamText(rawText);
+        var result = { fr: cleanText, title: entry.title || '', fetched: dateKey, source: 'json' };
+        console.log('Rambam: Found in hyy-data.json! (' + cleanText.length + ' chars cleaned)');
         try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
         displayRambam(result);
         return;
@@ -8171,7 +8218,13 @@ function _tanyaLoadJson(dateKey, cacheKey) {
     .then(function(data) {
       if (data.tanya && data.tanya[dateKey]) {
         var entry = data.tanya[dateKey];
-        var result = { fr: entry.text || entry, title: entry.title || '', fetched: dateKey, source: 'json' };
+        var rawText = entry.text || entry;
+        if (_isGarbageStudyText(rawText)) {
+          console.log('Tanya: hyy-data.json text is garbage, trying fr.chabad.org');
+          _tanyaLoadFrChabad(dateKey, cacheKey);
+          return;
+        }
+        var result = { fr: rawText, title: entry.title || '', fetched: dateKey, source: 'json' };
         console.log('Tanya: Found in hyy-data.json!');
         try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
         displayTanya(result);
@@ -8285,7 +8338,13 @@ function _houmashLoadJson(dateKey, cacheKey) {
     .then(function(data) {
       if (data.houmash && data.houmash[dateKey]) {
         var entry = data.houmash[dateKey];
-        var result = { fr: entry.text || entry, title: entry.title || '', fetched: dateKey, source: 'json' };
+        var rawText = entry.text || entry;
+        if (_isGarbageStudyText(rawText)) {
+          console.log('Houmash: hyy-data.json text is garbage, trying fr.chabad.org');
+          _houmashLoadFrChabad(dateKey, cacheKey);
+          return;
+        }
+        var result = { fr: rawText, title: entry.title || '', fetched: dateKey, source: 'json' };
         console.log('Houmash: Found in hyy-data.json!');
         try { localStorage.setItem(cacheKey, JSON.stringify(result)); } catch(e) {}
         displayHoumash(result);
