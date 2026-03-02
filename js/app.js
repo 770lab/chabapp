@@ -4133,7 +4133,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-etudes","sub-don","sub-videos","sub-jewbuzz","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-patakh","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-don","sub-videos","sub-jewbuzz","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
@@ -7248,7 +7248,7 @@ function updateHomeNav(activeTab) {
   if (!nav) return;
   var items = nav.querySelectorAll('.insta-nav-item, .insta-nav-center');
   items.forEach(function(item) { item.classList.remove('active'); });
-  var tabMap = { menu: 0, 'sub-tefila': 1, 'sub-tefila-patakh': 1, 'sub-objectifs': 2, 'sub-tehilim': 3, 'sub-etudes': 4, 'sub-club': 0, 'sub-beth': 0, jour: 0, chains: 0, 'chain-detail': 0, perek: 3, birthday: 0, auth: 0, profile: 0, feed: 0, notifs: 0 };
+  var tabMap = { menu: 0, 'sub-tefila': 1, 'sub-tefila-patakh': 1, 'sub-tefila-siddur': 1, 'sub-objectifs': 2, 'sub-tehilim': 3, 'sub-etudes': 4, 'sub-club': 0, 'sub-beth': 0, jour: 0, chains: 0, 'chain-detail': 0, perek: 3, birthday: 0, auth: 0, profile: 0, feed: 0, notifs: 0 };
   var idx = tabMap[activeTab];
   if (idx !== undefined && items[idx]) items[idx].classList.add('active');
 }
