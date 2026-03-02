@@ -371,7 +371,7 @@ def update_data(data, target_date, results):
     if 'houmash' in results:
         data['houmash'][date_key] = {'text': results['houmash']['text'], 'title': results['houmash']['title']}
 
-def cleanup_old_entries(data, keep_days=7):
+def cleanup_old_entries(data, keep_days=30):
     today = date.today()
     for section in ['rambam','tanya','houmash']:
         if section not in data: continue
@@ -489,20 +489,153 @@ def bulk_scrape_hayom_yom():
     print("\n=== Bulk done: %d scraped, %d failed, %d total entries ===" % (scraped, failed, len(data.get('hayom_yom', {}))))
 
 
+# --- Bulk All Studies (multi-day) ---
+
+def bulk_scrape_all(days_ahead):
+    """Scrape all 4 studies for the next N days in a single Playwright session."""
+    from datetime import timedelta
+
+    if not USE_PLAYWRIGHT:
+        print("Bulk scrape requires Playwright.")
+        sys.exit(1)
+
+    data = load_data()
+    start = date.today()
+    dates_to_scrape = [start + timedelta(days=i) for i in range(days_ahead)]
+
+    print("=== Bulk All Studies: %d days (%s -> %s) ===" % (
+        days_ahead, dates_to_scrape[0], dates_to_scrape[-1]))
+
+    total_scraped = 0
+    total_failed = 0
+
+    with sync_playwright() as p:
+        print("Launching Chromium...")
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            locale="fr-FR",
+        )
+        page = context.new_page()
+
+        # Warm-up Cloudflare (once)
+        print("Warm-up: solving Cloudflare...")
+        try:
+            page.goto("https://fr.chabad.org/dailystudy/", wait_until="networkidle", timeout=90000)
+            if wait_for_cloudflare(page, max_wait=60):
+                print("  Cloudflare resolved!")
+            time.sleep(3)
+        except Exception as e:
+            print("  Warm-up error: %s" % str(e))
+            time.sleep(3)
+
+        for day_idx, target_date in enumerate(dates_to_scrape):
+            y, m, d = target_date.year, target_date.month, target_date.day
+            tdate = "%d/%d/%d" % (m, d, y)
+            date_key = "%d-%d-%d" % (y, m, d)
+            heb = greg_to_hebrew(y, m, d)
+            hyy_key = "%s_%d" % (heb['mName'].replace(' ', '_'), heb['hd'])
+
+            print("\n--- Day %d/%d: %s (heb: %s %d) ---" % (
+                day_idx+1, days_ahead, target_date, heb['mName'], heb['hd']))
+
+            for study, page_path in PAGES.items():
+                # Skip hayom_yom if already present (keyed by Hebrew date, repeats yearly)
+                if study == 'hayom_yom' and hyy_key in data.get('hayom_yom', {}):
+                    print("  [skip] %s: already have %s" % (study, hyy_key))
+                    continue
+                # Skip other studies if already present for this date
+                if study != 'hayom_yom' and date_key in data.get(study, {}):
+                    print("  [skip] %s: already have %s" % (study, date_key))
+                    continue
+
+                sep = '&' if '?' in page_path else '?'
+                url = "%s/%s%stdate=%s" % (BASE_URL, page_path, sep, tdate)
+                print("  Fetching %s: %s" % (study, url))
+
+                try:
+                    page.goto(url, wait_until="networkidle", timeout=90000)
+                    if not wait_for_cloudflare(page, max_wait=20):
+                        print("    x Cloudflare stuck")
+                        total_failed += 1
+                        time.sleep(DELAY)
+                        continue
+
+                    time.sleep(2)
+                    result = page.evaluate(EXTRACT_JS)
+                    text = result.get('text', '')
+
+                    if text and len(text) > 50:
+                        title = page.title()
+                        clean_title = re.sub(r'\s*-\s*fr\.chabad\.org.*', '', title, flags=re.IGNORECASE).strip()
+
+                        if study == 'hayom_yom':
+                            data.setdefault('hayom_yom', {})[hyy_key] = text
+                        else:
+                            data.setdefault(study, {})[date_key] = {'text': text, 'title': clean_title}
+
+                        total_scraped += 1
+                        print("    OK: %d chars - %s" % (len(text), clean_title[:50]))
+                    else:
+                        print("    x No content")
+                        total_failed += 1
+
+                except Exception as e:
+                    print("    x Error: %s" % str(e))
+                    total_failed += 1
+
+                time.sleep(DELAY)
+
+            # Checkpoint every 3 days
+            if (day_idx + 1) % 3 == 0:
+                save_data(data)
+                print("  [checkpoint saved]")
+
+        browser.close()
+
+    save_data(data)
+    hyy_count = len(data.get('hayom_yom', {}))
+    ram_count = len(data.get('rambam', {}))
+    tan_count = len(data.get('tanya', {}))
+    hou_count = len(data.get('houmash', {}))
+    print("\n=== Bulk done: %d scraped, %d failed ===" % (total_scraped, total_failed))
+    print("  hayom_yom: %d | rambam: %d | tanya: %d | houmash: %d" % (hyy_count, ram_count, tan_count, hou_count))
+
+
 # --- Main ---
+
+def _parse_arg(flag):
+    """Return the value after --flag or None."""
+    for i, a in enumerate(sys.argv):
+        if a == flag and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return None
 
 def main():
     if '--bulk-hyy' in sys.argv:
         bulk_scrape_hayom_yom()
         return
 
-    if len(sys.argv) > 1 and sys.argv[1] != '--bulk-hyy':
+    days_arg = _parse_arg('--days')
+    if days_arg:
         try:
-            target_date = datetime.strptime(sys.argv[1], '%Y-%m-%d').date()
+            days = int(days_arg)
         except ValueError:
-            print("Invalid date: %s (use YYYY-MM-DD)" % sys.argv[1]); sys.exit(1)
-    else:
-        target_date = date.today()
+            print("Invalid --days value: %s" % days_arg); sys.exit(1)
+        bulk_scrape_all(days)
+        data = load_data()
+        cleanup_old_entries(data)
+        save_data(data)
+        return
+
+    target_date = date.today()
+    for a in sys.argv[1:]:
+        if a.startswith('--'):
+            continue
+        try:
+            target_date = datetime.strptime(a, '%Y-%m-%d').date()
+        except ValueError:
+            print("Invalid date: %s (use YYYY-MM-DD)" % a); sys.exit(1)
 
     print("=== Scraping daily studies for %s ===\n" % target_date)
     results = scrape_playwright(target_date) if USE_PLAYWRIGHT else scrape_cloudscraper(target_date)
