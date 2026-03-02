@@ -523,6 +523,13 @@ function init() {
         }
       };
 
+      // Render immédiatement si le panel siddour est déjà visible au lancement
+      var root = document.getElementById('siddur-smart-root');
+      var panel = document.getElementById('panel-sub-tefila-siddur');
+      if (root && panel && panel.style.display !== 'none') {
+        render();
+      }
+
       clearInterval(_interval);
     }
   }, 200);
