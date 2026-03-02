@@ -21,6 +21,7 @@ var state = {
   nusach:     'chabad',
   noTahnoun:  false,
   isFemale:   false,
+  phonetic:   false,
   expandedId: null,
   autoScroll: false,
   scrollSpeed: 2,
@@ -33,53 +34,72 @@ var TEFILOT = {
     label: 'שַׁחֲרִית', sublabel: 'Shacharit', icon: '🌅',
     sections: [
       { id: 'modeh',    title: 'מודה אני',             always: true,
-        text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.' },
+        text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
+        phonetic: 'Modé ani léfanékha, Mélekh 'haï vékayam, chéhé'hézarta bi nichmati bé'hemla, raba émounatékha.' },
       { id: 'netilat',  title: 'נטילת ידיים',           always: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל נְטִילַת יָדָיִם.' },
+        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל נְטִילַת יָדָיִם.',
+        phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam, al nétilat yadaïm.' },
       { id: 'brachot',  title: 'בִּרְכוֹת הַשַּׁחַר',  always: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר נָתַן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה...' },
+        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר נָתַן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה...',
+        phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam, achère natane lassékhvi bina léhav\'hine beine yom ouveine laïla...' },
       { id: 'tfilin',   title: 'הנחת תפילין',            always: true, male_only: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.' },
+        text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.',
+        phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam achère kidéchanou bémitsvotav vétsivanou léhania'h téfiline.' },
       { id: 'psukei',   title: 'פְּסוּקֵי דְּזִמְרָה',  always: true,
-        text: 'בָּרוּךְ שֶׁאָמַר וְהָיָה הָעוֹלָם, בָּרוּךְ הוּא. בָּרוּךְ עֹשֵׂה בְרֵאשִׁית, בָּרוּךְ אוֹמֵר וְעוֹשֶׂה...' },
+        text: 'בָּרוּךְ שֶׁאָמַר וְהָיָה הָעוֹלָם, בָּרוּךְ הוּא. בָּרוּךְ עֹשֵׂה בְרֵאשִׁית, בָּרוּךְ אוֹמֵר וְעוֹשֶׂה...',
+        phonetic: 'Baroukh chéamar véhaya haolam, Baroukh hou. Baroukh ossé béréchit, Baroukh omère véossé...' },
       { id: 'shema',    title: 'קְרִיאַת שְׁמַע',       always: true,
-        text: 'שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד׃\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.' },
+        text: 'שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד׃\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.',
+        phonetic: 'Chéma Israël, Ado-naï Elo-hénou, Ado-naï É\'had.\nBaroukh chem kevod malkhouto léolam vaèd.' },
       { id: 'amida',    title: 'עֲמִידָה',               always: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, אֱלֹהֵי אַבְרָהָם, אֱלֹהֵי יִצְחָק, וֵאלֹהֵי יַעֲקֹב...' },
+        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, אֱלֹהֵי אַבְרָהָם, אֱלֹהֵי יִצְחָק, וֵאלֹהֵי יַעֲקֹב...',
+        phonetic: 'Baroukh ata Ado-naï, Elo-hénou vElo-hé avotéinou, Elo-hé Avraham, Elo-hé Its\'hak, vElo-hé Yaakov...' },
       { id: 'hallel',   title: 'הַלֵּל',                 rosh_hodesh: true,
-        text: 'הַלְלוּיָהּ, הַלְלוּ עַבְדֵי יְיָ, הַלְלוּ אֶת שֵׁם יְיָ. יְהִי שֵׁם יְיָ מְבֹרָךְ, מֵעַתָּה וְעַד עוֹלָם.' },
+        text: 'הַלְלוּיָהּ, הַלְלוּ עַבְדֵי יְיָ, הַלְלוּ אֶת שֵׁם יְיָ. יְהִי שֵׁם יְיָ מְבֹרָךְ, מֵעַתָּה וְעַד עוֹלָם.',
+        phonetic: 'Hallélouya, hallélou avdé Ado-naï, hallélou ète chem Ado-naï. Yéhi chem Ado-naï mévorakh, méata véad olam.' },
       { id: 'tahnoun',  title: 'תַּחֲנוּן',               tahnoun_day: true,
-        text: 'וַיֹּאמֶר דָּוִד אֶל גָד, צַר לִי מְאֹד, נִפְּלָה נָא בְיַד יְיָ כִּי רַבִּים רַחֲמָיו...' },
+        text: 'וַיֹּאמֶר דָּוִד אֶל גָד, צַר לִי מְאֹד, נִפְּלָה נָא בְיַד יְיָ כִּי רַבִּים רַחֲמָיו...',
+        phonetic: 'Vayomère David el Gad, tsar li méod, nipéla na béyad Ado-naï ki rabim ra\'hamav...' },
       { id: 'uva',      title: 'וּבָא לְצִיּוֹן',        always: true,
-        text: 'וּבָא לְצִיּוֹן גּוֹאֵל, וּלְשָׁבֵי פֶשַׁע בְּיַעֲקֹב, נְאֻם יְיָ...' },
+        text: 'וּבָא לְצִיּוֹן גּוֹאֵל, וּלְשָׁבֵי פֶשַׁע בְּיַעֲקֹב, נְאֻם יְיָ...',
+        phonetic: 'Ouva léTsione goèl, oulchavé pécha béYaakov, néoum Ado-naï...' },
       { id: 'aleinu',   title: 'עָלֵינוּ',               always: true,
-        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית...' },
+        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית...',
+        phonetic: 'Alénou léchabéa\'h laAdone hakol, latète guédoula léyotsère béréchit...' },
     ]
   },
   mincha: {
     label: 'מִנְחָה', sublabel: 'Mincha', icon: '☀️',
     sections: [
       { id: 'ashrei-m',  title: 'אַשְׁרֵי',  always: true,
-        text: 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ, עוֹד יְהַלְלוּךָ סֶּלָה...' },
+        text: 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ, עוֹד יְהַלְלוּךָ סֶּלָה...',
+        phonetic: 'Achré yochvé vétékha, od yéhaléloukha séla...' },
       { id: 'amida-m',   title: 'עֲמִידָה',  always: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ...' },
+        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ...',
+        phonetic: 'Baroukh ata Ado-naï, Elo-hénou vElo-hé avotéinou...' },
       { id: 'tahnoun-m', title: 'תַּחֲנוּן',  tahnoun_day: true,
-        text: 'וַיֹּאמֶר דָּוִד אֶל גָד, צַר לִי מְאֹד...' },
+        text: 'וַיֹּאמֶר דָּוִד אֶל גָד, צַר לִי מְאֹד...',
+        phonetic: 'Vayomère David el Gad, tsar li méod...' },
       { id: 'aleinu-m',  title: 'עָלֵינוּ',  always: true,
-        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל...' },
+        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל...',
+        phonetic: 'Alénou léchabéa\'h laAdone hakol...' },
     ]
   },
   arvit: {
     label: 'עַרְבִית', sublabel: 'Arvit', icon: '🌙',
     sections: [
       { id: 'barchu',   title: 'בָּרְכוּ',          always: true,
-        text: 'בָּרְכוּ אֶת יְיָ הַמְּבֹרָךְ...' },
+        text: 'בָּרְכוּ אֶת יְיָ הַמְּבֹרָךְ...',
+        phonetic: 'Barékhou ète Ado-naï hamévorakh...' },
       { id: 'shema-a',  title: 'קְרִיאַת שְׁמַע',  always: true,
-        text: 'שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד...' },
+        text: 'שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד...',
+        phonetic: 'Chéma Israël, Ado-naï Elo-hénou, Ado-naï É\'had...' },
       { id: 'amida-a',  title: 'עֲמִידָה',          always: true,
-        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ...' },
+        text: 'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ...',
+        phonetic: 'Baroukh ata Ado-naï, Elo-hénou vElo-hé avotéinou...' },
       { id: 'aleinu-a', title: 'עָלֵינוּ',          always: true,
-        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל...' },
+        text: 'עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל...',
+        phonetic: 'Alénou léchabéa\'h laAdone hakol...' },
     ]
   }
 };
@@ -217,6 +237,10 @@ function injectStyles() {
     '.ss-card-body { padding:0 16px 16px; direction:rtl; font-family:"Frank Ruhl Libre",serif;',
     '  font-size:17px; line-height:2.1; color:#222; border-top:1px solid #f0f0f0;',
     '  padding-top:12px; white-space:pre-line; animation:ssFadeIn .25s ease; }',
+    '.ss-card-phonetic { direction:ltr; font-family:system-ui,sans-serif; font-size:15px;',
+    '  line-height:1.8; color:#666; border-top:1px dashed #e0e0e0; margin-top:0;',
+    '  padding-top:10px; background:linear-gradient(135deg,rgba(131,58,180,.03),rgba(252,176,69,.03));',
+    '  border-radius:0 0 12px 12px; }',
 
     /* FAB auto-scroll */
     '.ss-fab { position:fixed; bottom:80px; right:16px; z-index:30;',
@@ -334,13 +358,21 @@ function renderSections(sections) {
     var badges = '';
     if (s.rosh_hodesh) badges += '<span class="ss-card-badge ss-badge-rh">ר״ח</span>';
     if (s.male_only)   badges += '<span class="ss-card-badge ss-badge-male">גברים</span>';
-    var body = open ? '<div class="ss-card-body">' + s.text + '</div>' : '';
+    var bodyContent = '';
+    if (open) {
+      if (state.phonetic && s.phonetic) {
+        bodyContent = '<div class="ss-card-body">' + s.text + '</div>' +
+          '<div class="ss-card-body ss-card-phonetic">' + s.phonetic + '</div>';
+      } else {
+        bodyContent = '<div class="ss-card-body">' + s.text + '</div>';
+      }
+    }
     return '<div class="ss-card' + (open ? ' open' : '') + '" id="ss-card-' + s.id + '">' +
       '<div class="ss-card-header" onclick="window.siddurToggleCard(\'' + s.id + '\')">' +
       '<div class="ss-card-left"><div class="ss-card-dot"></div>' +
       '<span class="ss-card-title">' + s.title + '</span>' + badges + '</div>' +
       '<span class="ss-card-chevron">▾</span></div>' +
-      body + '</div>';
+      bodyContent + '</div>';
   }).join('');
 }
 
@@ -412,6 +444,7 @@ function render() {
     '<div class="ss-toggles">' +
     renderToggle('ללא תחנון', 'noTahnoun') +
     renderToggle('נשים', 'isFemale') +
+    renderToggle('phonétique', 'phonetic') +
     '</div></div>' +
 
     // Tabs
