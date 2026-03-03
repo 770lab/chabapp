@@ -7856,34 +7856,8 @@ function submitDonation() {
 }
 
 function syncEtudesPanel() {
-  // Copy HYY content to études panel
-  var srcDate = document.getElementById('hyy-date');
-  var srcText = document.getElementById('hyy-text');
-  var dstDate = document.getElementById('etudes-hyy-date');
-  var dstText = document.getElementById('etudes-hyy-text');
-  if (srcDate && dstDate) dstDate.textContent = srcDate.textContent;
-  if (srcText && dstText) dstText.innerHTML = srcText.innerHTML;
-  // Copy Rambam content to études panel
-  var rSrcDate = document.getElementById('rambam-date');
-  var rSrcText = document.getElementById('rambam-text');
-  var rDstDate = document.getElementById('etudes-rambam-date');
-  var rDstText = document.getElementById('etudes-rambam-text');
-  if (rSrcDate && rDstDate) rDstDate.textContent = rSrcDate.textContent;
-  if (rSrcText && rDstText) rDstText.innerHTML = rSrcText.innerHTML;
-  // Copy Tanya content to études panel
-  var tSrcDate = document.getElementById('tanya-date');
-  var tSrcText = document.getElementById('tanya-text');
-  var tDstDate = document.getElementById('etudes-tanya-date');
-  var tDstText = document.getElementById('etudes-tanya-text');
-  if (tSrcDate && tDstDate) tDstDate.textContent = tSrcDate.textContent;
-  if (tSrcText && tDstText) tDstText.innerHTML = tSrcText.innerHTML;
-  // Copy Houmash content to études panel
-  var hSrcDate = document.getElementById('houmash-date');
-  var hSrcText = document.getElementById('houmash-text');
-  var hDstDate = document.getElementById('etudes-houmash-date');
-  var hDstText = document.getElementById('etudes-houmash-text');
-  if (hSrcDate && hDstDate) hDstDate.textContent = hSrcDate.textContent;
-  if (hSrcText && hDstText) hDstText.innerHTML = hSrcText.innerHTML;
+  // Les display*() ecrivent directement dans les elements etudes-*
+  // Cette fonction est conservee pour compatibilite avec switchTab
 }
 
 function loadHayomYom() {
@@ -8019,9 +7993,9 @@ function _hyyLoadFrChabad(heb, dateKey, cacheKey, hyyKey) {
 }
 
 function displayHyy(data) {
-  var el=document.getElementById('hyy-text');
+  var el=document.getElementById('etudes-hyy-text');
   var dateEl=document.getElementById('hyy-date');
-  var expEl=document.getElementById('hyy-expand');
+  var etudesDateEl=document.getElementById('etudes-hyy-date');
   if(!el) return;
   var content='';
   if(data.fr) {
@@ -8032,18 +8006,20 @@ function displayHyy(data) {
   if(data.he && !data.fr) content='<div style="direction:rtl;text-align:right;font-family:\'Noto Serif Hebrew\',serif;line-height:1.9;margin-bottom:10px;">'+data.he+'</div>'+content;
   if(content){
     el.innerHTML=content;
-    expEl.style.display='block';
   } else { displayHyyFallback(); return; }
   if(dateEl) dateEl.textContent=data.heDate||'';
+  if(etudesDateEl) etudesDateEl.textContent=data.heDate||'';
 }
 
 function displayHyyFallback() {
-  var el=document.getElementById('hyy-text');
+  var el=document.getElementById('etudes-hyy-text');
   var dateEl=document.getElementById('hyy-date');
+  var etudesDateEl=document.getElementById('etudes-hyy-date');
   if(!el) return;
   var d=new Date();
   var heb=gregToHebrew(d.getFullYear(),d.getMonth()+1,d.getDate());
   if(dateEl) dateEl.textContent=heb.mName+' '+heb.hd;
+  if(etudesDateEl) etudesDateEl.textContent=heb.mName+' '+heb.hd;
   el.innerHTML='<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Hayom Yom sera bientôt disponible</span>';
 }
 
@@ -8171,13 +8147,14 @@ function _rambamLoadFrChabad(dateKey, cacheKey) {
 }
 
 function displayRambam(data) {
-  var el = document.getElementById('rambam-text');
+  var el = document.getElementById('etudes-rambam-text');
   var dateEl = document.getElementById('rambam-date');
-  var expEl = document.getElementById('rambam-expand');
+  var etudesDateEl = document.getElementById('etudes-rambam-date');
   var heroSub = document.getElementById('rambam-date-hero');
   if (!el) return;
   var content = '';
   if (data.title && dateEl) { dateEl.textContent = data.title; }
+  if (data.title && etudesDateEl) { etudesDateEl.textContent = data.title; }
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
   } else {
@@ -8186,20 +8163,21 @@ function displayRambam(data) {
   }
   if (content) {
     el.innerHTML = content;
-    expEl.style.display = 'block';
   } else {
     displayRambamFallback();
   }
 }
 
 function displayRambamFallback() {
-  var el = document.getElementById('rambam-text');
+  var el = document.getElementById('etudes-rambam-text');
   var dateEl = document.getElementById('rambam-date');
+  var etudesDateEl = document.getElementById('etudes-rambam-date');
   var heroSub = document.getElementById('rambam-date-hero');
   if (!el) return;
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) { dateEl.textContent = heb.mName + ' ' + heb.hd; }
+  if (etudesDateEl) { etudesDateEl.textContent = heb.mName + ' ' + heb.hd; }
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Rambam sera bientôt disponible</span>';
 }
 
@@ -8270,32 +8248,32 @@ function _tanyaLoadFrChabad(dateKey, cacheKey) {
 }
 
 function displayTanya(data) {
-  var el = document.getElementById('tanya-text');
+  var el = document.getElementById('etudes-tanya-text');
   var dateEl = document.getElementById('tanya-date');
-  var expEl = document.getElementById('tanya-expand');
+  var etudesDateEl = document.getElementById('etudes-tanya-date');
   if (!el) return;
   if (data.title && dateEl) dateEl.textContent = data.title;
-  var heroSub = document.getElementById('tanya-date-hero');
-  if(heroSub) {}
+  if (data.title && etudesDateEl) etudesDateEl.textContent = data.title;
   var content = '';
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
   }
   if (content) {
     el.innerHTML = content;
-    if (expEl) expEl.style.display = 'block';
   } else {
     displayTanyaFallback();
   }
 }
 
 function displayTanyaFallback() {
-  var el = document.getElementById('tanya-text');
+  var el = document.getElementById('etudes-tanya-text');
   var dateEl = document.getElementById('tanya-date');
+  var etudesDateEl = document.getElementById('etudes-tanya-date');
   if (!el) return;
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
+  if (etudesDateEl) etudesDateEl.textContent = heb.mName + ' ' + heb.hd;
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Tanya sera bientôt disponible</span>';
 }
 
@@ -8390,30 +8368,32 @@ function _houmashLoadFrChabad(dateKey, cacheKey) {
 }
 
 function displayHoumash(data) {
-  var el = document.getElementById('houmash-text');
+  var el = document.getElementById('etudes-houmash-text');
   var dateEl = document.getElementById('houmash-date');
-  var expEl = document.getElementById('houmash-expand');
+  var etudesDateEl = document.getElementById('etudes-houmash-date');
   if (!el) return;
   if (data.title && dateEl) dateEl.textContent = data.title;
+  if (data.title && etudesDateEl) etudesDateEl.textContent = data.title;
   var content = '';
   if (data.fr) {
     content = '<div style="font-size:15px;line-height:1.8;color:var(--gray-1);">' + data.fr.replace(/\n/g,'<br>') + '</div>';
   }
   if (content) {
     el.innerHTML = content;
-    if (expEl) expEl.style.display = 'block';
   } else {
     displayHoumashFallback();
   }
 }
 
 function displayHoumashFallback() {
-  var el = document.getElementById('houmash-text');
+  var el = document.getElementById('etudes-houmash-text');
   var dateEl = document.getElementById('houmash-date');
+  var etudesDateEl = document.getElementById('etudes-houmash-date');
   if (!el) return;
   var d = new Date();
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
+  if (etudesDateEl) etudesDateEl.textContent = heb.mName + ' ' + heb.hd;
   el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du \'Houmach sera bient\u00f4t disponible</span>';
 }
 
