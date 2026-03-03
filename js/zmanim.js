@@ -1,19 +1,19 @@
 // ─── ZMANIM MODULE ───
 (function() {
   const ZMANIM_DEFS = [
-    { key: 'alotHaShachar',      fr: 'Alot HaCha\'har',        he: 'עלות השחר',        section: 'matin',  icon: '🌑' },
-    { key: 'misheyakir',         fr: 'Michéyakir',             he: 'משיכיר',           section: 'matin',  icon: '🌒' },
-    { key: 'sunrise',            fr: 'Nets Ha\'Hama',          he: 'הנץ החמה',         section: 'matin',  icon: '🌅' },
-    { key: 'sofZmanShmaMGA',     fr: 'Sof Zman Shma (MGA)',    he: 'סוף זמן שמע (מג״א)', section: 'matin', icon: '📖' },
-    { key: 'sofZmanShma',        fr: 'Sof Zman Shma (GRA)',    he: 'סוף זמן שמע (גר״א)', section: 'matin', icon: '📖' },
-    { key: 'sofZmanTfillaMGA',   fr: 'Sof Zman Tefila (MGA)',  he: 'סוף זמן תפילה (מג״א)', section: 'matin', icon: '🙏' },
-    { key: 'sofZmanTfilla',      fr: 'Sof Zman Tefila (GRA)',  he: 'סוף זמן תפילה (גר״א)', section: 'matin', icon: '🙏' },
-    { key: 'chatzot',            fr: '\'Hatzot HaYom',         he: 'חצות היום',        section: 'midi',   icon: '☀️' },
-    { key: 'minchaGedola',       fr: 'Min\'ha Guedola',        he: 'מנחה גדולה',       section: 'apresmidi', icon: '🕑' },
-    { key: 'minchaKetana',       fr: 'Min\'ha Ketana',         he: 'מנחה קטנה',        section: 'apresmidi', icon: '🕓' },
-    { key: 'plagHaMincha',       fr: 'Plag HaMin\'ha',         he: 'פלג המנחה',        section: 'apresmidi', icon: '🌤' },
-    { key: 'sunset',             fr: 'Chki\'a',                he: 'שקיעה',            section: 'soir',   icon: '🌇' },
-    { key: 'tzeit7083deg',       fr: 'Tsèt HaKokhavim',       he: 'צאת הכוכבים',      section: 'soir',   icon: '⭐' },
+    { key: 'alotHaShachar',      fr: 'Aube (Alot Hacha\'har)',                  he: 'עלות השחר',        section: 'matin',  icon: '🌑' },
+    { key: 'misheyakir',         fr: 'Tallit & Téfilines (Michéyakir)',         he: 'משיכיר',           section: 'matin',  icon: '🌒' },
+    { key: 'sunrise',            fr: 'Lever du soleil',                         he: 'הנץ החמה',         section: 'matin',  icon: '🌅' },
+    { key: 'sofZmanShmaMGA',     fr: '⏰ Chéma max (Maguèn Avraham)',           he: 'סוף זמן שמע (מג״א)', section: 'matin', icon: '📖' },
+    { key: 'sofZmanShma',        fr: '⏰ Chéma max (Gaon de Vilna)',             he: 'סוף זמן שמע (גר״א)', section: 'matin', icon: '📖' },
+    { key: 'sofZmanTfillaMGA',   fr: '⏰ Amida max (Maguèn Avraham)',            he: 'סוף זמן תפילה (מג״א)', section: 'matin', icon: '🙏' },
+    { key: 'sofZmanTfilla',      fr: '⏰ Amida max (Gaon de Vilna)',              he: 'סוף זמן תפילה (גר״א)', section: 'matin', icon: '🙏' },
+    { key: 'chatzot',            fr: 'Midi solaire (\'Hatzot)',                 he: 'חצות היום',        section: 'midi',   icon: '☀️' },
+    { key: 'minchaGedola',       fr: 'Début de Min\'ha',                        he: 'מנחה גדולה',       section: 'apresmidi', icon: '🕑' },
+    { key: 'minchaKetana',       fr: 'Min\'ha tardive',                         he: 'מנחה קטנה',        section: 'apresmidi', icon: '🕓' },
+    { key: 'plagHaMincha',       fr: 'Plag HaMin\'ha',                          he: 'פלג המנחה',        section: 'apresmidi', icon: '🌤' },
+    { key: 'sunset',             fr: 'Coucher du soleil (Chki\'a)',             he: 'שקיעה',            section: 'soir',   icon: '🌇' },
+    { key: 'tzeit7083deg',       fr: 'Sortie des étoiles (Tsèt)',              he: 'צאת הכוכבים',      section: 'soir',   icon: '⭐' },
   ];
 
   const SECTION_LABELS = {

@@ -35,7 +35,7 @@ var TEFILOT = {
     sections: [
       { id: 'modeh',    title: 'מודה אני',             titlePhonetic: 'Modé Ani',              always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
-        phonetic: 'Modé ani léfanékha, Mélekh 'haï vékayam, chéhé'hézarta bi nichmati bé'hemla, raba émounatékha.' },
+        phonetic: 'Modé ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.' },
       { id: 'netilat',  title: 'נטילת ידיים',           titlePhonetic: 'Nétilat Yadaïm',        always: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל נְטִילַת יָדָיִם.',
         phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam, al nétilat yadaïm.' },
@@ -44,7 +44,7 @@ var TEFILOT = {
         phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam, achère natane lassékhvi bina léhav\'hine beine yom ouveine laïla...' },
       { id: 'tfilin',   title: 'הנחת תפילין',            titlePhonetic: 'Hana\'hat Téfiline',    always: true, male_only: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.',
-        phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam achère kidéchanou bémitsvotav vétsivanou léhania'h téfiline.' },
+        phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam achère kidéchanou bémitsvotav vétsivanou léhania\'h téfiline.' },
       { id: 'psukei',   title: 'פְּסוּקֵי דְּזִמְרָה',  titlePhonetic: 'Pessouké déZimra',     always: true,
         text: 'בָּרוּךְ שֶׁאָמַר וְהָיָה הָעוֹלָם, בָּרוּךְ הוּא. בָּרוּךְ עֹשֵׂה בְרֵאשִׁית, בָּרוּךְ אוֹמֵר וְעוֹשֶׂה...',
         phonetic: 'Baroukh chéamar véhaya haolam, Baroukh hou. Baroukh ossé béréchit, Baroukh omère véossé...' },
