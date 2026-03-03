@@ -210,6 +210,8 @@
 <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;">
 <div class="big-card-title" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Hayom Yom</div>
 <div class="big-card-sub hyy-date" id="hyy-date" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Étude du jour</div>
+<div id="hyy-text" style="display:none;"></div>
+<div id="hyy-expand" style="display:none;"></div>
 </div>
 
 </div>
@@ -1165,7 +1167,7 @@ Partager
 <button class="feed-fab" id="feed-fab" style="display:none;" onclick="feedShowTypeChoice()">+</button>
 <!-- Choix Post / Story -->
 <div id="feed-type-overlay" class="feed-compose-overlay" style="display:none;" onclick="feedCloseTypeChoice()"></div>
-<div id="feed-type-menu" style="display:none;position:fixed;bottom:160px;right:20px;z-index:110;background:var(--card-bg,#232338);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4);padding:8px 0;min-width:180px;">
+<div id="feed-type-menu" style="display:none;position:fixed;bottom:160px;right:20px;z-index:210;background:var(--card-bg,#232338);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4);padding:8px 0;min-width:180px;">
 <button onclick="feedStartPost()" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 20px;border:none;background:none;color:#fff;font-size:15px;font-family:var(--font);cursor:pointer;"><span style="font-size:20px;">📷</span> Publication</button>
 <button onclick="feedStartStory()" style="display:flex;align-items:center;gap:12px;width:100%;padding:14px 20px;border:none;background:none;color:#fff;font-size:15px;font-family:var(--font);cursor:pointer;"><span style="font-size:20px;">⏳</span> Story</button>
 </div>

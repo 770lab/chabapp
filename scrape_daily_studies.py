@@ -668,31 +668,10 @@ def main():
         except ValueError:
             print("Invalid --days value: %s" % days_arg); sys.exit(1)
         bulk_scrape_all(days)
-        data = load_data()
-        cleanup_old_entries(data)
-        save_data(data)
         return
 
-    target_date = date.today()
-    for a in sys.argv[1:]:
-        if a.startswith('--'):
-            continue
-        try:
-            target_date = datetime.strptime(a, '%Y-%m-%d').date()
-        except ValueError:
-            print("Invalid date: %s (use YYYY-MM-DD)" % a); sys.exit(1)
-
-    print("=== Scraping daily studies for %s ===\n" % target_date)
-    results = scrape_playwright(target_date) if USE_PLAYWRIGHT else scrape_cloudscraper(target_date)
-
-    if not results:
-        print("\nx No studies scraped."); sys.exit(1)
-
-    data = load_data()
-    update_data(data, target_date, results)
-    cleanup_old_entries(data)
-    save_data(data)
-    print("\n=== Done: %d/4 studies scraped ===" % len(results))
+    print("Usage: python scrape_daily_studies.py --bulk-hyy | --days N")
+    sys.exit(1)
 
 if __name__ == '__main__':
     main()
