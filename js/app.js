@@ -4167,6 +4167,7 @@ function switchTab(tab) {
   if (tab === "sub-objectifs") { renderObjectives(); renderObjStoryBar(); }
   if (tab === "sub-etudes") { syncEtudesPanel(); }
   if (tab === "sub-tefila-patakh") { showPatakhDirect('shaharit'); }
+  if (tab === "sub-tefila-siddur") { setTimeout(function(){ if (typeof window.siddurRender === "function") window.siddurRender(); }, 50); }
   if (tab === "menu") { renderObjStoryBar(); updateBigObjSub(); }
   if (tab === "auth")    { if (typeof _renderAuth === "function") _renderAuth(); }
   if (tab === "sub-videos") { if (typeof ytLoadVideos === "function") ytLoadVideos(); }
@@ -4177,6 +4178,9 @@ function switchTab(tab) {
   if (tab === "profile") { if (typeof _renderProfile === "function") _renderProfile(); }
   if (tab === "notifs")  { if (typeof notifLoad === "function") notifLoad(); }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
+  // Masquer le header Chab'app sur les sous-panels (ils ont leur propre bouton retour)
+  var homeHeader = document.querySelector('.home-header');
+  if (homeHeader) homeHeader.style.display = (tab === 'menu' || tab === 'jour') ? '' : 'none';
   window.scrollTo(0, 0);
   document.getElementById("reading").scrollTop = 0;
   updateHomeNav(tab);

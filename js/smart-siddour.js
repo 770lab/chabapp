@@ -418,6 +418,7 @@ function renderCompassModal() {
 }
 
 // ── Render principal ───────────────────────────────────────────────────────
+window.siddurRender = render;
 function render() {
   var container = document.getElementById('siddur-smart-root');
   if (!container) return;
