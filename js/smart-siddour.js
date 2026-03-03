@@ -422,10 +422,6 @@ function render() {
   var container = document.getElementById('siddur-smart-root');
   if (!container) return;
 
-  var hdate    = getHDate();
-  var tefilah  = TEFILOT[state.tefilah];
-  var sections = filterSections(tefilah.sections, hdate);
-
   // Auto-detect tefila selon heure
   var h = new Date().getHours();
   if (!state._tefilahManual) {
@@ -433,6 +429,10 @@ function render() {
     else if (h >= 13 && h < 19) state.tefilah = 'mincha';
     else                        state.tefilah = 'arvit';
   }
+
+  var hdate    = getHDate();
+  var tefilah  = TEFILOT[state.tefilah];
+  var sections = filterSections(tefilah.sections, hdate);
 
   container.innerHTML =
     '<div class="ss-wrap">' +
