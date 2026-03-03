@@ -829,11 +829,14 @@ select.yt-admin-input { appearance: auto; }
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 .feed-post-avatar-story-ring .feed-post-avatar {
   width: 34px; height: 34px;
   border: 2px solid #fff;
   border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 .panel-profile-btn.has-story {
   border: none;

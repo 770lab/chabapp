@@ -468,11 +468,11 @@ function _renderFeed() {
     html += '<div class="feed-stories-bar" style="display:flex;gap:12px;padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;">';
     stories.forEach(function (s) {
       var avatar = s.authorPhoto
-        ? '<img src="' + s.authorPhoto + '" style="width:56px;height:56px;border-radius:50%;object-fit:cover;" />'
-        : '<div style="width:56px;height:56px;border-radius:50%;background:var(--gray-5);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;">' + (s.authorName || "?").charAt(0).toUpperCase() + '</div>';
+        ? '<img src="' + s.authorPhoto + '" style="width:52px;height:52px;border-radius:50%;object-fit:cover;display:block;" />'
+        : '<div style="width:52px;height:52px;border-radius:50%;background:var(--gray-5);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;">' + (s.authorName || "?").charAt(0).toUpperCase() + '</div>';
       html += '<div onclick="_feedViewStory(\'' + s.id + '\')" style="flex-shrink:0;text-align:center;cursor:pointer;">';
-      html += '<div style="padding:2px;border-radius:50%;background:conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34);display:inline-block;">';
-      html += '<div style="padding:2px;border-radius:50%;background:var(--card-bg,#232338);">' + avatar + '</div>';
+      html += '<div style="width:60px;height:60px;border-radius:50%;background:conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34);display:flex;align-items:center;justify-content:center;">';
+      html += '<div style="width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;">' + avatar + '</div>';
       html += '</div>';
       html += '<div style="font-size:11px;color:var(--gray-3);margin-top:4px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + _escHtml(s.authorName || "").split(" ")[0] + '</div>';
       html += '</div>';
