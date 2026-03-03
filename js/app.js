@@ -4179,8 +4179,11 @@ function switchTab(tab) {
   if (tab === "notifs")  { if (typeof notifLoad === "function") notifLoad(); }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
   // Masquer le header Chab'app sur les sous-panels (ils ont leur propre bouton retour)
-  var homeHeader = document.querySelector('.home-header');
-  if (homeHeader) homeHeader.style.display = (tab === 'menu' || tab === 'jour') ? '' : 'none';
+  var homeEl = document.getElementById('home');
+  if (homeEl) {
+    if (tab === 'menu' || tab === 'jour') homeEl.classList.remove('sub-panel-mode');
+    else homeEl.classList.add('sub-panel-mode');
+  }
   window.scrollTo(0, 0);
   document.getElementById("reading").scrollTop = 0;
   updateHomeNav(tab);

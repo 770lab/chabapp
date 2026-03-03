@@ -61,7 +61,7 @@
   background: var(--white, #fff);
   border-bottom: 1px solid var(--gray-5, #f0f0f0);
 }
-.panel-back {
+.panel-top-bar .panel-back {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; cursor: pointer; color: var(--black, #000);
