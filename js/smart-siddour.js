@@ -19,7 +19,6 @@ var state = {
   nusach:     'chabad',
   isFemale:   false,
   lang:       'hebrew',   // 'hebrew' | 'phonetic' | 'french'
-  expandedId: null,
   autoScroll: false,
   scrollSpeed: 2,
   scrollInterval: null,
@@ -355,7 +354,7 @@ function injectStyles() {
     '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 15px); }',
 
     /* Tefila tabs */
-    '.ss-tabs { display:flex; gap:10px; padding:14px 16px 0; justify-content:center; }',
+    '.ss-tabs { display:flex; gap:10px; padding:10px 0 0; justify-content:center; }',
     '.ss-tab { flex:1; padding:12px 6px; border-radius:14px; cursor:pointer; border:1.5px solid #e8e8e8;',
     '  background:#fff; text-align:center; transition:all .3s;',
     '  box-shadow:0 1px 4px rgba(0,0,0,.04); }',
@@ -380,43 +379,32 @@ function injectStyles() {
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
     '.ss-banner-sub { font-size:11px; color:#aaa; margin-top:1px; }',
 
-    /* Liste sections */
-    '.ss-list { padding:12px 16px; }',
-    '.ss-list-title { font-family:"Frank Ruhl Libre",serif; font-size:18px; font-weight:700;',
+    /* Barre de sections horizontale sticky */
+    '.ss-sections-bar { position:sticky; top:0; z-index:19; background:rgba(255,255,255,.96);',
+    '  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);',
+    '  border-bottom:1px solid #ececec; padding:8px 0; overflow-x:auto; overflow-y:hidden;',
+    '  display:flex; gap:6px; scrollbar-width:none; -ms-overflow-style:none; white-space:nowrap; }',
+    '.ss-sections-bar::-webkit-scrollbar { display:none; }',
+    '.ss-sections-bar-inner { display:flex; gap:6px; padding:0 12px; }',
+    '.ss-sec-pill { padding:6px 14px; border-radius:100px; border:none; white-space:nowrap;',
+    '  font-family:"Frank Ruhl Libre",serif; font-size:13px; font-weight:500;',
+    '  cursor:pointer; transition:all .25s; background:#f2f2f2; color:#888; flex-shrink:0; }',
+    '.ss-sec-pill.active { color:#fff;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
-    '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;',
-    '  direction:rtl; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }',
-    '.ss-list-count { font-size:12px; color:#bbb;',
-    '  -webkit-text-fill-color:#bbb; background:none; font-weight:400; }',
+    '  box-shadow:0 2px 8px rgba(131,58,180,.25); }',
 
-    /* Cards */
-    '.ss-card { border-radius:14px; margin-bottom:8px; overflow:hidden;',
-    '  border:1.5px solid #ebebeb; background:#fff;',
-    '  box-shadow:0 1px 4px rgba(0,0,0,.04); transition:all .3s; }',
-    '.ss-card.open { border-color:transparent;',
-    '  background: linear-gradient(white,white) padding-box,',
-    '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box;',
-    '  box-shadow:0 4px 20px rgba(131,58,180,.09); }',
-    '.ss-card-header { display:flex; align-items:center; justify-content:space-between;',
-    '  direction:rtl; padding:13px 14px; cursor:pointer; }',
-    '.ss-card-left { display:flex; align-items:center; gap:10px; }',
-    '.ss-card-dot { width:7px; height:7px; border-radius:50%; background:#d5d5d5; flex-shrink:0; transition:background .3s; }',
-    '.ss-card.open .ss-card-dot { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
-    '.ss-card-title { font-family:"Frank Ruhl Libre",serif; font-size:16px; color:#444; transition:color .3s; }',
-    '.ss-card.open .ss-card-title { font-weight:600;',
-    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
+    /* Contenu continu plein ecran */
+    '.ss-content { padding:0 16px 100px; }',
+    '.ss-section { padding-top:20px; }',
+    '.ss-section-title { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:700;',
+    '  padding:8px 0; margin-bottom:6px; color:#999;',
+    '  border-bottom:1px solid #f0f0f0; }',
+    '.ss-section-title.active-title { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
-    /* supprime : ss-card-title-phonetic plus utilise */
-    '.ss-card-badge { font-size:10px; border-radius:6px; padding:2px 7px; font-family:sans-serif; }',
-    '.ss-badge-rh { background:linear-gradient(135deg,#833ab415,#fcb04515); color:#833ab4; border:1px solid #833ab430; }',
-    '.ss-badge-male { background:#f5f5f5; color:#999; }',
-    '.ss-card-chevron { font-size:12px; color:#ccc; transition:transform .3s; flex-shrink:0; }',
-    '.ss-card.open .ss-card-chevron { transform:rotate(180deg); }',
-    '.ss-card-body { padding:0 16px 16px; direction:rtl; font-family:"Frank Ruhl Libre",serif;',
-    '  font-size:17px; line-height:2.1; color:#222; border-top:1px solid #f0f0f0;',
-    '  padding-top:12px; white-space:pre-line; animation:ssFadeIn .25s ease; }',
-    '.ss-card-phonetic { direction:ltr; font-family:system-ui,sans-serif; font-size:16px;',
-    '  line-height:1.9; color:#333; }',
+    '.ss-section-body { font-family:"Frank Ruhl Libre",serif; direction:rtl;',
+    '  font-size:19px; line-height:2.2; color:#222; white-space:pre-line; }',
+    '.ss-section-body.ss-phonetic-body { direction:ltr; font-family:system-ui,sans-serif;',
+    '  font-size:17px; line-height:1.9; color:#333; }',
 
     /* FAB auto-scroll */
     '.ss-fab { position:fixed; bottom:80px; right:16px; z-index:30;',
@@ -584,36 +572,30 @@ function renderBanner(hdate) {
     '<div><div class="ss-banner-title">' + title + '</div></div></div>';
 }
 
+function renderSectionsBar(sections) {
+  return '<div class="ss-sections-bar" id="ss-sections-bar"><div class="ss-sections-bar-inner">' +
+    sections.map(function(s, i) {
+      return '<button class="ss-sec-pill' + (i === 0 ? ' active' : '') + '" ' +
+        'data-section="' + s.id + '" onclick="window.siddurScrollTo(\'' + s.id + '\')">' +
+        sectionTitle(s) + '</button>';
+    }).join('') + '</div></div>';
+}
+
 function renderSections(sections) {
   var isHe = state.lang === 'hebrew';
   return sections.map(function(s) {
-    var open = state.expandedId === s.id;
-    var badgeLabels = {
-      rh:   { hebrew: 'ר״ח', phonetic: 'R.H.', french: 'N.L.' },
-      male: { hebrew: 'גברים', phonetic: 'Hommes', french: 'Hommes' }
-    };
-    var badges = '';
-    if (s.rosh_hodesh) badges += '<span class="ss-card-badge ss-badge-rh">' + badgeLabels.rh[state.lang] + '</span>';
-    if (s.male_only)   badges += '<span class="ss-card-badge ss-badge-male">' + badgeLabels.male[state.lang] + '</span>';
-    var bodyContent = '';
-    if (open) {
-      if (isHe) {
-        bodyContent = '<div class="ss-card-body">' + s.text + '</div>';
-      } else if (s.phonetic) {
-        bodyContent = '<div class="ss-card-body ss-card-phonetic">' + s.phonetic + '</div>';
-      } else {
-        bodyContent = '<div class="ss-card-body">' + s.text + '</div>';
-      }
-    }
     var displayTitle = sectionTitle(s);
     var titleDir = isHe ? 'rtl' : 'ltr';
-    return '<div class="ss-card' + (open ? ' open' : '') + '" id="ss-card-' + s.id + '">' +
-      '<div class="ss-card-header" onclick="window.siddurToggleCard(\'' + s.id + '\')">' +
-      '<div class="ss-card-left"><div class="ss-card-dot"></div>' +
-      '<div><span class="ss-card-title" style="direction:' + titleDir + '">' + displayTitle + '</span>' +
-      '</div>' + badges + '</div>' +
-      '<span class="ss-card-chevron">▾</span></div>' +
-      bodyContent + '</div>';
+    var bodyClass = 'ss-section-body';
+    var bodyText = s.text;
+    if (!isHe && s.phonetic) {
+      bodyClass += ' ss-phonetic-body';
+      bodyText = s.phonetic;
+    }
+    return '<div class="ss-section" id="ss-sec-' + s.id + '">' +
+      '<div class="ss-section-title" style="direction:' + titleDir + ';text-align:' + (isHe ? 'right' : 'left') + '">' + displayTitle + '</div>' +
+      '<div class="' + bodyClass + '">' + bodyText + '</div>' +
+      '</div>';
   }).join('');
 }
 
@@ -653,6 +635,39 @@ function renderCompassModal() {
     '</div></div>';
 }
 
+// ── Scroll spy : met à jour la pill active au scroll ─────────────────────
+var _scrollSpyRaf = null;
+function initScrollSpy() {
+  if (_scrollSpyRaf) return; // deja actif
+  function onScroll() {
+    _scrollSpyRaf = requestAnimationFrame(function() {
+      _scrollSpyRaf = null;
+      var bar = document.getElementById('ss-sections-bar');
+      if (!bar) return;
+      var offset = bar.offsetHeight + bar.getBoundingClientRect().top + 20;
+      var secs = document.querySelectorAll('.ss-section');
+      var activeId = null;
+      secs.forEach(function(sec) {
+        var rect = sec.getBoundingClientRect();
+        if (rect.top <= offset) activeId = sec.id.replace('ss-sec-', '');
+      });
+      if (!activeId) return;
+      var pills = bar.querySelectorAll('.ss-sec-pill');
+      var changed = false;
+      pills.forEach(function(p) {
+        var isActive = p.getAttribute('data-section') === activeId;
+        if (isActive && !p.classList.contains('active')) changed = true;
+        p.classList.toggle('active', isActive);
+      });
+      if (changed) {
+        var ap = bar.querySelector('.ss-sec-pill.active');
+        if (ap) ap.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 // ── Render principal ───────────────────────────────────────────────────────
 window.siddurRender = render;
 function render() {
@@ -672,13 +687,10 @@ function render() {
   var sections = filterSections(tefilah.sections, hdate);
   patchShirYom(sections);
 
-  var isHe = state.lang === 'hebrew';
-  var countLabel = isHe ? (sections.length + ' סעיפים') : (sections.length + ' sections');
-
   container.innerHTML =
     '<div class="ss-wrap">' +
 
-    // Header : langue + boussole
+    // Header : langue + boussole + nusach + tabs
     '<div class="ss-header">' +
     '<div class="ss-header-top">' +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
@@ -686,23 +698,17 @@ function render() {
     '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     '</div>' +
     (hdate.isRoshHodesh ? '<div style="text-align:center;margin-bottom:8px;"><span class="ss-rh-badge">ראש חודש</span></div>' : '') +
-    // Nusachim
     '<div class="ss-nusachim">' + renderNusachim() + '</div>' +
-    // Toggles
-    '<div class="ss-toggles">' +
-    renderToggle('isFemale') +
-    '</div></div>' +
-
-    // Tabs
+    '<div class="ss-toggles">' + renderToggle('isFemale') + '</div>' +
     '<div class="ss-tabs">' + renderTabs() + '</div>' +
-
-    // Banner
     renderBanner(hdate) +
+    '</div>' +
 
-    // Sections
-    '<div class="ss-list">' +
-    '<div class="ss-list-title">' + tefilahLabel(tefilah) +
-    '<span class="ss-list-count">' + countLabel + '</span></div>' +
+    // Barre de sections (sticky)
+    renderSectionsBar(sections) +
+
+    // Contenu continu
+    '<div class="ss-content">' +
     renderSections(sections) +
     '</div>' +
 
@@ -713,14 +719,17 @@ function render() {
     (state.autoScroll ? '⏸' : '▶') + '</button></div>' +
 
     '</div>';
+
+  // Activer le scroll spy
+  initScrollSpy();
 }
 
 // ── API publique (appelée depuis le HTML inline) ───────────────────────────
 window.siddurSetTefilah = function(key) {
   state.tefilah = key;
   state._tefilahManual = true;
-  state.expandedId = null;
   render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 window.siddurSetNusach = function(id) {
   state.nusach = id;
@@ -734,21 +743,20 @@ window.siddurToggle = function(key) {
   state[key] = !state[key];
   render();
 };
-window.siddurToggleCard = function(id) {
-  state.expandedId = state.expandedId === id ? null : id;
-  // Re-render uniquement les cards pour éviter le scroll jump
-  var hdate    = getHDate();
-  var tefilah  = TEFILOT[state.tefilah];
-  var sections = filterSections(tefilah.sections, hdate);
-  patchShirYom(sections);
-  var list = document.querySelector('.ss-list');
-  if (list) {
-    var isHe = state.lang === 'hebrew';
-    var countLabel = isHe ? (sections.length + ' סעיפים') : (sections.length + ' sections');
-    list.innerHTML =
-      '<div class="ss-list-title">' + tefilahLabel(tefilah) +
-      '<span class="ss-list-count">' + countLabel + '</span></div>' +
-      renderSections(sections);
+window.siddurScrollTo = function(id) {
+  var el = document.getElementById('ss-sec-' + id);
+  var bar = document.getElementById('ss-sections-bar');
+  if (!el) return;
+  var offset = bar ? bar.offsetHeight + bar.offsetTop : 0;
+  var top = el.getBoundingClientRect().top + window.scrollY - offset - 4;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+  // Mettre a jour la pill active
+  var pills = document.querySelectorAll('.ss-sec-pill');
+  pills.forEach(function(p) { p.classList.remove('active'); });
+  var activePill = document.querySelector('.ss-sec-pill[data-section="' + id + '"]');
+  if (activePill) {
+    activePill.classList.add('active');
+    activePill.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
   }
 };
 window.siddurToggleScroll = function() {
