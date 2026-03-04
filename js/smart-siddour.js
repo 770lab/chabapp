@@ -589,8 +589,8 @@ function applyFemaleText(txt, sectionId, isHebrew) {
     txt = txt.replace(/מוֹדֶה אֲנִי/g, 'מוֹדָה אֲנִי');
     txt = txt.replace(/וּמוֹדֶה עַל/g, 'וּמוֹדָה עַל');
   } else {
-    txt = txt.replace(/\bmod[\u00e8\u00e9] ani/gi, 'moda ani');
-    txt = txt.replace(/\boumod[\u00e8\u00e9] al/gi, 'oumoda al');
+    txt = txt.replace(/\b(M|m)od[\u00e8\u00e9] ani/g, function(m) { return m[0] === 'M' ? 'Moda ani' : 'moda ani'; });
+    txt = txt.replace(/\b(O|o)umod[\u00e8\u00e9] al/g, function(m) { return m[0] === 'O' ? 'Oumoda al' : 'oumoda al'; });
   }
 
   // 2 & 3. Brachot : logique selon nusach
