@@ -386,17 +386,17 @@ function injectStyles() {
     '  box-shadow:0 2px 8px rgba(131,58,180,.25); }',
 
     /* Contenu continu plein ecran */
-    '.ss-content { padding:0 16px 100px; }',
+    '.ss-content { padding:0 16px 100px; touch-action:pan-y; overflow-x:hidden; }',
     '.ss-section { padding-top:20px; }',
-    '.ss-section-title { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:700;',
+    '.ss-section-title { font-family:"Frank Ruhl Libre",serif; font-size:18px; font-weight:700;',
     '  padding:8px 0; margin-bottom:6px; color:#999;',
     '  border-bottom:1px solid #f0f0f0; }',
     '.ss-section-title.active-title { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
     '.ss-section-body { font-family:"Frank Ruhl Libre",serif; direction:rtl;',
-    '  font-size:19px; line-height:2.2; color:#222; white-space:pre-line; }',
+    '  font-size:24px; line-height:2.2; color:#222; white-space:pre-line; }',
     '.ss-section-body.ss-phonetic-body { direction:ltr; font-family:system-ui,sans-serif;',
-    '  font-size:17px; line-height:1.9; color:#333; }',
+    '  font-size:22px; line-height:1.9; color:#333; }',
 
     /* FAB auto-scroll */
     '.ss-fab { position:fixed; bottom:80px; right:16px; z-index:30;',
@@ -792,6 +792,8 @@ function render() {
 
   // Activer le scroll spy
   initScrollSpy();
+  // Activer le pinch-to-zoom sur le texte
+  initPinchZoom();
 }
 
 // ── API publique (appelée depuis le HTML inline) ───────────────────────────
@@ -868,6 +870,59 @@ window.siddurActivateCompass = function() {
 };
 
 // ── Init : s'accroche à switchTab ──────────────────────────────────────────
+// ── Pinch-to-zoom sur le texte du siddour ───────────────────────────────────
+var _pinchState = { active: false, startDist: 0, startSize: 24 };
+var _savedFontSize = 24; // taille par defaut (px)
+var FONT_MIN = 16, FONT_MAX = 42;
+
+function initPinchZoom() {
+  var el = document.querySelector('.ss-content');
+  if (!el || el._pinchBound) return;
+  el._pinchBound = true;
+
+  el.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 2) {
+      _pinchState.active = true;
+      _pinchState.startDist = pinchDist(e);
+      _pinchState.startSize = _savedFontSize;
+    }
+  }, { passive: true });
+
+  el.addEventListener('touchmove', function(e) {
+    if (!_pinchState.active || e.touches.length !== 2) return;
+    var ratio = pinchDist(e) / _pinchState.startDist;
+    var newSize = Math.round(Math.min(FONT_MAX, Math.max(FONT_MIN, _pinchState.startSize * ratio)));
+    if (newSize !== _savedFontSize) {
+      _savedFontSize = newSize;
+      applyZoom(el, newSize);
+    }
+  }, { passive: true });
+
+  el.addEventListener('touchend', function() {
+    _pinchState.active = false;
+  }, { passive: true });
+
+  // Appliquer la taille sauvegardee
+  applyZoom(el, _savedFontSize);
+}
+
+function pinchDist(e) {
+  var dx = e.touches[0].clientX - e.touches[1].clientX;
+  var dy = e.touches[0].clientY - e.touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function applyZoom(el, size) {
+  var bodies = el.querySelectorAll('.ss-section-body');
+  bodies.forEach(function(b) {
+    if (b.classList.contains('ss-phonetic-body')) {
+      b.style.fontSize = Math.max(FONT_MIN, size - 2) + 'px';
+    } else {
+      b.style.fontSize = size + 'px';
+    }
+  });
+}
+
 function init() {
   injectStyles();
 
