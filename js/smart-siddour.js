@@ -29,9 +29,11 @@ var TEFILOT = {
   shacharit: {
     label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅',
     sections: [
-      { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', always: true,
+      { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', titleFemale: 'מודָה אני', titlePhoneticFemale: 'Moda Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
-        phonetic: 'Modé ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.' },
+        textFemale: 'מוֹדָה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
+        phonetic: 'Modé ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.',
+        phoneticFemale: 'Moda ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.' },
 
       { id: 'netilat', title: 'נטילת ידיים', titlePhonetic: 'Nétilat Yadaïm', always: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל נְטִילַת יָדָיִם.',
@@ -47,7 +49,9 @@ var TEFILOT = {
 
       { id: 'brachot', title: 'בִּרְכוֹת הַשַּׁחַר', titlePhonetic: 'Birkhot Hacha\'har', always: true,
         text: (window.SIDDUR_BRACHOT || {}).text || '',
-        phonetic: (window.SIDDUR_BRACHOT || {}).phonetic || '' },
+        textFemale: (window.SIDDUR_BRACHOT || {}).textFemale || '',
+        phonetic: (window.SIDDUR_BRACHOT || {}).phonetic || '',
+        phoneticFemale: (window.SIDDUR_BRACHOT || {}).phoneticFemale || '' },
 
       { id: 'tfilin', title: 'הנחת תפילין', titlePhonetic: 'Hana\'hat Téfiline', always: true, male_only: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.\n\nתְּפִלִּין שֶׁל רֹאשׁ:\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין.\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.',
@@ -492,8 +496,8 @@ var TITLE_FR = {
 
 // ── Helpers de langue ────────────────────────────────────────────────────
 function sectionTitle(s) {
-  if (state.lang === 'hebrew')   return s.title;
-  if (state.lang === 'phonetic') return s.titlePhonetic || s.title;
+  if (state.lang === 'hebrew')   return (state.isFemale && s.titleFemale) ? s.titleFemale : s.title;
+  if (state.lang === 'phonetic') return (state.isFemale && s.titlePhoneticFemale) ? s.titlePhoneticFemale : (s.titlePhonetic || s.title);
   return TITLE_FR[s.id] || s.titlePhonetic || s.title;
 }
 function tefilahLabel(t) {
@@ -576,14 +580,24 @@ function renderSectionsBar(sections) {
 
 function renderSections(sections) {
   var isHe = state.lang === 'hebrew';
+  var fem = state.isFemale;
   return sections.map(function(s) {
     var displayTitle = sectionTitle(s);
+    // Titre feminin si disponible
+    if (fem) {
+      if (isHe && s.titleFemale) displayTitle = s.titleFemale;
+      else if (state.lang === 'phonetic' && s.titlePhoneticFemale) displayTitle = s.titlePhoneticFemale;
+    }
     var titleDir = isHe ? 'rtl' : 'ltr';
     var bodyClass = 'ss-section-body';
-    var bodyText = s.text;
-    if (!isHe && s.phonetic) {
-      bodyClass += ' ss-phonetic-body';
-      bodyText = s.phonetic;
+    // Texte : variante feminine si disponible
+    var bodyText = (fem && s.textFemale) ? s.textFemale : s.text;
+    if (!isHe) {
+      var phon = (fem && s.phoneticFemale) ? s.phoneticFemale : s.phonetic;
+      if (phon) {
+        bodyClass += ' ss-phonetic-body';
+        bodyText = phon;
+      }
     }
     return '<div class="ss-section" id="ss-sec-' + s.id + '">' +
       '<div class="ss-section-title" style="direction:' + titleDir + ';text-align:' + (isHe ? 'right' : 'left') + '">' + displayTitle + '</div>' +
