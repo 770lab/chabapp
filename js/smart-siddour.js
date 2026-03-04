@@ -310,80 +310,58 @@ function injectStyles() {
     '@import url("https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;600;700&display=swap");',
     '.ss-wrap { font-family: system-ui, sans-serif; background: #f7f7f7; min-height: 100%; padding-bottom: 80px; }',
 
-    /* Header sticky */
-    '.ss-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.94);',
+    /* Header sticky — tout en un bloc */
+    '.ss-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.96);',
     '  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);',
-    '  border-bottom: 1px solid #ececec; padding: 12px 16px 10px; }',
+    '  border-bottom: 1px solid #ececec; padding: 8px 12px 0; }',
 
-    /* Header top row: compass + lang switcher + date */
-    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:12px; position:relative; }',
-    '.ss-compass-btn { width:36px; height:36px; border-radius:10px; border:1.5px solid #ececec;',
-    '  background:#fff; font-size:17px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }',
-    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:12px; color:#aaa; direction:rtl; flex-shrink:0; }',
+    /* Row 1 : compass + lang switcher + date */
+    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:6px; }',
+    '.ss-compass-btn { width:30px; height:30px; border-radius:8px; border:1px solid #e8e8e8;',
+    '  background:#fff; font-size:14px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }',
+    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:11px; color:#aaa; direction:rtl; flex-shrink:0; }',
 
-    /* Lang switcher (3 boutons coulissants) */
-    '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:10px; padding:3px; gap:2px; }',
-    '.ss-lang-btn { padding:7px 14px; border-radius:8px; border:none; background:transparent;',
-    '  font-size:13px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
-    '.ss-lang-btn.active { background:#fff; color:#333;',
-    '  box-shadow:0 2px 8px rgba(0,0,0,.1); }',
+    /* Lang switcher */
+    '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:8px; padding:2px; gap:1px; }',
+    '.ss-lang-btn { padding:5px 10px; border-radius:6px; border:none; background:transparent;',
+    '  font-size:12px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
+    '.ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
 
-    '.ss-rh-badge { display:inline-block; padding:2px 9px; border-radius:6px; font-size:10px; color:#fff;',
-    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
-
-    /* Pills nusach — centre, gros */
-    '.ss-nusachim { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }',
-    '.ss-nusach { padding:8px 18px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
-    '  font-size:15px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
+    /* Row 2 : nusach + femmes sur une ligne */
+    '.ss-row-nusach { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:6px; }',
+    '.ss-nusach { padding:5px 14px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
+    '  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
-    '  box-shadow:0 2px 10px rgba(131,58,180,.22); }',
-
-    /* Toggles — centre, gros */
-    '.ss-toggles { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }',
-    '.ss-toggle { display:flex; align-items:center; gap:8px; padding:8px 16px 8px 10px;',
+    '  box-shadow:0 2px 8px rgba(131,58,180,.22); }',
+    '.ss-toggle { display:flex; align-items:center; gap:5px; padding:5px 12px 5px 7px;',
     '  border-radius:100px; cursor:pointer; transition:all .25s; border:1.5px solid #e0e0e0;',
-    '  background:#fff; font-family:"Frank Ruhl Libre",serif; font-size:14px; font-weight:500; color:#555; }',
+    '  background:#fff; font-size:12px; font-weight:500; color:#555; }',
     '.ss-toggle.active { border-color:transparent; color:#fff;',
-    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
-    '  box-shadow:0 2px 12px rgba(131,58,180,.22); }',
-    '.ss-toggle-knob { width:30px; height:17px; border-radius:9px; background:#e0e0e0;',
+    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
+    '.ss-toggle-knob { width:24px; height:14px; border-radius:7px; background:#e0e0e0;',
     '  position:relative; flex-shrink:0; transition:background .2s; }',
     '.ss-toggle.active .ss-toggle-knob { background:rgba(255,255,255,.35); }',
-    '.ss-toggle-dot { position:absolute; top:2px; left:2px; width:13px; height:13px;',
-    '  border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 3px rgba(0,0,0,.2); }',
-    '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 15px); }',
+    '.ss-toggle-dot { position:absolute; top:2px; left:2px; width:10px; height:10px;',
+    '  border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 2px rgba(0,0,0,.2); }',
+    '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 12px); }',
 
-    /* Tefila tabs */
-    '.ss-tabs { display:flex; gap:10px; padding:10px 0 0; justify-content:center; }',
-    '.ss-tab { flex:1; padding:12px 6px; border-radius:14px; cursor:pointer; border:1.5px solid #e8e8e8;',
-    '  background:#fff; text-align:center; transition:all .3s;',
-    '  box-shadow:0 1px 4px rgba(0,0,0,.04); }',
+    /* Row 3 : 4 tabs (3 prieres + info jour) */
+    '.ss-tabs { display:flex; gap:6px; margin-bottom:6px; }',
+    '.ss-tab { flex:1; padding:7px 4px; border-radius:10px; cursor:pointer; border:1px solid #e8e8e8;',
+    '  background:#fff; text-align:center; transition:all .2s; }',
     '.ss-tab.active { border-color:transparent;',
     '  background: linear-gradient(white,white) padding-box,',
-    '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box;',
-    '  box-shadow:0 4px 16px rgba(131,58,180,.12); }',
-    '.ss-tab-icon { font-size:22px; margin-bottom:3px; }',
-    '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:500; color:#888; }',
+    '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box; }',
+    '.ss-tab-icon { font-size:16px; }',
+    '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:11px; font-weight:500; color:#888; }',
     '.ss-tab.active .ss-tab-he { font-weight:700; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
+    '.ss-tab-info { flex:1; padding:7px 4px; border-radius:10px; border:1px solid #e8e8e8;',
+    '  background:#fff; text-align:center; font-size:10px; color:#999; line-height:1.3; }',
 
-    /* Banner smart */
-    '.ss-banner { margin:10px 16px 0; padding:10px 14px; border-radius:12px; direction:rtl;',
-    '  display:flex; align-items:center; gap:10px;',
-    '  border:1.5px solid transparent;',
-    '  background: linear-gradient(white,white) padding-box,',
-    '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box;',
-    '  animation: ssFadeIn .3s ease; }',
-    '.ss-banner-title { font-family:"Frank Ruhl Libre",serif; font-size:13px; font-weight:600;',
-    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
-    '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
-    '.ss-banner-sub { font-size:11px; color:#aaa; margin-top:1px; }',
-
-    /* Barre de sections horizontale sticky */
-    '.ss-sections-bar { position:sticky; top:0; z-index:19; background:rgba(255,255,255,.96);',
-    '  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);',
-    '  border-bottom:1px solid #ececec; padding:8px 0; overflow-x:auto; overflow-y:hidden;',
-    '  display:flex; gap:6px; scrollbar-width:none; -ms-overflow-style:none; white-space:nowrap; }',
+    /* Row 4 : barre sections (dans le header => sticky ensemble) */
+    '.ss-sections-bar { overflow-x:auto; overflow-y:hidden; padding:6px 0 8px;',
+    '  display:flex; scrollbar-width:none; -ms-overflow-style:none; white-space:nowrap; }',
     '.ss-sections-bar::-webkit-scrollbar { display:none; }',
     '.ss-sections-bar-inner { display:flex; gap:6px; padding:0 12px; }',
     '.ss-sec-pill { padding:6px 14px; border-radius:100px; border:none; white-space:nowrap;',
@@ -642,9 +620,9 @@ function initScrollSpy() {
   function onScroll() {
     _scrollSpyRaf = requestAnimationFrame(function() {
       _scrollSpyRaf = null;
-      var bar = document.getElementById('ss-sections-bar');
-      if (!bar) return;
-      var offset = bar.offsetHeight + bar.getBoundingClientRect().top + 20;
+      var header = document.querySelector('.ss-header');
+      if (!header) return;
+      var offset = header.offsetHeight + 20;
       var secs = document.querySelectorAll('.ss-section');
       var activeId = null;
       secs.forEach(function(sec) {
@@ -652,7 +630,7 @@ function initScrollSpy() {
         if (rect.top <= offset) activeId = sec.id.replace('ss-sec-', '');
       });
       if (!activeId) return;
-      var pills = bar.querySelectorAll('.ss-sec-pill');
+      var pills = document.querySelectorAll('.ss-sec-pill');
       var changed = false;
       pills.forEach(function(p) {
         var isActive = p.getAttribute('data-section') === activeId;
@@ -660,7 +638,7 @@ function initScrollSpy() {
         p.classList.toggle('active', isActive);
       });
       if (changed) {
-        var ap = bar.querySelector('.ss-sec-pill.active');
+        var ap = document.querySelector('.ss-sec-pill.active');
         if (ap) ap.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
       }
     });
@@ -687,25 +665,33 @@ function render() {
   var sections = filterSections(tefilah.sections, hdate);
   patchShirYom(sections);
 
+  // Info du jour
+  var infoLines = [];
+  if (!hdate.isTahnounDay) infoLines.push(state.lang === 'hebrew' ? 'אין תחנון' : 'Pas de Ta\'hanoun');
+  if (hdate.isRoshHodesh) infoLines.push(state.lang === 'hebrew' ? 'ר״ח + הלל' : 'Roch Hodech + Hallel');
+  if (hdate.isShabbat) infoLines.push(state.lang === 'hebrew' ? 'שבת' : 'Chabbat');
+  var infoTab = '<div class="ss-tab-info">' +
+    (infoLines.length > 0 ? infoLines.join('<br>') : (state.lang === 'hebrew' ? 'יום רגיל' : 'Jour normal')) +
+    '</div>';
+
   container.innerHTML =
     '<div class="ss-wrap">' +
 
-    // Header : langue + boussole + nusach + tabs
+    // Header sticky unique
     '<div class="ss-header">' +
+    // Row 1 : compass + lang + date
     '<div class="ss-header-top">' +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
     renderLangSwitcher() +
     '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     '</div>' +
-    (hdate.isRoshHodesh ? '<div style="text-align:center;margin-bottom:8px;"><span class="ss-rh-badge">ראש חודש</span></div>' : '') +
-    '<div class="ss-nusachim">' + renderNusachim() + '</div>' +
-    '<div class="ss-toggles">' + renderToggle('isFemale') + '</div>' +
-    '<div class="ss-tabs">' + renderTabs() + '</div>' +
-    renderBanner(hdate) +
-    '</div>' +
-
-    // Barre de sections (sticky)
+    // Row 2 : nusach + femmes
+    '<div class="ss-row-nusach">' + renderNusachim() + renderToggle('isFemale') + '</div>' +
+    // Row 3 : 3 prieres + info jour
+    '<div class="ss-tabs">' + renderTabs() + infoTab + '</div>' +
+    // Row 4 : barre sections
     renderSectionsBar(sections) +
+    '</div>' +
 
     // Contenu continu
     '<div class="ss-content">' +
@@ -745,9 +731,9 @@ window.siddurToggle = function(key) {
 };
 window.siddurScrollTo = function(id) {
   var el = document.getElementById('ss-sec-' + id);
-  var bar = document.getElementById('ss-sections-bar');
+  var header = document.querySelector('.ss-header');
   if (!el) return;
-  var offset = bar ? bar.offsetHeight + bar.offsetTop : 0;
+  var offset = header ? header.offsetHeight : 0;
   var top = el.getBoundingClientRect().top + window.scrollY - offset - 4;
   window.scrollTo({ top: top, behavior: 'smooth' });
   // Mettre a jour la pill active
