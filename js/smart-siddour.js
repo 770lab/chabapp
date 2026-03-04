@@ -31,9 +31,7 @@ var TEFILOT = {
     sections: [
       { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', titleFemale: 'מודָה אני', titlePhoneticFemale: 'Moda Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
-        textFemale: 'מוֹדָה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
-        phonetic: 'Modé ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.',
-        phoneticFemale: 'Moda ani léfanékha, Mélekh \'haï vékayam, chéhé\'hézarta bi nichmati bé\'hemla, raba émounatékha.' },
+        phonetic: 'Mod\u00e9 ani l\u00e9fan\u00e9kha, M\u00e9lekh \'ha\u00ef v\u00e9kayam, ch\u00e9h\u00e9\'h\u00e9zarta bi nichmati b\u00e9\'hemla, raba \u00e9mounat\u00e9kha.' },
 
       { id: 'netilat', title: 'נטילת ידיים', titlePhonetic: 'Nétilat Yadaïm', always: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל נְטִילַת יָדָיִם.',
@@ -576,23 +574,49 @@ function renderSectionsBar(sections) {
     }).join('') + '</div></div>';
 }
 
-// Adapte le texte des brachot pour les femmes selon le nusach
-// Habad : on supprime la ligne "shelo asani isha"
-// Mizrach : on remplace par "she'asani kirtzono"
-function applyFemaleBrachot(txt, lang) {
-  if (lang === 'hebrew') {
-    if (state.nusach === 'chabad') {
-      // Supprimer la ligne entiere
-      return txt.replace(/[^\n]*שֶׁלֹּא עָשַׂנִי אִשָּׁה[^\n]*\n?/g, '');
+// ── Adaptations feminines du texte ─────────────────────────────────────────
+// Applique TOUTES les variantes feminines a un texte de priere
+// selon la section, la langue et le nusach.
+//
+// Differences homme/femme :
+// 1. modeh -> modah (Moda Ani, Elohai Neshama, Leolam yehe adam) — les 2 nusahim
+// 2. Brachot 3e : Habad = supprimer "shelo asani isha"
+//                 Mizrah = remplacer par "she'asani kirtsono"
+// 3. Mizrah seulement : goy -> goya, eved -> shifha
+function applyFemaleText(txt, sectionId, isHebrew) {
+  // 1. modeh -> modah (dans toutes les sections qui le contiennent)
+  if (isHebrew) {
+    txt = txt.replace(/מוֹדֶה אֲנִי/g, 'מוֹדָה אֲנִי');
+    txt = txt.replace(/וּמוֹדֶה עַל/g, 'וּמוֹדָה עַל');
+  } else {
+    txt = txt.replace(/\bmod[\u00e8\u00e9] ani/gi, 'moda ani');
+    txt = txt.replace(/\boumod[\u00e8\u00e9] al/gi, 'oumoda al');
+  }
+
+  // 2 & 3. Brachot : logique selon nusach
+  if (sectionId === 'brachot') {
+    if (isHebrew) {
+      if (state.nusach === 'chabad') {
+        // Habad : supprimer la ligne "shelo asani isha"
+        txt = txt.replace(/[^\n]*שֶׁלֹּא עָשַׂנִי אִשָּׁה[^\n]*\n?/g, '');
+      } else {
+        // Mizrah : goy->goya, eved->shifha, isha->kirtsono
+        txt = txt.replace('שֶׁלֹּא עָשַׂנִי גּוֹי', 'שֶׁלֹּא עָשַׂנִי גּוֹיָה');
+        txt = txt.replace('שֶׁלֹּא עָשַׂנִי עָבֶד', 'שֶׁלֹּא עָשַׂנִי שִׁפְחָה');
+        txt = txt.replace('שֶׁלֹּא עָשַׂנִי אִשָּׁה', 'שֶׁעָשַׂנִי כִּרְצוֹנוֹ');
+      }
+    } else {
+      if (state.nusach === 'chabad') {
+        txt = txt.replace(/[^\n]*ch[^\n]*assani icha[^\n]*\n?/gi, '');
+      } else {
+        txt = txt.replace(/ch\u00e9lo assani go\u00ef/gi, 'ch\u00e9lo assani goya');
+        txt = txt.replace(/ch\u00e9lo assani av\u00e8d/gi, 'ch\u00e9lo assani chif\'ha');
+        txt = txt.replace(/ch\u00e9lo assani icha/gi, 'ch\u00e9assani kirtsono');
+      }
     }
-    // Mizrach : remplacer par kirtzono
-    return txt.replace('שֶׁלֹּא עָשַׂנִי אִשָּׁה', 'שֶׁעָשַׂנִי כִּרְצוֹנוֹ');
   }
-  // Phonetique
-  if (state.nusach === 'chabad') {
-    return txt.replace(/[^\n]*ch[^\n]*assani icha[^\n]*\n?/gi, '');
-  }
-  return txt.replace(/ch\u00e9lo assani icha/gi, 'ch\u00e9assani kirtsono');
+
+  return txt;
 }
 
 function renderSections(sections) {
@@ -609,14 +633,7 @@ function renderSections(sections) {
     }
     // Variantes feminines
     if (fem) {
-      if (s.id === 'brachot') {
-        // Brachot : logique speciale selon nusach
-        bodyText = applyFemaleBrachot(bodyText, isHe ? 'hebrew' : 'phonetic');
-      } else if (isHe && s.textFemale) {
-        bodyText = s.textFemale;
-      } else if (!isHe && s.phoneticFemale) {
-        bodyText = s.phoneticFemale;
-      }
+      bodyText = applyFemaleText(bodyText, s.id, isHe);
     }
     return '<div class="ss-section" id="ss-sec-' + s.id + '">' +
       '<div class="ss-section-title" style="direction:' + titleDir + ';text-align:' + (isHe ? 'right' : 'left') + '">' + displayTitle + '</div>' +
