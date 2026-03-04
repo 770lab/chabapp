@@ -49,9 +49,7 @@ var TEFILOT = {
 
       { id: 'brachot', title: 'בִּרְכוֹת הַשַּׁחַר', titlePhonetic: 'Birkhot Hacha\'har', always: true,
         text: (window.SIDDUR_BRACHOT || {}).text || '',
-        textFemale: (window.SIDDUR_BRACHOT || {}).textFemale || '',
-        phonetic: (window.SIDDUR_BRACHOT || {}).phonetic || '',
-        phoneticFemale: (window.SIDDUR_BRACHOT || {}).phoneticFemale || '' },
+        phonetic: (window.SIDDUR_BRACHOT || {}).phonetic || '' },
 
       { id: 'tfilin', title: 'הנחת תפילין', titlePhonetic: 'Hana\'hat Téfiline', always: true, male_only: true,
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.\n\nתְּפִלִּין שֶׁל רֹאשׁ:\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין.\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.',
@@ -578,25 +576,46 @@ function renderSectionsBar(sections) {
     }).join('') + '</div></div>';
 }
 
+// Adapte le texte des brachot pour les femmes selon le nusach
+// Habad : on supprime la ligne "shelo asani isha"
+// Mizrach : on remplace par "she'asani kirtzono"
+function applyFemaleBrachot(txt, lang) {
+  if (lang === 'hebrew') {
+    if (state.nusach === 'chabad') {
+      // Supprimer la ligne entiere
+      return txt.replace(/[^\n]*שֶׁלֹּא עָשַׂנִי אִשָּׁה[^\n]*\n?/g, '');
+    }
+    // Mizrach : remplacer par kirtzono
+    return txt.replace('שֶׁלֹּא עָשַׂנִי אִשָּׁה', 'שֶׁעָשַׂנִי כִּרְצוֹנוֹ');
+  }
+  // Phonetique
+  if (state.nusach === 'chabad') {
+    return txt.replace(/[^\n]*ch[^\n]*assani icha[^\n]*\n?/gi, '');
+  }
+  return txt.replace(/ch\u00e9lo assani icha/gi, 'ch\u00e9assani kirtsono');
+}
+
 function renderSections(sections) {
   var isHe = state.lang === 'hebrew';
   var fem = state.isFemale;
   return sections.map(function(s) {
     var displayTitle = sectionTitle(s);
-    // Titre feminin si disponible
-    if (fem) {
-      if (isHe && s.titleFemale) displayTitle = s.titleFemale;
-      else if (state.lang === 'phonetic' && s.titlePhoneticFemale) displayTitle = s.titlePhoneticFemale;
-    }
     var titleDir = isHe ? 'rtl' : 'ltr';
     var bodyClass = 'ss-section-body';
-    // Texte : variante feminine si disponible
-    var bodyText = (fem && s.textFemale) ? s.textFemale : s.text;
-    if (!isHe) {
-      var phon = (fem && s.phoneticFemale) ? s.phoneticFemale : s.phonetic;
-      if (phon) {
-        bodyClass += ' ss-phonetic-body';
-        bodyText = phon;
+    var bodyText = s.text;
+    if (!isHe && s.phonetic) {
+      bodyClass += ' ss-phonetic-body';
+      bodyText = s.phonetic;
+    }
+    // Variantes feminines
+    if (fem) {
+      if (s.id === 'brachot') {
+        // Brachot : logique speciale selon nusach
+        bodyText = applyFemaleBrachot(bodyText, isHe ? 'hebrew' : 'phonetic');
+      } else if (isHe && s.textFemale) {
+        bodyText = s.textFemale;
+      } else if (!isHe && s.phoneticFemale) {
+        bodyText = s.phoneticFemale;
       }
     }
     return '<div class="ss-section" id="ss-sec-' + s.id + '">' +
