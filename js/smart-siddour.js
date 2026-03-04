@@ -9,10 +9,10 @@ var INSTA = 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)';
 
 // ── Nusachim ───────────────────────────────────────────────────────────────
 var NUSACHIM = [
-  { id: 'chabad',   label: 'חב״ד'        },
-  { id: 'ashkenaz', label: 'אשכנז'       },
-  { id: 'sfarad',   label: 'ספרד'        },
-  { id: 'mizrach',  label: 'עדות המזרח'  },
+  { id: 'chabad',   label: 'חב״ד', labelPhonetic: 'Habad',    labelFr: 'Habad'    },
+  { id: 'ashkenaz', label: 'אשכנז', labelPhonetic: 'Achkenaz', labelFr: 'Ashkenaze' },
+  { id: 'sfarad',   label: 'ספרד',  labelPhonetic: 'Sefarad',  labelFr: 'Sefarade'  },
+  { id: 'mizrach',  label: 'עדות המזרח', labelPhonetic: 'Edot Hamizra\'h', labelFr: 'Orientaux' },
 ];
 
 // ── État global ────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ var state = {
   nusach:     'chabad',
   noTahnoun:  false,
   isFemale:   false,
-  phonetic:   false,
+  lang:       'hebrew',   // 'hebrew' | 'phonetic' | 'french'
   expandedId: null,
   autoScroll: false,
   scrollSpeed: 2,
@@ -31,7 +31,7 @@ var state = {
 // ── Données téfilot ────────────────────────────────────────────────────────
 var TEFILOT = {
   shacharit: {
-    label: 'שַׁחֲרִית', sublabel: 'Shacharit', icon: '🌅',
+    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅',
     sections: [
       { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
@@ -99,7 +99,7 @@ var TEFILOT = {
     ]
   },
   mincha: {
-    label: 'מִנְחָה', sublabel: 'Mincha', icon: '☀️',
+    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️',
     sections: [
       { id: 'ashrei-m', title: 'אַשְׁרֵי', titlePhonetic: 'Achré', always: true,
         text: 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ, עוֹד יְהַלְלוּךָ סֶּלָה.\nאַשְׁרֵי הָעָם שֶׁכָּכָה לּוֹ, אַשְׁרֵי הָעָם שֶׁיְיָ אֱלֹהָיו.\nתְּהִלָּה לְדָוִד: אֲרוֹמִמְךָ אֱלוֹהַי הַמֶּלֶךְ, וַאֲבָרְכָה שִׁמְךָ לְעוֹלָם וָעֶד.\nבְּכׇל יוֹם אֲבָרְכֶךָּ, וַאֲהַלְלָה שִׁמְךָ לְעוֹלָם וָעֶד.\nגָּדוֹל יְיָ וּמְהֻלָּל מְאֹד, וְלִגְדֻלָּתוֹ אֵין חֵקֶר.\nדּוֹר לְדוֹר יְשַׁבַּח מַעֲשֶׂיךָ, וּגְבוּרֹתֶיךָ יַגִּידוּ.\nהֲדַר כְּבוֹד הוֹדֶךָ, וְדִבְרֵי נִפְלְאוֹתֶיךָ אָשִׂיחָה.\nוֶעֱזוּז נוֹרְאוֹתֶיךָ יֹאמֵרוּ, וּגְדֻלָּתְךָ אֲסַפְּרֶנָּה.\nזֵכֶר רַב טוּבְךָ יַבִּיעוּ, וְצִדְקָתְךָ יְרַנֵּנוּ.\nחַנּוּן וְרַחוּם יְיָ, אֶרֶךְ אַפַּיִם וּגְדׇל חָסֶד.\nטוֹב יְיָ לַכֹּל, וְרַחֲמָיו עַל כׇּל מַעֲשָׂיו.\nיוֹדוּךָ יְיָ כׇּל מַעֲשֶׂיךָ, וַחֲסִידֶיךָ יְבָרְכוּכָה.\nכְּבוֹד מַלְכוּתְךָ יֹאמֵרוּ, וּגְבוּרָתְךָ יְדַבֵּרוּ.\nלְהוֹדִיעַ לִבְנֵי הָאָדָם גְּבוּרֹתָיו, וּכְבוֹד הֲדַר מַלְכוּתוֹ.\nמַלְכוּתְךָ מַלְכוּת כׇּל עוֹלָמִים, וּמֶמְשַׁלְתְּךָ בְּכׇל דּוֹר וָדוֹר.\nסוֹמֵךְ יְיָ לְכׇל הַנֹּפְלִים, וְזוֹקֵף לְכׇל הַכְּפוּפִים.\nעֵינֵי כֹל אֵלֶיךָ יְשַׂבֵּרוּ, וְאַתָּה נוֹתֵן לָהֶם אֶת אׇכְלָם בְּעִתּוֹ.\nפּוֹתֵחַ אֶת יָדֶךָ, וּמַשְׂבִּיעַ לְכׇל חַי רָצוֹן.\nצַדִּיק יְיָ בְּכׇל דְּרָכָיו, וְחָסִיד בְּכׇל מַעֲשָׂיו.\nקָרוֹב יְיָ לְכׇל קֹרְאָיו, לְכֹל אֲשֶׁר יִקְרָאֻהוּ בֶאֱמֶת.\nרְצוֹן יְרֵאָיו יַעֲשֶׂה, וְאֶת שַׁוְעָתָם יִשְׁמַע וְיוֹשִׁיעֵם.\nשׁוֹמֵר יְיָ אֶת כׇּל אֹהֲבָיו, וְאֵת כׇּל הָרְשָׁעִים יַשְׁמִיד.\nתְּהִלַּת יְיָ יְדַבֶּר פִּי, וִיבָרֵךְ כׇּל בָּשָׂר שֵׁם קׇדְשׁוֹ לְעוֹלָם וָעֶד.\nוַאֲנַחְנוּ נְבָרֵךְ יָהּ, מֵעַתָּה וְעַד עוֹלָם, הַלְלוּיָהּ.',
@@ -119,7 +119,7 @@ var TEFILOT = {
     ]
   },
   arvit: {
-    label: 'עַרְבִית', sublabel: 'Arvit', icon: '🌙',
+    label: 'עַרְבִית', labelPhonetic: 'Arvit', labelFr: 'Priere du soir', sublabel: 'Arvit', icon: '🌙',
     sections: [
       { id: 'barchu', title: 'בָּרְכוּ', titlePhonetic: 'Barékhou', always: true,
         text: 'בָּרְכוּ אֶת יְיָ הַמְּבֹרָךְ.\nבָּרוּךְ יְיָ הַמְּבֹרָךְ לְעוֹלָם וָעֶד.\n\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים, בְּחׇכְמָה פּוֹתֵחַ שְׁעָרִים, וּבִתְבוּנָה מְשַׁנֶּה עִתִּים, וּמַחֲלִיף אֶת הַזְּמַנִּים, וּמְסַדֵּר אֶת הַכּוֹכָבִים בְּמִשְׁמְרוֹתֵיהֶם בָּרָקִיעַ כִּרְצוֹנוֹ. בּוֹרֵא יוֹם וָלָיְלָה, גּוֹלֵל אוֹר מִפְּנֵי חֹשֶׁךְ וְחֹשֶׁךְ מִפְּנֵי אוֹר, וּמַעֲבִיר יוֹם וּמֵבִיא לָיְלָה, וּמַבְדִּיל בֵּין יוֹם וּבֵין לָיְלָה, יְיָ צְבָאוֹת שְׁמוֹ. אֵל חַי וְקַיָּם, תָּמִיד יִמְלוֹךְ עָלֵינוּ לְעוֹלָם וָעֶד. בָּרוּךְ אַתָּה יְיָ, הַמַּעֲרִיב עֲרָבִים.',
@@ -313,35 +313,46 @@ function injectStyles() {
     '  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);',
     '  border-bottom: 1px solid #ececec; padding: 12px 16px 10px; }',
 
-    /* Date */
-    '.ss-hdate { font-family: "Frank Ruhl Libre", serif; font-size: 13px; color: #999; direction: rtl; margin-bottom: 10px; display:flex; align-items:center; justify-content:space-between; }',
+    /* Header top row: compass + lang switcher + date */
+    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:12px; position:relative; }',
+    '.ss-compass-btn { width:36px; height:36px; border-radius:10px; border:1.5px solid #ececec;',
+    '  background:#fff; font-size:17px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }',
+    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:12px; color:#aaa; direction:rtl; flex-shrink:0; }',
+
+    /* Lang switcher (3 boutons coulissants) */
+    '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:10px; padding:3px; gap:2px; }',
+    '.ss-lang-btn { padding:7px 14px; border-radius:8px; border:none; background:transparent;',
+    '  font-size:13px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
+    '.ss-lang-btn.active { background:#fff; color:#333;',
+    '  box-shadow:0 2px 8px rgba(0,0,0,.1); }',
+
     '.ss-rh-badge { display:inline-block; padding:2px 9px; border-radius:6px; font-size:10px; color:#fff;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
 
-    /* Pills nusach */
-    '.ss-nusachim { display:flex; gap:6px; direction:rtl; flex-wrap:wrap; margin-bottom:10px; }',
-    '.ss-nusach { padding:5px 11px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
-    '  font-size:12px; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#666; }',
+    /* Pills nusach — centre, gros */
+    '.ss-nusachim { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }',
+    '.ss-nusach { padding:8px 18px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
+    '  font-size:15px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  box-shadow:0 2px 10px rgba(131,58,180,.22); }',
 
-    /* Toggles */
-    '.ss-toggles { display:flex; gap:8px; direction:rtl; flex-wrap:wrap; }',
-    '.ss-toggle { display:flex; align-items:center; gap:6px; padding:6px 12px 6px 8px;',
+    /* Toggles — centre, gros */
+    '.ss-toggles { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }',
+    '.ss-toggle { display:flex; align-items:center; gap:8px; padding:8px 16px 8px 10px;',
     '  border-radius:100px; cursor:pointer; transition:all .25s; border:1.5px solid #e0e0e0;',
-    '  background:#fff; font-family:"Frank Ruhl Libre",serif; font-size:12px; color:#555; }',
+    '  background:#fff; font-family:"Frank Ruhl Libre",serif; font-size:14px; font-weight:500; color:#555; }',
     '.ss-toggle.active { border-color:transparent; color:#fff;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  box-shadow:0 2px 12px rgba(131,58,180,.22); }',
-    '.ss-toggle-knob { width:26px; height:15px; border-radius:8px; background:#e0e0e0;',
+    '.ss-toggle-knob { width:30px; height:17px; border-radius:9px; background:#e0e0e0;',
     '  position:relative; flex-shrink:0; transition:background .2s; }',
     '.ss-toggle.active .ss-toggle-knob { background:rgba(255,255,255,.35); }',
-    '.ss-toggle-dot { position:absolute; top:1.5px; left:1.5px; width:12px; height:12px;',
+    '.ss-toggle-dot { position:absolute; top:2px; left:2px; width:13px; height:13px;',
     '  border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 3px rgba(0,0,0,.2); }',
-    '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 13px); }',
+    '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 15px); }',
 
     /* Tefila tabs */
-    '.ss-tabs { display:flex; gap:10px; padding:14px 16px 0; direction:rtl; }',
+    '.ss-tabs { display:flex; gap:10px; padding:14px 16px 0; justify-content:center; }',
     '.ss-tab { flex:1; padding:12px 6px; border-radius:14px; cursor:pointer; border:1.5px solid #e8e8e8;',
     '  background:#fff; text-align:center; transition:all .3s;',
     '  box-shadow:0 1px 4px rgba(0,0,0,.04); }',
@@ -349,12 +360,10 @@ function injectStyles() {
     '  background: linear-gradient(white,white) padding-box,',
     '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box;',
     '  box-shadow:0 4px 16px rgba(131,58,180,.12); }',
-    '.ss-tab-icon { font-size:20px; margin-bottom:3px; }',
-    '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:14px; color:#888; direction:rtl; }',
+    '.ss-tab-icon { font-size:22px; margin-bottom:3px; }',
+    '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:500; color:#888; }',
     '.ss-tab.active .ss-tab-he { font-weight:700; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
-    '.ss-tab-sub { font-size:10px; color:#bbb; }',
-    '.ss-tab.active .ss-tab-sub { color:#833ab4; }',
 
     /* Banner smart */
     '.ss-banner { margin:10px 16px 0; padding:10px 14px; border-radius:12px; direction:rtl;',
@@ -394,9 +403,7 @@ function injectStyles() {
     '.ss-card.open .ss-card-title { font-weight:600;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
-    '.ss-card-title-phonetic { font-family:system-ui,sans-serif; font-size:11px; color:#aaa;',
-    '  direction:ltr; text-align:right; margin-top:1px; font-weight:400;',
-    '  -webkit-text-fill-color:#aaa; background:none; }',
+    /* supprime : ss-card-title-phonetic plus utilise */
     '.ss-card-badge { font-size:10px; border-radius:6px; padding:2px 7px; font-family:sans-serif; }',
     '.ss-badge-rh { background:linear-gradient(135deg,#833ab415,#fcb04515); color:#833ab4; border:1px solid #833ab430; }',
     '.ss-badge-male { background:#f5f5f5; color:#999; }',
@@ -405,10 +412,8 @@ function injectStyles() {
     '.ss-card-body { padding:0 16px 16px; direction:rtl; font-family:"Frank Ruhl Libre",serif;',
     '  font-size:17px; line-height:2.1; color:#222; border-top:1px solid #f0f0f0;',
     '  padding-top:12px; white-space:pre-line; animation:ssFadeIn .25s ease; }',
-    '.ss-card-phonetic { direction:ltr; font-family:system-ui,sans-serif; font-size:15px;',
-    '  line-height:1.8; color:#666; border-top:1px dashed #e0e0e0; margin-top:0;',
-    '  padding-top:10px; background:linear-gradient(135deg,rgba(131,58,180,.03),rgba(252,176,69,.03));',
-    '  border-radius:0 0 12px 12px; }',
+    '.ss-card-phonetic { direction:ltr; font-family:system-ui,sans-serif; font-size:16px;',
+    '  line-height:1.9; color:#333; }',
 
     /* FAB auto-scroll */
     '.ss-fab { position:fixed; bottom:80px; right:16px; z-index:30;',
@@ -483,16 +488,71 @@ function enableCompass() {
   window.addEventListener('deviceorientation', handler, true);
 }
 
+// ── Traductions françaises des titres de sections ────────────────────────
+var TITLE_FR = {
+  'modeh': 'Je reconnais', 'netilat': 'Ablution des mains',
+  'brachot': 'Benedictions du matin', 'tfilin': 'Pose des Tefilines',
+  'psukei': 'Versets de louanges', 'birkot-shema': 'Benedictions du Chema',
+  'shema': 'Lecture du Chema', 'amida': 'Amida (debout)',
+  'hallel': 'Hallel', 'tahnoun': 'Supplications',
+  'kaddish-half': 'Demi-Kaddich', 'ashrei-2': 'Achre (2e)',
+  'uva': 'Et un sauveur viendra', 'aleinu': 'A nous de louer',
+  'shir-yom': 'Cantique du jour', 'kaddish-yatom': 'Kaddich de l\'orphelin',
+  'ashrei-m': 'Achre', 'amida-m': 'Amida (debout)',
+  'tahnoun-m': 'Supplications', 'aleinu-m': 'A nous de louer',
+  'kaddish-yatom-m': 'Kaddich de l\'orphelin',
+  'barchu': 'Invocation', 'shema-a': 'Lecture du Chema',
+  'amida-a': 'Amida (debout)', 'aleinu-a': 'A nous de louer',
+  'kaddish-yatom-a': 'Kaddich de l\'orphelin'
+};
+
+// ── Helpers de langue ────────────────────────────────────────────────────
+function sectionTitle(s) {
+  if (state.lang === 'hebrew')   return s.title;
+  if (state.lang === 'phonetic') return s.titlePhonetic || s.title;
+  return TITLE_FR[s.id] || s.titlePhonetic || s.title;
+}
+function tefilahLabel(t) {
+  if (state.lang === 'hebrew')   return t.label;
+  if (state.lang === 'phonetic') return t.labelPhonetic || t.sublabel;
+  return t.labelFr || t.sublabel;
+}
+function nusachLabel(n) {
+  if (state.lang === 'hebrew')   return n.label;
+  if (state.lang === 'phonetic') return n.labelPhonetic || n.label;
+  return n.labelFr || n.label;
+}
+
+// ── Labels multilingues pour les toggles ─────────────────────────────────
+var TOGGLE_LABELS = {
+  noTahnoun: { hebrew: 'ללא תחנון', phonetic: 'Lelo Ta\'hanoun', french: 'Sans Ta\'hanoun' },
+  isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes' }
+};
+
 // ── Render helpers ─────────────────────────────────────────────────────────
+function renderLangSwitcher() {
+  var langs = [
+    { id: 'hebrew',   label: 'עברית' },
+    { id: 'phonetic', label: 'Phonetique' },
+    { id: 'french',   label: 'Francais' }
+  ];
+  return '<div class="ss-lang-switcher">' + langs.map(function(l) {
+    return '<button class="ss-lang-btn' + (state.lang === l.id ? ' active' : '') + '" ' +
+      'onclick="window.siddurSetLang(\'' + l.id + '\')">' + l.label + '</button>';
+  }).join('') + '</div>';
+}
+
 function renderNusachim() {
   return NUSACHIM.map(function(n) {
     return '<button class="ss-nusach' + (state.nusach === n.id ? ' active' : '') + '" ' +
-      'onclick="window.siddurSetNusach(\'' + n.id + '\')">' + n.label + '</button>';
+      'onclick="window.siddurSetNusach(\'' + n.id + '\')">' + nusachLabel(n) + '</button>';
   }).join('');
 }
 
-function renderToggle(label, key) {
+function renderToggle(key) {
   var active = state[key];
+  var labels = TOGGLE_LABELS[key];
+  var label = labels ? labels[state.lang] || labels.hebrew : key;
   return '<button class="ss-toggle' + (active ? ' active' : '') + '" onclick="window.siddurToggle(\'' + key + '\')">' +
     '<div class="ss-toggle-knob"><div class="ss-toggle-dot"></div></div>' +
     label + '</button>';
@@ -503,8 +563,7 @@ function renderTabs() {
     var t = TEFILOT[key];
     return '<button class="ss-tab' + (state.tefilah === key ? ' active' : '') + '" onclick="window.siddurSetTefilah(\'' + key + '\')">' +
       '<div class="ss-tab-icon">' + t.icon + '</div>' +
-      '<div class="ss-tab-he">' + t.label + '</div>' +
-      '<div class="ss-tab-sub">' + t.sublabel + '</div>' +
+      '<div class="ss-tab-he">' + tefilahLabel(t) + '</div>' +
       '</button>';
   }).join('');
 }
@@ -512,34 +571,44 @@ function renderTabs() {
 function renderBanner(hdate) {
   if (!hdate.isRoshHodesh && hdate.isTahnounDay) return '';
   var icon  = hdate.isRoshHodesh ? '🌙' : '✨';
-  var title = hdate.isRoshHodesh ? 'ראש חודש — הלל מתווסף' : 'אין תחנון היום';
-  var sub   = hdate.isRoshHodesh ? 'Hallel ajouté automatiquement' : 'Tahnoun retiré automatiquement';
+  var titles = {
+    rh:  { hebrew: 'ראש חודש — הלל מתווסף', phonetic: 'Roch \'Hodech — Hallel ajoute', french: 'Nouvelle lune — Hallel ajoute' },
+    nt:  { hebrew: 'אין תחנון היום', phonetic: 'Ene Ta\'hanoun hayom', french: 'Pas de Ta\'hanoun aujourd\'hui' }
+  };
+  var k = hdate.isRoshHodesh ? 'rh' : 'nt';
+  var title = titles[k][state.lang] || titles[k].hebrew;
   return '<div class="ss-banner">' +
     '<span style="font-size:18px">' + icon + '</span>' +
-    '<div><div class="ss-banner-title">' + title + '</div>' +
-    '<div class="ss-banner-sub">' + sub + '</div></div></div>';
+    '<div><div class="ss-banner-title">' + title + '</div></div></div>';
 }
 
 function renderSections(sections) {
+  var isHe = state.lang === 'hebrew';
   return sections.map(function(s) {
     var open = state.expandedId === s.id;
+    var badgeLabels = {
+      rh:   { hebrew: 'ר״ח', phonetic: 'R.H.', french: 'N.L.' },
+      male: { hebrew: 'גברים', phonetic: 'Hommes', french: 'Hommes' }
+    };
     var badges = '';
-    if (s.rosh_hodesh) badges += '<span class="ss-card-badge ss-badge-rh">ר״ח</span>';
-    if (s.male_only)   badges += '<span class="ss-card-badge ss-badge-male">גברים</span>';
+    if (s.rosh_hodesh) badges += '<span class="ss-card-badge ss-badge-rh">' + badgeLabels.rh[state.lang] + '</span>';
+    if (s.male_only)   badges += '<span class="ss-card-badge ss-badge-male">' + badgeLabels.male[state.lang] + '</span>';
     var bodyContent = '';
     if (open) {
-      if (state.phonetic && s.phonetic) {
-        bodyContent = '<div class="ss-card-body">' + s.text + '</div>' +
-          '<div class="ss-card-body ss-card-phonetic">' + s.phonetic + '</div>';
+      if (isHe) {
+        bodyContent = '<div class="ss-card-body">' + s.text + '</div>';
+      } else if (s.phonetic) {
+        bodyContent = '<div class="ss-card-body ss-card-phonetic">' + s.phonetic + '</div>';
       } else {
         bodyContent = '<div class="ss-card-body">' + s.text + '</div>';
       }
     }
+    var displayTitle = sectionTitle(s);
+    var titleDir = isHe ? 'rtl' : 'ltr';
     return '<div class="ss-card' + (open ? ' open' : '') + '" id="ss-card-' + s.id + '">' +
       '<div class="ss-card-header" onclick="window.siddurToggleCard(\'' + s.id + '\')">' +
       '<div class="ss-card-left"><div class="ss-card-dot"></div>' +
-      '<div><span class="ss-card-title">' + s.title + '</span>' +
-      (state.phonetic && s.titlePhonetic ? '<div class="ss-card-title-phonetic">' + s.titlePhonetic + '</div>' : '') +
+      '<div><span class="ss-card-title" style="direction:' + titleDir + '">' + displayTitle + '</span>' +
       '</div>' + badges + '</div>' +
       '<span class="ss-card-chevron">▾</span></div>' +
       bodyContent + '</div>';
@@ -601,22 +670,26 @@ function render() {
   var sections = filterSections(tefilah.sections, hdate);
   patchShirYom(sections);
 
+  var isHe = state.lang === 'hebrew';
+  var countLabel = isHe ? (sections.length + ' סעיפים') : (sections.length + ' sections');
+
   container.innerHTML =
     '<div class="ss-wrap">' +
 
-    // Header
+    // Header : langue + boussole
     '<div class="ss-header">' +
-    '<div class="ss-hdate">' +
-    '<span>' + hdate.label + '</span>' +
-    '<div style="display:flex;gap:8px;">' +
-    '<button style="width:34px;height:34px;border-radius:9px;border:1.5px solid #ececec;background:#fff;font-size:16px;cursor:pointer;" onclick="window.siddurOpenCompass()">✡️</button>' +
-    '</div></div>' +
-    (hdate.isRoshHodesh ? '<div><span class="ss-rh-badge">ראש חודש</span></div>' : '') +
+    '<div class="ss-header-top">' +
+    '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
+    renderLangSwitcher() +
+    '<div class="ss-hdate-inline">' + hdate.label + '</div>' +
+    '</div>' +
+    (hdate.isRoshHodesh ? '<div style="text-align:center;margin-bottom:8px;"><span class="ss-rh-badge">ראש חודש</span></div>' : '') +
+    // Nusachim
     '<div class="ss-nusachim">' + renderNusachim() + '</div>' +
+    // Toggles
     '<div class="ss-toggles">' +
-    renderToggle('ללא תחנון', 'noTahnoun') +
-    renderToggle('נשים', 'isFemale') +
-    renderToggle('הגייה צרפתית', 'phonetic') +
+    renderToggle('noTahnoun') +
+    renderToggle('isFemale') +
     '</div></div>' +
 
     // Tabs
@@ -627,8 +700,8 @@ function render() {
 
     // Sections
     '<div class="ss-list">' +
-    '<div class="ss-list-title">' + tefilah.label +
-    '<span class="ss-list-count">' + sections.length + ' סעיפים</span></div>' +
+    '<div class="ss-list-title">' + tefilahLabel(tefilah) +
+    '<span class="ss-list-count">' + countLabel + '</span></div>' +
     renderSections(sections) +
     '</div>' +
 
@@ -652,6 +725,10 @@ window.siddurSetNusach = function(id) {
   state.nusach = id;
   render();
 };
+window.siddurSetLang = function(lang) {
+  state.lang = lang;
+  render();
+};
 window.siddurToggle = function(key) {
   state[key] = !state[key];
   render();
@@ -665,9 +742,11 @@ window.siddurToggleCard = function(id) {
   patchShirYom(sections);
   var list = document.querySelector('.ss-list');
   if (list) {
+    var isHe = state.lang === 'hebrew';
+    var countLabel = isHe ? (sections.length + ' סעיפים') : (sections.length + ' sections');
     list.innerHTML =
-      '<div class="ss-list-title">' + tefilah.label +
-      '<span class="ss-list-count">' + sections.length + ' סעיפים</span></div>' +
+      '<div class="ss-list-title">' + tefilahLabel(tefilah) +
+      '<span class="ss-list-count">' + countLabel + '</span></div>' +
       renderSections(sections);
   }
 };
