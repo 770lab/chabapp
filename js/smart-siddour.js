@@ -19,7 +19,6 @@ var NUSACHIM = [
 var state = {
   tefilah:    'shacharit',
   nusach:     'chabad',
-  noTahnoun:  false,
   isFemale:   false,
   lang:       'hebrew',   // 'hebrew' | 'phonetic' | 'french'
   expandedId: null,
@@ -203,6 +202,7 @@ function patchShirYom(sections) {
 
 // ── Logique date hébraïque (utilise gregToHebrew de app.js) ───────────────
 var HEB_MONTHS_HE = {1:'תשרי',2:'חשון',3:'כסלו',4:'טבת',5:'שבט',6:'אדר א׳',7:'אדר ב׳',8:'ניסן',9:'אייר',10:'סיון',11:'תמוז',12:'אב',13:'אלול'};
+var HEB_MONTHS_FR = {1:'Tichri',2:'Hechvan',3:'Kislev',4:'Tevet',5:'Chevat',6:'Adar I',7:'Adar II',8:'Nissan',9:'Iyar',10:'Sivan',11:'Tamouz',12:'Av',13:'Eloul'};
 
 function _hebYear(hy) {
   var t = hy % 1000;
@@ -275,15 +275,20 @@ function getHDate() {
   if (hm === 10 && hd === 8) noTahanoun = true; // Isrou Hag Chavouot
   if (hm === 1 && hd === 24) noTahanoun = true; // Isrou Hag Souccot
 
-  var monthName = HEB_MONTHS_HE[hm] || '';
-  if (hm === 6 && !_hyyIsLeap(heb.hy)) monthName = 'אדר';
-  var label = _gematriaDay(hd) + ' ' + monthName + ' ' + _hebYear(heb.hy);
+  var monthNameHe = HEB_MONTHS_HE[hm] || '';
+  if (hm === 6 && !_hyyIsLeap(heb.hy)) monthNameHe = 'אדר';
+  var labelHe = _gematriaDay(hd) + ' ' + monthNameHe + ' ' + _hebYear(heb.hy);
+
+  var monthNameFr = HEB_MONTHS_FR[hm] || '';
+  if (hm === 6 && !_hyyIsLeap(heb.hy)) monthNameFr = 'Adar';
+  var labelFr = hd + ' ' + monthNameFr + ' ' + heb.hy;
 
   return {
     isRoshHodesh: isRoshHodesh,
     isTahnounDay: !noTahanoun,
     isShabbat:    isShabbat,
-    label:        label,
+    label:        labelHe,
+    labelFr:      labelFr,
     hm: hm,
     hd: hd,
   };
@@ -294,7 +299,7 @@ function filterSections(sections, hdate) {
     if (s.male_only && state.isFemale) return false;
     if (s.always)      return true;
     if (s.rosh_hodesh) return hdate.isRoshHodesh;
-    if (s.tahnoun_day) return hdate.isTahnounDay && !state.noTahnoun;
+    if (s.tahnoun_day) return hdate.isTahnounDay;
     return false;
   });
 }
@@ -525,7 +530,6 @@ function nusachLabel(n) {
 
 // ── Labels multilingues pour les toggles ─────────────────────────────────
 var TOGGLE_LABELS = {
-  noTahnoun: { hebrew: 'ללא תחנון', phonetic: 'Lelo Ta\'hanoun', french: 'Sans Ta\'hanoun' },
   isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes' }
 };
 
@@ -681,14 +685,13 @@ function render() {
     '<div class="ss-header-top">' +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
     renderLangSwitcher() +
-    '<div class="ss-hdate-inline">' + hdate.label + '</div>' +
+    '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     '</div>' +
     (hdate.isRoshHodesh ? '<div style="text-align:center;margin-bottom:8px;"><span class="ss-rh-badge">ראש חודש</span></div>' : '') +
     // Nusachim
     '<div class="ss-nusachim">' + renderNusachim() + '</div>' +
     // Toggles
     '<div class="ss-toggles">' +
-    renderToggle('noTahnoun') +
     renderToggle('isFemale') +
     '</div></div>' +
 
