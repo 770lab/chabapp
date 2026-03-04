@@ -27,7 +27,7 @@ var state = {
 // ── Données téfilot ────────────────────────────────────────────────────────
 var TEFILOT = {
   shacharit: {
-    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅',
+    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Abraham.png',
     sections: [
       { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', titleFemale: 'מודָה אני', titlePhoneticFemale: 'Moda Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
@@ -364,6 +364,16 @@ function injectStyles() {
     '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:11px; font-weight:500; color:#888; }',
     '.ss-tab.active .ss-tab-he { font-weight:700; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
+    '.ss-tab.ss-tab-img { padding:0; overflow:hidden; position:relative; min-height:60px;',
+    '  background-size:cover; background-position:center; border:none; }',
+    '.ss-tab.ss-tab-img .ss-tab-icon { display:none; }',
+    '.ss-tab.ss-tab-img .ss-tab-label { position:absolute; bottom:0; left:0; right:0;',
+    '  padding:4px 0; color:#fff; font-size:12px; font-weight:700; text-align:center;',
+    '  background:linear-gradient(transparent, rgba(0,0,0,0.6)); }',
+    '.ss-tab.ss-tab-img.active { border:2px solid transparent;',
+    '  background-size:cover; background-position:center;',
+    '  border-image: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) 1; border-radius:10px; }',
+    '.ss-tab.ss-tab-img.active { outline:2px solid #833ab4; outline-offset:-2px; }',
     '.ss-tab-info { flex:1.2; padding:7px 6px; border-radius:10px; text-align:center;',
     '  font-size:10px; line-height:1.4; font-weight:600; border:1.5px solid transparent;',
     '  background: linear-gradient(white,white) padding-box,',
@@ -544,7 +554,15 @@ function renderToggle(key) {
 function renderTabs() {
   return Object.keys(TEFILOT).map(function(key) {
     var t = TEFILOT[key];
-    return '<button class="ss-tab' + (state.tefilah === key ? ' active' : '') + '" onclick="window.siddurSetTefilah(\'' + key + '\')">' +
+    var isActive = state.tefilah === key;
+    if (t.image) {
+      return '<button class="ss-tab ss-tab-img' + (isActive ? ' active' : '') + '" ' +
+        'style="background-image:url(\'' + t.image + '\')" ' +
+        'onclick="window.siddurSetTefilah(\'' + key + '\')">' +
+        '<div class="ss-tab-label">' + t.labelPhonetic + '</div>' +
+        '</button>';
+    }
+    return '<button class="ss-tab' + (isActive ? ' active' : '') + '" onclick="window.siddurSetTefilah(\'' + key + '\')">' +
       '<div class="ss-tab-icon">' + t.icon + '</div>' +
       '<div class="ss-tab-he">' + tefilahLabel(t) + '</div>' +
       '</button>';
