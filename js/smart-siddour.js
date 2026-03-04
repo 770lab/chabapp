@@ -356,8 +356,14 @@ function injectStyles() {
     '.ss-tab-he { font-family:"Frank Ruhl Libre",serif; font-size:11px; font-weight:500; color:#888; }',
     '.ss-tab.active .ss-tab-he { font-weight:700; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
-    '.ss-tab-info { flex:1; padding:7px 4px; border-radius:10px; border:1px solid #e8e8e8;',
-    '  background:#fff; text-align:center; font-size:10px; color:#999; line-height:1.3; }',
+    '.ss-tab-info { flex:1.2; padding:7px 6px; border-radius:10px; text-align:center;',
+    '  font-size:10px; line-height:1.4; font-weight:600; border:1.5px solid transparent;',
+    '  background: linear-gradient(white,white) padding-box,',
+    '    linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045) border-box; color:#833ab4; }',
+    '.ss-tab-info.has-alert { color:#fff;',
+    '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
+    '  box-shadow:0 2px 10px rgba(131,58,180,.3); animation: ssPulse 2s ease-in-out infinite; }',
+    '@keyframes ssPulse { 0%,100%{box-shadow:0 2px 10px rgba(131,58,180,.3)} 50%{box-shadow:0 2px 18px rgba(131,58,180,.5)} }',
 
     /* Row 4 : barre sections (dans le header => sticky ensemble) */
     '.ss-sections-bar { overflow-x:auto; overflow-y:hidden; padding:6px 0 8px;',
@@ -666,12 +672,31 @@ function render() {
   patchShirYom(sections);
 
   // Info du jour
+  var isHe = state.lang === 'hebrew';
   var infoLines = [];
-  if (!hdate.isTahnounDay) infoLines.push(state.lang === 'hebrew' ? 'אין תחנון' : 'Pas de Ta\'hanoun');
-  if (hdate.isRoshHodesh) infoLines.push(state.lang === 'hebrew' ? 'ר״ח + הלל' : 'Roch Hodech + Hallel');
-  if (hdate.isShabbat) infoLines.push(state.lang === 'hebrew' ? 'שבת' : 'Chabbat');
-  var infoTab = '<div class="ss-tab-info">' +
-    (infoLines.length > 0 ? infoLines.join('<br>') : (state.lang === 'hebrew' ? 'יום רגיל' : 'Jour normal')) +
+  // Roch Hodech => Yaale veYavo + Hallel
+  if (hdate.isRoshHodesh) {
+    infoLines.push(isHe ? '🌙 ר״ח' : '🌙 Roch Hodech');
+    infoLines.push(isHe ? 'יעלה ויבוא + הלל' : 'Yaale veYavo + Hallel');
+  }
+  if (!hdate.isTahnounDay && !hdate.isRoshHodesh) {
+    infoLines.push(isHe ? '✨ אין תחנון' : '✨ Pas de Ta\'hanoun');
+  }
+  if (hdate.isShabbat) {
+    infoLines.push(isHe ? '🕯 שבת' : '🕯 Chabbat');
+  }
+  // Fetes avec Yaale veYavo (Hol Hamoed)
+  var hm = hdate.hm; var hd = hdate.hd;
+  var isHolHamoed = (hm === 8 && hd >= 16 && hd <= 20) || (hm === 1 && hd >= 16 && hd <= 21);
+  if (isHolHamoed) {
+    infoLines.push(isHe ? '🎪 חול המועד' : '🎪 Hol Hamoed');
+    if (infoLines.indexOf(isHe ? 'יעלה ויבוא' : 'Yaale veYavo') === -1) {
+      infoLines.push(isHe ? 'יעלה ויבוא' : 'Yaale veYavo');
+    }
+  }
+  var hasAlert = infoLines.length > 0;
+  var infoTab = '<div class="ss-tab-info' + (hasAlert ? ' has-alert' : '') + '">' +
+    (hasAlert ? infoLines.join('<br>') : (isHe ? 'יום רגיל' : 'Jour normal')) +
     '</div>';
 
   container.innerHTML =
