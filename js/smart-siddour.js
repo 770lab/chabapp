@@ -9,10 +9,8 @@ var INSTA = 'linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)';
 
 // ── Nusachim ───────────────────────────────────────────────────────────────
 var NUSACHIM = [
-  { id: 'chabad',   label: 'חב״ד', labelPhonetic: 'Habad',    labelFr: 'Habad'    },
-  { id: 'ashkenaz', label: 'אשכנז', labelPhonetic: 'Achkenaz', labelFr: 'Ashkenaze' },
-  { id: 'sfarad',   label: 'ספרד',  labelPhonetic: 'Sefarad',  labelFr: 'Sefarade'  },
-  { id: 'mizrach',  label: 'עדות המזרח', labelPhonetic: 'Edot Hamizra\'h', labelFr: 'Orientaux' },
+  { id: 'chabad',  label: 'תהילת השם',  labelPhonetic: 'Tehilat Hachem',  labelFr: 'Tehilat Hachem'  },
+  { id: 'mizrach', label: 'פתח אליהו', labelPhonetic: "Pata'h Eliyahou", labelFr: "Pata'h Eliyahou" },
 ];
 
 // ── État global ────────────────────────────────────────────────────────────
