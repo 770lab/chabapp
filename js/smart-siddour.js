@@ -22,6 +22,7 @@ var state = {
   autoScroll: false,
   scrollSpeed: 2,
   scrollInterval: null,
+  tabsExpanded: false,
 };
 
 // ── Données téfilot ────────────────────────────────────────────────────────
@@ -534,8 +535,8 @@ var TOGGLE_LABELS = {
 // ── Render helpers ─────────────────────────────────────────────────────────
 function renderLangSwitcher() {
   var langs = [
-    { id: 'hebrew',   label: '<img src="assets/tehilat-hachem-cover.png" alt="Tehilat Hachem" style="height:28px;vertical-align:middle;border-radius:3px;">' },
-    { id: 'phonetic', label: '<img src="assets/patah-eliyahou-cover.png" alt="Patah Eliyahou" style="height:28px;vertical-align:middle;border-radius:3px;">' },
+    { id: 'hebrew',   label: 'עברית' },
+    { id: 'phonetic', label: 'Phonetique' },
     { id: 'french',   label: 'Francais' }
   ];
   return '<div class="ss-lang-switcher">' + langs.map(function(l) {
@@ -545,9 +546,17 @@ function renderLangSwitcher() {
 }
 
 function renderNusachim() {
+  var images = {
+    chabad: 'assets/tehilat-hachem-cover.png',
+    mizrach: 'assets/patah-eliyahou-cover.png'
+  };
   return NUSACHIM.map(function(n) {
+    var img = images[n.id];
+    var content = img
+      ? '<img src="' + img + '" alt="' + n.labelPhonetic + '" style="height:28px;vertical-align:middle;border-radius:3px;">'
+      : nusachLabel(n);
     return '<button class="ss-nusach' + (state.nusach === n.id ? ' active' : '') + '" ' +
-      'onclick="window.siddurSetNusach(\'' + n.id + '\')">' + nusachLabel(n) + '</button>';
+      'onclick="window.siddurSetNusach(\'' + n.id + '\')">' + content + '</button>';
   }).join('');
 }
 
@@ -561,9 +570,27 @@ function renderToggle(key) {
 }
 
 function renderTabs() {
+  var showAll = state.tabsExpanded;
   return Object.keys(TEFILOT).map(function(key) {
     var t = TEFILOT[key];
     var isActive = state.tefilah === key;
+    var hidden = !showAll && !isActive;
+    if (isActive && !showAll) {
+      // Onglet actif seul : clic = expander pour changer
+      if (t.image) {
+        return '<button class="ss-tab ss-tab-img active" ' +
+          'style="background-image:url(\'' + t.image + '\')" ' +
+          'onclick="window.siddurExpandTabs()">' +
+          '<div class="ss-tab-label">' + t.labelPhonetic + ' &#9662;</div>' +
+          '</button>';
+      }
+      return '<button class="ss-tab active" onclick="window.siddurExpandTabs()">' +
+        '<div class="ss-tab-icon">' + t.icon + '</div>' +
+        '<div class="ss-tab-he">' + tefilahLabel(t) + ' &#9662;</div>' +
+        '</button>';
+    }
+    if (hidden) return '';
+    // Mode expande : tous les onglets visibles
     if (t.image) {
       return '<button class="ss-tab ss-tab-img' + (isActive ? ' active' : '') + '" ' +
         'style="background-image:url(\'' + t.image + '\')" ' +
@@ -827,8 +854,13 @@ function render() {
 window.siddurSetTefilah = function(key) {
   state.tefilah = key;
   state._tefilahManual = true;
+  state.tabsExpanded = false;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+window.siddurExpandTabs = function() {
+  state.tabsExpanded = true;
+  render();
 };
 window.siddurSetNusach = function(id) {
   state.nusach = id;
