@@ -985,7 +985,7 @@ window.siddurActivateCompass = function() {
 
 // ── Init : s'accroche à switchTab ──────────────────────────────────────────
 // ── Pinch-to-zoom sur le texte du siddour ───────────────────────────────────
-var _pinchState = { active: false, startDist: 0, startSize: 24 };
+var _pinchState = { active: false, startDist: 0, startSize: 28 };
 var _savedFontSize = 28; // taille par defaut (px)
 var FONT_MIN = 16, FONT_MAX = 42;
 
