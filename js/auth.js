@@ -231,6 +231,7 @@ function _onLogout() {
   if (profilePanel) profilePanel.style.display = "none";
   var fab = document.getElementById("feed-fab");
   if (fab) fab.style.display = "none";
+  if (typeof switchTab === "function") switchTab("menu");
 }
 
 function _updateAuthNav(loggedIn) {
