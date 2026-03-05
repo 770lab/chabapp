@@ -1,17 +1,20 @@
 name: Bulk Studies Scraper
 
 on:
+  schedule:
+    - cron: '0 3 * * *'
   workflow_dispatch:
     inputs:
       mode:
         description: 'Mode: bulk-hyy (Hayom Yom year entier) ou days-60 (toutes etudes 60j)'
         required: true
-        default: 'days-60'
+        default: 'days-7'
         type: choice
         options:
+          - days-7
+          - days-30
           - days-60
           - bulk-hyy
-          - days-30
 
 jobs:
   bulk-scrape:
@@ -36,13 +39,15 @@ jobs:
 
       - name: Run bulk scraper
         run: |
-          MODE="${{ github.event.inputs.mode }}"
+          MODE="${{ github.event.inputs.mode || 'days-7' }}"
           if [ "$MODE" = "bulk-hyy" ]; then
             python scrape_daily_studies.py --bulk-hyy
           elif [ "$MODE" = "days-30" ]; then
             python scrape_daily_studies.py --days 30
-          else
+          elif [ "$MODE" = "days-60" ]; then
             python scrape_daily_studies.py --days 60
+          else
+            python scrape_daily_studies.py --days 7
           fi
 
       - name: Commit & push

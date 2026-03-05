@@ -7899,6 +7899,7 @@ function _hyyLoadJson(heb, dateKey, cacheKey, hyyKey) {
 
 // ====== FR.CHABAD.ORG AUTO-FETCH ======
 var _corsProxies = [
+  function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); },
   function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
   function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
 ];
