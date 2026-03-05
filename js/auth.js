@@ -223,6 +223,8 @@ function _onLogin() {
   if (typeof feedLoad === "function") feedLoad();
   // Écouter les notifications
   if (typeof notifListen === "function") notifListen();
+  // Init push notifications
+  if (typeof pushInit === "function") pushInit();
 }
 
 function _onLogout() {

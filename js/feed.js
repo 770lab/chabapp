@@ -857,10 +857,11 @@ function _renderNotif(n) {
     : '<div class="notif-avatar notif-avatar-ph">' + (n.fromName || "?").charAt(0).toUpperCase() + '</div>';
 
   var msg = "";
-  if (n.type === "follow")  msg = '<b>' + _escHtml(n.fromName) + '</b> vous suit';
-  if (n.type === "like")    msg = '<b>' + _escHtml(n.fromName) + '</b> a aimé votre publication';
-  if (n.type === "comment") msg = '<b>' + _escHtml(n.fromName) + '</b> a commenté : "' + _escHtml(n.text) + '"';
-  if (n.type === "mention") msg = '<b>' + _escHtml(n.fromName) + '</b> vous a mentionné dans une publication';
+  if (n.type === "follow")    msg = '<b>' + _escHtml(n.fromName) + '</b> vous suit';
+  if (n.type === "like")      msg = '<b>' + _escHtml(n.fromName) + '</b> a aimé votre publication';
+  if (n.type === "comment")   msg = '<b>' + _escHtml(n.fromName) + '</b> a commenté : "' + _escHtml(n.text) + '"';
+  if (n.type === "mention")   msg = '<b>' + _escHtml(n.fromName) + '</b> vous a mentionné dans une publication';
+  if (n.type === "broadcast") msg = '<b>' + _escHtml(n.title || "Chab'app") + '</b><br>' + _escHtml(n.text);
 
   var cls = n.read ? "notif-item" : "notif-item notif-unread";
   var time = _timeAgo(n.createdAt);
