@@ -228,6 +228,8 @@ function _onLogin() {
   if (typeof notifListen === "function") notifListen();
   // Init push notifications
   if (typeof pushInit === "function") pushInit();
+  // Afficher Actualites uniquement pour les admins
+  _checkShowFeedAdmin();
 }
 
 function _onLogout() {
@@ -236,7 +238,27 @@ function _onLogout() {
   if (profilePanel) profilePanel.style.display = "none";
   var fab = document.getElementById("feed-fab");
   if (fab) fab.style.display = "none";
+  // Cacher les blocs admin (actualites)
+  var blocActu = document.getElementById("bloc-actualites");
+  if (blocActu) blocActu.style.display = "none";
+  var heroActu = document.querySelector(".feed-hero-admin");
+  if (heroActu) heroActu.style.display = "none";
   if (typeof switchTab === "function") switchTab("menu");
+}
+
+// Afficher le bloc Actualites uniquement si admin
+function _checkShowFeedAdmin() {
+  if (!chabUser) return;
+  fbDb.collection("config").doc("admins").get().then(function(doc) {
+    var isAdmin = false;
+    if (doc.exists) {
+      isAdmin = (doc.data().uids || []).indexOf(chabUser.uid) !== -1;
+    }
+    var blocActu = document.getElementById("bloc-actualites");
+    if (blocActu) blocActu.style.display = isAdmin ? "" : "none";
+    var heroActu = document.querySelector(".feed-hero-admin");
+    if (heroActu) heroActu.style.display = isAdmin ? "" : "none";
+  }).catch(function() {});
 }
 
 function _updateAuthNav(loggedIn) {

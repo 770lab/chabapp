@@ -277,8 +277,8 @@
 <div onclick="switchTab('sub-videos')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;margin-top:10px;">
 <img src="assets/jewtube-visual.png" alt="JewTube - Regardez en famille" style="width:100%;display:block;border-radius:16px;" />
 </div>
-<!-- BLOC ACTUALITÉS -->
-<div onclick="switchTab('feed')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;height:110px;margin-top:10px;background:linear-gradient(135deg, #1a3a5c 0%, #1a73e8 50%, #4285f4 100%);">
+<!-- BLOC ACTUALITÉS (admin only) -->
+<div id="bloc-actualites" onclick="switchTab('feed')" style="display:none;position:relative;border-radius:16px;overflow:hidden;cursor:pointer;height:110px;margin-top:10px;background:linear-gradient(135deg, #1a3a5c 0%, #1a73e8 50%, #4285f4 100%);">
 <div style="position:absolute;inset:0;display:flex;align-items:center;padding:20px;">
 <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:16px;"><span style="font-size:26px;">📰</span></div>
 <div>
@@ -755,8 +755,8 @@ Partager
 <div class="menu-card-content"><span class="menu-card-title">Connexion</span><span class="menu-card-sub">Compte &amp; profil</span></div>
 </button>
 </div>
-<!-- Hero Actualités -->
-<div class="feed-hero" onclick="switchTab('feed')">
+<!-- Hero Actualités (admin only) -->
+<div class="feed-hero feed-hero-admin" onclick="switchTab('feed')" style="display:none">
 <div class="feed-hero-bg">
 <div class="feed-hero-content">
 <span class="feed-hero-icon">📰</span>
