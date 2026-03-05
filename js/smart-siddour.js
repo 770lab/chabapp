@@ -534,8 +534,8 @@ var TOGGLE_LABELS = {
 // ── Render helpers ─────────────────────────────────────────────────────────
 function renderLangSwitcher() {
   var langs = [
-    { id: 'hebrew',   label: 'עברית' },
-    { id: 'phonetic', label: '<img src="assets/patah-eliyahou-cover.png" alt="Phonetique" style="height:28px;vertical-align:middle;border-radius:3px;">' },
+    { id: 'hebrew',   label: '<img src="assets/tehilat-hachem-cover.png" alt="Tehilat Hachem" style="height:28px;vertical-align:middle;border-radius:3px;">' },
+    { id: 'phonetic', label: '<img src="assets/patah-eliyahou-cover.png" alt="Patah Eliyahou" style="height:28px;vertical-align:middle;border-radius:3px;">' },
     { id: 'french',   label: 'Francais' }
   ];
   return '<div class="ss-lang-switcher">' + langs.map(function(l) {
