@@ -50,13 +50,25 @@ var SIMHA_COMEDIANS = [
     ]
   },
   {
-    name: 'YJC Comedy',
-    avatar: 'YJ',
-    color: '#f39c12',
+    name: 'Elie Kakou',
+    avatar: 'EK',
+    color: '#e67e22',
     videos: [
-      { id: '7CwPlYckvXo', title: 'YJC - Quand ta mere est juive' },
-      { id: 'hxRSgOKKRvk', title: 'YJC - Les types au Beth Midrash' },
-      { id: 'JHi2wGHi5_M', title: 'YJC - Chabat chez les voisins' }
+      { id: 'f7_ho_Y5bU8', title: 'Elie Kakou - Olympia 1994 Spectacle integral' },
+      { id: 'CnfKV2GGDWE', title: 'Elie Kakou - Mme Sarfati a l\'Olympia' },
+      { id: 'FzzpSQ3JXfc', title: 'Elie Kakou - Fortunee Sarfati: apres j\'t\'explique' },
+      { id: '8d5QYWx4eSw', title: 'Elie Kakou - Le Kibboutz' },
+      { id: 'rFuBPH9biek', title: 'Elie Kakou - Pub Lessive' }
+    ]
+  },
+  {
+    name: 'Popeck',
+    avatar: 'PO',
+    color: '#1abc9c',
+    videos: [
+      { id: 'VR9L4VZ5BMA', title: 'Popeck - Les calecons molletonnes' },
+      { id: 'fQvz9tR8xOk', title: 'Popeck - Best of sketches' },
+      { id: '6FTg5K2Qxh4', title: 'Popeck - On n\'est pas des sauvages' }
     ]
   }
 ];
