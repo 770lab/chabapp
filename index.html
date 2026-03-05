@@ -1046,6 +1046,15 @@ Partager
 <div id="push-admin-panel"></div>
 <div id="notifs-list" class="notifs-container"></div>
 </div>
+<!-- ═══ PANEL DASHBOARD ADMIN ═══ -->
+<div id="panel-dashboard" style="display:none;" class="chab-panel">
+<div class="panel-top-bar">
+<div class="panel-back" onclick="switchTab('profile')">&#8249;</div>
+<div class="panel-title">Dashboard</div>
+<div style="width:32px;"></div>
+</div>
+<div id="dashboard-content" style="padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;height:calc(100vh - 56px);"></div>
+</div>
 <!-- ═══ PANEL ABONNEMENTS ═══ -->
 <div id="panel-following" style="display:none;" class="chab-panel">
 <div class="panel-top-bar">
@@ -1212,6 +1221,7 @@ Partager
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <!-- App scripts -->
 <script src="js/share.js?v=2"></script>
 <script src="js/zmanim.js?v=3"></script>
@@ -1227,5 +1237,6 @@ Partager
 <script src="js/feed.js?v=3"></script>
 <script src="js/videos.js?v=2"></script>
 <script src="js/push.js?v=1"></script>
+<script src="js/dashboard.js?v=1"></script>
 </body>
 </html>

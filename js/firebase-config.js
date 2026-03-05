@@ -32,6 +32,7 @@ var fbApp  = firebase.initializeApp(FIREBASE_CONFIG);
 var fbAuth = firebase.auth();
 var fbDb   = firebase.firestore();
 var fbStore = firebase.storage();
+var fbAnalytics = firebase.analytics();
 
 // Persistence Firestore (offline)
 fbDb.enablePersistence({ synchronizeTabs: true }).catch(function (err) {
@@ -79,6 +80,11 @@ function fbUpload(file, path) {
 /** Retourne l'utilisateur connecté ou null */
 function fbCurrentUser() {
   return fbAuth.currentUser;
+}
+
+/** Log un événement analytics */
+function fbLogEvent(name, params) {
+  if (fbAnalytics) fbAnalytics.logEvent(name, params || {});
 }
 
 console.log("[Chab'app] Firebase initialisé ✓");
