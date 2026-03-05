@@ -1,0 +1,338 @@
+/* ============================================================
+   dashboard.css  —  Dashboard admin responsive
+   Mobile-first, optimise desktop large
+   ============================================================ */
+
+.dash-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+/* Header */
+.dash-header {
+  margin-bottom: 24px;
+}
+.dash-header-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+}
+.dash-header-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* Grille KPI */
+.dash-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.dash-kpi-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  transition: box-shadow .2s, transform .2s;
+}
+.dash-kpi-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  transform: translateY(-2px);
+}
+.dash-kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.dash-kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.dash-kpi-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 4px;
+}
+.dash-kpi-sub {
+  font-size: 11px;
+  color: #9ca3af;
+}
+.dash-kpi-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dash-kpi-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Deux colonnes */
+.dash-two-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Sections cartes */
+.dash-card-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+}
+.dash-section-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* Barres graphique */
+.dash-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.dash-bar-label {
+  width: 65px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: right;
+  flex-shrink: 0;
+}
+.dash-bar-track {
+  flex: 1;
+  background: #f3f4f6;
+  border-radius: 6px;
+  height: 24px;
+  overflow: hidden;
+}
+.dash-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 6px;
+  transition: width .4s ease;
+}
+.dash-bar-val {
+  width: 28px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Activite du jour */
+.dash-activity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.dash-activity-item {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.dash-activity-num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+.dash-activity-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* Tableau desktop */
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  display: none;
+}
+.dash-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 8px 12px;
+  border-bottom: 2px solid #f3f4f6;
+}
+.dash-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 14px;
+  color: #374151;
+}
+.dash-table tr:hover {
+  background: #f9fafb;
+}
+
+/* Avatars */
+.dash-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.dash-avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  font-weight: 700;
+  font-size: 14px;
+  color: #6b7280;
+}
+.dash-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.dash-email-cell {
+  color: #6b7280 !important;
+  font-size: 13px !important;
+}
+.dash-date-cell {
+  font-size: 12px !important;
+  color: #9ca3af !important;
+  white-space: nowrap;
+}
+
+/* Badges */
+.dash-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.dash-badge-pro {
+  background: rgba(6,182,212,.12);
+  color: #0891b2;
+}
+.dash-badge-perso {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Vue mobile users */
+.dash-mobile-users {
+  display: block;
+}
+.dash-mobile-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.dash-mobile-user-info {
+  flex: 1;
+  min-width: 0;
+}
+.dash-mobile-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dash-mobile-user-email {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dash-mobile-user-date {
+  font-size: 10px;
+  color: #9ca3af;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ──── Desktop (768px+) ──── */
+@media (min-width: 768px) {
+  .dash-wrap {
+    padding: 8px 24px 80px;
+  }
+  .dash-header-title {
+    font-size: 28px;
+  }
+  .dash-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .dash-kpi-card {
+    padding: 24px;
+  }
+  .dash-kpi-value {
+    font-size: 36px;
+  }
+  .dash-kpi-icon-wrap {
+    width: 48px;
+    height: 48px;
+  }
+  .dash-kpi-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .dash-two-col {
+    flex-direction: row;
+    gap: 20px;
+  }
+  .dash-two-col > .dash-card-section {
+    flex: 1;
+  }
+  .dash-bar-track {
+    height: 28px;
+  }
+  .dash-activity-num {
+    font-size: 44px;
+  }
+  /* Show table, hide mobile list */
+  .dash-table {
+    display: table;
+  }
+  .dash-mobile-users {
+    display: none;
+  }
+}
+
+/* ──── Large desktop (1024px+) ──── */
+@media (min-width: 1024px) {
+  .dash-wrap {
+    padding: 16px 32px 80px;
+  }
+  .dash-header-title {
+    font-size: 32px;
+  }
+  .dash-kpi-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .dash-card-section {
+    padding: 28px;
+  }
+  .dash-section-title {
+    font-size: 18px;
+  }
+}

@@ -350,6 +350,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
   #home, #reading { box-shadow:0 0 30px rgba(0,0,0,0.08); border-left:1px solid var(--gray-5); border-right:1px solid var(--gray-5); }
   body { background:#f0f0f0; }
 }
+@media(min-width:768px) {
+  #home, #reading { box-shadow:0 0 40px rgba(0,0,0,0.06); }
+}
 .reading-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--gray-5); background:var(--white); position:relative; z-index:50; flex-shrink:0; }
 .back-btn { background:none; border:none; color:var(--black); font-size:14px; font-weight:600; cursor:pointer; padding:12px 16px 12px 0; min-height:44px; min-width:70px; }
 .next-btn { background:none; border:none; color:var(--black); font-size:14px; font-weight:600; cursor:pointer; padding:12px 0 12px 16px; min-height:44px; min-width:70px; text-align:right; }
@@ -736,3 +739,73 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .home-big-cards > :nth-child(1) .big-card-sub { grid-column:1; grid-row:2; margin-top:0; }
 .home-big-cards > :nth-child(1) .obj-progress-home { grid-column:1; grid-row:3; width:100%; }
 .home-big-cards > :nth-child(1) .obj-progress-home-pct { grid-column:1; grid-row:4; width:100%; }
+
+/* ===== DESKTOP RESPONSIVE ===== */
+@media (min-width: 768px) {
+  #home { max-width: 900px; }
+  #reading { max-width: 900px; }
+  #obj-story-overlay { max-width: 900px; }
+
+  /* Home big cards: 2 columns */
+  .home-big-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .home-big-cards > :first-child { grid-column: 1 / -1; }
+
+  /* Menu cards: 3 columns */
+  .menu-cards { grid-template-columns: repeat(3, 1fr); }
+
+  /* Objectives grid: 3 columns */
+  .obj-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Calendar grid: wider */
+  .cal-grid { grid-template-columns: repeat(7, 1fr); }
+
+  /* Psalms: 2 columns */
+  .psalms-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .psalms-list .section-title { grid-column: 1 / -1; }
+
+  /* Reading content: centered with max-width for readability */
+  .insta-post-content { max-width: 680px; margin: 0 auto; padding: 0 24px 24px; }
+  .verse-block { margin-bottom: 28px; }
+
+  /* Wider paddings */
+  .home-header { padding: 48px 24px 8px; }
+  .home-big-cards { padding: 8px 24px 0; }
+  .psalms-list { padding: 0 24px; }
+  .progress-section { padding: 16px 24px; }
+
+  /* Shabbat card wider */
+  .shabbat-card { margin: 0 24px 12px; }
+  .shabbat-times-row { gap: 16px; }
+
+  /* Bottom nav: constrain width */
+  .insta-bottom-nav { max-width: 600px; margin: 0 auto; }
+
+  /* Story bar items: bigger on desktop */
+  .story-circle { width: 64px; height: 64px; font-size: 18px; }
+  .story-ring { width: 70px; height: 70px; }
+
+  /* Chain form wider */
+  .chain-type-btns { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1100px) {
+  #home { max-width: 1100px; }
+  #reading { max-width: 1000px; }
+  #obj-story-overlay { max-width: 1000px; }
+
+  /* Home big cards: 3 columns */
+  .home-big-cards { grid-template-columns: 1fr 1fr 1fr; }
+  .home-big-cards > :first-child { grid-column: 1 / -1; }
+
+  /* Menu cards: 4 columns */
+  .menu-cards { grid-template-columns: repeat(4, 1fr); }
+
+  /* Objectives: 4 columns */
+  .obj-grid { grid-template-columns: repeat(4, 1fr); }
+
+  /* Psalms: 3 columns */
+  .psalms-list { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* Reading: wider content area */
+  .insta-post-content { max-width: 760px; padding: 0 32px 32px; }
+}

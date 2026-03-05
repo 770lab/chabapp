@@ -4154,7 +4154,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-don","sub-videos","sub-jewbuzz","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-don","sub-videos","sub-jewbuzz","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
@@ -4193,6 +4193,7 @@ function switchTab(tab) {
     }
   }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
+  if (tab === "dashboard") { if (typeof dashboardLoad === "function") dashboardLoad(); }
   // Masquer le header Chab'app sur les sous-panels (ils ont leur propre bouton retour)
   var homeEl = document.getElementById('home');
   if (homeEl) {

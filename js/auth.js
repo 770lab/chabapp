@@ -175,6 +175,7 @@ function profileDeleteAccount() {
 // ═══════════════════════════════════════════════════════════
 
 function _createUserDoc(firebaseUser, role, name) {
+  if (typeof fbLogEvent === "function") fbLogEvent("sign_up", { method: firebaseUser.providerData && firebaseUser.providerData[0] ? firebaseUser.providerData[0].providerId : "email" });
   return usersCol.doc(firebaseUser.uid).set({
     uid:         firebaseUser.uid,
     email:       firebaseUser.email || "",
@@ -208,6 +209,8 @@ function _loadUserProfile(firebaseUser) {
 }
 
 function _onLogin() {
+  // Analytics
+  if (typeof fbLogEvent === "function") fbLogEvent("login", { method: chabUser.provider || "email" });
   // Retourner au menu principal
   if (typeof switchTab === "function") switchTab("menu");
   var homeEl2 = document.getElementById("home");
@@ -436,7 +439,8 @@ function _renderProfile() {
   }
   html += '</div>';
 
-  // Section admin (visible uniquement pour les admins)
+  // Bouton dashboard + section admin (visible uniquement pour les admins)
+  html += '<div id="admin-dashboard-btn"></div>';
   html += '<div id="admin-manage-section"></div>';
 
   // Déconnexion
@@ -454,6 +458,10 @@ function _renderProfile() {
   // Charger la section admin si l'utilisateur est admin
   _authCheckAdmin().then(function() {
     _renderAdminSection();
+    var dbBtn = document.getElementById("admin-dashboard-btn");
+    if (dbBtn && _authIsAdmin) {
+      dbBtn.innerHTML = '<div style="margin-top:24px;"><button class="chab-btn" onclick="switchTab(\'dashboard\')" style="width:100%;background:#3b82f6;color:#fff;font-weight:700;border:none;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;">Dashboard Admin</button></div>';
+    }
   });
 }
 

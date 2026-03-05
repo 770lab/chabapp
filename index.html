@@ -17,6 +17,7 @@
 <link href="css/styles.css?v=6" rel="stylesheet"/>
 <link href="css/inline.css?v=2" rel="stylesheet"/>
 <link href="css/firebase-panels.css?v=3" rel="stylesheet"/>
+<link href="css/dashboard.css?v=1" rel="stylesheet"/>
 </head>
 <body>
 <svg height="0" style="position:absolute;" width="0">
@@ -439,7 +440,7 @@
 <!-- SUB-PANEL: TEFILA -->
 <div id="panel-sub-tefila" style="display:none">
 <div style="position:relative;width:100%;height:200px;overflow:hidden;">
-<img src="assets/tefila-hero.jpg" alt="Tefila" style="width:100%;height:100%;object-fit:contain;background:#1a1a2e;">
+<img src="assets/tefila-hero.jpg" alt="Tefila" style="width:100%;height:100%;object-fit:cover;background:#1a1a2e;">
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.0) 100%);"></div>
 <div style="position:absolute;bottom:14px;left:16px;z-index:1;">
 <div style="font-size:22px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Tefila</div>
@@ -1046,6 +1047,15 @@ Partager
 <div id="push-admin-panel"></div>
 <div id="notifs-list" class="notifs-container"></div>
 </div>
+<!-- ═══ PANEL DASHBOARD ADMIN ═══ -->
+<div id="panel-dashboard" style="display:none;" class="chab-panel">
+<div class="panel-top-bar">
+<div class="panel-back" onclick="switchTab('profile')">&#8249;</div>
+<div class="panel-title">Dashboard</div>
+<div style="width:32px;"></div>
+</div>
+<div id="dashboard-content" style="padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;height:calc(100vh - 56px);background:#f9fafb;"></div>
+</div>
 <!-- ═══ PANEL ABONNEMENTS ═══ -->
 <div id="panel-following" style="display:none;" class="chab-panel">
 <div class="panel-top-bar">
@@ -1212,6 +1222,7 @@ Partager
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <!-- App scripts -->
 <script src="js/share.js?v=2"></script>
 <script src="js/zmanim.js?v=3"></script>
@@ -1227,5 +1238,6 @@ Partager
 <script src="js/feed.js?v=3"></script>
 <script src="js/videos.js?v=2"></script>
 <script src="js/push.js?v=1"></script>
+<script src="js/dashboard.js?v=1"></script>
 </body>
 </html>

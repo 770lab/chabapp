@@ -1,0 +1,14 @@
+{
+  "appId": "com.chabapp.app",
+  "appName": "Chab'app",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#ffffff"
+    }
+  }
+}
