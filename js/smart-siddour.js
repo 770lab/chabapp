@@ -535,7 +535,7 @@ var TOGGLE_LABELS = {
 function renderLangSwitcher() {
   var langs = [
     { id: 'hebrew',   label: 'עברית' },
-    { id: 'phonetic', label: 'Phonetique' },
+    { id: 'phonetic', label: '<img src="assets/patah-eliyahou-cover.png" alt="Phonetique" style="height:28px;vertical-align:middle;border-radius:3px;">' },
     { id: 'french',   label: 'Francais' }
   ];
   return '<div class="ss-lang-switcher">' + langs.map(function(l) {
