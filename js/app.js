@@ -4175,7 +4175,20 @@ function switchTab(tab) {
   var fab = document.getElementById("feed-fab");
   if (fab) fab.style.display = (tab === "feed") ? "" : "none";
   if (tab === "profile") { if (typeof _renderProfile === "function") _renderProfile(); }
-  if (tab === "notifs")  { if (typeof notifLoad === "function") notifLoad(); }
+  if (tab === "notifs")  {
+    if (typeof notifLoad === "function") notifLoad();
+    var pushWrap = document.getElementById('push-enable-wrap');
+    if (pushWrap && typeof Notification !== 'undefined') {
+      pushWrap.style.display = Notification.permission === 'granted' ? 'none' : '';
+      if (typeof _updatePushUI === 'function') _updatePushUI(Notification.permission === 'granted');
+    }
+    if (typeof _pushCheckAdmin === 'function') {
+      _pushCheckAdmin().then(function() {
+        var panel = document.getElementById('push-admin-panel');
+        if (panel && typeof pushRenderAdmin === 'function') pushRenderAdmin(panel);
+      });
+    }
+  }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
   // Masquer le header Chab'app sur les sous-panels (ils ont leur propre bouton retour)
   var homeEl = document.getElementById('home');

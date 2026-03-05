@@ -1036,6 +1036,10 @@ Partager
 <div class="panel-title">Notifications</div>
 <div style="width:32px;"></div>
 </div>
+<div id="push-enable-wrap" style="padding:12px 16px;display:none;">
+<button id="push-enable-btn" onclick="pushRequestPermission()" style="width:100%;padding:10px;border:1.5px solid var(--black);border-radius:10px;background:var(--white);font-size:13px;font-weight:600;cursor:pointer;">Activer les notifications push</button>
+</div>
+<div id="push-admin-panel"></div>
 <div id="notifs-list" class="notifs-container"></div>
 </div>
 <!-- ═══ PANEL ABONNEMENTS ═══ -->
@@ -1217,5 +1221,6 @@ Partager
 <script src="js/auth.js?v=5"></script>
 <script src="js/feed.js?v=3"></script>
 <script src="js/videos.js?v=2"></script>
+<script src="js/push.js?v=1"></script>
 </body>
 </html>
