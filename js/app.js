@@ -4186,6 +4186,9 @@ function switchTab(tab) {
       _pushCheckAdmin().then(function() {
         var panel = document.getElementById('push-admin-panel');
         if (panel && typeof pushRenderAdmin === 'function') pushRenderAdmin(panel);
+      }).catch(function() {
+        var panel = document.getElementById('push-admin-panel');
+        if (panel && typeof pushRenderAdmin === 'function') pushRenderAdmin(panel);
       });
     }
   }

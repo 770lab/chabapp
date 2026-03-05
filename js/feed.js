@@ -848,6 +848,10 @@ function notifLoad() {
         _notifUnread = 0;
         _updateNotifBadge();
       });
+    })
+    .catch(function (err) {
+      console.log('[Notif] Erreur chargement:', err);
+      el.innerHTML = '<div class="feed-empty">Aucune notification pour l\'instant.</div>';
     });
 }
 
