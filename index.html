@@ -190,7 +190,7 @@
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;">
 <div class="big-card-title" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Téfila</div>
-<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Tehilat Hachem · Patakh Eliyahou</div>
+<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Tehilat Hachem</div>
 </div>
 </div>
 </div>
@@ -496,19 +496,6 @@ Partager
 <button onclick="switchTab('sub-tefila-siddur')" style="padding:12px;border:1.5px solid transparent;border-radius:var(--radius);background-image:linear-gradient(white,white),linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);background-origin:padding-box,border-box;background-clip:padding-box,border-box;font-size:13px;font-weight:600;cursor:pointer;text-align:left;">📖 Ouvrir le Smart Siddour</button>
 </div>
 </div>
-<!-- Patakh Eliyahou -->
-<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:var(--radius);padding:16px;margin-bottom:12px;">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-<span style="font-size:24px;">📕</span>
-<div>
-<div style="font-size:15px;font-weight:700;color:var(--black);">Patakh Eliyahou</div>
-<div style="font-size:11px;color:var(--gray-3);">Rite Séfarade · Hébreu &amp; Phonétique</div>
-</div>
-</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<button onclick="switchTab('sub-tefila-patakh')" style="padding:12px;border:1px solid var(--gray-5);border-radius:var(--radius);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;text-align:left;">🔤 Prières en hébreu &amp; phonétique</button>
-</div>
-</div>
 <!-- Kriat Chéma al Hamita -->
 <div style="background:var(--white);border:1px solid var(--gray-5);border-radius:var(--radius);padding:16px;margin-bottom:12px;">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -555,26 +542,6 @@ Partager
 </div>
 <!-- Content -->
 <div id="brachot-content"><span class="hyy-loading">Chargement…</span></div>
-</div>
-</div>
-<!-- SUB-PANEL: TEFILA PATAKH ELIYAHOU (Prayers) -->
-<div id="panel-sub-tefila-patakh" style="display:none">
-<div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('sub-tefila')">← Tefila</button></div>
-<div style="padding:0 16px 16px;">
-<div style="font-size:16px;font-weight:800;color:var(--black);margin-bottom:2px;">📕 Patakh Eliyahou</div>
-<div style="font-size:11px;color:var(--gray-3);margin-bottom:16px;">Prières en hébreu &amp; phonétique</div>
-<div style="display:flex;gap:6px;margin-bottom:12px;">
-<button class="siddur-toggle-btn active" onclick="switchSiddur('tehilat')" style="flex:1;padding:10px;border:2px solid var(--black);border-radius:12px;background:var(--black);color:var(--white);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;">📖 Tehilat Hachem</button>
-<button class="siddur-toggle-btn" onclick="switchSiddur('patakh')" style="flex:1;padding:10px;border:2px solid var(--gray-5);border-radius:12px;background:var(--white);color:var(--gray-2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;">📜 Patakh Eliyahou</button>
-</div>
-<div id="patakh-tabs" style="display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;">
-<button class="patakh-tab active" data-key="shaharit" onclick="showPatakh('shaharit')">Cha'harit</button>
-<button class="patakh-tab" data-key="minha" onclick="showPatakh('minha')">Min'ha</button>
-<button class="patakh-tab" data-key="arvit" onclick="showPatakh('arvit')">Arvit</button>
-<button class="patakh-tab" data-key="shema" onclick="showPatakh('shema')">Chéma</button>
-<button class="patakh-tab" data-key="birkat" onclick="showPatakh('birkat')">Birkat</button>
-</div>
-<div id="patakh-content" style="background:var(--white);border:1px solid var(--gray-5);border-radius:var(--radius);padding:16px;max-height:60vh;overflow-y:auto;"></div>
 </div>
 </div>
 <!-- SUB-PANEL: SMART SIDDOUR -->
