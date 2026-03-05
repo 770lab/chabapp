@@ -436,6 +436,9 @@ function _renderProfile() {
   }
   html += '</div>';
 
+  // Section admin (visible uniquement pour les admins)
+  html += '<div id="admin-manage-section"></div>';
+
   // Déconnexion
   html += '<div class="profile-section" style="margin-top:24px;">';
   html += '<button class="chab-btn chab-btn-danger" onclick="authLogout()">Se déconnecter</button>';
@@ -447,6 +450,11 @@ function _renderProfile() {
   html += '</div>';
 
   el.innerHTML = html;
+
+  // Charger la section admin si l'utilisateur est admin
+  _authCheckAdmin().then(function() {
+    _renderAdminSection();
+  });
 }
 
 // ─── Utilitaires UI ──────────────────────────────────────────
@@ -481,6 +489,98 @@ function _friendlyError(err) {
 document.addEventListener("DOMContentLoaded", function () {
   _renderAuth();
 });
+
+// ─── Gestion des admins ─────────────────────────────────────
+var _authIsAdmin = false;
+
+function _authCheckAdmin() {
+  if (!chabUser) { _authIsAdmin = false; return Promise.resolve(); }
+  return fbDb.collection("config").doc("admins").get().then(function(doc) {
+    if (doc.exists) {
+      _authIsAdmin = (doc.data().uids || []).indexOf(chabUser.uid) !== -1;
+    }
+  }).catch(function() { _authIsAdmin = false; });
+}
+
+function adminAddByEmail() {
+  var input = document.getElementById("admin-email-input");
+  if (!input) return;
+  var email = input.value.trim().toLowerCase();
+  if (!email) return alert("Entrez un email.");
+
+  // Chercher l'utilisateur par email dans la collection users
+  fbDb.collection("users").where("email", "==", email).get().then(function(snap) {
+    if (snap.empty) return alert("Aucun utilisateur trouvé avec cet email.\nIl doit d'abord créer un compte sur Chab'app.");
+    var targetUid = snap.docs[0].id;
+
+    return fbDb.collection("config").doc("admins").get().then(function(doc) {
+      var uids = doc.exists ? (doc.data().uids || []) : [];
+      if (uids.indexOf(targetUid) !== -1) return alert("Cet utilisateur est déjà admin.");
+      uids.push(targetUid);
+      return fbDb.collection("config").doc("admins").set({ uids: uids }).then(function() {
+        input.value = "";
+        alert("Admin ajouté avec succès !");
+        _renderAdminSection();
+      });
+    });
+  }).catch(function(err) { alert("Erreur : " + err.message); });
+}
+
+function adminRemove(uid) {
+  if (uid === chabUser.uid) return alert("Vous ne pouvez pas vous retirer vous-même.");
+  if (!confirm("Retirer cet admin ?")) return;
+
+  fbDb.collection("config").doc("admins").get().then(function(doc) {
+    if (!doc.exists) return;
+    var uids = (doc.data().uids || []).filter(function(u) { return u !== uid; });
+    return fbDb.collection("config").doc("admins").set({ uids: uids }).then(function() {
+      _renderAdminSection();
+    });
+  }).catch(function(err) { alert("Erreur : " + err.message); });
+}
+
+function _renderAdminSection() {
+  var wrap = document.getElementById("admin-manage-section");
+  if (!wrap || !_authIsAdmin) { if (wrap) wrap.innerHTML = ""; return; }
+
+  fbDb.collection("config").doc("admins").get().then(function(doc) {
+    var uids = doc.exists ? (doc.data().uids || []) : [];
+    // Récupérer les infos de chaque admin
+    var promises = uids.map(function(uid) {
+      return fbDb.collection("users").doc(uid).get().then(function(uDoc) {
+        return uDoc.exists ? { uid: uid, email: uDoc.data().email || "?", name: uDoc.data().displayName || "" } : { uid: uid, email: "?", name: "Utilisateur supprimé" };
+      });
+    });
+    return Promise.all(promises);
+  }).then(function(admins) {
+    var h = '<div style="margin-top:24px;padding:16px;background:#f8f9fa;border-radius:12px;">';
+    h += '<div style="font-weight:700;font-size:15px;margin-bottom:12px;">Gestion des admins</div>';
+
+    // Liste des admins actuels
+    admins.forEach(function(a) {
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e5e7eb;">';
+      h += '<div><div style="font-size:14px;font-weight:600;">' + a.name + '</div><div style="font-size:12px;color:#6b7280;">' + a.email + '</div></div>';
+      if (a.uid !== chabUser.uid) {
+        h += '<button onclick="adminRemove(\'' + a.uid + '\')" style="background:none;border:none;color:#ef4444;font-size:18px;cursor:pointer;padding:4px 8px;">✕</button>';
+      } else {
+        h += '<span style="font-size:11px;color:#9ca3af;padding:4px 8px;">Vous</span>';
+      }
+      h += '</div>';
+    });
+
+    // Ajouter un admin
+    h += '<div style="margin-top:12px;">';
+    h += '<div style="font-size:13px;color:#6b7280;margin-bottom:6px;">Ajouter un admin par email</div>';
+    h += '<div style="display:flex;gap:8px;">';
+    h += '<input id="admin-email-input" type="email" placeholder="email@exemple.com" class="chab-input" style="flex:1;font-size:13px;" />';
+    h += '<button class="chab-btn chab-btn-sm" onclick="adminAddByEmail()">Ajouter</button>';
+    h += '</div>';
+    h += '</div>';
+
+    h += '</div>';
+    wrap.innerHTML = h;
+  }).catch(function() { wrap.innerHTML = ""; });
+}
 
 console.log("[Chab'app] Auth module chargé ✓");
 
