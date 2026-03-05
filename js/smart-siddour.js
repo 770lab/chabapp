@@ -345,8 +345,24 @@ function injectStyles() {
     '  font-size:12px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
     '.ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
 
-    /* Row 2 : nusach + femmes sur une ligne */
-    '.ss-row-nusach { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:6px; }',
+    /* Banner hero (comme le banner Tefila) */
+    '.ss-hero { position:relative; width:100%; height:180px; overflow:hidden; margin-bottom:0; }',
+    '.ss-hero img { width:100%; height:100%; object-fit:cover; }',
+    '.ss-hero-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 100%); }',
+    '.ss-hero-text { position:absolute; bottom:14px; left:16px; z-index:1; }',
+    '.ss-hero-title { font-size:22px; font-weight:800; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5); }',
+    '.ss-hero-sub { font-size:12px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.4); }',
+
+    /* Row 2 : 3 cartes images (tefila + nusachim) */
+    '.ss-row-nusach { display:flex; align-items:stretch; gap:8px; margin-bottom:6px; padding:0 4px; }',
+    '.ss-nusach-card { flex:1; position:relative; border-radius:12px; overflow:hidden; cursor:pointer;',
+    '  min-height:80px; background-size:cover; background-position:center; border:2px solid transparent; transition:all .2s; }',
+    '.ss-nusach-card.active { outline:2.5px solid #833ab4; outline-offset:-2px; }',
+    '.ss-nusach-card-label { position:absolute; bottom:0; left:0; right:0; padding:6px 4px;',
+    '  color:#fff; font-size:11px; font-weight:700; text-align:center;',
+    '  background:linear-gradient(transparent, rgba(0,0,0,0.65)); }',
+    '.ss-nusach-card-tefila { flex:1.1; }',
+    '.ss-nusach-card-tefila .ss-nusach-card-label { font-size:12px; }',
     '.ss-nusach { padding:5px 14px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
     '  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
@@ -546,6 +562,29 @@ function renderLangSwitcher() {
 }
 
 function renderNusachim() {
+  var images = {
+    chabad: 'assets/tehilat-hachem-cover.png',
+    mizrach: 'assets/patah-eliyahou-cover.png'
+  };
+  // Carte de la tefila en cours (a gauche)
+  var tefilah = TEFILOT[state.tefilah];
+  var tefilaCard = '<div class="ss-nusach-card ss-nusach-card-tefila" ' +
+    'style="background-image:url(\'' + (tefilah.image || '') + '\')" ' +
+    'onclick="window.siddurExpandTabs()">' +
+    '<div class="ss-nusach-card-label">' + tefilah.labelPhonetic + '</div></div>';
+  // Cartes nusachim (tehilat + patakh)
+  var nusachCards = NUSACHIM.map(function(n) {
+    var img = images[n.id] || '';
+    return '<div class="ss-nusach-card' + (state.nusach === n.id ? ' active' : '') + '" ' +
+      'style="background-image:url(\'' + img + '\')' + (!img ? ';background:#f0f0f0' : '') + '" ' +
+      'onclick="window.siddurSetNusach(\'' + n.id + '\')">' +
+      '<div class="ss-nusach-card-label">' + n.labelPhonetic + '</div></div>';
+  }).join('');
+  return tefilaCard + nusachCards;
+}
+
+// Ancien renderNusachim en mode pill (pour fallback si besoin)
+function renderNusachimPills() {
   var images = {
     chabad: 'assets/tehilat-hachem-cover.png',
     mizrach: 'assets/patah-eliyahou-cover.png'
@@ -812,19 +851,35 @@ function render() {
     (hasAlert ? infoLines.join('<br>') : (isHe ? 'יום רגיל' : 'Jour normal')) +
     '</div>';
 
+  // Banner hero avec l'image de la tefila
+  var heroBanner = '';
+  if (tefilah.image) {
+    heroBanner = '<div class="ss-hero">' +
+      '<img src="' + tefilah.image + '" alt="' + tefilah.labelPhonetic + '">' +
+      '<div class="ss-hero-overlay"></div>' +
+      '<div class="ss-hero-text">' +
+      '<div class="ss-hero-title">' + tefilah.labelPhonetic + '</div>' +
+      '<div class="ss-hero-sub">' + tefilah.labelFr + '</div>' +
+      '</div></div>';
+  }
+
   container.innerHTML =
     '<div class="ss-wrap">' +
 
+    // Banner hero
+    heroBanner +
+
     // Header sticky unique
     '<div class="ss-header">' +
-    // Row 1 : compass + lang + date
+    // Row 1 : compass + lang + date + toggle femmes
     '<div class="ss-header-top">' +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
     renderLangSwitcher() +
+    renderToggle('isFemale') +
     '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     '</div>' +
-    // Row 2 : nusach + femmes
-    '<div class="ss-row-nusach">' + renderNusachim() + renderToggle('isFemale') + '</div>' +
+    // Row 2 : 3 cartes (tefila + tehilat + patakh)
+    '<div class="ss-row-nusach">' + renderNusachim() + '</div>' +
     // Row 3 : 3 prieres + info jour
     '<div class="ss-tabs">' + renderTabs() + infoTab + '</div>' +
     // Row 4 : barre sections
