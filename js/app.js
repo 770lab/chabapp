@@ -8639,5 +8639,13 @@ function refreshBethMap() {
 }
 
 
+// ====== OPEN TEFILA DIRECT ======
+function openTefilaDirect(key) {
+  switchTab('sub-tefila-siddur');
+  setTimeout(function() {
+    if (typeof window.siddurSetTefilah === 'function') window.siddurSetTefilah(key);
+  }, 100);
+}
+
 // ====== START ======
 document.addEventListener("DOMContentLoaded", init);
