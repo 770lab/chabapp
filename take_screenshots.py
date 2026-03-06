@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Take screenshots of all Chab'app sections and save to screenshots/ folder."""
+"""Take full-page screenshots of all KOULAM sections and save to screenshots/ folder."""
 import time
 import os
+import base64
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -45,7 +46,6 @@ def navigate_and_screenshot(name, tab_command, wait=3):
     """Navigate to a tab and take a full-page screenshot."""
     driver.execute_script(tab_command)
     full_page_screenshot(name, wait)
-
 
 try:
     driver.get(BASE_URL)
