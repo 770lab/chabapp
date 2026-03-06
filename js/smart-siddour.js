@@ -334,10 +334,11 @@ function injectStyles() {
     '  border-bottom: 1px solid #ececec; padding: 8px 12px 0; }',
 
     /* Row 1 : compass + lang switcher + date */
-    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:6px; }',
-    '.ss-compass-btn { width:30px; height:30px; border-radius:8px; border:1px solid #e8e8e8;',
-    '  background:#fff; font-size:14px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }',
-    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:11px; color:#aaa; direction:rtl; flex-shrink:0; }',
+    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:6px; flex-wrap:wrap; padding:0 4px; }',
+    '.ss-compass-btn { width:32px; height:32px; border-radius:50%; border:1.5px solid #e0e0e0;',
+    '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
+    '.ss-compass-btn svg { width:22px; height:22px; }',
+    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:11px; color:#aaa; direction:rtl; flex-shrink:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }',
 
     /* Lang switcher */
     '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:8px; padding:2px; gap:1px; }',
@@ -346,23 +347,29 @@ function injectStyles() {
     '.ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
 
     /* Banner hero (comme le banner Tefila) */
-    '.ss-hero { position:relative; width:100%; height:180px; overflow:hidden; margin-bottom:0; }',
-    '.ss-hero img { width:100%; height:100%; object-fit:cover; }',
-    '.ss-hero-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 100%); }',
-    '.ss-hero-text { position:absolute; bottom:14px; left:16px; z-index:1; }',
-    '.ss-hero-title { font-size:22px; font-weight:800; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5); }',
-    '.ss-hero-sub { font-size:12px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.4); }',
+    '.ss-hero { position:relative; width:calc(100% - 32px); height:150px; overflow:hidden; margin:16px auto 0; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,0.12); }',
+    '.ss-hero img { width:100%; height:100%; object-fit:cover; object-position:center 30%; border-radius:16px; }',
+    '.ss-hero-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 100%); border-radius:16px; }',
+    '.ss-hero-back { position:absolute; top:12px; left:12px; z-index:2; background:rgba(0,0,0,0.35); border:none; color:#fff; font-size:20px; width:36px; height:36px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }',
+    '.ss-hero-text-bottom { position:absolute; bottom:12px; left:0; right:0; z-index:1; text-align:center; }',
+    '.ss-hero-title { font-size:22px; font-weight:800; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,0.6); }',
+    /* Swipe hint arrows */
+    '.ss-swipe-hint { position:absolute; top:50%; z-index:3; transform:translateY(-50%); color:rgba(255,255,255,0.8); font-size:18px; opacity:0; pointer-events:none; }',
+    '.ss-swipe-hint-left { left:10px; animation:ssSwipeLeft 2.5s ease-in-out 1.5s 2; }',
+    '.ss-swipe-hint-right { right:10px; animation:ssSwipeRight 2.5s ease-in-out 1.5s 2; }',
+    '@keyframes ssSwipeLeft { 0%{opacity:0;transform:translateY(-50%) translateX(0)} 20%{opacity:0.9} 50%{opacity:0.9;transform:translateY(-50%) translateX(-8px)} 80%{opacity:0} 100%{opacity:0;transform:translateY(-50%) translateX(0)} }',
+    '@keyframes ssSwipeRight { 0%{opacity:0;transform:translateY(-50%) translateX(0)} 20%{opacity:0.9} 50%{opacity:0.9;transform:translateY(-50%) translateX(8px)} 80%{opacity:0} 100%{opacity:0;transform:translateY(-50%) translateX(0)} }',
+    /* Dot indicators */
+    '.ss-hero-dots { position:absolute; bottom:36px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }',
+    '.ss-hero-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.4); }',
+    '.ss-hero-dot.active { background:#fff; width:18px; border-radius:3px; }',
 
     /* Row 2 : 3 cartes images (tefila + nusachim) */
-    '.ss-row-nusach { display:flex; align-items:stretch; gap:8px; margin-bottom:6px; padding:0 4px; }',
-    '.ss-nusach-card { flex:1; position:relative; border-radius:12px; overflow:hidden; cursor:pointer;',
-    '  min-height:80px; background-size:cover; background-position:center; border:2px solid transparent; transition:all .2s; }',
-    '.ss-nusach-card.active { outline:2.5px solid #833ab4; outline-offset:-2px; }',
-    '.ss-nusach-card-label { position:absolute; bottom:0; left:0; right:0; padding:6px 4px;',
-    '  color:#fff; font-size:11px; font-weight:700; text-align:center;',
-    '  background:linear-gradient(transparent, rgba(0,0,0,0.65)); }',
-    '.ss-nusach-card-tefila { flex:1.1; }',
-    '.ss-nusach-card-tefila .ss-nusach-card-label { font-size:12px; }',
+    '.ss-row-nusach { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:6px; padding:0 8px; }',
+    '.ss-nusach-card { display:flex; align-items:center; justify-content:center; padding:5px; border-radius:12px; cursor:pointer;',
+    '  border:2px solid transparent; background:#fff; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,0.08); }',
+    '.ss-nusach-card.active { border-color:#833ab4; box-shadow:0 2px 10px rgba(131,58,180,0.2); }',
+    '.ss-nusach-card-img { width:50px; height:65px; border-radius:6px; object-fit:cover; }',
     '.ss-nusach { padding:5px 14px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
     '  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
@@ -566,21 +573,14 @@ function renderNusachim() {
     chabad: 'assets/tehilat-hachem-cover.png',
     mizrach: 'assets/patah-eliyahou-cover.png'
   };
-  // Carte de la tefila en cours (a gauche)
-  var tefilah = TEFILOT[state.tefilah];
-  var tefilaCard = '<div class="ss-nusach-card ss-nusach-card-tefila" ' +
-    'style="background-image:url(\'' + (tefilah.image || '') + '\')" ' +
-    'onclick="window.siddurExpandTabs()">' +
-    '<div class="ss-nusach-card-label">' + tefilah.labelPhonetic + '</div></div>';
-  // Cartes nusachim (tehilat + patakh)
-  var nusachCards = NUSACHIM.map(function(n) {
+  // Cartes nusachim uniquement (tehilat + patakh)
+  return NUSACHIM.map(function(n) {
     var img = images[n.id] || '';
     return '<div class="ss-nusach-card' + (state.nusach === n.id ? ' active' : '') + '" ' +
-      'style="background-image:url(\'' + img + '\')' + (!img ? ';background:#f0f0f0' : '') + '" ' +
       'onclick="window.siddurSetNusach(\'' + n.id + '\')">' +
-      '<div class="ss-nusach-card-label">' + n.labelPhonetic + '</div></div>';
+      (img ? '<img class="ss-nusach-card-img" src="' + img + '" alt="' + n.labelPhonetic + '">' : '') +
+      '</div>';
   }).join('');
-  return tefilaCard + nusachCards;
 }
 
 // Ancien renderNusachim en mode pill (pour fallback si besoin)
@@ -615,18 +615,8 @@ function renderTabs() {
     var isActive = state.tefilah === key;
     var hidden = !showAll && !isActive;
     if (isActive && !showAll) {
-      // Onglet actif seul : clic = expander pour changer
-      if (t.image) {
-        return '<button class="ss-tab ss-tab-img active" ' +
-          'style="background-image:url(\'' + t.image + '\')" ' +
-          'onclick="window.siddurExpandTabs()">' +
-          '<div class="ss-tab-label">' + t.labelPhonetic + ' &#9662;</div>' +
-          '</button>';
-      }
-      return '<button class="ss-tab active" onclick="window.siddurExpandTabs()">' +
-        '<div class="ss-tab-icon">' + t.icon + '</div>' +
-        '<div class="ss-tab-he">' + tefilahLabel(t) + ' &#9662;</div>' +
-        '</button>';
+      // Onglet actif seul : masque car deja dans ss-row-nusach
+      return '';
     }
     if (hidden) return '';
     // Mode expande : tous les onglets visibles
@@ -854,12 +844,22 @@ function render() {
   // Banner hero avec l'image de la tefila
   var heroBanner = '';
   if (tefilah.image) {
+    var tefilaKeys = Object.keys(TEFILOT);
+    var tefilaIdx = tefilaKeys.indexOf(state.tefilah);
+    var dots = tefilaKeys.map(function(k, i) {
+      return '<div class="ss-hero-dot' + (i === tefilaIdx ? ' active' : '') + '"></div>';
+    }).join('');
+    var prevLabel = tefilaIdx > 0 ? TEFILOT[tefilaKeys[tefilaIdx - 1]].labelPhonetic : '';
+    var nextLabel = tefilaIdx < tefilaKeys.length - 1 ? TEFILOT[tefilaKeys[tefilaIdx + 1]].labelPhonetic : '';
     heroBanner = '<div class="ss-hero">' +
       '<img src="' + tefilah.image + '" alt="' + tefilah.labelPhonetic + '">' +
       '<div class="ss-hero-overlay"></div>' +
-      '<div class="ss-hero-text">' +
+      '<button class="ss-hero-back" onclick="switchTab(\'sub-tefila\')">&larr;</button>' +
+      (prevLabel ? '<div class="ss-swipe-hint ss-swipe-hint-left">&larr; ' + prevLabel + '</div>' : '') +
+      (nextLabel ? '<div class="ss-swipe-hint ss-swipe-hint-right">' + nextLabel + ' &rarr;</div>' : '') +
+      '<div class="ss-hero-dots">' + dots + '</div>' +
+      '<div class="ss-hero-text-bottom">' +
       '<div class="ss-hero-title">' + tefilah.labelPhonetic + '</div>' +
-      '<div class="ss-hero-sub">' + tefilah.labelFr + '</div>' +
       '</div></div>';
   }
 
@@ -873,7 +873,16 @@ function render() {
     '<div class="ss-header">' +
     // Row 1 : compass + lang + date + toggle femmes
     '<div class="ss-header-top">' +
-    '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">✡️</button>' +
+    '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">' +
+    '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#bbb" stroke-width="1.2"/>' +
+    '<line x1="16" y1="2" x2="16" y2="6" stroke="#e74c3c" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<line x1="16" y1="26" x2="16" y2="30" stroke="#bbb" stroke-width="1" stroke-linecap="round"/>' +
+    '<line x1="2" y1="16" x2="6" y2="16" stroke="#bbb" stroke-width="1" stroke-linecap="round"/>' +
+    '<line x1="26" y1="16" x2="30" y2="16" stroke="#bbb" stroke-width="1" stroke-linecap="round"/>' +
+    '<text x="16" y="5.5" text-anchor="middle" font-size="4" fill="#e74c3c" font-weight="700">N</text>' +
+    '<polygon points="16,9 18.5,14.5 16,13 13.5,14.5" fill="#c0a44d" opacity="0.9"/>' +
+    '<polygon points="16,23 13.5,17.5 16,19 18.5,17.5" fill="#c0a44d" opacity="0.9"/>' +
+    '</svg></button>' +
     renderLangSwitcher() +
     renderToggle('isFemale') +
     '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
@@ -903,6 +912,31 @@ function render() {
   initScrollSpy();
   // Activer le pinch-to-zoom sur le texte
   initPinchZoom();
+  // Swipe sur le hero pour changer de tefila
+  initHeroSwipe();
+}
+
+function initHeroSwipe() {
+  var hero = document.querySelector('.ss-hero');
+  if (!hero) return;
+  var startX = 0;
+  var startY = 0;
+  hero.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  hero.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    var keys = Object.keys(TEFILOT);
+    var idx = keys.indexOf(state.tefilah);
+    if (dx < 0 && idx < keys.length - 1) {
+      window.siddurSetTefilah(keys[idx + 1]);
+    } else if (dx > 0 && idx > 0) {
+      window.siddurSetTefilah(keys[idx - 1]);
+    }
+  }, { passive: true });
 }
 
 // ── API publique (appelée depuis le HTML inline) ───────────────────────────
