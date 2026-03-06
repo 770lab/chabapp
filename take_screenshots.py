@@ -18,7 +18,6 @@ options.add_argument('--headless')
 options.add_argument(f'--window-size={WIDTH},{HEIGHT}')
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
-options.add_argument('--force-device-scale-factor=2')
 
 driver = webdriver.Chrome(options=options)
 driver.set_window_size(WIDTH, HEIGHT)
