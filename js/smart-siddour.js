@@ -430,9 +430,9 @@ function injectStyles() {
     '.ss-section-title.active-title { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }',
     '.ss-section-body { font-family:"Frank Ruhl Libre",serif; direction:rtl;',
-    '  font-size:24px; line-height:2.2; color:#222; white-space:pre-line; }',
+    '  font-size:28px; line-height:2.2; color:#222; white-space:pre-line; }',
     '.ss-section-body.ss-phonetic-body { direction:ltr; font-family:system-ui,sans-serif;',
-    '  font-size:22px; line-height:1.9; color:#333; }',
+    '  font-size:24px; line-height:1.9; color:#333; }',
 
     /* FAB auto-scroll */
     '.ss-fab { position:fixed; bottom:80px; right:16px; z-index:30;',
@@ -985,8 +985,8 @@ window.siddurActivateCompass = function() {
 
 // ── Init : s'accroche à switchTab ──────────────────────────────────────────
 // ── Pinch-to-zoom sur le texte du siddour ───────────────────────────────────
-var _pinchState = { active: false, startDist: 0, startSize: 24 };
-var _savedFontSize = 24; // taille par defaut (px)
+var _pinchState = { active: false, startDist: 0, startSize: 28 };
+var _savedFontSize = 28; // taille par defaut (px)
 var FONT_MIN = 16, FONT_MAX = 42;
 
 function initPinchZoom() {
