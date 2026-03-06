@@ -849,13 +849,12 @@ function render() {
     var dots = tefilaKeys.map(function(k, i) {
       return '<div class="ss-hero-dot' + (i === tefilaIdx ? ' active' : '') + '"></div>';
     }).join('');
-    var prevLabel = tefilaIdx > 0 ? TEFILOT[tefilaKeys[tefilaIdx - 1]].labelPhonetic : '';
+    var prevLabel = tefilaIdx > 0 ? TEFILOT[tefilaKeys[tefilaIdx - 1]].labelPhonetic : 'Tefila';
     var nextLabel = tefilaIdx < tefilaKeys.length - 1 ? TEFILOT[tefilaKeys[tefilaIdx + 1]].labelPhonetic : '';
     heroBanner = '<div class="ss-hero">' +
       '<img src="' + tefilah.image + '" alt="' + tefilah.labelPhonetic + '">' +
       '<div class="ss-hero-overlay"></div>' +
-      '<button class="ss-hero-back" onclick="switchTab(\'sub-tefila\')">&larr;</button>' +
-      (prevLabel ? '<div class="ss-swipe-hint ss-swipe-hint-left">&larr; ' + prevLabel + '</div>' : '') +
+      '<div class="ss-swipe-hint ss-swipe-hint-left">&larr; ' + prevLabel + '</div>' +
       (nextLabel ? '<div class="ss-swipe-hint ss-swipe-hint-right">' + nextLabel + ' &rarr;</div>' : '') +
       '<div class="ss-hero-dots">' + dots + '</div>' +
       '<div class="ss-hero-text-bottom">' +
@@ -935,6 +934,9 @@ function initHeroSwipe() {
       window.siddurSetTefilah(keys[idx + 1]);
     } else if (dx > 0 && idx > 0) {
       window.siddurSetTefilah(keys[idx - 1]);
+    } else if (dx > 0 && idx === 0) {
+      // Sur Cha'harit, swipe droit = retour a Tefila
+      switchTab('sub-tefila');
     }
   }, { passive: true });
 }
