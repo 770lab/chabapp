@@ -4087,6 +4087,7 @@ function showHome() {
   document.getElementById("home").style.display = "block";
   document.getElementById("reading").style.display = "none";
   switchTab("menu");
+  setTimeout(initCardAnimations, 100);
   setTimeout(() => document.getElementById("home").classList.add("visible"), 50);
   renderHome();
   renderObjStoryBar();
@@ -8721,6 +8722,29 @@ function askHalakha() {
     btn.disabled = false;
     btn.style.opacity = '1';
   });
+}
+
+// ====== HERO CARDS SCROLL ANIMATION ======
+function initCardAnimations() {
+  var container = document.querySelector('.home-big-cards');
+  if (!container) return;
+  var items = container.children;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var idx = Array.prototype.indexOf.call(items, el);
+        var delay = idx * 100;
+        setTimeout(function() {
+          el.classList.add('card-visible');
+        }, delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0, rootMargin: '50px 0px' });
+  for (var i = 0; i < items.length; i++) {
+    observer.observe(items[i]);
+  }
 }
 
 // ====== START ======
