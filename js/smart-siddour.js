@@ -108,7 +108,7 @@ var TEFILOT = {
     ]
   },
   mincha: {
-    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.png',
+    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.png?v=2',
     sections: [
       { id: 'patakh-eliyahou-m', title: 'פָּתַח אֵלִיָּהוּ', titlePhonetic: "Pata'h Eliyahou", always: true, nusach_only: 'mizrach',
         text: (window.SIDDUR_PATAKH_ELIYAHOU || {}).text || '',
