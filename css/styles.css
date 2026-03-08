@@ -191,7 +191,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .club-hero-title { font-size:22px; font-weight:800; color:var(--black); margin-bottom:4px; }
 .club-hero-sub { font-size:13px; color:var(--gray-3); }
 .club-cards { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; padding:0 16px 16px; }
-.obj-story-bar { display:flex; align-items:center; gap:10px; padding:10px 12px 6px; justify-content:center; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.obj-story-bar { display:flex; align-items:center; gap:10px; padding:10px 12px 6px; justify-content:flex-start; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
 .obj-story-bar-scroll { justify-content:flex-start; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:12px; }
 .obj-story-bar-scroll::-webkit-scrollbar { display:none; }
 .obj-story-bar-scroll .os-ring { width:56px; height:56px; }
