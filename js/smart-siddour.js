@@ -342,6 +342,11 @@ function injectStyles() {
     '.ss-header-right-block .ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
     '.ss-header-right-block .ss-toggle-inline { display:flex; align-items:center; justify-content:center; gap:4px; padding:4px 8px; border-radius:7px; border:none; background:transparent; font-size:10px; font-weight:500; color:#555; cursor:pointer; transition:all .25s; }',
     '.ss-header-right-block .ss-toggle-inline.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
+    '.ss-toggle-inline .ss-toggle-knob { width:24px; height:14px; border-radius:7px; background:#e0e0e0; position:relative; flex-shrink:0; transition:background .2s; }',
+    '.ss-toggle-inline.active .ss-toggle-knob { background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
+    '.ss-toggle-inline .ss-toggle-dot { position:absolute; top:2px; left:2px; width:10px; height:10px; border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 2px rgba(0,0,0,.2); }',
+    '.ss-toggle-inline.active .ss-toggle-dot { left:calc(100% - 12px); }',
+    '.ss-toggle-inline .ss-fem-label { transition:opacity .3s; }',
     '.ss-compass-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
     '.ss-compass-btn svg { width:18px; height:18px; }',
@@ -639,12 +644,13 @@ function renderControlsBlock() {
   }).join('');
   var femLabel = TOGGLE_LABELS.isFemale;
   var femActive = state.isFemale;
-  var femText = femLabel[state.lang] || femLabel.hebrew;
+  // En phonetique : afficher d'abord Nachim, puis Femme apres 2s (via timer dans siddurSetLang)
+  var femText = state._showFemmeLabel ? 'Femme' : (femLabel[state.lang] || femLabel.hebrew);
   return '<div class="ss-header-right-block">' +
     langBtns +
     '<button class="ss-toggle-inline' + (femActive ? ' active' : '') + '" onclick="window.siddurToggle(\'isFemale\')">' +
     '<div class="ss-toggle-knob"><div class="ss-toggle-dot"></div></div>' +
-    femText + '</button>' +
+    '<span class="ss-fem-label">' + femText + '</span></button>' +
     '</div>';
 }
 
@@ -1001,7 +1007,19 @@ window.siddurSetNusach = function(id) {
 };
 window.siddurSetLang = function(lang) {
   state.lang = lang;
-  render();
+  if (window._femmeTimer) clearTimeout(window._femmeTimer);
+  if (lang === 'phonetic') {
+    state._showFemmeLabel = false;
+    render();
+    window._femmeTimer = setTimeout(function() {
+      state._showFemmeLabel = true;
+      var label = document.querySelector('.ss-fem-label');
+      if (label) label.textContent = 'Femme';
+    }, 2000);
+  } else {
+    state._showFemmeLabel = false;
+    render();
+  }
 };
 window.siddurToggle = function(key) {
   state[key] = !state[key];
