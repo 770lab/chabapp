@@ -335,9 +335,9 @@ function injectStyles() {
 
     /* Row 1 : lang (left) + books (center) + toggle/compass (right) */
     '.ss-header-top { display:flex; align-items:center; justify-content:space-between; gap:4px; margin-bottom:4px; padding:0 2px; }',
-    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:3px; flex-shrink:0; }',
+    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:3px; width:90px; flex-shrink:0; }',
     '.ss-header-center { display:flex; align-items:center; justify-content:center; gap:8px; flex:1; min-width:0; }',
-    '.ss-header-right { display:flex; flex-direction:column; align-items:center; gap:3px; flex-shrink:0; }',
+    '.ss-header-right { display:flex; flex-direction:column; align-items:center; gap:3px; width:90px; flex-shrink:0; }',
     '.ss-compass-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
     '.ss-compass-btn svg { width:18px; height:18px; }',
