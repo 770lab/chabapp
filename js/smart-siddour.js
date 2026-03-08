@@ -333,11 +333,10 @@ function injectStyles() {
     '  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);',
     '  border-bottom: 1px solid #ececec; padding: 8px 12px 0; }',
 
-    /* Row 1 : lang (left) + books (center) + toggle/compass (right) */
-    '.ss-header-top { display:flex; align-items:center; justify-content:space-between; gap:4px; margin-bottom:4px; padding:0 2px; }',
-    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:3px; width:90px; flex-shrink:0; }',
+    /* Row 1 : controls (left) + books (center) */
+    '.ss-header-top { display:flex; align-items:center; gap:6px; margin-bottom:4px; padding:0 2px; }',
+    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:4px; width:80px; flex-shrink:0; }',
     '.ss-header-center { display:flex; align-items:center; justify-content:center; gap:8px; flex:1; min-width:0; }',
-    '.ss-header-right { display:flex; flex-direction:column; align-items:center; gap:3px; width:90px; flex-shrink:0; }',
     '.ss-compass-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
     '.ss-compass-btn svg { width:18px; height:18px; }',
@@ -376,9 +375,9 @@ function injectStyles() {
     '  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  box-shadow:0 2px 8px rgba(131,58,180,.22); }',
-    '.ss-toggle { display:flex; align-items:center; gap:4px; padding:4px 8px 4px 5px;',
+    '.ss-toggle { display:flex; align-items:center; gap:4px; padding:4px 6px 4px 5px;',
     '  border-radius:100px; cursor:pointer; transition:all .25s; border:1.5px solid #e0e0e0;',
-    '  background:#fff; font-size:10px; font-weight:500; color:#555; }',
+    '  background:#fff; font-size:10px; font-weight:500; color:#555; width:72px; box-sizing:border-box; }',
     '.ss-toggle.active { border-color:transparent; color:#fff;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
     '.ss-toggle-knob { width:24px; height:14px; border-radius:7px; background:#e0e0e0;',
@@ -886,15 +885,10 @@ function render() {
 
     // Header sticky unique
     '<div class="ss-header">' +
-    // Row 1 : lang (left) + books (center) + toggle/compass (right)
+    // Row 1 : controls (left) + books (center)
     '<div class="ss-header-top">' +
     '<div class="ss-header-left">' +
     renderLangSwitcher() +
-    '</div>' +
-    '<div class="ss-header-center">' +
-    renderNusachim() +
-    '</div>' +
-    '<div class="ss-header-right">' +
     renderToggle('isFemale') +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">' +
     '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#bbb" stroke-width="1.2"/>' +
@@ -906,6 +900,9 @@ function render() {
     '<polygon points="16,9 18.5,14.5 16,13 13.5,14.5" fill="#c0a44d" opacity="0.9"/>' +
     '<polygon points="16,23 13.5,17.5 16,19 18.5,17.5" fill="#c0a44d" opacity="0.9"/>' +
     '</svg></button>' +
+    '</div>' +
+    '<div class="ss-header-center">' +
+    renderNusachim() +
     '</div>' +
     '</div>' +
     '<div class="ss-hdate-inline"' + (state.lang === 'hebrew' ? ' style="direction:rtl"' : '') + '>' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
