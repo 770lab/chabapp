@@ -333,10 +333,15 @@ function injectStyles() {
     '  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);',
     '  border-bottom: 1px solid #ececec; padding: 8px 12px 0; }',
 
-    /* Row 1 : controls (left) + books (center) */
+    /* Row 1 : books (left/center) + controls (right) */
     '.ss-header-top { display:flex; align-items:center; gap:6px; margin-bottom:4px; padding:0 2px; }',
-    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:4px; width:80px; flex-shrink:0; }',
     '.ss-header-center { display:flex; align-items:center; justify-content:center; gap:8px; flex:1; min-width:0; }',
+    '.ss-header-right { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }',
+    '.ss-header-right-block { display:flex; flex-direction:column; background:#f0f0f0; border-radius:10px; padding:3px; gap:1px; align-items:stretch; }',
+    '.ss-header-right-block .ss-lang-btn { padding:4px 8px; border-radius:7px; border:none; background:transparent; font-size:10px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; text-align:center; }',
+    '.ss-header-right-block .ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
+    '.ss-header-right-block .ss-toggle-inline { display:flex; align-items:center; justify-content:center; gap:4px; padding:4px 8px; border-radius:7px; border:none; background:transparent; font-size:10px; font-weight:500; color:#555; cursor:pointer; transition:all .25s; }',
+    '.ss-header-right-block .ss-toggle-inline.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
     '.ss-compass-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
     '.ss-compass-btn svg { width:18px; height:18px; }',
@@ -623,6 +628,26 @@ function renderToggle(key) {
     label + '</button>' + (sub ? '<span class="ss-toggle-sub">' + sub + '</span>' : '') + '</div>';
 }
 
+function renderControlsBlock() {
+  var langs = [
+    { id: 'hebrew',   label: 'עברית' },
+    { id: 'phonetic', label: 'Phonetique' }
+  ];
+  var langBtns = langs.map(function(l) {
+    return '<button class="ss-lang-btn' + (state.lang === l.id ? ' active' : '') + '" ' +
+      'onclick="window.siddurSetLang(\'' + l.id + '\')">' + l.label + '</button>';
+  }).join('');
+  var femLabel = TOGGLE_LABELS.isFemale;
+  var femActive = state.isFemale;
+  var femText = femLabel[state.lang] || femLabel.hebrew;
+  return '<div class="ss-header-right-block">' +
+    langBtns +
+    '<button class="ss-toggle-inline' + (femActive ? ' active' : '') + '" onclick="window.siddurToggle(\'isFemale\')">' +
+    '<div class="ss-toggle-knob"><div class="ss-toggle-dot"></div></div>' +
+    femText + '</button>' +
+    '</div>';
+}
+
 function renderTabs() {
   var showAll = state.tabsExpanded;
   return Object.keys(TEFILOT).map(function(key) {
@@ -885,12 +910,14 @@ function render() {
 
     // Header sticky unique
     '<div class="ss-header">' +
-    // Row 1 : controls (left) + books (center)
+    // Row 1 : books (center) + unified controls block (right)
     '<div class="ss-header-top">' +
-    '<div class="ss-header-left">' +
-    renderLangSwitcher() +
-    renderToggle('isFemale') +
-    '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">' +
+    '<div class="ss-header-center">' +
+    renderNusachim() +
+    '</div>' +
+    '<div class="ss-header-right">' +
+    renderControlsBlock() +
+    '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()" style="margin-top:4px">' +
     '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#bbb" stroke-width="1.2"/>' +
     '<line x1="16" y1="2" x2="16" y2="6" stroke="#e74c3c" stroke-width="1.5" stroke-linecap="round"/>' +
     '<line x1="16" y1="26" x2="16" y2="30" stroke="#bbb" stroke-width="1" stroke-linecap="round"/>' +
@@ -900,9 +927,6 @@ function render() {
     '<polygon points="16,9 18.5,14.5 16,13 13.5,14.5" fill="#c0a44d" opacity="0.9"/>' +
     '<polygon points="16,23 13.5,17.5 16,19 18.5,17.5" fill="#c0a44d" opacity="0.9"/>' +
     '</svg></button>' +
-    '</div>' +
-    '<div class="ss-header-center">' +
-    renderNusachim() +
     '</div>' +
     '</div>' +
     '<div class="ss-hdate-inline"' + (state.lang === 'hebrew' ? ' style="direction:rtl"' : '') + '>' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
