@@ -336,8 +336,8 @@ function injectStyles() {
     /* Row 1 : books (left/center) + controls (right) */
     '.ss-header-top { display:flex; align-items:center; gap:6px; margin-bottom:4px; padding:0 2px; }',
     '.ss-header-center { display:flex; align-items:center; justify-content:center; gap:8px; flex:1; min-width:0; }',
-    '.ss-header-right { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }',
-    '.ss-header-right-block { display:flex; flex-direction:column; background:#f0f0f0; border-radius:10px; padding:3px; gap:1px; align-items:stretch; }',
+    '.ss-header-right { display:flex; flex-direction:column; align-items:center; flex-shrink:0; width:105px; }',
+    '.ss-header-right-block { display:flex; flex-direction:column; background:#f0f0f0; border-radius:10px; padding:3px; gap:1px; align-items:stretch; width:100%; box-sizing:border-box; }',
     '.ss-header-right-block .ss-lang-btn { padding:4px 8px; border-radius:7px; border:none; background:transparent; font-size:10px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; text-align:center; }',
     '.ss-header-right-block .ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
     '.ss-header-right-block .ss-toggle-inline { display:flex; align-items:center; justify-content:center; gap:4px; padding:4px 8px; border-radius:7px; border:none; background:transparent; font-size:10px; font-weight:500; color:#555; cursor:pointer; transition:all .25s; }',
