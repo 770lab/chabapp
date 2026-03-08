@@ -8461,9 +8461,11 @@ function shareHoumash(e) {
 // ====== 180 CHABAD CENTERS IN FRANCE (from lubavitch.com) ======
 var CHABAD_CENTERS = [{"name":"Beit Loubavitch Centre Siège","lat":48.876,"lng":2.3411,"addr":"8 Rue Lamartine","city":"Paris","cp":"75009","phone":"33-1-45-26-87-60","web":"www.loubavitch.fr","rabbi":"Rabbi Shmuel Azimov"},{"name":"Beth Chabad Paris 12e Bercy","lat":48.8408,"lng":2.3829,"addr":"52 Rue de Bercy","city":"Paris","cp":"75012","phone":"33-6-29-30-16-31","web":"www.bl-bercy.fr","rabbi":"Rabbi Shlomo Israel Ohayon"},{"name":"Beth Habad Champs Elysées","lat":48.8713,"lng":2.2997,"addr":"122 Avenue des Champs-Élysées","city":"Paris","cp":"75008","phone":"33-9-75-32-58-20","web":"ChabadChampsElysees.com","rabbi":"Rabbi Yona Hasky"},{"name":"Beth Loubavitch 16e Victor Hugo","lat":48.868,"lng":2.2897,"addr":"63 Rue Lauriston","city":"Paris","cp":"75116","phone":"33-6-51-96-68-24","web":"","rabbi":"Rabbi Chaim Hertz"},{"name":"Beth Loubavitch 17 Champerret-Ternes","lat":48.8831,"lng":2.2941,"addr":"1 Avenue Stéphane Mallarmé","city":"Paris","cp":"75017","phone":"33-6-52-43-40-57","web":"","rabbi":"Rabbi Gabriel Lankar"},{"name":"Beth Loubavitch Bastille","lat":48.8575,"lng":2.371,"addr":"19 Rue Saint-Sabin","city":"Paris","cp":"75011","phone":"33-6-65-01-18-20","web":"chabadbastille.fr","rabbi":"Rabbi Levi Itshak Arnauve"},{"name":"Beth Loubavitch Chabad 16e","lat":48.8551,"lng":2.2745,"addr":"3 Rue de l'Assomption","city":"Paris","cp":"75016","phone":"33-7-68-84-60-26","web":"","rabbi":"Rabbi Sholom Dovber Kesselman"},{"name":"Beth Loubavitch Étudiants","lat":48.8446,"lng":2.3409,"addr":"1 Rue de l'Abbé de l'Épée","city":"Paris","cp":"75005","phone":"33-1-42-03-13-21","web":"www.bethloubavitch-etudiants.com","rabbi":"Rabbi Levi Azimov"},{"name":"Beth Loubavitch Flandre","lat":48.8895,"lng":2.3751,"addr":"59-65 Rue de Flandre","city":"Paris","cp":"75019","phone":"33-1-42-81-80-00","web":"","rabbi":"Rabbi Daniel Gabay"},{"name":"Beth Loubavitch Gambetta","lat":48.8625,"lng":2.3971,"addr":"10 Villa Gagliardini","city":"Paris","cp":"75020","phone":"33-6-50-20-11-92","web":"","rabbi":"Rabbi Menahem Mendel Zana"},{"name":"Beth Loubavitch Île-de-France","lat":48.8834,"lng":2.3873,"addr":"49 Rue Petit","city":"Paris","cp":"75019","phone":"33-1-42-00-50-29","web":"","rabbi":"Rabbi Menachem Mendel Isroel Erentroy"},{"name":"Beth Loubavitch Orteaux","lat":48.8607,"lng":2.3979,"addr":"93 Rue des Orteaux","city":"Paris","cp":"75020","phone":"33-6-62-62-17-82","web":"","rabbi":"Rabbi Yehouda David Atlan"},{"name":"Beth Loubavitch Paris 1","lat":48.8621,"lng":2.3345,"addr":"7 Rue de l'Échelle","city":"Paris","cp":"75001","phone":"33-6-64-37-68-53","web":"","rabbi":"Rabbi Levi Itshak Asseraf"},{"name":"Beth Loubavitch Paris 10","lat":48.869,"lng":2.3619,"addr":"8 Rue Legouvé","city":"Paris","cp":"75010","phone":"33-1-42-09-52-43","web":"","rabbi":"Rabbi Chalom Halimi"},{"name":"Beth Loubavitch Paris 11 République","lat":48.8614,"lng":2.3776,"addr":"33 Rue Saint-Ambroise","city":"Paris","cp":"75011","phone":"33-6-10-96-30-84","web":"","rabbi":"Rabbi Moyche Cohen"},{"name":"Beth Loubavitch Paris 12","lat":48.8402,"lng":2.3873,"addr":"21 Rue de la Gare de Reuilly","city":"Paris","cp":"75012","phone":"33-1-46-28-03-66","web":"","rabbi":"Rabbi Yosef Martinez"},{"name":"Beth Loubavitch Paris 13 (Auriol)","lat":48.8367,"lng":2.3609,"addr":"18 Boulevard Vincent Auriol","city":"Paris","cp":"75013","phone":"33-6-63-02-54-30","web":"","rabbi":"Rabbi Meir Lachkar"},{"name":"Beth Loubavitch Paris 13 (Widal)","lat":48.8284,"lng":2.3567,"addr":"7 Rue Fernand Widal","city":"Paris","cp":"75013","phone":"33-1-45-83-62-92","web":"","rabbi":"Rabbi Elie Assouline"},{"name":"Beth Loubavitch Paris 14","lat":48.8234,"lng":2.3184,"addr":"125 Boulevard Brune","city":"Paris","cp":"75014","phone":"33-1-45-39-20-34","web":"","rabbi":"Rabbi Chalom Dovber Mergui"},{"name":"Beth Loubavitch Paris 15","lat":48.8456,"lng":2.2836,"addr":"62 Rue Sébastien Mercier","city":"Paris","cp":"75015","phone":"33-1-45-75-39-66","web":"","rabbi":"Rabbi Yosef Y. Djian"},{"name":"Beth Loubavitch Paris 15 North","lat":48.8442,"lng":2.2943,"addr":"2 Rue d'Arsonval","city":"Paris","cp":"75015","phone":"33-9-53-49-99-62","web":"","rabbi":"Rabbi Asher Marciano"},{"name":"Beth Loubavitch Paris 16","lat":48.8651,"lng":2.2847,"addr":"9 Rue Decamps","city":"Paris","cp":"75116","phone":"33-1-56-26-00-05","web":"Loubavitch16.com","rabbi":"Rabbi Mendel Azimov"},{"name":"Beth Loubavitch Paris 17","lat":48.8877,"lng":2.3135,"addr":"78 Rue de Saussure","city":"Paris","cp":"75017","phone":"33-6-50-07-33-09","web":"","rabbi":"Rabbi Ygal Elmkies"},{"name":"Beth Loubavitch Paris 18","lat":48.8918,"lng":2.3466,"addr":"8 Rue du Marché Ordener","city":"Paris","cp":"75018","phone":"06-62-37-20-19","web":"","rabbi":"Rabbi Schmuel Touboul"},{"name":"Beth Loubavitch Paris 19","lat":48.8784,"lng":2.3849,"addr":"74 Avenue Simon Bolivar","city":"Paris","cp":"75019","phone":"33-6-27-12-63-91","web":"","rabbi":"Rabbi Yossef Attuil"},{"name":"Beth Loubavitch Paris 2","lat":48.8688,"lng":2.34,"addr":"6 Rue de la Bourse","city":"Paris","cp":"75002","phone":"33-6-10-22-02-77","web":"","rabbi":"Rabbi Mendel Danow"},{"name":"Beth Loubavitch Paris 20","lat":48.8682,"lng":2.3878,"addr":"82 Rue Couronnes","city":"Paris","cp":"75020","phone":"33-1-43-49-15-34","web":"","rabbi":"Rabbi Nissim Berdah"},{"name":"Beth Loubavitch Paris 3","lat":48.866,"lng":2.36,"addr":"14 Rue de Beauce","city":"Paris","cp":"75003","phone":"33-6-66-90-73-60","web":"www.habad3est.fr","rabbi":"Rabbi Meir Shlomo Lubecki"},{"name":"Beth Loubavitch Paris 4","lat":48.8557,"lng":2.3576,"addr":"17 Rue des Rosiers","city":"Paris","cp":"75004","phone":"33-1-45-26-87-60","web":"","rabbi":"Rabbi Yisroel Lubecki"},{"name":"Beth Loubavitch Paris 5","lat":48.8297,"lng":2.3283,"addr":"14 Rue Thomas Francine","city":"Paris","cp":"75014","phone":"33-1-45-65-10-92","web":"","rabbi":"Rabbi Elhonon Marasow"},{"name":"Beth Loubavitch Paris 6","lat":48.8437,"lng":2.3306,"addr":"63 Rue Notre Dame des Champs","city":"Paris","cp":"75006","phone":"33-6-61-78-00-20","web":"","rabbi":"Rabbi Binyamin Apelbaum"},{"name":"Beth Loubavitch Paris 7","lat":48.857,"lng":2.3064,"addr":"19 Passage Jean Nicot","city":"Paris","cp":"75007","phone":"33-6-22-03-33-07","web":"BethLoubavitch-Paris7.com","rabbi":"Rabbi Yossef Y. Mergui"},{"name":"Beth Loubavitch Place des Fêtes","lat":48.881,"lng":2.388,"addr":"53 Rue Compans","city":"Paris","cp":"75019","phone":"33-1-40-30-56-59","web":"","rabbi":"Rabbi Binyomin Mergui"},{"name":"Beth Loubavitch Students","lat":48.8863,"lng":2.3822,"addr":"47-51 Rue Petit","city":"Paris","cp":"75019","phone":"","web":"","rabbi":"Rabbi Menachem Mendel Isroel Erentroy"},{"name":"Chabad on Campus Paris","lat":48.8446,"lng":2.3409,"addr":"1 Rue de l'Abbé de l'Épée","city":"Paris","cp":"75005","phone":"","web":"","rabbi":"Rabbi Menahem Mendel Arnauve"},{"name":"Lishka - Bureau Lubavitch Européen","lat":48.8677,"lng":2.3592,"addr":"8 Rue Meslay","city":"Paris","cp":"75003","phone":"33-1-48-87-87-12","web":"LoubavitchFrance.fr","rabbi":"Rabbi Yossef Y. Gorodetsky"},{"name":"Lichka Centre","lat":48.8758,"lng":2.3413,"addr":"2 Rue Lamartine","city":"Paris","cp":"75009","phone":"33-1-45-26-87-60","web":"Lichkalubavitch.org","rabbi":"Rabbi Yoseph Y. Pevzner"},{"name":"Beth Chabad Marseille 7ème Seaside","lat":43.2831,"lng":5.3636,"addr":"24 Boulevard Sainte-Lucie","city":"Marseille","cp":"13007","phone":"33-6-65-22-60-12","web":"www.habadmarseille7.com","rabbi":"Rabbi Chneor Zalman Bitton"},{"name":"Beth Chabad Centre Ville Marseille 6ème","lat":43.2911,"lng":5.379,"addr":"22 Rue Saint Suffren","city":"Marseille","cp":"13006","phone":"33-6-52-23-77-41","web":"www.bhm6.fr","rabbi":"Rabbi Yossef Itshak Elgrishi"},{"name":"Beth Chabad Château Gombert","lat":43.344,"lng":5.4389,"addr":"4 Rue des Brus","city":"Marseille","cp":"13013","phone":"33-7-61-20-80-13","web":"","rabbi":"Rabbi Michel Rosenthal"},{"name":"Beth Habad Marseille 1-2ème","lat":43.3312,"lng":5.4243,"addr":"Chemin de la Sartan","city":"Marseille","cp":"13013","phone":"","web":"","rabbi":"Rabbi Levy Yitschak Bitoun"},{"name":"Beth Habad Marseille 10ème","lat":43.2793,"lng":5.4168,"addr":"151 Boulevard Paul Claudel","city":"Marseille","cp":"13010","phone":"33-6-25-07-25-91","web":"","rabbi":"Rabbi Yoseph Attal"},{"name":"Beth Habad Marseille 11ème","lat":43.2969,"lng":5.4536,"addr":"","city":"Marseille","cp":"13011","phone":"33-6-95-59-03-24","web":"","rabbi":"Rabbi Shneor Zalman Meir Bueno"},{"name":"Beth Habad Marseille 5ème","lat":43.2889,"lng":5.3965,"addr":"7 Rue Crillon","city":"Marseille","cp":"13005","phone":"33-7-83-52-08-38","web":"www.habadmarseille5eme.com","rabbi":"Rabbi Barouh Jonathan Bard"},{"name":"Beth Habad Marseille 6ème","lat":43.2843,"lng":5.3812,"addr":"195 Rue Paradis","city":"Marseille","cp":"13006","phone":"33-6-52-23-77-41","web":"www.bhm6.fr","rabbi":"Rabbi Yossef Itshak Elgrishi"},{"name":"Beth Habad Marseille 8ème","lat":43.2651,"lng":5.3809,"addr":"8 Boulevard Mireille Jourdan-Barry","city":"Marseille","cp":"13008","phone":"33-6-11-60-03-05","web":"BetHabad8eme.com","rabbi":"Rabbi Eliyahu Altabe"},{"name":"Beth Habad Marseille 9ème","lat":43.2481,"lng":5.4019,"addr":"32 Rue Joseph Petronio","city":"Marseille","cp":"13009","phone":"33-6-64-88-25-04","web":"","rabbi":"Rabbi Menahem Mendel Assouline"},{"name":"Beth Habad of Marseille","lat":43.3329,"lng":5.4113,"addr":"112 Boulevard Barry","city":"Marseille","cp":"13013","phone":"33-6-20-51-43-53","web":"","rabbi":"Rabbi Yosef Y. Labkowski"},{"name":"Beth Habad Ohr Menahem Marseille 12ème","lat":43.3163,"lng":5.4443,"addr":"57 Avenue de Saint Julien","city":"Marseille","cp":"13012","phone":"33-6-25-70-32-12","web":"","rabbi":"Rabbi Emanuel Aryeh Chaim Taubenblatt"},{"name":"Beth Haya Mouchka Marseille","lat":43.2653,"lng":5.3908,"addr":"18 Rue Liandier","city":"Marseille","cp":"13008","phone":"33-6-34-40-15-56","web":"","rabbi":"Rabbi Yehouda Madar"},{"name":"Beth Loubavitch Marseille","lat":43.3269,"lng":5.42,"addr":"65 Rue Alphonse Daudet","city":"Marseille","cp":"13013","phone":"33-4-91-66-71-55","web":"","rabbi":"Rabbi Gabriel Elgrishi"},{"name":"Beth Habad Centre-Ville Lyon","lat":45.7673,"lng":4.834,"addr":"10 Rue Mulet","city":"Lyon","cp":"69001","phone":"33-6-21-82-05-56","web":"","rabbi":"Rabbi Sender Gurewitz"},{"name":"Chabad on Campus Lyon","lat":45.7371,"lng":4.8717,"addr":"10 Promenade Léa et Napoléon Bullukian","city":"Lyon","cp":"69008","phone":"33-6-19-18-02-67","web":"","rabbi":"Rabbi Eliezer Gurewitz"},{"name":"Beth Habad Lyon 3","lat":45.756,"lng":4.8581,"addr":"249 Rue Créqui","city":"Lyon","cp":"69003","phone":"33-4-78-95-23-53","web":"","rabbi":"Rabbi Eliyahou Maman"},{"name":"Beth Habad Lyon 7","lat":45.7488,"lng":4.8379,"addr":"7 Rue de Marseille","city":"Lyon","cp":"69007","phone":"","web":"","rabbi":"Rabbi Itshak Torjman"},{"name":"Beth Habad Lyon 8","lat":45.7383,"lng":4.8576,"addr":"141 Avenue Berthelot","city":"Lyon","cp":"69008","phone":"","web":"","rabbi":"Rabbi Menahem Mendel Sebag"},{"name":"Habad Loubavitch Nice Magnan","lat":43.6969,"lng":7.2337,"addr":"73 Boulevard Édouard Herriot","city":"Nice","cp":"06200","phone":"33-6-13-67-62-08","web":"www.habadnice.com","rabbi":"Rabbi Reouven Ouanounou"},{"name":"Habad Loubavitch of Nice Côte d'Azur","lat":43.7011,"lng":7.2753,"addr":"22 Rue Rossini","city":"Nice","cp":"06000","phone":"33-4-93-82-46-86","web":"www.chabadnice.com","rabbi":"Rabbi Yossef Yitschok Pinson"},{"name":"Beth Habad Strasbourg","lat":48.5849,"lng":7.7497,"addr":"59 Rue du Faubourg de Pierre","city":"Strasbourg","cp":"67000","phone":"33-3-88-75-66-05","web":"LoubavitchStrasbourg.com","rabbi":"Rabbi Shimon Samama"},{"name":"Chabad Lubavitch Bordeaux","lat":44.8406,"lng":-0.5789,"addr":"6 Rue Guillaume Brochon","city":"Bordeaux","cp":"33000","phone":"33-5-54-54-17-70","web":"","rabbi":"Rabbi Menachem Mendel Cohen"},{"name":"Jeunesse Lubavitch - Beth Habad Toulouse","lat":43.6043,"lng":1.4449,"addr":"17 Rue Alsace Lorraine","city":"Toulouse","cp":"31000","phone":"33-5-61-21-27-87","web":"","rabbi":"Rabbi Gavriel Sebag"},{"name":"Chabad Lubavitch of Cannes","lat":43.553,"lng":6.9376,"addr":"22 Rue du Commandant Vidal","city":"Cannes","cp":"06400","phone":"33-4-92-98-67-51","web":"HabadCannes.com","rabbi":"Rabbi Yehuda Leib Matusof"},{"name":"Beth Habad de Grenoble","lat":45.1872,"lng":5.7249,"addr":"10 Rue Lazare Carnot","city":"Grenoble","cp":"38000","phone":"33-4-85-02-84-47","web":"HabadGrenobleAlpes.com","rabbi":"Rabbi Yhia Lahiany"},{"name":"Chabad on Campus Grenoble","lat":45.1853,"lng":5.7241,"addr":"1 Boulevard des Diables Bleus","city":"Grenoble","cp":"38000","phone":"33-7-81-82-31-93","web":"","rabbi":"Rabbi Menachem Mendel Attal"},{"name":"Beth Loubavitch Montpellier","lat":43.611,"lng":3.8728,"addr":"9 Rue des Blanquiers","city":"Montpellier","cp":"34000","phone":"33-4-67-92-86-93","web":"www.habad-montpellier.com","rabbi":"Rabbi Peretz Partouche"},{"name":"Chabad on Campus Montpellier","lat":43.611,"lng":3.8728,"addr":"9 Rue des Blanquiers","city":"Montpellier","cp":"34000","phone":"","web":"","rabbi":"Rabbi Yosef Yitshak Partouche"},{"name":"Chabad Lubavitch Aix-les-Bains","lat":45.688,"lng":5.915,"addr":"27 Rue de Genève","city":"Aix-les-Bains","cp":"73100","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Ajaccio","lat":41.9192,"lng":8.7386,"addr":"","city":"Ajaccio","cp":"20000","phone":"","web":"","rabbi":""},{"name":"Beth Habad Alfortville","lat":48.8053,"lng":2.4214,"addr":"2 Rue Véron","city":"Alfortville","cp":"94140","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Antibes","lat":43.5808,"lng":7.1239,"addr":"","city":"Antibes","cp":"06600","phone":"","web":"","rabbi":""},{"name":"Beth Habad Argenteuil","lat":48.9472,"lng":2.2467,"addr":"","city":"Argenteuil","cp":"95100","phone":"","web":"","rabbi":""},{"name":"Beth Habad Asnières-sur-Seine","lat":48.9137,"lng":2.2871,"addr":"","city":"Asnières-sur-Seine","cp":"92600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Athis-Mons","lat":48.7073,"lng":2.3934,"addr":"","city":"Athis-Mons","cp":"91200","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Aubervilliers","lat":48.9146,"lng":2.3826,"addr":"","city":"Aubervilliers","cp":"93300","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Avignon","lat":43.9493,"lng":4.8055,"addr":"","city":"Avignon","cp":"84000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Bagnolet","lat":48.8691,"lng":2.4165,"addr":"","city":"Bagnolet","cp":"93170","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Balma","lat":43.6111,"lng":1.4988,"addr":"","city":"Balma","cp":"31130","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Bastia","lat":42.6975,"lng":9.451,"addr":"","city":"Bastia","cp":"20200","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Biarritz","lat":43.4832,"lng":-1.5586,"addr":"","city":"Biarritz","cp":"64200","phone":"","web":"","rabbi":""},{"name":"Beth Habad Bobigny","lat":48.9096,"lng":2.4396,"addr":"","city":"Bobigny","cp":"93000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Bonneuil-sur-Marne","lat":48.7732,"lng":2.4883,"addr":"","city":"Bonneuil-sur-Marne","cp":"94380","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Boulogne-Billancourt","lat":48.8396,"lng":2.2399,"addr":"","city":"Boulogne-Billancourt","cp":"92100","phone":"","web":"","rabbi":""},{"name":"Beth Habad Brunoy","lat":48.6991,"lng":2.5015,"addr":"","city":"Brunoy","cp":"91800","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Bry-sur-Marne","lat":48.8383,"lng":2.5244,"addr":"","city":"Bry-sur-Marne","cp":"94360","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Cabourg","lat":49.2896,"lng":-0.1166,"addr":"","city":"Cabourg","cp":"14390","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Caen","lat":49.1829,"lng":-0.3707,"addr":"","city":"Caen","cp":"14000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Champigny-sur-Marne","lat":48.8174,"lng":2.5156,"addr":"","city":"Champigny-sur-Marne","cp":"94500","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Chantilly","lat":49.1933,"lng":2.4711,"addr":"","city":"Chantilly","cp":"60500","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Charenton-le-Pont","lat":48.8266,"lng":2.4133,"addr":"","city":"Charenton-le-Pont","cp":"94220","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Chatou","lat":48.8899,"lng":2.1583,"addr":"","city":"Chatou","cp":"78400","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Chevilly-Larue","lat":48.7648,"lng":2.3482,"addr":"","city":"Chevilly-Larue","cp":"94550","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Choisy-le-Roi","lat":48.764,"lng":2.4099,"addr":"","city":"Choisy-le-Roi","cp":"94600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Clamart","lat":48.8002,"lng":2.2644,"addr":"","city":"Clamart","cp":"92140","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Courbevoie","lat":48.8966,"lng":2.2575,"addr":"","city":"Courbevoie","cp":"92400","phone":"","web":"","rabbi":""},{"name":"Beth Habad Créteil","lat":48.7904,"lng":2.4556,"addr":"","city":"Créteil","cp":"94000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Criel-sur-Mer","lat":50.0153,"lng":1.3126,"addr":"","city":"Criel-sur-Mer","cp":"76910","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Deauville","lat":49.3578,"lng":0.0761,"addr":"","city":"Deauville","cp":"14800","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Dijon","lat":47.322,"lng":5.0415,"addr":"","city":"Dijon","cp":"21000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Domont","lat":49.0285,"lng":2.3262,"addr":"","city":"Domont","cp":"95330","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Ecully","lat":45.7738,"lng":4.7779,"addr":"","city":"Ecully","cp":"69130","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Épinay-sur-Seine","lat":48.953,"lng":2.3115,"addr":"","city":"Épinay-sur-Seine","cp":"93800","phone":"","web":"","rabbi":""},{"name":"Beth Habad Fontenay-sous-Bois","lat":48.8523,"lng":2.4793,"addr":"","city":"Fontenay-sous-Bois","cp":"94120","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Fréjus","lat":43.4332,"lng":6.737,"addr":"","city":"Fréjus","cp":"83600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Gagny","lat":48.8835,"lng":2.5353,"addr":"","city":"Gagny","cp":"93220","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Gournay-sur-Marne","lat":48.8631,"lng":2.5772,"addr":"","city":"Gournay-sur-Marne","cp":"93460","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Houilles","lat":48.9275,"lng":2.1902,"addr":"","city":"Houilles","cp":"78800","phone":"","web":"","rabbi":""},{"name":"Beth Habad Joinville-le-Pont","lat":48.8206,"lng":2.4708,"addr":"","city":"Joinville-le-Pont","cp":"94340","phone":"","web":"","rabbi":""},{"name":"Beth Habad L'Haÿ-les-Roses","lat":48.7803,"lng":2.3371,"addr":"","city":"L'Haÿ-les-Roses","cp":"94240","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch La Celle-Saint-Cloud","lat":48.8414,"lng":2.1365,"addr":"","city":"La Celle-Saint-Cloud","cp":"78170","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch La Ciotat","lat":43.1747,"lng":5.6048,"addr":"","city":"La Ciotat","cp":"13600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch La Courneuve","lat":48.9282,"lng":2.3964,"addr":"","city":"La Courneuve","cp":"93120","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch La Garenne-Colombes","lat":48.9067,"lng":2.2448,"addr":"","city":"La Garenne-Colombes","cp":"92250","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch La Varenne-Saint-Hilaire","lat":48.7999,"lng":2.4947,"addr":"","city":"La Varenne-Saint-Hilaire","cp":"94210","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Le Havre","lat":49.4944,"lng":0.1079,"addr":"","city":"Le Havre","cp":"76600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Le Plessis-Robinson","lat":48.783,"lng":2.2639,"addr":"","city":"Le Plessis-Robinson","cp":"92350","phone":"","web":"","rabbi":""},{"name":"Beth Habad Les Lilas","lat":48.8798,"lng":2.4183,"addr":"","city":"Les Lilas","cp":"93260","phone":"","web":"","rabbi":""},{"name":"Beth Habad Les Pavillons-sous-Bois","lat":48.9049,"lng":2.5018,"addr":"","city":"Les Pavillons-sous-Bois","cp":"93320","phone":"","web":"","rabbi":""},{"name":"Beth Habad Levallois-Perret","lat":48.8947,"lng":2.2876,"addr":"","city":"Levallois-Perret","cp":"92300","phone":"","web":"","rabbi":""},{"name":"Beth Habad Lille","lat":50.6292,"lng":3.0573,"addr":"","city":"Lille","cp":"59000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Lunéville","lat":48.5937,"lng":6.5015,"addr":"","city":"Lunéville","cp":"54300","phone":"","web":"","rabbi":""},{"name":"Beth Habad Maisons-Alfort","lat":48.8098,"lng":2.438,"addr":"","city":"Maisons-Alfort","cp":"94700","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Maisons-Laffitte","lat":48.9517,"lng":2.1511,"addr":"","city":"Maisons-Laffitte","cp":"78600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Mandelieu-la-Napoule","lat":43.5476,"lng":6.9387,"addr":"","city":"Mandelieu-la-Napoule","cp":"06210","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Massy","lat":48.7307,"lng":2.271,"addr":"","city":"Massy","cp":"91300","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Meaux","lat":48.9604,"lng":2.8789,"addr":"","city":"Meaux","cp":"77100","phone":"","web":"","rabbi":""},{"name":"Beth Habad Metz","lat":49.1193,"lng":6.1757,"addr":"","city":"Metz","cp":"57000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Meyzieu","lat":45.7659,"lng":5.0031,"addr":"","city":"Meyzieu","cp":"69330","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Montigny-le-Bretonneux","lat":48.7693,"lng":2.0365,"addr":"","city":"Montigny-le-Bretonneux","cp":"78180","phone":"","web":"","rabbi":""},{"name":"Beth Habad Montreuil","lat":48.861,"lng":2.4432,"addr":"","city":"Montreuil","cp":"93100","phone":"","web":"","rabbi":""},{"name":"Beth Habad Montrouge","lat":48.8167,"lng":2.3192,"addr":"","city":"Montrouge","cp":"92120","phone":"","web":"","rabbi":""},{"name":"Beth Habad Neuilly-sur-Seine","lat":48.8845,"lng":2.2681,"addr":"","city":"Neuilly-sur-Seine","cp":"92200","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Nîmes","lat":43.8367,"lng":4.3601,"addr":"","city":"Nîmes","cp":"30000","phone":"","web":"","rabbi":""},{"name":"Beth Habad Nogent-sur-Marne","lat":48.8359,"lng":2.4829,"addr":"","city":"Nogent-sur-Marne","cp":"94130","phone":"","web":"","rabbi":""},{"name":"Beth Habad Noisy-le-Grand","lat":48.8449,"lng":2.5621,"addr":"","city":"Noisy-le-Grand","cp":"93160","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Orléans","lat":47.9029,"lng":1.909,"addr":"","city":"Orléans","cp":"45000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Pantin","lat":48.8936,"lng":2.4058,"addr":"","city":"Pantin","cp":"93500","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Pau","lat":43.2951,"lng":-0.3708,"addr":"","city":"Pau","cp":"64000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Perpignan","lat":42.6988,"lng":2.8959,"addr":"","city":"Perpignan","cp":"66000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Poissy","lat":48.9284,"lng":2.0469,"addr":"","city":"Poissy","cp":"78300","phone":"","web":"","rabbi":""},{"name":"Beth Habad Pontault-Combault","lat":48.7971,"lng":2.6047,"addr":"","city":"Pontault-Combault","cp":"77340","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Porto-Vecchio","lat":41.5917,"lng":9.2789,"addr":"","city":"Porto-Vecchio","cp":"20137","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Rennes","lat":48.1173,"lng":-1.6778,"addr":"","city":"Rennes","cp":"35000","phone":"","web":"","rabbi":""},{"name":"Beth Habad Romainville","lat":48.8853,"lng":2.4344,"addr":"","city":"Romainville","cp":"93230","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Rouen","lat":49.4432,"lng":1.0993,"addr":"","city":"Rouen","cp":"76000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Rueil-Malmaison","lat":48.8769,"lng":2.1894,"addr":"","city":"Rueil-Malmaison","cp":"92500","phone":"","web":"","rabbi":""},{"name":"Beth Habad Saint-Denis","lat":48.9362,"lng":2.3574,"addr":"","city":"Saint-Denis","cp":"93200","phone":"","web":"","rabbi":""},{"name":"Beth Habad Saint-Maurice","lat":48.8174,"lng":2.4294,"addr":"","city":"Saint-Maurice","cp":"94410","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Ouen-l'Aumône","lat":49.0449,"lng":2.1097,"addr":"","city":"Saint-Ouen-l'Aumône","cp":"95310","phone":"","web":"","rabbi":""},{"name":"Beth Habad Sarcelles","lat":48.9959,"lng":2.3795,"addr":"","city":"Sarcelles","cp":"95200","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Savigny-sur-Orge","lat":48.6811,"lng":2.3488,"addr":"","city":"Savigny-sur-Orge","cp":"91600","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Sceaux","lat":48.777,"lng":2.2888,"addr":"","city":"Sceaux","cp":"92330","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Sèvres","lat":48.824,"lng":2.213,"addr":"","city":"Sèvres","cp":"92310","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Soisy-sous-Montmorency","lat":48.9889,"lng":2.2989,"addr":"","city":"Soisy-sous-Montmorency","cp":"95230","phone":"","web":"","rabbi":""},{"name":"Beth Habad Saint-Ouen","lat":48.9122,"lng":2.3338,"addr":"","city":"Saint-Ouen","cp":"93400","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Brice-sous-Forêt","lat":49.0016,"lng":2.3527,"addr":"","city":"Saint-Brice-sous-Forêt","cp":"95350","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Cloud","lat":48.8453,"lng":2.2196,"addr":"","city":"Saint-Cloud","cp":"92210","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Sainte-Geneviève-des-Bois","lat":48.6348,"lng":2.3195,"addr":"","city":"Sainte-Geneviève-des-Bois","cp":"91700","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Germain-en-Laye","lat":48.8986,"lng":2.0938,"addr":"","city":"Saint-Germain-en-Laye","cp":"78100","phone":"","web":"","rabbi":""},{"name":"Beth Habad Saint-Mandé","lat":48.8387,"lng":2.4186,"addr":"","city":"Saint-Mandé","cp":"94160","phone":"","web":"","rabbi":""},{"name":"Beth Habad Saint-Gratien","lat":48.9723,"lng":2.2849,"addr":"","city":"Saint-Gratien","cp":"95210","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Jean-Cap-Ferrat","lat":43.6881,"lng":7.3322,"addr":"","city":"Saint-Jean-Cap-Ferrat","cp":"06230","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Tropez","lat":43.2677,"lng":6.6401,"addr":"","city":"Saint-Tropez","cp":"83990","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Saint-Maur-des-Fossés","lat":48.7999,"lng":2.4947,"addr":"","city":"Saint-Maur-des-Fossés","cp":"94100","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Ste-Geneviève-des-Bois (2)","lat":48.6348,"lng":2.3195,"addr":"","city":"Sainte-Geneviève-des-Bois","cp":"91700","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Sucy-en-Brie","lat":48.7706,"lng":2.5256,"addr":"","city":"Sucy-en-Brie","cp":"94370","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Suresnes","lat":48.8715,"lng":2.2192,"addr":"","city":"Suresnes","cp":"92150","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Torcy","lat":48.8506,"lng":2.6519,"addr":"","city":"Torcy","cp":"77200","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Toulon","lat":43.1242,"lng":5.928,"addr":"","city":"Toulon","cp":"83000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Tournefeuille","lat":43.5847,"lng":1.3461,"addr":"","city":"Tournefeuille","cp":"31170","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Tours","lat":47.3941,"lng":0.6848,"addr":"","city":"Tours","cp":"37000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Valence","lat":44.9334,"lng":4.8924,"addr":"","city":"Valence","cp":"26000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Versailles","lat":48.8014,"lng":2.1301,"addr":"","city":"Versailles","cp":"78000","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Vigneux-sur-Seine","lat":48.7009,"lng":2.424,"addr":"","city":"Vigneux-sur-Seine","cp":"91270","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Ville-d'Avray","lat":48.8263,"lng":2.191,"addr":"","city":"Ville-d'Avray","cp":"92410","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Villeneuve-Loubet","lat":43.6572,"lng":7.1245,"addr":"","city":"Villeneuve-Loubet","cp":"06270","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Villeneuve-Saint-Georges","lat":48.7324,"lng":2.449,"addr":"","city":"Villeneuve-Saint-Georges","cp":"94190","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Villeurbanne","lat":45.7666,"lng":4.8806,"addr":"","city":"Villeurbanne","cp":"69100","phone":"","web":"","rabbi":""},{"name":"Chabad Lubavitch Villiers-sur-Marne","lat":48.827,"lng":2.5444,"addr":"","city":"Villiers-sur-Marne","cp":"94350","phone":"","web":"","rabbi":""},{"name":"Beth Habad Vincennes","lat":48.8473,"lng":2.4387,"addr":"","city":"Vincennes","cp":"94300","phone":"","web":"","rabbi":""},{"name":"Beth Habad Yerres","lat":48.7144,"lng":2.4897,"addr":"","city":"Yerres","cp":"91330","phone":"","web":"","rabbi":""}];
 
+var GOOGLE_MAPS_API_KEY = 'AIzaSyCwh7st3LNSyg9yNdFR1P_Eed_FhHKrmiM';
 var _bethMap = null;
 var _bethMarkers = [];
 var _bethUserMarker = null;
+var _bethActiveFilter = 'all';
 
 function openBethChabad() {
   switchTab('sub-beth');
@@ -8534,60 +8536,163 @@ function showBethMap(lat, lng) {
     zIndexOffset: 1000
   }).addTo(_bethMap).bindPopup('<b>Votre position</b>');
 
-  if (info) info.textContent = 'Recherche des Beth Chabad\u2026';
+  _bethLoadFilter(_bethActiveFilter);
+}
 
-  // Use local CHABAD_CENTERS database (180 centers)
-  var radiusKm = 50;
-  var places = [];
-  CHABAD_CENTERS.forEach(function(c) {
-    var dist = haversine(lat, lng, c.lat, c.lng);
-    if (dist <= radiusKm) {
-      places.push({
-        name: c.name,
-        lat: c.lat,
-        lng: c.lng,
-        dist: dist,
-        addr: c.addr,
-        city: c.city,
-        cp: c.cp,
-        phone: c.phone,
-        website: c.web,
-        rabbi: c.rabbi
+function _bethLoadFilter(filter) {
+  var lat = window._bethUserLat;
+  var lng = window._bethUserLng;
+  var info = document.getElementById('beth-location-info');
+  if (!lat || !lng) return;
+
+  if (filter === 'all' || filter === 'chabad') {
+    if (info) info.textContent = 'Recherche des Beth Chabad\u2026';
+    var radiusKm = 50;
+    var places = [];
+    CHABAD_CENTERS.forEach(function(c) {
+      var dist = haversine(lat, lng, c.lat, c.lng);
+      if (dist <= radiusKm) {
+        places.push({
+          name: c.name,
+          lat: c.lat,
+          lng: c.lng,
+          dist: dist,
+          addr: c.addr,
+          city: c.city,
+          cp: c.cp,
+          phone: c.phone,
+          website: c.web,
+          rabbi: c.rabbi
+        });
+      }
+    });
+    places.sort(function(a, b) { return a.dist - b.dist; });
+    if (filter === 'all') {
+      // Also fetch restaurants + boucheries for "Tout"
+      _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(rPlaces) {
+        _bethFetchGooglePlaces(lat, lng, 'butcher_shop', 'kosher casher cacher', function(bPlaces) {
+          var all = places.concat(rPlaces).concat(bPlaces);
+          all.sort(function(a, b) { return a.dist - b.dist; });
+          if (info) info.textContent = all.length + ' r\u00e9sultat' + (all.length > 1 ? 's' : '') + ' trouv\u00e9' + (all.length > 1 ? 's' : '');
+          displayBethResults(all, lat, lng);
+        });
       });
+    } else {
+      displayBethResults(places, lat, lng);
     }
+  } else if (filter === 'restaurant') {
+    if (info) info.textContent = 'Recherche des restaurants cach\u00e8res\u2026';
+    _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(places) {
+      if (info) info.textContent = places.length + ' restaurant' + (places.length > 1 ? 's' : '') + ' cach\u00e8re' + (places.length > 1 ? 's' : '') + ' trouv\u00e9' + (places.length > 1 ? 's' : '');
+      displayBethResults(places, lat, lng);
+    });
+  } else if (filter === 'butcher') {
+    if (info) info.textContent = 'Recherche des boucheries cach\u00e8res\u2026';
+    _bethFetchGooglePlaces(lat, lng, 'butcher_shop', 'kosher casher cacher', function(places) {
+      if (info) info.textContent = places.length + ' boucherie' + (places.length > 1 ? 's' : '') + ' cach\u00e8re' + (places.length > 1 ? 's' : '') + ' trouv\u00e9e' + (places.length > 1 ? 's' : '');
+      displayBethResults(places, lat, lng);
+    });
+  }
+}
+
+function setBethFilter(filter) {
+  _bethActiveFilter = filter;
+  var chips = document.querySelectorAll('.beth-filter-chip');
+  chips.forEach(function(c) {
+    if (c.getAttribute('data-filter') === filter) c.classList.add('beth-filter-active');
+    else c.classList.remove('beth-filter-active');
   });
-  places.sort(function(a, b) { return a.dist - b.dist; });
-  displayBethResults(places, lat, lng);
+  _bethLoadFilter(filter);
+}
+
+function _bethFetchGooglePlaces(lat, lng, type, keyword, callback) {
+  var body = {
+    includedTypes: [type],
+    textQuery: keyword,
+    locationBias: {
+      circle: {
+        center: { latitude: lat, longitude: lng },
+        radius: 5000.0
+      }
+    },
+    maxResultCount: 20,
+    languageCode: 'fr'
+  };
+  var fieldMask = 'places.displayName,places.formattedAddress,places.rating,places.currentOpeningHours,places.googleMapsUri,places.location';
+  fetch('https://places.googleapis.com/v1/places:searchText', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+      'X-Goog-FieldMask': fieldMask
+    },
+    body: JSON.stringify(body)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var results = [];
+    if (data.places && data.places.length > 0) {
+      data.places.forEach(function(p) {
+        var pLat = p.location ? p.location.latitude : 0;
+        var pLng = p.location ? p.location.longitude : 0;
+        var isOpen = null;
+        if (p.currentOpeningHours && typeof p.currentOpeningHours.openNow === 'boolean') {
+          isOpen = p.currentOpeningHours.openNow;
+        }
+        results.push({
+          name: p.displayName ? p.displayName.text : 'Sans nom',
+          lat: pLat,
+          lng: pLng,
+          dist: haversine(lat, lng, pLat, pLng),
+          addr: p.formattedAddress || '',
+          rating: p.rating || null,
+          isOpen: isOpen,
+          googleMapsUri: p.googleMapsUri || null,
+          _source: type === 'restaurant' ? 'restaurant' : 'butcher'
+        });
+      });
+      results.sort(function(a, b) { return a.dist - b.dist; });
+    }
+    callback(results);
+  })
+  .catch(function(err) {
+    console.log('Google Places error:', err);
+    callback([]);
+  });
 }
 
 function displayBethResults(places, userLat, userLng) {
-  var info = document.getElementById('beth-location-info');
   var results = document.getElementById('beth-results');
   _bethMarkers.forEach(function(m) { _bethMap.removeLayer(m); });
   _bethMarkers = [];
 
-  if (info) info.textContent = places.length + ' Beth Chabad trouv\u00e9' + (places.length > 1 ? 's' : '') + ' dans un rayon de 50km';
-
-  // Custom marker - clean blue pin style
-  var chabadIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:32px;height:40px;position:relative;">' +
-      '<div style="width:32px;height:32px;background:#1a73e8;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);">' +
-      '<span style="transform:rotate(45deg);font-size:16px;line-height:1;">\ud83d\udd4d</span></div>' +
-      '<div style="width:8px;height:8px;background:rgba(0,0,0,0.15);border-radius:50%;margin:-2px auto 0;"></div></div>',
-    iconSize: [32, 40],
-    iconAnchor: [16, 40],
-    popupAnchor: [0, -40]
-  });
+  function _makeIcon(bg, emoji) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="width:32px;height:40px;position:relative;">' +
+        '<div style="width:32px;height:32px;background:' + bg + ';border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);">' +
+        '<span style="transform:rotate(45deg);font-size:16px;line-height:1;">' + emoji + '</span></div>' +
+        '<div style="width:8px;height:8px;background:rgba(0,0,0,0.15);border-radius:50%;margin:-2px auto 0;"></div></div>',
+      iconSize: [32, 40],
+      iconAnchor: [16, 40],
+      popupAnchor: [0, -40]
+    });
+  }
+  var iconChabad = _makeIcon('#1a73e8', '\ud83d\udd4d');
+  var iconRestaurant = _makeIcon('#e8631a', '\ud83c\udf7d\ufe0f');
+  var iconButcher = _makeIcon('#b71c1c', '\ud83e\udd69');
 
   places.forEach(function(p) {
-    var m = L.marker([p.lat, p.lng], { icon: chabadIcon }).addTo(_bethMap);
-    var itUrl = _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
+    var icon = p._source === 'restaurant' ? iconRestaurant : (p._source === 'butcher' ? iconButcher : iconChabad);
+    var m = L.marker([p.lat, p.lng], { icon: icon }).addTo(_bethMap);
+    var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
     var popup = '<div style="min-width:180px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">';
     popup += '<div style="font-size:14px;font-weight:700;margin-bottom:4px;">' + p.name + '</div>';
     if (p.addr) popup += '<div style="font-size:12px;color:#666;">' + p.addr + '</div>';
     if (p.city) popup += '<div style="font-size:12px;color:#666;">' + p.cp + ' ' + p.city + '</div>';
     if (p.rabbi) popup += '<div style="font-size:11px;color:#888;margin-top:3px;">\ud83d\udc64 ' + p.rabbi + '</div>';
+    if (p.rating) popup += '<div style="font-size:11px;color:#f5a623;margin-top:3px;">\u2b50 ' + p.rating.toFixed(1) + '</div>';
+    if (p.isOpen !== null) popup += '<div style="font-size:11px;color:' + (p.isOpen ? '#34a853' : '#ea4335') + ';margin-top:2px;">' + (p.isOpen ? 'Ouvert' : 'Ferm\u00e9') + '</div>';
     popup += '<div style="font-size:11px;color:#888;margin-top:2px;">\ud83d\udccd ' + p.dist.toFixed(1) + ' km</div>';
     popup += '<div style="display:flex;gap:6px;margin-top:8px;">';
     popup += '<a href="' + itUrl + '" target="_blank" style="flex:1;display:block;text-align:center;padding:7px 0;background:#1a73e8;color:white;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;">\ud83e\udded Itin\u00e9raire</a>';
@@ -8600,23 +8705,28 @@ function displayBethResults(places, userLat, userLng) {
     _bethMarkers.push(m);
   });
 
-  // Keep map centered on user location (zoom 13), don't fitBounds all markers
-
   if (results && places.length > 0) {
     var html = '';
-    places.slice(0, 10).forEach(function(p, idx) {
-      var itUrl = _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
+    places.slice(0, 15).forEach(function(p, idx) {
+      var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
+      var badgeColor = p._source === 'restaurant' ? '#e8631a' : (p._source === 'butcher' ? '#b71c1c' : '#1a73e8');
       html += '<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);">';
       html += '<div style="display:flex;gap:10px;cursor:pointer;" onclick="_bethMap.setView([' + p.lat + ',' + p.lng + '],15);_bethMarkers[' + idx + '].openPopup();">';
-      html += '<div style="min-width:28px;height:28px;background:#1a73e8;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">' + (idx+1) + '</div>';
+      html += '<div style="min-width:28px;height:28px;background:' + badgeColor + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">' + (idx+1) + '</div>';
       html += '<div style="flex:1;min-width:0;">';
       html += '<div style="font-size:14px;font-weight:700;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.name + '</div>';
-      if (p.addr) html += '<div style="font-size:12px;color:var(--gray-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.addr + ', ' + p.city + '</div>';
-      else if (p.city) html += '<div style="font-size:12px;color:var(--gray-3);">' + p.cp + ' ' + p.city + '</div>';
+      if (p.addr) {
+        var addrLine = p.city ? (p.addr + ', ' + p.city) : p.addr;
+        html += '<div style="font-size:12px;color:var(--gray-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + addrLine + '</div>';
+      } else if (p.city) {
+        html += '<div style="font-size:12px;color:var(--gray-3);">' + p.cp + ' ' + p.city + '</div>';
+      }
       if (p.rabbi) html += '<div style="font-size:11px;color:var(--gray-3);margin-top:2px;">\ud83d\udc64 ' + p.rabbi + '</div>';
+      if (p.rating) html += '<div style="font-size:11px;color:#f5a623;margin-top:2px;">\u2b50 ' + p.rating.toFixed(1) + '</div>';
+      if (p.isOpen !== null) html += '<div style="font-size:11px;color:' + (p.isOpen ? '#34a853' : '#ea4335') + ';margin-top:1px;">' + (p.isOpen ? 'Ouvert' : 'Ferm\u00e9') + '</div>';
       html += '</div>';
       html += '<div style="text-align:right;flex-shrink:0;">';
-      html += '<div style="font-size:13px;font-weight:700;color:#1a73e8;">' + p.dist.toFixed(1) + '</div>';
+      html += '<div style="font-size:13px;font-weight:700;color:' + badgeColor + ';">' + p.dist.toFixed(1) + '</div>';
       html += '<div style="font-size:10px;color:var(--gray-3);">km</div>';
       html += '</div></div>';
       html += '<div style="display:flex;gap:8px;margin-top:10px;">';
@@ -8634,7 +8744,7 @@ function displayBethResults(places, userLat, userLng) {
     });
     results.innerHTML = html;
   } else if (results) {
-    results.innerHTML = '<div style="text-align:center;padding:20px 12px;color:var(--gray-3);font-size:13px;">\ud83d\udd4d Aucun Beth Chabad trouv\u00e9 dans un rayon de 50km.<br>Essayez d\u2019actualiser votre position.</div>';
+    results.innerHTML = '<div style="text-align:center;padding:20px 12px;color:var(--gray-3);font-size:13px;">Aucun r\u00e9sultat trouv\u00e9.<br>Essayez d\u2019actualiser votre position.</div>';
   }
 }
 
@@ -8665,6 +8775,11 @@ function refreshBethMap() {
   if (r) r.innerHTML = '';
   var recenterBtn = document.getElementById('beth-recenter-btn');
   if (recenterBtn) recenterBtn.style.display = 'none';
+  _bethActiveFilter = 'all';
+  var chips = document.querySelectorAll('.beth-filter-chip');
+  chips.forEach(function(c) {
+    c.classList.toggle('beth-filter-active', c.getAttribute('data-filter') === 'all');
+  });
   loadBethMap();
 }
 

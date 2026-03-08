@@ -5,17 +5,17 @@
 // ── Asher Yatzar ────────────────────────────────────────────────────────────
 window.SIDDUR_ASHER_YATZAR = {
   text:
-    'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחׇכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים, חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם, אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשָׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ אֲפִלּוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְיָ, רוֹפֵא כׇל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.',
+    'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחׇכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים, חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם, אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשָׁר לְהִתְקַיֵּם אֲפִלּוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְיָ, רוֹפֵא כׇל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.',
   phonetic:
-    'Baroukh ata Ado-na\u00ef Elo-h\u00e9nou M\u00e9lekh haolam, ach\u00e8re yatsar \u00e8te haadam b\u00e9\'hokhma, ouvara vo n\u00e9kavim n\u00e9kavim, \'haloulim \'haloulim. Galoui v\u00e9yadoua lifn\u00e9 kiss\u00e9 kh\u00e9vod\u00e8kha, ch\u00e9im yipat\u00e9a\'h \u00e9\'had m\u00e9h\u00e8m, o yissat\u00e8m \u00e9\'had m\u00e9h\u00e8m, i efchar l\u00e9hitka\u00ef\u00e8m v\u00e9laamod l\u00e9fan\u00e8kha afilou chaa a\'hat. Baroukh ata Ado-na\u00ef, rof\u00e9 khol bassar oumafl\u00ee laassot.'
+    'Baroukh ata Ado-na\u00ef Elo-h\u00e9nou M\u00e9lekh haolam, ach\u00e8re yatsar \u00e8te haadam b\u00e9\'hokhma, ouvara vo n\u00e9kavim n\u00e9kavim, \'haloulim \'haloulim. Galoui v\u00e9yadoua lifn\u00e9 kiss\u00e9 kh\u00e9vod\u00e8kha, ch\u00e9im yipat\u00e9a\'h \u00e9\'had m\u00e9h\u00e8m, o yissat\u00e8m \u00e9\'had m\u00e9h\u00e8m, i efchar l\u00e9hitka\u00ef\u00e8m afilou chaa a\'hat. Baroukh ata Ado-na\u00ef, rof\u00e9 khol bassar oumafl\u00ee laassot.'
 };
 
 // ── Elohai Neshama ──────────────────────────────────────────────────────────
 window.SIDDUR_ELOHAI_NESHAMA = {
   text:
-    'אֱלֹהַי, נְשָׁמָה שֶׁנָּתַתָּ בִּי טְהוֹרָה הִיא. אַתָּה בְרָאתָהּ, אַתָּה יְצַרְתָּהּ, אַתָּה נְפַחְתָּהּ בִּי, וְאַתָּה מְשַׁמְּרָהּ בְּקִרְבִּי, וְאַתָּה עָתִיד לִטְּלָהּ מִמֶּנִּי, וּלְהַחֲזִירָהּ בִּי לֶעָתִיד לָבוֹא. כׇּל זְמַן שֶׁהַנְּשָׁמָה בְקִרְבִּי, מוֹדֶה אֲנִי לְפָנֶיךָ יְיָ אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי, רִבּוֹן כׇּל הַמַּעֲשִׂים, אֲדוֹן כׇּל הַנְּשָׁמוֹת. בָּרוּךְ אַתָּה יְיָ, הַמַּחֲזִיר נְשָׁמוֹת לִפְגָרִים מֵתִים.',
+    'אֱלֹהַי, נְשָׁמָה שֶׁנָּתַתָּ בִּי טְהוֹרָה הִיא. אַתָּה בְרָאתָהּ, אַתָּה יְצַרְתָּהּ, אַתָּה נְפַחְתָּהּ בִּי, וְאַתָּה מְשַׁמְּרָהּ בְּקִרְבִּי, וְאַתָּה עָתִיד לִטְּלָהּ מִמֶּנִּי, וּלְהַחֲזִירָהּ בִּי לֶעָתִיד לָבוֹא. כׇּל זְמַן שֶׁהַנְּשָׁמָה בְקִרְבִּי, מוֹדֶה אֲנִי לְפָנֶיךָ יְיָ אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי, שֶׁאַתָּה הוּא רִבּוֹן כׇּל הַמַּעֲשִׂים, אֲדוֹן כׇּל הַנְּשָׁמוֹת, מוֹשֵׁל בְּכׇל הַבְּרִיּוֹת, חַי וְקַיָּם לָעֶד. בָּרוּךְ אַתָּה יְיָ, הַמַּחֲזִיר נְשָׁמוֹת לִפְגָרִים מֵתִים.',
   phonetic:
-    'Elo-ha\u00ef, n\u00e9chama ch\u00e9natata bi t\u00e9hora hi. Ata v\u00e9ratah, ata y\u00e9tsartah, ata n\u00e9fa\'htah bi, v\u00e9ata m\u00e9cham\u00e9rah b\u00e9kirbi, v\u00e9ata atid lit\u00e9lah mim\u00e8ni, oul\u00e9ha\'hazirah bi l\u00e9atid lavo. Kol z\u00e9mane ch\u00e9han\u00e9chama b\u00e9kirbi, mod\u00e8 ani l\u00e9fan\u00e8kha Ado-na\u00ef Elo-ha\u00ef v\u00e9Elo-h\u00e9 avota\u00ef, Ribone kol hamaassim, Adone kol han\u00e9chamot. Baroukh ata Ado-na\u00ef, hama\'hazir n\u00e9chamot lifgarim m\u00e9tim.'
+    'Elo-ha\u00ef, n\u00e9chama ch\u00e9natata bi t\u00e9hora hi. Ata v\u00e9ratah, ata y\u00e9tsartah, ata n\u00e9fa\'htah bi, v\u00e9ata m\u00e9cham\u00e9rah b\u00e9kirbi, v\u00e9ata atid lit\u00e9lah mim\u00e8ni, oul\u00e9ha\'hazirah bi l\u00e9atid lavo. Kol z\u00e9mane ch\u00e9han\u00e9chama b\u00e9kirbi, mod\u00e8 ani l\u00e9fan\u00e8kha Ado-na\u00ef Elo-ha\u00ef v\u00e9Elo-h\u00e9 avota\u00ef, ch\u00e9ata hou Ribone kol hamaassim, Adone kol han\u00e9chamot, moch\u00e8l b\u00e9khol habriryot, \'ha\u00ef v\u00e9kayam la\u00e8d. Baroukh ata Ado-na\u00ef, hama\'hazir n\u00e9chamot lifgarim m\u00e9tim.'
 };
 
 // ── Birkhot HaShachar complet ───────────────────────────────────────────────

@@ -464,7 +464,13 @@
 <div id="panel-sub-beth" style="display:none">
 <div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
 <div style="padding:0 16px 16px;">
-<div style="font-size:16px;font-weight:800;color:var(--black);margin-bottom:2px;">🕍 Trouver un Beth Chabad</div>
+<div style="font-size:16px;font-weight:800;color:var(--black);margin-bottom:8px;">🕍 Trouver autour de moi</div>
+<div id="beth-filters" style="display:flex;gap:8px;margin-bottom:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+<button class="beth-filter-chip beth-filter-active" onclick="setBethFilter('all')" data-filter="all">Tout</button>
+<button class="beth-filter-chip" onclick="setBethFilter('chabad')" data-filter="chabad">🕍 Beth Chabad</button>
+<button class="beth-filter-chip" onclick="setBethFilter('restaurant')" data-filter="restaurant">🍽️ Restaurants cachères</button>
+<button class="beth-filter-chip" onclick="setBethFilter('butcher')" data-filter="butcher">🥩 Boucheries</button>
+</div>
 <div id="beth-location-info" style="font-size:11px;color:var(--gray-3);margin-bottom:10px;">Localisation en cours…</div>
 <div id="beth-map-container" style="width:100%;height:55vh;border-radius:14px;overflow:hidden;background:#e8e8e8;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
 <div id="beth-map" style="width:100%;height:100%;"></div>
