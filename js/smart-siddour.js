@@ -566,7 +566,7 @@ function nusachLabel(n) {
 
 // ── Labels multilingues pour les toggles ─────────────────────────────────
 var TOGGLE_LABELS = {
-  isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes', sub: { hebrew: 'Femme', phonetic: 'Femme', french: '' } }
+  isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes', sub: { hebrew: '', phonetic: 'Femme', french: '' } }
 };
 
 // ── Render helpers ─────────────────────────────────────────────────────────
@@ -899,7 +899,7 @@ function render() {
     renderLangSwitcher() +
     renderToggle('isFemale') +
     '</div>' +
-    '<div class="ss-hdate-inline">' + hdate.labelFr + '</div>' +
+    '<div class="ss-hdate-inline"' + (state.lang === 'hebrew' ? ' style="direction:rtl"' : '') + '>' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     // Row 2 : 3 cartes (tefila + tehilat + patakh)
     '<div class="ss-row-nusach">' + renderNusachim() + '</div>' +
     // Row 3 : 3 prieres + info jour
