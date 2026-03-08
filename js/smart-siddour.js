@@ -333,17 +333,20 @@ function injectStyles() {
     '  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);',
     '  border-bottom: 1px solid #ececec; padding: 8px 12px 0; }',
 
-    /* Row 1 : compass + lang switcher + date */
-    '.ss-header-top { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:6px; flex-wrap:wrap; padding:0 4px; }',
-    '.ss-compass-btn { width:32px; height:32px; border-radius:50%; border:1.5px solid #e0e0e0;',
+    /* Row 1 : lang (left) + books (center) + toggle/compass (right) */
+    '.ss-header-top { display:flex; align-items:center; justify-content:space-between; gap:4px; margin-bottom:4px; padding:0 2px; }',
+    '.ss-header-left { display:flex; flex-direction:column; align-items:center; gap:3px; flex-shrink:0; }',
+    '.ss-header-center { display:flex; align-items:center; justify-content:center; gap:8px; flex:1; min-width:0; }',
+    '.ss-header-right { display:flex; flex-direction:column; align-items:center; gap:3px; flex-shrink:0; }',
+    '.ss-compass-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
-    '.ss-compass-btn svg { width:22px; height:22px; }',
-    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:600; color:#666; text-align:center; width:100%; margin-top:4px; }',
+    '.ss-compass-btn svg { width:18px; height:18px; }',
+    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:12px; font-weight:600; color:#888; text-align:center; width:100%; margin-top:2px; }',
 
-    /* Lang switcher */
-    '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:8px; padding:2px; gap:1px; }',
-    '.ss-lang-btn { padding:5px 10px; border-radius:6px; border:none; background:transparent;',
-    '  font-size:12px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
+    /* Lang switcher vertical */
+    '.ss-lang-switcher { display:flex; flex-direction:column; background:#f0f0f0; border-radius:8px; padding:2px; gap:1px; }',
+    '.ss-lang-btn { padding:4px 8px; border-radius:6px; border:none; background:transparent;',
+    '  font-size:10px; font-weight:600; cursor:pointer; transition:all .25s; color:#999; white-space:nowrap; }',
     '.ss-lang-btn.active { background:#fff; color:#333; box-shadow:0 1px 4px rgba(0,0,0,.1); }',
 
     /* Banner hero (comme le banner Tefila) */
@@ -364,19 +367,18 @@ function injectStyles() {
     '.ss-hero-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.4); }',
     '.ss-hero-dot.active { background:#fff; width:18px; border-radius:3px; }',
 
-    /* Row 2 : 3 cartes images (tefila + nusachim) */
-    '.ss-row-nusach { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:6px; padding:0 8px; }',
-    '.ss-nusach-card { display:flex; align-items:center; justify-content:center; padding:5px; border-radius:12px; cursor:pointer;',
+    /* Nusach cards (inside header-center) */
+    '.ss-nusach-card { display:flex; align-items:center; justify-content:center; padding:4px; border-radius:10px; cursor:pointer;',
     '  border:2px solid transparent; background:#fff; transition:all .2s; box-shadow:0 1px 4px rgba(0,0,0,0.08); }',
     '.ss-nusach-card.active { border-color:#833ab4; box-shadow:0 2px 10px rgba(131,58,180,0.2); }',
-    '.ss-nusach-card-img { width:50px; height:65px; border-radius:6px; object-fit:cover; }',
+    '.ss-nusach-card-img { width:60px; height:80px; border-radius:6px; object-fit:cover; }',
     '.ss-nusach { padding:5px 14px; border-radius:100px; font-family:"Frank Ruhl Libre",serif;',
     '  font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; border:1.5px solid #e5e5e5; background:#fff; color:#555; }',
     '.ss-nusach.active { border-color:transparent; color:#fff; background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);',
     '  box-shadow:0 2px 8px rgba(131,58,180,.22); }',
-    '.ss-toggle { display:flex; align-items:center; gap:5px; padding:5px 12px 5px 7px;',
+    '.ss-toggle { display:flex; align-items:center; gap:4px; padding:4px 8px 4px 5px;',
     '  border-radius:100px; cursor:pointer; transition:all .25s; border:1.5px solid #e0e0e0;',
-    '  background:#fff; font-size:12px; font-weight:500; color:#555; }',
+    '  background:#fff; font-size:10px; font-weight:500; color:#555; }',
     '.ss-toggle.active { border-color:transparent; color:#fff;',
     '  background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }',
     '.ss-toggle-knob { width:24px; height:14px; border-radius:7px; background:#e0e0e0;',
@@ -884,8 +886,16 @@ function render() {
 
     // Header sticky unique
     '<div class="ss-header">' +
-    // Row 1 : compass + lang + date + toggle femmes
+    // Row 1 : lang (left) + books (center) + toggle/compass (right)
     '<div class="ss-header-top">' +
+    '<div class="ss-header-left">' +
+    renderLangSwitcher() +
+    '</div>' +
+    '<div class="ss-header-center">' +
+    renderNusachim() +
+    '</div>' +
+    '<div class="ss-header-right">' +
+    renderToggle('isFemale') +
     '<button class="ss-compass-btn" onclick="window.siddurOpenCompass()">' +
     '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#bbb" stroke-width="1.2"/>' +
     '<line x1="16" y1="2" x2="16" y2="6" stroke="#e74c3c" stroke-width="1.5" stroke-linecap="round"/>' +
@@ -896,12 +906,9 @@ function render() {
     '<polygon points="16,9 18.5,14.5 16,13 13.5,14.5" fill="#c0a44d" opacity="0.9"/>' +
     '<polygon points="16,23 13.5,17.5 16,19 18.5,17.5" fill="#c0a44d" opacity="0.9"/>' +
     '</svg></button>' +
-    renderLangSwitcher() +
-    renderToggle('isFemale') +
+    '</div>' +
     '</div>' +
     '<div class="ss-hdate-inline"' + (state.lang === 'hebrew' ? ' style="direction:rtl"' : '') + '>' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
-    // Row 2 : 3 cartes (tefila + tehilat + patakh)
-    '<div class="ss-row-nusach">' + renderNusachim() + '</div>' +
     // Row 3 : 3 prieres + info jour
     '<div class="ss-tabs">' + renderTabs() + infoTab + '</div>' +
     // Row 4 : barre sections
