@@ -733,6 +733,17 @@ function applyFemaleText(txt, sectionId, isHebrew) {
         txt = txt.replace('שֶׁלֹּא עָשַׂנִי גּוֹי', 'שֶׁלֹּא עָשַׂנִי גּוֹיָה');
         txt = txt.replace('שֶׁלֹּא עָשַׂנִי עָבֶד', 'שֶׁלֹּא עָשַׂנִי שִׁפְחָה');
         txt = txt.replace('שֶׁלֹּא עָשַׂנִי אִשָּׁה', 'שֶׁעָשַׂנִי כִּרְצוֹנוֹ');
+        // Patakh : bracha #1 hanoten au lieu de asher natan
+        txt = txt.replace('אֲשֶׁר נָתַן לַשֶּׂכְוִי', 'הַנּוֹתֵן לַשֶּׂכְוִי');
+        // Patakh : Birkhot HaTorah "al divrei" au lieu de "laassok bedivrei"
+        txt = txt.replace('לַעֲסוֹק בְּדִבְרֵי תוֹרָה', 'עַל דִּבְרֵי תוֹרָה');
+        // Patakh : Birkat Kohanim avec intro et conclusion
+        txt = txt.replace('יְבָרֶכְךָ יְיָ וְיִשְׁמְרֶךָ', 'וַיְדַבֵּר יְיָ אֶל מֹשֶׁה לֵּאמֹר. דַּבֵּר אֶל אַהֲרֹן וְאֶל בָּנָיו לֵאמֹר, כֹּה תְבָרְכוּ אֶת בְּנֵי יִשְׂרָאֵל, אָמוֹר לָהֶם.\nיְבָרֶכְךָ יְיָ וְיִשְׁמְרֶךָ');
+        txt = txt.replace('וְיָשֵׂם לְךָ שָׁלוֹם.\n', 'וְיָשֵׂם לְךָ שָׁלוֹם.\nוְשָׂמוּ אֶת שְׁמִי עַל בְּנֵי יִשְׂרָאֵל, וַאֲנִי אֲבָרְכֵם.\n');
+        // Patakh : Yehi Ratson version etendue
+        txt = txt.replace(
+          'שֶׁתַּרְגִּילֵנוּ בְּתוֹרָתֶךָ, וְדַבְּקֵנוּ בְּמִצְוֹתֶיךָ, וְאַל תְּבִיאֵנוּ לֹא לִידֵי חֵטְא, וְלֹא לִידֵי עֲבֵרָה וְעָוֹן, וְלֹא לִידֵי נִסָּיוֹן, וְלֹא לִידֵי בִזָּיוֹן, וְאַל תַּשְׁלֶט בָּנוּ יֵצֶר הָרָע, וְהַרְחִיקֵנוּ מֵאָדָם רָע וּמֵחָבֵר רָע, וְדַבְּקֵנוּ בְּיֵצֶר הַטּוֹב וּבְמַעֲשִׂים טוֹבִים, וְכֹף אֶת יִצְרֵנוּ לְהִשְׁתַּעְבֶּד לָךְ, וּתְנֵנוּ הַיּוֹם וּבְכׇל יוֹם לְחֵן וּלְחֶסֶד וּלְרַחֲמִים בְּעֵינֶיךָ וּבְעֵינֵי כׇל רוֹאֵינוּ, וְתִגְמְלֵנוּ חֲסָדִים טוֹבִים. בָּרוּךְ אַתָּה יְיָ, גּוֹמֵל חֲסָדִים טוֹבִים לְעַמּוֹ יִשְׂרָאֵל.',
+          'שֶׁתַּצִּילֵנוּ הַיּוֹם וּבְכׇל יוֹם מֵעַזֵּי פָנִים וּמֵעַזּוּת פָּנִים, מֵאָדָם רָע, מֵאִשָּׁה רָעָה, מִיֵּצֶר רָע, מֵחָבֵר רָע, מִשָּׁכֵן רָע, מִפֶּגַע רָע, מֵעַיִן הָרָע, מִלָּשׁוֹן הָרָע, מִמַּלְשִׁינוּת, מֵעֵדוּת שֶׁקֶר, מִשִּׂנְאַת הַבְּרִיּוֹת, מֵעָלִילָה, מִמִּיתָה מְשֻׁנָּה, מֵחֳלָאִים רָעִים, מִמִּקְרִים רָעִים, מִדִּין קָשֶׁה וּמִבַּעַל דִּין קָשֶׁה, בֵּין שֶׁהוּא בֶּן בְּרִית וּבֵין שֶׁאֵינוֹ בֶּן בְּרִית, וּמִדִּינָהּ שֶׁל גֵּיהִנָּם.');
       }
     } else {
       if (state.nusach === 'chabad') {
@@ -741,6 +752,17 @@ function applyFemaleText(txt, sectionId, isHebrew) {
         txt = txt.replace(/ch\u00e9lo assani go\u00ef/gi, 'ch\u00e9lo assani goya');
         txt = txt.replace(/ch\u00e9lo assani av\u00e8d/gi, 'ch\u00e9lo assani chif\'ha');
         txt = txt.replace(/ch\u00e9lo assani icha/gi, 'ch\u00e9assani kirtsono');
+        // Patakh : bracha #1 hanot\u00e8ne au lieu de ach\u00e8re natane
+        txt = txt.replace('ach\u00e8re natane lass\u00e9khvi', 'hanot\u00e8ne lass\u00e9khvi');
+        // Patakh : Birkhot HaTorah "al divr\u00e9" au lieu de "laassok b\u00e9divr\u00e9"
+        txt = txt.replace('laassok b\u00e9divr\u00e9\u00e9 Tora', 'al divr\u00e9 Tora');
+        // Patakh : Birkat Kohanim avec intro et conclusion
+        txt = txt.replace('Y\u00e9var\u00e8kh\u00e9kha Ado-na\u00ef v\u00e9yichm\u00e9r\u00e8kha', 'Vayedab\u00e8r Ado-na\u00ef \u00e8l Moch\u00e9 l\u00e9mor. Dab\u00e8r \u00e8l Aharone v\u00e9\u00e8l banav l\u00e9mor, ko t\u00e9var\u00e9khou \u00e8te b\u00e9n\u00e9 Isra\u00ebl, amor lah\u00e8m.\nY\u00e9var\u00e8kh\u00e9kha Ado-na\u00ef v\u00e9yichm\u00e9r\u00e8kha');
+        txt = txt.replace('v\u00e9yass\u00e8m l\u00e9kha chalom.\n', 'v\u00e9yass\u00e8m l\u00e9kha chalom.\nV\u00e9samou \u00e8te ch\u00e9mi al b\u00e9n\u00e9 Isra\u00ebl, vaani avar\u00e8kh\u00e8m.\n');
+        // Patakh : Yehi Ratson version \u00e9tendue
+        txt = txt.replace(
+          'ch\u00e9targuil\u00e9nou b\u00e9Torat\u00e8kha, v\u00e9dab\u00e9k\u00e9nou b\u00e9mitsvot\u00e8kha, v\u00e9al t\u00e9vi\u00e9nou lo lid\u00e9 \'h\u00e8t, v\u00e9lo lid\u00e9 av\u00e9ra v\u00e9avone, v\u00e9lo lid\u00e9 nissayone, v\u00e9lo lid\u00e9 vizayone, v\u00e9al tachl\u00e8t banou y\u00e9ts\u00e8r hara, v\u00e9har\'hik\u00e9nou m\u00e9adam ra oum\u00e9\'hav\u00e8r ra, v\u00e9dab\u00e9k\u00e9nou b\u00e9y\u00e9ts\u00e8r hatov ouv\u00e9maassim tovim, v\u00e9khof \u00e8te yitsr\u00e9nou l\u00e9hichtab\u00e8d lakh, out\u00e9n\u00e9nou hayom ouv\u00e9khol yom l\u00e9\'h\u00e8ne oul\u00e9\'h\u00e8ss\u00e8d oul\u00e9ra\'hamim b\u00e9\u00e8n\u00e8kha ouv\u00e9\u00e8n\u00e9 khol ro\u00e9nou, v\u00e9tigm\u00e9l\u00e9nou \'hassadim tovim. Baroukh ata Ado-na\u00ef, gom\u00e8l \'hassadim tovim l\u00e9amo Isra\u00ebl.',
+          'ch\u00e9tatsi l\u00e9nou hayom ouv\u00e9khol yom m\u00e9azz\u00e9 fanim oum\u00e9azzoute panim, m\u00e9adam ra, m\u00e9icha raa, miy\u00e9ts\u00e8re ra, m\u00e9hav\u00e8re ra, michakh\u00e8ne ra, mip\u00e9ga ra, m\u00e9ayin hara, milachone hara, mimalchinout, m\u00e9\u00e9dout ch\u00e9k\u00e8re, missin\u00e9at habriryot, m\u00e9alila, mimmita m\u00e9chouna, m\u00e9\'holaim raim, mimmikrim raim, middin\u00e9 kach\u00e9 oumibaal din\u00e9 kach\u00e9, b\u00e9ine ch\u00e9hou b\u00e8ne b\u00e9rit ouv\u00e9ine ch\u00e9\u00e9no b\u00e8ne b\u00e9rit, oumidinah ch\u00e8l gu\u00e9h\u00e9nam.');
       }
     }
   }
