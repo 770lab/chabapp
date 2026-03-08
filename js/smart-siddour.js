@@ -338,7 +338,7 @@ function injectStyles() {
     '.ss-compass-btn { width:32px; height:32px; border-radius:50%; border:1.5px solid #e0e0e0;',
     '  background:#fff; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; position:relative; }',
     '.ss-compass-btn svg { width:22px; height:22px; }',
-    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:11px; color:#aaa; direction:rtl; flex-shrink:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }',
+    '.ss-hdate-inline { font-family:"Frank Ruhl Libre",serif; font-size:15px; font-weight:600; color:#666; text-align:center; width:100%; margin-top:4px; }',
 
     /* Lang switcher */
     '.ss-lang-switcher { display:flex; background:#f0f0f0; border-radius:8px; padding:2px; gap:1px; }',
@@ -385,6 +385,8 @@ function injectStyles() {
     '.ss-toggle-dot { position:absolute; top:2px; left:2px; width:10px; height:10px;',
     '  border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 2px rgba(0,0,0,.2); }',
     '.ss-toggle.active .ss-toggle-dot { left:calc(100% - 12px); }',
+    '.ss-toggle-wrap { display:flex; flex-direction:column; align-items:center; gap:2px; }',
+    '.ss-toggle-sub { font-size:9px; color:#999; font-weight:500; }',
 
     /* Row 3 : 4 tabs (3 prieres + info jour) */
     '.ss-tabs { display:flex; gap:6px; margin-bottom:6px; }',
@@ -564,15 +566,14 @@ function nusachLabel(n) {
 
 // ── Labels multilingues pour les toggles ─────────────────────────────────
 var TOGGLE_LABELS = {
-  isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes' }
+  isFemale:  { hebrew: 'נשים', phonetic: 'Nachim', french: 'Femmes', sub: { hebrew: 'Femme', phonetic: 'Femme', french: '' } }
 };
 
 // ── Render helpers ─────────────────────────────────────────────────────────
 function renderLangSwitcher() {
   var langs = [
     { id: 'hebrew',   label: 'עברית' },
-    { id: 'phonetic', label: 'Phonetique' },
-    { id: 'french',   label: 'Francais' }
+    { id: 'phonetic', label: 'Phonetique' }
   ];
   return '<div class="ss-lang-switcher">' + langs.map(function(l) {
     return '<button class="ss-lang-btn' + (state.lang === l.id ? ' active' : '') + '" ' +
@@ -615,9 +616,10 @@ function renderToggle(key) {
   var active = state[key];
   var labels = TOGGLE_LABELS[key];
   var label = labels ? labels[state.lang] || labels.hebrew : key;
-  return '<button class="ss-toggle' + (active ? ' active' : '') + '" onclick="window.siddurToggle(\'' + key + '\')">' +
+  var sub = labels && labels.sub ? labels.sub[state.lang] || '' : '';
+  return '<div class="ss-toggle-wrap"><button class="ss-toggle' + (active ? ' active' : '') + '" onclick="window.siddurToggle(\'' + key + '\')">' +
     '<div class="ss-toggle-knob"><div class="ss-toggle-dot"></div></div>' +
-    label + '</button>';
+    label + '</button>' + (sub ? '<span class="ss-toggle-sub">' + sub + '</span>' : '') + '</div>';
 }
 
 function renderTabs() {
@@ -896,8 +898,8 @@ function render() {
     '</svg></button>' +
     renderLangSwitcher() +
     renderToggle('isFemale') +
-    '<div class="ss-hdate-inline">' + (state.lang === 'hebrew' ? hdate.label : hdate.labelFr) + '</div>' +
     '</div>' +
+    '<div class="ss-hdate-inline">' + hdate.labelFr + '</div>' +
     // Row 2 : 3 cartes (tefila + tehilat + patakh)
     '<div class="ss-row-nusach">' + renderNusachim() + '</div>' +
     // Row 3 : 3 prieres + info jour
