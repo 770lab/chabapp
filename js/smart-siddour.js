@@ -498,16 +498,28 @@ function requestCompass() {
 
 function enableCompass() {
   compassState.hasPermission = true;
+  var smoothBearing = null;
+  var SMOOTHING = 0.15; // filtre passe-bas (0 = pas de changement, 1 = brut)
+  function angleDiff(a, b) {
+    var d = ((b - a + 540) % 360) - 180;
+    return d;
+  }
   function handler(e) {
-    if (e.webkitCompassHeading != null) compassState.bearing = Math.round(e.webkitCompassHeading);
-    else if (e.alpha != null)           compassState.bearing = Math.round(360 - e.alpha);
+    var raw = null;
+    if (e.webkitCompassHeading != null) raw = e.webkitCompassHeading;
+    else if (e.alpha != null) raw = (360 - e.alpha) % 360;
+    if (raw == null) return;
+    if (smoothBearing == null) { smoothBearing = raw; }
+    else { smoothBearing = (smoothBearing + angleDiff(smoothBearing, raw) * SMOOTHING + 360) % 360; }
+    compassState.bearing = Math.round(smoothBearing);
     var needle = document.getElementById('ss-compass-needle');
-    if (needle && compassState.bearing != null) {
+    if (needle) {
+      needle.style.transition = 'transform 0.3s ease-out';
       needle.style.transform = 'rotate(' + (113 - compassState.bearing) + 'deg)';
     }
     var info = document.getElementById('ss-compass-info');
-    if (info && compassState.bearing != null) {
-      info.innerHTML = 'Cap : <span class="ss-grad-text">' + compassState.bearing + '°</span> → Jérusalem : <span class="ss-grad-text">113°</span>';
+    if (info) {
+      info.innerHTML = 'Cap : <span class="ss-grad-text">' + compassState.bearing + '°</span> \u2192 J\u00e9rusalem : <span class="ss-grad-text">113\u00b0</span>';
     }
   }
   window.addEventListener('deviceorientationabsolute', handler, true);
