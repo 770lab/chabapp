@@ -28,7 +28,7 @@ var state = {
 // ── Données téfilot ────────────────────────────────────────────────────────
 var TEFILOT = {
   shacharit: {
-    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Avraham.png',
+    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Avraham.png', imagePosition: 'center 30%',
     sections: [
       { id: 'patakh-eliyahou', title: 'פָּתַח אֵלִיָּהוּ', titlePhonetic: "Pata'h Eliyahou", always: true, nusach_only: 'mizrach',
         text: (window.SIDDUR_PATAKH_ELIYAHOU || {}).text || '',
@@ -108,7 +108,7 @@ var TEFILOT = {
     ]
   },
   mincha: {
-    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.png?v=2',
+    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.png?v=2', imagePosition: 'center 15%',
     sections: [
       { id: 'patakh-eliyahou-m', title: 'פָּתַח אֵלִיָּהוּ', titlePhonetic: "Pata'h Eliyahou", always: true, nusach_only: 'mizrach',
         text: (window.SIDDUR_PATAKH_ELIYAHOU || {}).text || '',
@@ -132,7 +132,7 @@ var TEFILOT = {
     ]
   },
   arvit: {
-    label: 'עַרְבִית', labelPhonetic: 'Arvit', labelFr: 'Priere du soir', sublabel: 'Arvit', icon: '🌙', image: 'assets/Yaakov.png?v=2',
+    label: 'עַרְבִית', labelPhonetic: 'Arvit', labelFr: 'Priere du soir', sublabel: 'Arvit', icon: '🌙', image: 'assets/Yaakov.png?v=2', imagePosition: 'center 20%',
     sections: [
       { id: 'barchu', title: 'בָּרְכוּ', titlePhonetic: 'Barékhou', always: true,
         text: 'בָּרְכוּ אֶת יְיָ הַמְּבֹרָךְ.\nבָּרוּךְ יְיָ הַמְּבֹרָךְ לְעוֹלָם וָעֶד.\n\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים, בְּחׇכְמָה פּוֹתֵחַ שְׁעָרִים, וּבִתְבוּנָה מְשַׁנֶּה עִתִּים, וּמַחֲלִיף אֶת הַזְּמַנִּים, וּמְסַדֵּר אֶת הַכּוֹכָבִים בְּמִשְׁמְרוֹתֵיהֶם בָּרָקִיעַ כִּרְצוֹנוֹ. בּוֹרֵא יוֹם וָלָיְלָה, גּוֹלֵל אוֹר מִפְּנֵי חֹשֶׁךְ וְחֹשֶׁךְ מִפְּנֵי אוֹר, וּמַעֲבִיר יוֹם וּמֵבִיא לָיְלָה, וּמַבְדִּיל בֵּין יוֹם וּבֵין לָיְלָה, יְיָ צְבָאוֹת שְׁמוֹ. אֵל חַי וְקַיָּם, תָּמִיד יִמְלוֹךְ עָלֵינוּ לְעוֹלָם וָעֶד. בָּרוּךְ אַתָּה יְיָ, הַמַּעֲרִיב עֲרָבִים.',
@@ -864,7 +864,7 @@ function render() {
     var prevLabel = tefilaIdx > 0 ? TEFILOT[tefilaKeys[tefilaIdx - 1]].labelPhonetic : 'Tefila';
     var nextLabel = tefilaIdx < tefilaKeys.length - 1 ? TEFILOT[tefilaKeys[tefilaIdx + 1]].labelPhonetic : '';
     heroBanner = '<div class="ss-hero">' +
-      '<img src="' + tefilah.image + '" alt="' + tefilah.labelPhonetic + '">' +
+      '<img src="' + tefilah.image + '" alt="' + tefilah.labelPhonetic + '" style="object-position:' + (tefilah.imagePosition || 'center 30%') + '">' +
       '<div class="ss-hero-overlay"></div>' +
       '<div class="ss-swipe-hint ss-swipe-hint-left">&larr; ' + prevLabel + '</div>' +
       (nextLabel ? '<div class="ss-swipe-hint ss-swipe-hint-right">' + nextLabel + ' &rarr;</div>' : '') +
