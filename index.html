@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Noto+Serif+Hebrew:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
-<link href="css/styles.css?v=8" rel="stylesheet"/>
+<link href="css/styles.css?v=9" rel="stylesheet"/>
 <link href="css/inline.css?v=2" rel="stylesheet"/>
 <link href="css/firebase-panels.css?v=3" rel="stylesheet"/>
 <link href="css/dashboard.css?v=1" rel="stylesheet"/>
@@ -349,7 +349,15 @@
 <button class="insta-share-btn" onclick="shareObjectifs(event)" style="margin-left:auto;margin-right:6px;"><svg viewBox="0 0 24 24"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
 <span class="obj-counter" id="obj-counter">0/13</span>
 </div>
-<div class="obj-progress-bar"><div class="obj-progress-fill" id="obj-progress-fill"></div></div>
+<div class="obj-circle-wrap">
+<svg class="obj-circle-svg" viewBox="0 0 120 120">
+<defs><linearGradient id="obj-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6228d7"/><stop offset="50%" stop-color="#ee2a7b"/><stop offset="100%" stop-color="#f9ce34"/></linearGradient></defs>
+<circle class="obj-circle-bg" cx="60" cy="60" r="52"/>
+<circle class="obj-circle-fill" id="obj-circle-fill" cx="60" cy="60" r="52" stroke="url(#obj-grad)"/>
+</svg>
+<div class="obj-circle-text" id="obj-circle-text">0%</div>
+<div class="obj-circle-sub" id="obj-circle-sub">0/13</div>
+</div>
 <div class="obj-list" id="obj-list"></div>
 <div class="obj-complete-quote" id="obj-complete-quote"></div>
 <div class="obj-reset-wrap"><button class="obj-reset-btn" onclick="resetObjectives()">↺ Réinitialiser</button></div>
@@ -1236,7 +1244,7 @@ Partager
 <script src="js/zmanim.js?v=3"></script>
 <script src="js/tefila.js?v=2"></script>
 <script src="js/api-keys.js?v=2"></script>
-<script src="js/app.js?v=16"></script>
+<script src="js/app.js?v=17"></script>
 <script src="js/siddur-brachot.js?v=1"></script>
 <script src="js/siddur-hallel.js?v=1"></script>
 <script src="js/siddur-psukei.js?v=1"></script>

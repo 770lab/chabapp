@@ -6791,8 +6791,17 @@ function renderObjectives() {
   // Counter & progress
   var counter = document.getElementById('obj-counter');
   if (counter) { counter.textContent = checked + '/' + TOTAL_OBJ; counter.classList.toggle('done', checked === TOTAL_OBJ); }
-  var fill = document.getElementById('obj-progress-fill');
-  if (fill) fill.style.width = (checked / TOTAL_OBJ * 100) + '%';
+  var circle = document.getElementById('obj-circle-fill');
+  if (circle) {
+    var circumference = 326.73;
+    circle.style.strokeDashoffset = circumference * (1 - checked / TOTAL_OBJ);
+    if (checked === TOTAL_OBJ) circle.style.stroke = '#16a34a';
+    else circle.style.stroke = '';
+  }
+  var circleText = document.getElementById('obj-circle-text');
+  if (circleText) { circleText.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; circleText.style.color = checked === TOTAL_OBJ ? '#16a34a' : ''; }
+  var circleSub = document.getElementById('obj-circle-sub');
+  if (circleSub) circleSub.textContent = checked + '/' + TOTAL_OBJ;
   var bigSub = document.getElementById('big-obj-sub');
   if (bigSub) bigSub.textContent = checked + '/' + TOTAL_OBJ + ' accomplis';
   var homeFill = document.getElementById('obj-progress-home-fill');
