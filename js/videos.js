@@ -34,8 +34,18 @@ var YT_PROFILES = [
     handle: "@jem_francais",
     url: "https://youtube.com/@jem_francais",
     avatar: "https://yt3.googleusercontent.com/ytc/AIdro_kQx7U7p3PBbqOT-S4HZMAI2FTqPr2WbJqQCq9Z4R3JEA=s176-c-k-c0x00ffffff-no-rj",
+    banner: "",
     description: "Contenu du Rabbi de Loubavitch en francais",
     channelFilter: "JEM"
+  },
+  {
+    name: "Torah-Box",
+    handle: "@torahbox",
+    url: "https://youtube.com/@torahbox",
+    avatar: "https://yt3.googleusercontent.com/ytc/AIdro_nr-nyifJPMBkGClMdJJm01yDMGnDaqfxJfKOB_n05NKBM=s176-c-k-c0x00ffffff-no-rj",
+    banner: "",
+    description: "L'association de diffusion du Judaisme aux francophones",
+    channelFilter: "Torah-Box"
   }
 ];
 
