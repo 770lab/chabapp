@@ -30,10 +30,6 @@ var TEFILOT = {
   shacharit: {
     label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Avraham.png', imagePosition: 'center 30%',
     sections: [
-      { id: 'patakh-eliyahou', title: 'פָּתַח אֵלִיָּהוּ', titlePhonetic: "Pata'h Eliyahou", always: true, nusach_only: 'mizrach',
-        text: (window.SIDDUR_PATAKH_ELIYAHOU || {}).text || '',
-        phonetic: (window.SIDDUR_PATAKH_ELIYAHOU || {}).phonetic || '' },
-
       { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', titleFemale: 'מודָה אני', titlePhoneticFemale: 'Moda Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
         phonetic: 'Mod\u00e9 ani l\u00e9fan\u00e9kha, M\u00e9lekh \'ha\u00ef v\u00e9kayam, ch\u00e9h\u00e9\'h\u00e9zarta bi nichmati b\u00e9\'hemla, raba \u00e9mounat\u00e9kha.' },
