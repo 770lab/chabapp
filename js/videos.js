@@ -127,14 +127,11 @@ function _ytRender() {
     html += '<div class="yt-profiles-section">';
     html += '<div class="yt-profiles-title">Chaines recommandees</div>';
     html += '<div class="yt-profiles-scroll">';
-    YT_PROFILES.forEach(function (p) {
-      var isActive = _ytActiveChannel === p.channelFilter;
-      html += '<div class="yt-profile-card' + (isActive ? ' active' : '') + '" onclick="ytFilterChannel(\'' + _ytEsc(p.channelFilter).replace(/'/g, "\\'") + '\')">';
+    YT_PROFILES.forEach(function (p, idx) {
+      html += '<div class="yt-profile-card" onclick="ytOpenProfile(' + idx + ')">';
       html += '<img class="yt-profile-avatar" src="' + _ytEsc(p.avatar) + '" alt="' + _ytEsc(p.name) + '" />';
       html += '<div class="yt-profile-name">' + _ytEsc(p.name) + '</div>';
       html += '<div class="yt-profile-handle">' + _ytEsc(p.handle) + '</div>';
-      html += '<div class="yt-profile-desc">' + _ytEsc(p.description) + '</div>';
-      html += '<a class="yt-profile-link" href="' + _ytEsc(p.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Voir sur YouTube</a>';
       html += '</div>';
     });
     html += '</div>';
@@ -212,6 +209,91 @@ function ytClosePlayer() {
   var container = document.getElementById("yt-player-container");
   if (container) container.innerHTML = "";
   if (wrap) wrap.style.display = "none";
+}
+
+// ─── Page profil in-app ──────────────────────────────────
+var _ytProfileOpen = false;
+
+function ytOpenProfile(idx) {
+  var p = YT_PROFILES[idx];
+  if (!p) return;
+
+  _ytProfileOpen = true;
+  var grid = document.getElementById("yt-grid");
+  if (!grid) return;
+
+  // Filtrer les videos de cette chaine
+  var channelVideos = _ytVideos.filter(function (v) { return v.channel === p.channelFilter; });
+
+  var html = '';
+
+  // Header profil
+  html += '<div class="ytp-header">';
+  html += '<div class="ytp-banner"></div>';
+  html += '<div class="ytp-info">';
+  html += '<img class="ytp-avatar" src="' + _ytEsc(p.avatar) + '" alt="' + _ytEsc(p.name) + '" />';
+  html += '<div class="ytp-meta">';
+  html += '<div class="ytp-name">' + _ytEsc(p.name) + '</div>';
+  html += '<div class="ytp-handle">' + _ytEsc(p.handle) + '</div>';
+  if (p.description) {
+    html += '<div class="ytp-desc">' + _ytEsc(p.description) + '</div>';
+  }
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Compteur de videos
+  html += '<div class="ytp-video-count">' + channelVideos.length + ' video' + (channelVideos.length > 1 ? 's' : '') + '</div>';
+
+  // Grille des videos de la chaine
+  if (!channelVideos.length) {
+    html += '<div class="feed-empty">Aucune video de cette chaine.</div>';
+  } else {
+    html += '<div class="yt-grid-inner">';
+    channelVideos.forEach(function (v) {
+      var realIndex = _ytVideos.indexOf(v);
+      var thumb = "https://img.youtube.com/vi/" + v.id + "/mqdefault.jpg";
+      html += '<div class="yt-card" onclick="ytPlayVideo(' + realIndex + ')">';
+      html += '<div class="yt-thumb-wrap">';
+      html += '<img class="yt-thumb" src="' + thumb + '" alt="' + _ytEsc(v.title) + '" loading="lazy" />';
+      html += '<div class="yt-play-icon"><svg width="40" height="40" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24L27 14v20" fill="white"/></svg></div>';
+      html += '</div>';
+      html += '<div class="yt-card-info">';
+      html += '<div class="yt-card-title">' + _ytEsc(v.title) + '</div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  grid.innerHTML = html;
+
+  // Mettre a jour le top bar : bouton retour vers JewTube
+  var backBtn = document.querySelector('#panel-sub-videos .panel-back');
+  if (backBtn) {
+    backBtn.setAttribute('onclick', 'ytCloseProfile()');
+  }
+  var titleEl = document.querySelector('#panel-sub-videos .panel-title span');
+  if (titleEl) {
+    titleEl.innerHTML = _ytEsc(p.name);
+  }
+
+  // Scroll en haut
+  grid.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function ytCloseProfile() {
+  _ytProfileOpen = false;
+  // Restaurer le top bar
+  var backBtn = document.querySelector('#panel-sub-videos .panel-back');
+  if (backBtn) {
+    backBtn.setAttribute('onclick', "switchTab('menu')");
+  }
+  var titleEl = document.querySelector('#panel-sub-videos .panel-title span');
+  if (titleEl) {
+    titleEl.innerHTML = 'Jew<span style="color:#ff0033;">Tube</span>';
+  }
+  _ytRender();
 }
 
 // ═══════════════════════════════════════════════════════════

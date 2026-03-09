@@ -770,30 +770,59 @@ select.yt-admin-input { appearance: auto; }
   color: var(--gray-3, #9ca3af);
   margin-top: 2px;
 }
-.yt-profile-desc {
-  font-size: 11px;
-  color: var(--gray-2, #6b7280);
-  margin-top: 6px;
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+/* Page profil in-app */
+.ytp-header {
+  border-radius: 16px;
   overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
 }
-.yt-profile-link {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 11px; font-weight: 600;
-  color: #ff0033;
-  text-decoration: none;
-  padding: 4px 12px;
-  border-radius: 12px;
-  border: 1px solid #ff0033;
-  transition: all 0.15s;
+.ytp-banner {
+  height: 80px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #c9a84c 100%);
 }
-.yt-profile-link:active {
-  background: #ff0033;
-  color: #fff;
+.ytp-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 0 16px 16px;
+  margin-top: -32px;
+}
+.ytp-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+.ytp-meta {
+  padding-top: 36px;
+  min-width: 0;
+}
+.ytp-name {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 18px; font-weight: 900;
+  color: var(--black, #1a1a2e);
+  line-height: 1.2;
+}
+.ytp-handle {
+  font-size: 12px;
+  color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+.ytp-desc {
+  font-size: 13px;
+  color: var(--gray-2, #4b5563);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.ytp-video-count {
+  font-size: 13px; font-weight: 600;
+  color: var(--gray-2, #4b5563);
+  margin-bottom: 12px;
+  padding-left: 2px;
 }
 
 /* ─── NOTIFICATIONS ───────────────────────────────────────── */
