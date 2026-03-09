@@ -8568,10 +8568,10 @@ function _bethLoadFilter(filter) {
     });
     places.sort(function(a, b) { return a.dist - b.dist; });
     if (filter === 'all') {
-      // Also fetch restaurants + boucheries for "Tout"
+      // Also fetch restaurants + minyanim for "Tout"
       _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(rPlaces) {
-        _bethFetchGooglePlaces(lat, lng, 'butcher_shop', 'kosher casher cacher', function(bPlaces) {
-          var all = places.concat(rPlaces).concat(bPlaces);
+        _bethFetchGooglePlaces(lat, lng, 'synagogue', 'synagogue minyan miniane', function(mPlaces) {
+          var all = places.concat(rPlaces).concat(mPlaces);
           all.sort(function(a, b) { return a.dist - b.dist; });
           if (info) info.textContent = all.length + ' r\u00e9sultat' + (all.length > 1 ? 's' : '') + ' trouv\u00e9' + (all.length > 1 ? 's' : '');
           displayBethResults(all, lat, lng);
@@ -8586,10 +8586,10 @@ function _bethLoadFilter(filter) {
       if (info) info.textContent = places.length + ' restaurant' + (places.length > 1 ? 's' : '') + ' cach\u00e8re' + (places.length > 1 ? 's' : '') + ' trouv\u00e9' + (places.length > 1 ? 's' : '');
       displayBethResults(places, lat, lng);
     });
-  } else if (filter === 'butcher') {
-    if (info) info.textContent = 'Recherche des boucheries cach\u00e8res\u2026';
-    _bethFetchGooglePlaces(lat, lng, 'butcher_shop', 'kosher casher cacher', function(places) {
-      if (info) info.textContent = places.length + ' boucherie' + (places.length > 1 ? 's' : '') + ' cach\u00e8re' + (places.length > 1 ? 's' : '') + ' trouv\u00e9e' + (places.length > 1 ? 's' : '');
+  } else if (filter === 'minyan') {
+    if (info) info.textContent = 'Recherche des minianim proches\u2026';
+    _bethFetchGooglePlaces(lat, lng, 'synagogue', 'synagogue minyan miniane', function(places) {
+      if (info) info.textContent = places.length + ' miniane' + (places.length > 1 ? 's' : '') + ' trouv\u00e9' + (places.length > 1 ? 's' : '');
       displayBethResults(places, lat, lng);
     });
   }
@@ -8648,7 +8648,7 @@ function _bethFetchGooglePlaces(lat, lng, type, keyword, callback) {
           rating: p.rating || null,
           isOpen: isOpen,
           googleMapsUri: p.googleMapsUri || null,
-          _source: type === 'restaurant' ? 'restaurant' : 'butcher'
+          _source: type === 'restaurant' ? 'restaurant' : (type === 'synagogue' ? 'minyan' : 'other')
         });
       });
       results.sort(function(a, b) { return a.dist - b.dist; });
@@ -8680,10 +8680,10 @@ function displayBethResults(places, userLat, userLng) {
   }
   var iconChabad = _makeIcon('#1a73e8', '\ud83d\udd4d');
   var iconRestaurant = _makeIcon('#e8631a', '\ud83c\udf7d\ufe0f');
-  var iconButcher = _makeIcon('#b71c1c', '\ud83e\udd69');
+  var iconMinyan = _makeIcon('#6a1b9a', '\ud83e\udd32');
 
   places.forEach(function(p) {
-    var icon = p._source === 'restaurant' ? iconRestaurant : (p._source === 'butcher' ? iconButcher : iconChabad);
+    var icon = p._source === 'restaurant' ? iconRestaurant : (p._source === 'minyan' ? iconMinyan : iconChabad);
     var m = L.marker([p.lat, p.lng], { icon: icon }).addTo(_bethMap);
     var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
     var popup = '<div style="min-width:180px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">';
@@ -8709,7 +8709,7 @@ function displayBethResults(places, userLat, userLng) {
     var html = '';
     places.slice(0, 15).forEach(function(p, idx) {
       var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
-      var badgeColor = p._source === 'restaurant' ? '#e8631a' : (p._source === 'butcher' ? '#b71c1c' : '#1a73e8');
+      var badgeColor = p._source === 'restaurant' ? '#e8631a' : (p._source === 'minyan' ? '#6a1b9a' : '#1a73e8');
       html += '<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);">';
       html += '<div style="display:flex;gap:10px;cursor:pointer;" onclick="_bethMap.setView([' + p.lat + ',' + p.lng + '],15);_bethMarkers[' + idx + '].openPopup();">';
       html += '<div style="min-width:28px;height:28px;background:' + badgeColor + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">' + (idx+1) + '</div>';
