@@ -1,9 +1,33 @@
 // Textes complets Pessouké déZimra — Tehilat Hashem
-// Contient : Baroukh chéAmar, Hodou complet, Mizmor léToda, Yéhi Khvod,
+// Contient : Lamnatséa'h (Téhilim 67), Ana Békhoa'h,
+// Baroukh chéAmar, Hodou complet, Mizmor léToda, Yéhi Khvod,
 // Achré, Tehilim 146-150, Vayévarèkh David, Az Yachir, Yichtaba'h
 window.SIDDUR_PSUKEI = {
 
 text: '\
+— לַמְנַצֵּחַ בִּנְגִינוֹת (תהלים סז) —\n\
+\n\
+לַמְנַצֵּחַ בִּנְגִינֹת מִזְמוֹר שִׁיר.\n\
+אֱלֹהִים יְחׇנֵּנוּ וִיבָרְכֵנוּ, יָאֵר פָּנָיו אִתָּנוּ סֶלָה.\n\
+לָדַעַת בָּאָרֶץ דַּרְכֶּךָ, בְּכׇל גּוֹיִם יְשׁוּעָתֶךָ.\n\
+יוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\n\
+יִשְׂמְחוּ וִירַנְּנוּ לְאֻמִּים, כִּי תִשְׁפֹּט עַמִּים מִישֹׁר, וּלְאֻמִּים בָּאָרֶץ תַּנְחֵם סֶלָה.\n\
+יוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\n\
+אֶרֶץ נָתְנָה יְבוּלָהּ, יְבָרְכֵנוּ אֱלֹהִים אֱלֹהֵינוּ.\n\
+יְבָרְכֵנוּ אֱלֹהִים, וְיִירְאוּ אֹתוֹ כׇּל אַפְסֵי אָרֶץ.\n\
+\n\
+— אָנָּא בְּכֹחַ —\n\
+\n\
+אָנָּא בְּכֹחַ גְּדֻלַּת יְמִינְךָ, תַּתִּיר צְרוּרָה.\n\
+קַבֵּל רִנַּת עַמְּךָ, שַׂגְּבֵנוּ, טַהֲרֵנוּ, נוֹרָא.\n\
+נָא גִבּוֹר, דּוֹרְשֵׁי יִחוּדְךָ, כְּבָבַת שׇׁמְרֵם.\n\
+בָּרְכֵם, טַהֲרֵם, רַחֲמֵי צִדְקָתְךָ תָּמִיד גׇּמְלֵם.\n\
+חֲסִין קָדוֹשׁ, בְּרוֹב טוּבְךָ נַהֵל עֲדָתֶךָ.\n\
+יָחִיד גֵּאֶה, לְעַמְּךָ פְּנֵה, זוֹכְרֵי קְדֻשָּׁתֶךָ.\n\
+שַׁוְעָתֵנוּ קַבֵּל, וּשְׁמַע צַעֲקָתֵנוּ, יוֹדֵעַ תַּעֲלוּמוֹת.\n\
+\n\
+(בלחש) בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.\n\
+\n\
 — בָּרוּךְ שֶׁאָמַר —\n\
 \n\
 בָּרוּךְ שֶׁאָמַר וְהָיָה הָעוֹלָם, בָּרוּךְ הוּא, בָּרוּךְ עֹשֵׂה בְרֵאשִׁית, בָּרוּךְ אוֹמֵר וְעוֹשֶׂה, בָּרוּךְ גּוֹזֵר וּמְקַיֵּם, בָּרוּךְ מְרַחֵם עַל הָאָרֶץ, בָּרוּךְ מְרַחֵם עַל הַבְּרִיּוֹת, בָּרוּךְ מְשַׁלֵּם שָׂכָר טוֹב לִירֵאָיו, בָּרוּךְ חַי לָעַד וְקַיָּם לָנֶצַח, בָּרוּךְ פּוֹדֶה וּמַצִּיל, בָּרוּךְ שְׁמוֹ.\n\
@@ -218,6 +242,29 @@ text: '\
 יִשְׁתַּבַּח שִׁמְךָ לָעַד מַלְכֵּנוּ, הָאֵל הַמֶּלֶךְ הַגָּדוֹל וְהַקָּדוֹשׁ בַּשָּׁמַיִם וּבָאָרֶץ. כִּי לְךָ נָאֶה, יְיָ אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שִׁיר וּשְׁבָחָה, הַלֵּל וְזִמְרָה, עֹז וּמֶמְשָׁלָה, נֶצַח, גְּדֻלָּה וּגְבוּרָה, תְּהִלָּה וְתִפְאֶרֶת, קְדֻשָּׁה וּמַלְכוּת, בְּרָכוֹת וְהוֹדָאוֹת מֵעַתָּה וְעַד עוֹלָם. בָּרוּךְ אַתָּה יְיָ, אֵל מֶלֶךְ גָּדוֹל בַּתִּשְׁבָּחוֹת, אֵל הַהוֹדָאוֹת, אֲדוֹן הַנִּפְלָאוֹת, הַבּוֹחֵר בְּשִׁירֵי זִמְרָה, מֶלֶךְ אֵל חֵי הָעוֹלָמִים.',
 
 phonetic: '\
+— Lamnatséa\'h Bineguinot (Téhilim 67) —\n\
+\n\
+Lamnatséa\'h bineguinot mizmor chir.\n\
+Elohim yé\'honénou vivarékhénou, yaèr panav itanou séla.\n\
+Lada\'at baarèts darkékha, békhol goïm yéchouatékha.\n\
+Yodokha \'amim Elohim, yodokha \'amim koulam.\n\
+Yismé\'hou viranénou léoumim, ki tichpot \'amim michor, ouléoumim baarèts tan\'hèm séla.\n\
+Yodokha \'amim Elohim, yodokha \'amim koulam.\n\
+Erèts naténa yévoulah, yévarékhénou Elohim Elo-hénou.\n\
+Yévarékhénou Elohim, véyiréou oto kol afsé arèts.\n\
+\n\
+— Ana Békhoa\'h —\n\
+\n\
+Ana békhoa\'h guédoulat yéminékha, tatir tséroura.\n\
+Kabèl rinat \'amékha, saguévénou, tahérénou, nora.\n\
+Na guibor, dorché yi\'houdékha, kébavat chomrém.\n\
+Barkhém, tahérém, ra\'hamé tsidkatékha tamid gomlém.\n\
+\'Hassine kadoch, bérov touvékha nahèl \'adatékha.\n\
+Ya\'hid guéé, lé\'amékha péné, zokhré kédouchatékha.\n\
+Chav\'aténou kabèl, ouchma tsa\'akaténou, yodéa ta\'aloumot.\n\
+\n\
+(en silence) Baroukh chèm kévod malkhouto léolam vaèd.\n\
+\n\
 — Baroukh chéAmar —\n\
 \n\
 Baroukh chéamar véhaya haolam, Baroukh hou, Baroukh ossé béréchit, Baroukh omère véossé, Baroukh gozère oumékayèm, Baroukh méra\'hèm al haarèts, Baroukh méra\'hèm al habériyot, Baroukh méchalèm sakhar tov liréav, Baroukh \'haï laad vékayam lanétsa\'h, Baroukh podé oumatsil, Baroukh chémo.\n\
