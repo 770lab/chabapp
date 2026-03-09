@@ -1,6 +1,6 @@
 {
-  "appId": "com.chabapp.app",
-  "appName": "Chab'app",
+  "appId": "com.koulam.app",
+  "appName": "KOULAM",
   "webDir": ".",
   "server": {
     "androidScheme": "https"

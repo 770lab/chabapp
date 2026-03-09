@@ -186,7 +186,7 @@
       }
     });
 
-    lines.push('', '🕎 Chab\'app - chabapp.com');
+    lines.push('', '🕎 KOULAM - koulam.com');
     var shareText = lines.join('\n');
 
     if (navigator.share) {

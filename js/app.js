@@ -4196,7 +4196,7 @@ function switchTab(tab) {
   }
   if (tab === "following") { if (typeof followingLoad === "function") followingLoad(); }
   if (tab === "dashboard") { if (typeof dashboardLoad === "function") dashboardLoad(); }
-  // Masquer le header Chab'app sur les sous-panels (ils ont leur propre bouton retour)
+  // Masquer le header KOULAM sur les sous-panels (ils ont leur propre bouton retour)
   var homeEl = document.getElementById('home');
   if (homeEl) {
     if (tab === 'menu' || tab === 'jour') homeEl.classList.remove('sub-panel-mode');

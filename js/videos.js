@@ -1,5 +1,5 @@
 /* ============================================================
-   videos.js  —  Vidéos YouTube intégrées  (Chab'app)
+   videos.js  —  Vidéos YouTube intégrées  (KOULAM)
    Dépend de : firebase-config.js, auth.js
    ============================================================ */
 
@@ -322,4 +322,4 @@ function _ytEsc(s) {
   return d.innerHTML;
 }
 
-console.log("[Chab'app] Videos module chargé ✓");
+console.log("[KOULAM] Videos module chargé");

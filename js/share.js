@@ -13,7 +13,7 @@ function shareObjectifs(e){
     if(text)lines.push((checked?'✅':'⬜')+' '+text);
   });
   if(cText)lines.push('─────────────────','📊 Progression : '+cText);
-  lines.push('','🕎 Chab\'app - chabapp.com');
+  lines.push('','🕎 KOULAM - koulam.com');
   var shareText=lines.join('\n');
   if(navigator.share){
     navigator.share({title:'Objectifs du jour',text:shareText}).catch(function(){});

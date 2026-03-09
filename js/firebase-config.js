@@ -1,6 +1,6 @@
 /* ============================================================
-   firebase-config.js  —  Chab'app Firebase initialisation
-   Repo : github.com/770lab/chabapp
+   firebase-config.js  —  KOULAM Firebase initialisation
+   Repo : github.com/770lab/koulam
    ============================================================
 
    1. Inclure le SDK Firebase avant ce fichier :
@@ -87,4 +87,4 @@ function fbLogEvent(name, params) {
   if (fbAnalytics) fbAnalytics.logEvent(name, params || {});
 }
 
-console.log("[Chab'app] Firebase initialisé ✓");
+console.log("[KOULAM] Firebase initialisé");

@@ -1,5 +1,5 @@
 /* ============================================================
-   simha.js  —  Panel Sim'ha — Humour juif  (Chab'app)
+   simha.js  —  Panel Sim'ha — Humour juif  (KOULAM)
    Comediens juifs francophones avec lecteur YouTube integre
    ============================================================ */
 
@@ -153,4 +153,4 @@ function simhaClosePlayer() {
   if (wrap) wrap.style.display = 'none';
 }
 
-console.log("[Chab'app] Simha module charge");
+console.log("[KOULAM] Simha module charge");

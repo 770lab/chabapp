@@ -1,13 +1,13 @@
-// sw.js — Service Worker Chab'app
+// sw.js — Service Worker KOULAM
 // PWA Cache + Web Push natif (via Cloudflare Worker)
 
 // ═══ PWA CACHE ═══
-var CACHE_NAME = 'chabapp-v4';
+var CACHE_NAME = 'koulam-v4';
 var ASSETS = [
-  '/chabapp/',
-  '/chabapp/index.html',
-  '/chabapp/manifest.json',
-  '/chabapp/icons/icon-192x192.png'
+  '/koulam/',
+  '/koulam/index.html',
+  '/koulam/manifest.json',
+  '/koulam/icons/icon-192x192.png'
 ];
 
 self.addEventListener('install', function(e) {
@@ -38,11 +38,11 @@ self.addEventListener('fetch', function(e) {
 // ═══ PUSH NOTIFICATIONS ═══
 self.addEventListener('push', function(event) {
   var data = {
-    title: "Chab'app",
+    title: "KOULAM",
     body: "Machia'h arrive, soyons prêts !",
-    icon: '/chabapp/icons/icon-192x192.png',
-    badge: '/chabapp/icons/icon-72x72.png',
-    url: '/chabapp/'
+    icon: '/koulam/icons/icon-192x192.png',
+    badge: '/koulam/icons/icon-72x72.png',
+    url: '/koulam/'
   };
 
   if (event.data) {
@@ -62,7 +62,7 @@ self.addEventListener('push', function(event) {
       icon: data.icon,
       badge: data.badge,
       vibrate: [200, 100, 200],
-      tag: 'chabapp-notification',
+      tag: 'koulam-notification',
       renotify: true,
       data: { url: data.url },
       actions: [
@@ -78,11 +78,11 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   if (event.action === 'close') return;
 
-  var url = (event.notification.data && event.notification.data.url) || '/chabapp/';
+  var url = (event.notification.data && event.notification.data.url) || '/koulam/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(list) {
       for (var i = 0; i < list.length; i++) {
-        if (list[i].url.indexOf('/chabapp/') !== -1) return list[i].focus();
+        if (list[i].url.indexOf('/koulam/') !== -1) return list[i].focus();
       }
       return clients.openWindow(url);
     })

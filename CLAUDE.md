@@ -1,4 +1,4 @@
-# Chab'app — Instructions pour Claude
+# KOULAM — Instructions pour Claude
 
 ## Git
 - Toujours committer et pusher les changements avant de terminer

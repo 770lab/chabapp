@@ -1,5 +1,5 @@
 /* ============================================================
-   feed.js  —  Fil d'actualité communautaire  (Chab'app)
+   feed.js  —  Fil d'actualité communautaire  (KOULAM)
    Dépend de : firebase-config.js, auth.js
    ============================================================ */
 
@@ -692,10 +692,10 @@ function feedFullscreen(btn) {
 
 // ─── Partage (Web Share API) ────────────────────────────────
 function feedShare(postId, authorName) {
-  var text = "Regarde ce post de " + authorName + " sur Chab'app !";
+  var text = "Regarde ce post de " + authorName + " sur KOULAM !";
   var url = window.location.origin + window.location.pathname + "#post-" + postId;
   if (navigator.share) {
-    navigator.share({ title: "Chab'app", text: text, url: url }).catch(function(){});
+    navigator.share({ title: "KOULAM", text: text, url: url }).catch(function(){});
   } else {
     navigator.clipboard.writeText(text + "\n" + url).then(function() {
       alert("Lien copié !");
@@ -703,12 +703,12 @@ function feedShare(postId, authorName) {
   }
 }
 
-// ─── Télécharger avec watermark Chabapp ─────────────────────
+// ─── Télécharger avec watermark KOULAM ──────────────────────
 function feedDownload(mediaURL, mediaType) {
   if (mediaType === "video") {
     // Pour les vidéos, téléchargement direct (watermark complexe côté client)
     var a = document.createElement("a");
-    a.href = mediaURL; a.download = "chabapp_video.mp4";
+    a.href = mediaURL; a.download = "koulam_video.mp4";
     a.target = "_blank"; a.click();
     return;
   }
@@ -722,13 +722,13 @@ function feedDownload(mediaURL, mediaType) {
     var ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
 
-    // Badge Chabapp en bas à droite
+    // Badge KOULAM en bas à droite
     var badgeH = Math.max(28, canvas.height * 0.04);
     var padX = badgeH * 0.6;
     var padY = badgeH * 0.25;
     var fontSize = badgeH * 0.55;
     ctx.font = "bold " + fontSize + "px sans-serif";
-    var text = "Chab'app";
+    var text = "KOULAM";
     var tw = ctx.measureText(text).width;
     var bw = tw + padX * 2;
     var bh = badgeH;
@@ -748,7 +748,7 @@ function feedDownload(mediaURL, mediaType) {
     canvas.toBlob(function(blob) {
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
-      a.href = url; a.download = "chabapp_photo.jpg";
+      a.href = url; a.download = "koulam_photo.jpg";
       a.click();
       setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
     }, "image/jpeg", 0.92);
@@ -756,7 +756,7 @@ function feedDownload(mediaURL, mediaType) {
   img.onerror = function() {
     // Fallback si CORS bloqué
     var a = document.createElement("a");
-    a.href = mediaURL; a.download = "chabapp_photo.jpg";
+    a.href = mediaURL; a.download = "koulam_photo.jpg";
     a.target = "_blank"; a.click();
   };
   img.src = mediaURL;
@@ -865,7 +865,7 @@ function _renderNotif(n) {
   if (n.type === "like")      msg = '<b>' + _escHtml(n.fromName) + '</b> a aimé votre publication';
   if (n.type === "comment")   msg = '<b>' + _escHtml(n.fromName) + '</b> a commenté : "' + _escHtml(n.text) + '"';
   if (n.type === "mention")   msg = '<b>' + _escHtml(n.fromName) + '</b> vous a mentionné dans une publication';
-  if (n.type === "broadcast") msg = '<b>' + _escHtml(n.title || "Chab'app") + '</b><br>' + _escHtml(n.text);
+  if (n.type === "broadcast") msg = '<b>' + _escHtml(n.title || "KOULAM") + '</b><br>' + _escHtml(n.text);
 
   var cls = n.read ? "notif-item" : "notif-item notif-unread";
   var time = _timeAgo(n.createdAt);
@@ -924,4 +924,4 @@ function followingLoad() {
   });
 }
 
-console.log("[Chab'app] Feed module chargé ✓");
+console.log("[KOULAM] Feed module chargé");

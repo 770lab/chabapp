@@ -1,5 +1,5 @@
 /* ============================================================
-   auth.js  —  Authentification & Profil  (Chab'app)
+   auth.js  —  Authentification & Profil  (KOULAM)
    Dépend de : firebase-config.js
    ============================================================ */
 
@@ -148,7 +148,7 @@ function profileChangePhoto() {
         _renderProfile();
       });
     }).catch(function (err) {
-      console.error("[Chab'app] Photo upload error:", err);
+      console.error("[KOULAM] Photo upload error:", err);
       if (err.code === "storage/unauthorized") {
         alert("Erreur photo : Vous n'avez pas la permission. Vérifiez les règles Storage.");
       } else if (err.code === "storage/unknown") {
@@ -540,7 +540,7 @@ function adminAddByEmail() {
 
   // Chercher l'utilisateur par email dans la collection users
   fbDb.collection("users").where("email", "==", email).get().then(function(snap) {
-    if (snap.empty) return alert("Aucun utilisateur trouvé avec cet email.\nIl doit d'abord créer un compte sur Chab'app.");
+    if (snap.empty) return alert("Aucun utilisateur trouvé avec cet email.\nIl doit d'abord créer un compte sur KOULAM.");
     var targetUid = snap.docs[0].id;
 
     return fbDb.collection("config").doc("admins").get().then(function(doc) {
@@ -612,7 +612,7 @@ function _renderAdminSection() {
   }).catch(function() { wrap.innerHTML = ""; });
 }
 
-console.log("[Chab'app] Auth module chargé ✓");
+console.log("[KOULAM] Auth module chargé");
 
 
 // ─── Gestion classe auth-open sur #home ───────────────────────

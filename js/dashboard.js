@@ -1,5 +1,5 @@
 /* ============================================================
-   dashboard.js  —  Dashboard admin (Chab'app)
+   dashboard.js  —  Dashboard admin (KOULAM)
    Stats utilisateurs, posts, activite
    Responsive : optimise desktop + mobile
    ============================================================ */
@@ -246,4 +246,4 @@ function _dashCard(label, value, color, sub, iconPath) {
     + '</div>';
 }
 
-console.log("[Chab'app] Dashboard module charge");
+console.log("[KOULAM] Dashboard module charge");
