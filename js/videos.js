@@ -27,6 +27,18 @@ var _ytLoaded    = false;
 var _ytIsAdmin   = false;
 var _ytActiveChannel = "all";   // filtre chaîne
 
+// ─── Profils de chaînes YouTube ──────────────────────────
+var YT_PROFILES = [
+  {
+    name: "JEM Francais",
+    handle: "@jem_francais",
+    url: "https://youtube.com/@jem_francais",
+    avatar: "https://yt3.googleusercontent.com/ytc/AIdro_kQx7U7p3PBbqOT-S4HZMAI2FTqPr2WbJqQCq9Z4R3JEA=s176-c-k-c0x00ffffff-no-rj",
+    description: "Contenu du Rabbi de Loubavitch en francais",
+    channelFilter: "JEM"
+  }
+];
+
 // ─── Extraire l'ID YouTube d'une URL ───────────────────────
 function _ytExtractId(url) {
   if (!url) return "";
@@ -107,6 +119,25 @@ function _ytRender() {
     html += '<div class="yt-admin-bar">';
     html += '<button class="yt-admin-btn" onclick="ytShowAddVideo()">+ Ajouter une vidéo</button>';
     html += '<button class="yt-admin-btn yt-admin-btn-channel" onclick="ytShowAddChannel()">+ Nouvelle chaîne</button>';
+    html += '</div>';
+  }
+
+  // Profils de chaînes
+  if (YT_PROFILES.length) {
+    html += '<div class="yt-profiles-section">';
+    html += '<div class="yt-profiles-title">Chaines recommandees</div>';
+    html += '<div class="yt-profiles-scroll">';
+    YT_PROFILES.forEach(function (p) {
+      var isActive = _ytActiveChannel === p.channelFilter;
+      html += '<div class="yt-profile-card' + (isActive ? ' active' : '') + '" onclick="ytFilterChannel(\'' + _ytEsc(p.channelFilter).replace(/'/g, "\\'") + '\')">';
+      html += '<img class="yt-profile-avatar" src="' + _ytEsc(p.avatar) + '" alt="' + _ytEsc(p.name) + '" />';
+      html += '<div class="yt-profile-name">' + _ytEsc(p.name) + '</div>';
+      html += '<div class="yt-profile-handle">' + _ytEsc(p.handle) + '</div>';
+      html += '<div class="yt-profile-desc">' + _ytEsc(p.description) + '</div>';
+      html += '<a class="yt-profile-link" href="' + _ytEsc(p.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Voir sur YouTube</a>';
+      html += '</div>';
+    });
+    html += '</div>';
     html += '</div>';
   }
 

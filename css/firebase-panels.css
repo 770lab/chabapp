@@ -716,6 +716,86 @@ select.yt-admin-input { appearance: auto; }
   color: #fff; cursor: pointer; font-family: inherit;
 }
 
+/* Profils de chaines */
+.yt-profiles-section {
+  padding: 0 0 16px;
+}
+.yt-profiles-title {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 16px; font-weight: 700;
+  color: var(--black, #1a1a2e);
+  margin-bottom: 10px;
+}
+.yt-profiles-scroll {
+  display: flex; gap: 12px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 4px;
+}
+.yt-profiles-scroll::-webkit-scrollbar { display: none; }
+.yt-profile-card {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--white, #fff);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  border: 2px solid transparent;
+}
+.yt-profile-card:active {
+  transform: scale(0.97);
+}
+.yt-profile-card.active {
+  border-color: #ff0033;
+  box-shadow: 0 2px 12px rgba(255,0,51,0.15);
+}
+.yt-profile-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 8px;
+  display: block;
+  border: 2px solid #f3f4f6;
+}
+.yt-profile-name {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 14px; font-weight: 700;
+  color: var(--black, #1a1a2e);
+  line-height: 1.2;
+}
+.yt-profile-handle {
+  font-size: 11px;
+  color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+.yt-profile-desc {
+  font-size: 11px;
+  color: var(--gray-2, #6b7280);
+  margin-top: 6px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.yt-profile-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px; font-weight: 600;
+  color: #ff0033;
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid #ff0033;
+  transition: all 0.15s;
+}
+.yt-profile-link:active {
+  background: #ff0033;
+  color: #fff;
+}
+
 /* ─── NOTIFICATIONS ───────────────────────────────────────── */
 .notifs-container { padding: 0; }
 
