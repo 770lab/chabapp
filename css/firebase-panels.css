@@ -716,6 +716,115 @@ select.yt-admin-input { appearance: auto; }
   color: #fff; cursor: pointer; font-family: inherit;
 }
 
+/* Profils de chaines */
+.yt-profiles-section {
+  padding: 0 0 16px;
+}
+.yt-profiles-title {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 16px; font-weight: 700;
+  color: var(--black, #1a1a2e);
+  margin-bottom: 10px;
+}
+.yt-profiles-scroll {
+  display: flex; gap: 12px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 4px;
+}
+.yt-profiles-scroll::-webkit-scrollbar { display: none; }
+.yt-profile-card {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--white, #fff);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  border: 2px solid transparent;
+}
+.yt-profile-card:active {
+  transform: scale(0.97);
+}
+.yt-profile-card.active {
+  border-color: #ff0033;
+  box-shadow: 0 2px 12px rgba(255,0,51,0.15);
+}
+.yt-profile-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 8px;
+  display: block;
+  border: 2px solid #f3f4f6;
+}
+.yt-profile-name {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 14px; font-weight: 700;
+  color: var(--black, #1a1a2e);
+  line-height: 1.2;
+}
+.yt-profile-handle {
+  font-size: 11px;
+  color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+/* Page profil in-app */
+.ytp-header {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+}
+.ytp-banner {
+  height: 80px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #c9a84c 100%);
+}
+.ytp-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 0 16px 16px;
+  margin-top: -32px;
+}
+.ytp-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+.ytp-meta {
+  padding-top: 36px;
+  min-width: 0;
+}
+.ytp-name {
+  font-family: var(--font, 'EB Garamond', serif);
+  font-size: 18px; font-weight: 900;
+  color: var(--black, #1a1a2e);
+  line-height: 1.2;
+}
+.ytp-handle {
+  font-size: 12px;
+  color: var(--gray-3, #9ca3af);
+  margin-top: 2px;
+}
+.ytp-desc {
+  font-size: 13px;
+  color: var(--gray-2, #4b5563);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.ytp-video-count {
+  font-size: 13px; font-weight: 600;
+  color: var(--gray-2, #4b5563);
+  margin-bottom: 12px;
+  padding-left: 2px;
+}
+
 /* ─── NOTIFICATIONS ───────────────────────────────────────── */
 .notifs-container { padding: 0; }
 
