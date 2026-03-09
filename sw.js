@@ -2,12 +2,12 @@
 // PWA Cache + Web Push natif (via Cloudflare Worker)
 
 // ═══ PWA CACHE ═══
-var CACHE_NAME = 'koulam-v4';
+var CACHE_NAME = 'koulam-v5';
 var ASSETS = [
-  '/koulam/',
-  '/koulam/index.html',
-  '/koulam/manifest.json',
-  '/koulam/icons/icon-192x192.png'
+  './',
+  './index.html',
+  './manifest.json',
+  './icons/icon-192x192.png'
 ];
 
 self.addEventListener('install', function(e) {
@@ -37,12 +37,13 @@ self.addEventListener('fetch', function(e) {
 
 // ═══ PUSH NOTIFICATIONS ═══
 self.addEventListener('push', function(event) {
+  var base = self.registration.scope;
   var data = {
     title: "KOULAM",
     body: "Machia'h arrive, soyons prêts !",
-    icon: '/koulam/icons/icon-192x192.png',
-    badge: '/koulam/icons/icon-72x72.png',
-    url: '/koulam/'
+    icon: base + 'icons/icon-192x192.png',
+    badge: base + 'icons/icon-72x72.png',
+    url: base
   };
 
   if (event.data) {
@@ -66,8 +67,8 @@ self.addEventListener('push', function(event) {
       renotify: true,
       data: { url: data.url },
       actions: [
-        { action: 'open', title: '📖 Ouvrir' },
-        { action: 'close', title: '✕ Fermer' }
+        { action: 'open', title: 'Ouvrir' },
+        { action: 'close', title: 'Fermer' }
       ]
     })
   );
@@ -78,11 +79,11 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   if (event.action === 'close') return;
 
-  var url = (event.notification.data && event.notification.data.url) || '/koulam/';
+  var url = (event.notification.data && event.notification.data.url) || self.registration.scope;
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(list) {
       for (var i = 0; i < list.length; i++) {
-        if (list[i].url.indexOf('/koulam/') !== -1) return list[i].focus();
+        if (list[i].url.indexOf(self.registration.scope) !== -1) return list[i].focus();
       }
       return clients.openWindow(url);
     })
