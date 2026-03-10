@@ -3778,28 +3778,6 @@ var HEBREW_NAMES = [
   [['mirel','mirele'], 'מירל', 'F'],
 ];
 
-const QUOTES = [
-  { text: "Celui qui récite les Tehilim chaque jour, c'est comme s'il avait accompli toute la Torah.", source: "Midrash Chocher Tov" },
-  { text: "Les Tehilim brisent toutes les barrières et s'élèvent de niveau en niveau sans obstacle.", source: "Rabbi Na'hman de Breslev" },
-  { text: "Le Livre des Tehilim est le remède pour toutes les souffrances.", source: "Le Baal Chem Tov" },
-  { text: "David, roi d'Israël, a composé les Tehilim en incluant en eux les prières de chaque juif, en tout temps et en tout lieu.", source: "Le Sfat Emet" },
-  { text: "Celui qui dit des Tehilim repousse les forces du mal et fait descendre la bénédiction sur le monde.", source: "Le Zohar HaKadoch" },
-  { text: "Si les gens connaissaient la puissance des Tehilim, ils les réciteraient à chaque instant.", source: "Rabbi Yéhouda HéH'assid" },
-  { text: "Les portes des larmes ne sont jamais fermées, et les Tehilim sont la clé de toutes les autres portes.", source: "Le Rabbi de Loubavitch" },
-  { text: "Chaque mot des Tehilim possède le pouvoir d'éveiller la miséricorde divine.", source: "Le 'Hafets 'Haïm" },
-  { text: "Heureux celui qui dit des Tehilim avec ferveur, car Hachem compte chacun de ses mots comme des pierres précieuses.", source: "Midrach Rabba" },
-  { text: "La récitation des Tehilim a le pouvoir de transformer un décret sévère en miséricorde.", source: "Le Ben Ich 'Haï" },
-  { text: "Quand un homme ne sait pas quoi dire à Hachem, qu'il ouvre le livre des Tehilim.", source: "Rabbi Yéhiel Mikhal de Zlotchov" },
-  { text: "Les Tehilim sont l'échelle par laquelle on s'élève vers le Créateur.", source: "Le Maguid de Mézéritch" },
-  { text: "Dix formes de louanges ont été utilisées pour composer les Tehilim, et la plus grande de toutes est Halelou-ya.", source: "Talmud Pessa'him 117a" },
-  { text: "La lecture des Tehilim est agréable à Hachem à toute heure du jour et de la nuit.", source: "Le Chla HaKadoch" },
-  { text: "Celui qui récite le livre entier des Tehilim chaque mois mérite de recevoir la face de la Chékhina.", source: "Séfer Hassidim" },
-  { text: "Les Tehilim sont le bouclier d'Israël : ils protègent aussi bien l'individu que la communauté.", source: "Le Rav Ovadia Yossef" },
-  { text: "Quiconque dit des Tehilim est considéré comme s'il avait accompli toutes les supplications du monde.", source: "Yalkout Chimoni" },
-  { text: "Le roi David a demandé à Hachem que la récitation des Tehilim soit considérée comme l'étude de Néguayim et Ohalot.", source: "Talmud Ménah'ot 4a" },
-  { text: "Avec les Tehilim, on peut obtenir tout ce dont on a besoin, que ce soit sur le plan matériel ou spirituel.", source: "Rabbi Israël de Rouzhin" },
-  { text: "Les Tehilim ont été composés avec Roua'h HaKodech pour toutes les générations et toutes les situations.", source: "Le Rambam" },
-];
 
 const COMPLETION_QUOTES = [
   { text: "Chaque bonne action que tu accomplis rapproche la venue du Machia'h. Tu as fait ta part aujourd'hui !", source: "Le Rabbi de Loubavitch" },
@@ -3936,14 +3914,6 @@ function getDayOfMonth() {
 
 
 
-// Quote display durations based on word count (2.5 words/sec + 2.5s buffer)
-// Reading speed: ~150 wpm on screen (French) = 2.5 words/sec
-// Formula: 1s notice + (wordCount / 2.5)s reading + 2s absorb
-function getQuoteDuration(q) {
-  const totalWords = q.text.split(/\s+/).length + q.source.split(/\s+/).length;
-  return Math.round(1000 + (totalWords / 2.5) * 1000);
-}
-
 // Hebrew numeral conversion (number → Hebrew letters)
 function toHebrewNumeral(n) {
   const ones = ['','א','ב','ג','ד','ה','ו','ז','ח','ט'];
@@ -4075,11 +4045,6 @@ function init() {
   }
 }
 
-function skipSplash() {
-  if (window._splashTimer) { clearTimeout(window._splashTimer); window._splashTimer = null; }
-  document.getElementById("splash").classList.add("hidden");
-  showHome();
-}
 
 function showHome() {
   if (window._homeShown) return;
@@ -5463,80 +5428,6 @@ function dismissNotif() {
   n.classList.remove("show");
 }
 
-// ====== QUOTES ======
-function updateQuote() {
-  const q = QUOTES[quoteIndex];
-  var sq = document.getElementById("splash-quote"); if (sq) sq.textContent = "« " + q.text + " »";
-  var ss = document.getElementById("splash-source"); if (ss) ss.textContent = "— " + q.source;
-  var hq = document.getElementById("home-quote"); if (hq) hq.textContent = "« " + q.text + " »";
-  var hs = document.getElementById("home-source"); if (hs) hs.textContent = "— " + q.source;
-  renderDots();
-}
-
-function renderDots() {
-  ["splash-dots", "home-dots"].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    let html = "";
-    QUOTES.forEach((_, i) => {
-      const w = i === quoteIndex ? 14 : 4;
-      const bg = i === quoteIndex ? "var(--black)" : "var(--gray-5)";
-      html += '<div class="' + (id === "splash-dots" ? "splash-dot" : "quote-dot") + '" data-qi="' + i + '" style="width:' + w + 'px;background:' + bg + '"></div>';
-    });
-    el.innerHTML = html;
-    el.onclick = function(e) {
-      var dot = e.target.closest('[data-qi]');
-      var idx = dot ? parseInt(dot.getAttribute('data-qi')) : -1;
-      if (idx >= 0 && idx !== quoteIndex) {
-        jumpToQuote(idx);
-      } else {
-        jumpToQuote((quoteIndex + 1) % QUOTES.length);
-      }
-    };
-  });
-}
-
-function jumpToQuote(idx) {
-  if (quoteTimer) clearTimeout(quoteTimer);
-  ["splash-quote", "splash-source", "home-quote", "home-source"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.style.opacity = "0"; el.style.transform = "translateY(8px)"; }
-  });
-  setTimeout(() => {
-    quoteIndex = idx;
-    updateQuote();
-    ["splash-quote", "splash-source", "home-quote", "home-source"].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }
-    });
-    scheduleNextQuote();
-  }, 400);
-}
-
-function scheduleNextQuote() {
-  if (quoteTimer) clearTimeout(quoteTimer);
-  const duration = getQuoteDuration(QUOTES[quoteIndex]);
-  quoteTimer = setTimeout(cycleQuote, duration);
-}
-
-function cycleQuote() {
-  quoteFade = false;
-  ["splash-quote", "splash-source", "home-quote", "home-source"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.style.opacity = "0"; el.style.transform = "translateY(8px)"; }
-  });
-  setTimeout(() => {
-    quoteIndex = (quoteIndex + 1) % QUOTES.length;
-    updateQuote();
-    ["splash-quote", "splash-source", "home-quote", "home-source"].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }
-    });
-    quoteFade = true;
-    scheduleNextQuote();
-  }, 600);
-}
-
 // ====== BIRTHDAY / MON TEHILIM ======
 const HEBREW_MONTHS_LIST = [
   { value: 1, name: "Tishri", heb: "תשרי" },
@@ -6325,7 +6216,7 @@ function renderT119Results(letters, hebrewName) {
 
 // ====== 10 OBJECTIFS QUOTIDIENS ======
 var DAILY_PERIODS = [
-  { id: 'matin', emoji: '🌅', label: 'Matin', hebrew: 'שַׁחֲרִית', h0: 5, h1: 12,
+  { id: 'matin', emoji: '', img: 'assets/Avraham.png', label: 'Matin', hebrew: 'שַׁחֲרִית', h0: 5, h1: 12,
     bg: 'linear-gradient(135deg,#667eea,#764ba2)', dark: true,
     msg: 'Le matin est le fondement de la journée. Commence par remercier Hachem, donner la Tsédaka et prier avec ferveur.',
     items: [
@@ -6337,7 +6228,7 @@ var DAILY_PERIODS = [
       { id: 'etude_am', emoji: '📚', label: 'Étude de Torah', bg: 'linear-gradient(135deg,#f9a8d4,#ec4899)' }
     ]
   },
-  { id: 'aprem', emoji: '🌤️', label: 'Après-midi', hebrew: 'מִנְחָה', h0: 12, h1: 19,
+  { id: 'aprem', emoji: '', img: 'assets/Itshak.png', imgPos: 'top', label: 'Après-midi', hebrew: 'מִנְחָה', h0: 12, h1: 19,
     bg: 'linear-gradient(135deg,#f6d365,#fda085)', dark: false,
     msg: 'Min\'ha est la prière la plus précieuse : elle interrompt nos occupations pour se tourner vers Hachem.',
     items: [
@@ -6346,7 +6237,7 @@ var DAILY_PERIODS = [
       { id: 'minha', emoji: '🙏', label: 'Min\'ha', bg: 'linear-gradient(135deg,#c084fc,#9333ea)' }
     ]
   },
-  { id: 'soir', emoji: '🌙', label: 'Soir', hebrew: 'עַרְבִית', h0: 19, h1: 5,
+  { id: 'soir', emoji: '', img: 'assets/Yaakov.png', label: 'Soir', hebrew: 'עַרְבִית', h0: 19, h1: 5,
     bg: 'linear-gradient(135deg,#0c3483,#a2b6df)', dark: true,
     msg: 'Le soir clôture la journée dans la sainteté. Prie, étudie, et transmets l\'amour de la Torah à tes proches.',
     items: [
@@ -6443,7 +6334,8 @@ function renderObjStoryBar() {
     var pct = total > 0 ? Math.round(done / total * 100) : 0;
     var ringBg = allDone ? '#dbdbdb' : (isCurrent ? 'conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34)' : 'conic-gradient(from 0deg, #f9ce34 0%, #ee2a7b ' + pct + '%, var(--gray-5) ' + pct + '%)');
     html3 += '<div class="os-item' + (allDone ? ' done' : '') + (isCurrent ? ' current' : '') + '" onclick="openObjStory(' + i + ')">';
-    html3 += '<div class="os-ring" style="background:' + ringBg + '"><div class="os-circle">' + p.emoji + '</div></div>';
+    var circleContent = p.img ? '<img src="' + p.img + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;object-position:' + (p.imgPos || 'center') + '">' : p.emoji;
+    html3 += '<div class="os-ring" style="background:' + ringBg + '"><div class="os-circle">' + circleContent + '</div></div>';
     html3 += '<span class="os-label">' + p.label + ' ' + done + '/' + total + '</span>';
     html3 += '</div>';
     // Insert HYY story after Matin (index 0)
