@@ -6,7 +6,7 @@
 }
 #splash.hidden { opacity:0; visibility:hidden; pointer-events:none; }
 .splash-bh { position:absolute; top:16px; right:16px; font-family:'Noto Serif Hebrew',serif; font-size:22px; font-weight:700; color:var(--black); direction:rtl; }
-.splash-content { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 30px; max-width:440px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.splash-content { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 30px; padding-bottom:80px; max-width:440px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
 @media (max-height:700px) { .splash-content { padding-top:0; } .splash-icon .icon-770 { width:90px; } .splash-footer { padding-bottom:max(16px, env(safe-area-inset-bottom, 0px)); } }
 /* Logo container: grid overlap for cross-fade */
 .splash-logo-wrap { margin-bottom:12px; display:grid; place-items:center; }
