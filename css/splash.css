@@ -39,7 +39,7 @@
 .splash-dots { display:flex; gap:6px; justify-content:center; margin-top:16px; cursor:pointer; padding:8px 0; opacity:0; animation:scSubIn 0.5s ease 7.0s forwards; }
 .splash-dot { height:6px; border-radius:3px; transition: all 0.4s ease; cursor:pointer; }
 .splash-tap { color:var(--gray-4); font-size:11px; margin-top:32px; letter-spacing:2px; opacity:0; animation: scSubIn 0.5s ease 7.2s forwards; }
-.splash-footer { flex-shrink:0; text-align:center; padding-bottom:max(24px, env(safe-area-inset-bottom, 16px)); opacity:0; animation:scSubIn 0.5s ease 7.2s forwards; }
+.splash-footer { flex-shrink:0; text-align:center; padding-bottom:max(60px, calc(env(safe-area-inset-bottom, 16px) + 40px)); opacity:0; animation:scSubIn 0.5s ease 7.2s forwards; }
 .footer-logo-wrap { display:inline-flex; align-items:center; gap:6px; opacity:0.7; transition:opacity 0.3s; }
 .footer-logo-wrap:hover { opacity:0.9; }
 .footer-logo-icon { width:28px; height:18px; }
