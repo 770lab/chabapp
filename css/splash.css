@@ -9,7 +9,7 @@
 .splash-content { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 30px; padding-bottom:80px; max-width:440px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
 @media (max-height:700px) { .splash-content { padding-top:0; } .splash-icon .icon-770 { width:90px; } .splash-footer { padding-bottom:max(16px, env(safe-area-inset-bottom, 0px)); } }
 /* Logo container: grid overlap for cross-fade */
-.splash-logo-wrap { margin-bottom:12px; display:grid; place-items:center; }
+.splash-logo-wrap { margin-bottom:4px; display:grid; place-items:center; }
 .splash-logo-wrap > * { grid-area:1/1; }
 .splash-ig-logo { opacity:0; animation:igLogoIn 0.5s ease 0s forwards, igLogoOut 2.2s ease 2.8s forwards; }
 .splash-crown-logo { width:180px; height:auto; opacity:0; animation:crownLogoIn 2.2s ease 3.0s forwards; }
@@ -18,7 +18,7 @@
 @keyframes crownLogoIn { from { opacity:0; } to { opacity:1; } }
 
 /* Instagram -> Koulam morphing title */
-.splash-title-chabad { font-size:clamp(36px, 12vw, 52px); color:var(--black); font-weight:400; margin-top:0; margin-bottom:16px; letter-spacing:0; font-family:'Grand Hotel',cursive; display:grid; place-items:center; overflow:visible; line-height:1.2; }
+.splash-title-chabad { font-size:clamp(36px, 12vw, 52px); color:var(--black); font-weight:400; margin-top:-4px; margin-bottom:12px; letter-spacing:0; font-family:'Grand Hotel',cursive; display:grid; place-items:center; overflow:visible; line-height:1.2; }
 .splash-title-chabad > * { grid-area:1/1; }
 .sp-ig-text { position:relative; opacity:0; animation:igTextIn 0.5s ease 0.3s forwards, igTextOut 2.2s ease 3.0s forwards; }
 .sp-ig-text::after { content:''; position:absolute; top:55%; left:0; width:0; height:2.5px; background:var(--black); animation:strikeGrow 0.6s ease 2.2s forwards; }
@@ -39,7 +39,7 @@
 .splash-dots { display:flex; gap:6px; justify-content:center; margin-top:16px; cursor:pointer; padding:8px 0; opacity:0; animation:scSubIn 0.5s ease 7.0s forwards; }
 .splash-dot { height:6px; border-radius:3px; transition: all 0.4s ease; cursor:pointer; }
 .splash-tap { color:var(--gray-4); font-size:11px; margin-top:32px; letter-spacing:2px; opacity:0; animation: scSubIn 0.5s ease 7.2s forwards; }
-.splash-footer { flex-shrink:0; text-align:center; padding-bottom:max(60px, calc(env(safe-area-inset-bottom, 16px) + 40px)); opacity:0; animation:scSubIn 0.5s ease 7.2s forwards; }
+.splash-footer { flex-shrink:0; text-align:center; padding-bottom:max(100px, calc(env(safe-area-inset-bottom, 16px) + 80px)); opacity:0; animation:scSubIn 0.5s ease 7.2s forwards; }
 .footer-logo-wrap { display:inline-flex; align-items:center; gap:6px; opacity:0.7; transition:opacity 0.3s; }
 .footer-logo-wrap:hover { opacity:0.9; }
 .footer-logo-icon { width:28px; height:18px; }

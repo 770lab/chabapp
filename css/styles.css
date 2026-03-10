@@ -377,13 +377,13 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .insta-nav-item { display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; cursor:pointer; color:var(--gray-3); padding:6px 12px; -webkit-tap-highlight-color:transparent; transition:color 0.15s; }
 .insta-nav-item:active { transform:scale(0.92); }
 .insta-nav-item svg { width:24px; height:24px; }
-.insta-nav-item span { font-size:12px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); }
+.insta-nav-item span { font-size:13px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); }
 .insta-nav-item.active { color:var(--black); }
 .insta-nav-item.active svg { stroke-width:2.2; }
 .insta-nav-center { position:relative; display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; cursor:pointer; padding:6px 12px; -webkit-tap-highlight-color:transparent; }
-.insta-nav-center-ring { width:50px; height:50px; border-radius:50%; background:conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34); display:flex; align-items:center; justify-content:center; margin-top:-22px; box-shadow:0 2px 12px rgba(98,40,215,0.25);  }
-.insta-nav-center-inner { width:44px; height:44px; border-radius:50%; background:var(--white); display:flex; align-items:center; justify-content:center; font-size:22px; }
-.insta-nav-center span { font-size:12px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); color:var(--gray-3); margin-top:2px; }
+.insta-nav-center-ring { width:58px; height:58px; border-radius:50%; background:conic-gradient(from 210deg, #f9ce34, #ee2a7b, #6228d7, #ee2a7b, #f9ce34); display:flex; align-items:center; justify-content:center; margin-top:-22px; box-shadow:0 2px 12px rgba(98,40,215,0.25);  }
+.insta-nav-center-inner { width:52px; height:52px; border-radius:50%; background:var(--white); display:flex; align-items:center; justify-content:center; font-size:22px; }
+.insta-nav-center span { font-size:13px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); color:var(--gray-3); margin-top:2px; }
 .insta-nav-center.active span { color:var(--black); }
 /* SHARE BTN next to heart */
 .insta-share-btn { background:none; border:none; cursor:pointer; padding:6px; display:flex; align-items:center; transition:transform 0.2s, filter 0.2s; border-radius:50%; position:relative; }
