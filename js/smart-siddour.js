@@ -54,6 +54,10 @@ var TEFILOT = {
         text: 'בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.\n\nתְּפִלִּין שֶׁל רֹאשׁ:\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין.\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.',
         phonetic: 'Baroukh ata Ado-naï Elo-hénou Mélekh haolam, achère kidéchanou bémitsvotav, vétsivanou léhania\'h téfiline.\n\nTéfiline chel roch :\nBaroukh ata Ado-naï Elo-hénou Mélekh haolam, achère kidéchanou bémitsvotav, vétsivanou al mitsvat téfiline.\nBaroukh chem kevod malkhouto léolam vaèd.' },
 
+      { id: 'lamnatseach', title: 'לַמְנַצֵּחַ בִּנְגִינוֹת + אָנָּא בְּכֹחַ', titlePhonetic: 'Lamnatséa\'h + Ana Békhoa\'h', omer_period: true,
+        text: '— לַמְנַצֵּחַ בִּנְגִינוֹת (תהלים סז) —\n\nלַמְנַצֵּחַ בִּנְגִינוֹת, מִזְמוֹר שִׁיר.\nאֱלֹהִים יְחׇנֵּנוּ וִיבָרְכֵנוּ, יָאֵר פָּנָיו אִתָּנוּ סֶלָה.\nלָדַעַת בָּאָרֶץ דַּרְכֶּךָ, בְּכׇל גּוֹיִם יְשׁוּעָתֶךָ.\nיוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\nיִשְׂמְחוּ וִירַנְּנוּ לְאֻמִּים, כִּי תִשְׁפֹּט עַמִּים מִישׁוֹר, וּלְאֻמִּים בָּאָרֶץ תַּנְחֵם סֶלָה.\nיוֹדוּךָ עַמִּים אֱלֹהִים, יוֹדוּךָ עַמִּים כֻּלָּם.\nאֶרֶץ נָתְנָה יְבוּלָהּ, יְבָרְכֵנוּ אֱלֹהִים אֱלֹהֵינוּ.\nיְבָרְכֵנוּ אֱלֹהִים, וְיִירְאוּ אוֹתוֹ כׇּל אַפְסֵי אָרֶץ.\n\n— אָנָּא בְּכֹחַ —\n\nאָנָּא בְּכֹחַ גְּדֻלַּת יְמִינְךָ, תַּתִּיר צְרוּרָה.\nקַבֵּל רִנַּת עַמְּךָ, שַׂגְּבֵנוּ טַהֲרֵנוּ נוֹרָא.\nנָא גִבּוֹר, דּוֹרְשֵׁי יִחוּדְךָ, כְּבָבַת שׇׁמְרֵם.\nבָּרְכֵם טַהֲרֵם, רַחֲמֵי צִדְקָתְךָ תָּמִיד גׇּמְלֵם.\nחֲסִין קָדוֹשׁ, בְּרוֹב טוּבְךָ נַהֵל עֲדָתֶךָ.\nיָחִיד גֵּאֶה, לְעַמְּךָ פְּנֵה, זוֹכְרֵי קְדֻשָּׁתֶךָ.\nשַׁוְעָתֵנוּ קַבֵּל, וּשְׁמַע צַעֲקָתֵנוּ, יוֹדֵעַ תַּעֲלוּמוֹת.\nבָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.',
+        phonetic: '— Lamnatséa\'h Bineguinot (Téhilim 67) —\n\nLamnatséa\'h bineguinot, mizmor chir.\nElohim yé\'honénou vivarékhénou, yaèr panav itanou séla.\nLadaat baarèts darkékha, békhol goyim yéchouatékha.\nYodoukha amim Elohim, yodoukha amim koulam.\nYismé\'hou viranénou léoumim, ki tichpot amim michor, ouléoumim baarèts tan\'hèm séla.\nYodoukha amim Elohim, yodoukha amim koulam.\nÉrèts naténa yévoulah, yévarékhénou Elohim Elo-hénou.\nYévarékhénou Elohim, véyiréou oto kol afssé arèts.\n\n— Ana Békhoa\'h —\n\nAna békhoa\'h guédoulat yéminékha, tatir tséroura.\nKabèl rinat amékha, saguévénou taharénou nora.\nNa guibor, dorché yi\'houdékha, kébavat chomrèm.\nBarékhèm taharèm, ra\'hamé tsidkatékha tamid gomlèm.\n\'Hassine kadoch, bérov touvékha nahèl adatékha.\nYa\'hid guéé, léamékha péné, zokhré kédouchatékha.\nChaveatéinou kabèl, ouchma tsaakatéinou, yodéa taaloumo.\nBaroukh chem kevod malkhouto léolam vaèd.' },
+
       { id: 'psukei', title: 'פְּסוּקֵי דְּזִמְרָה', titlePhonetic: 'Pessouké déZimra', always: true,
         text: (window.SIDDUR_PSUKEI || {}).text || '',
         phonetic: (window.SIDDUR_PSUKEI || {}).phonetic || '' },
@@ -285,6 +289,12 @@ function getHDate() {
   if (hm === 10 && hd === 8) noTahanoun = true; // Isrou Hag Chavouot
   if (hm === 1 && hd === 24) noTahanoun = true; // Isrou Hag Souccot
 
+  // Sefirat HaOmer : du 16 Nissan au 5 Sivan (veille de Chavouot)
+  var isOmerPeriod = false;
+  if (hm === 8 && hd >= 16) isOmerPeriod = true;  // 16-30 Nissan
+  if (hm === 9) isOmerPeriod = true;               // Tout Iyyar
+  if (hm === 10 && hd <= 5) isOmerPeriod = true;   // 1-5 Sivan
+
   var monthNameHe = HEB_MONTHS_HE[hm] || '';
   if (hm === 6 && !_hyyIsLeap(heb.hy)) monthNameHe = 'אדר';
   var labelHe = _gematriaDay(hd) + ' ' + monthNameHe + ' ' + _hebYear(heb.hy);
@@ -297,6 +307,7 @@ function getHDate() {
     isRoshHodesh: isRoshHodesh,
     isTahnounDay: !noTahanoun,
     isShabbat:    isShabbat,
+    isOmerPeriod: isOmerPeriod,
     label:        labelHe,
     labelFr:      labelFr,
     hm: hm,
@@ -311,6 +322,7 @@ function filterSections(sections, hdate) {
     if (s.always)      return true;
     if (s.rosh_hodesh) return hdate.isRoshHodesh;
     if (s.tahnoun_day) return hdate.isTahnounDay;
+    if (s.omer_period) return hdate.isOmerPeriod;
     return false;
   });
 }
@@ -540,6 +552,7 @@ var TITLE_FR = {
   'modeh': 'Je reconnais', 'netilat': 'Ablution des mains',
   'asher-yatzar': 'Asher Yatzar', 'elohai-neshama': 'Mon Dieu, l\'ame',
   'brachot': 'Benedictions du matin', 'tfilin': 'Pose des Tefilines',
+  'lamnatseach': 'Psaume 67 + Ana Bekoah (Omer)',
   'psukei': 'Versets de louanges', 'birkot-shema': 'Benedictions du Chema',
   'shema': 'Lecture du Chema', 'amida': 'Amida (debout)',
   'hallel': 'Hallel', 'tahnoun': 'Supplications',
@@ -887,6 +900,9 @@ function render() {
   }
   if (!hdate.isTahnounDay && !hdate.isRoshHodesh) {
     infoLines.push(isHe ? '✨ אין תחנון' : '✨ Pas de Ta\'hanoun');
+  }
+  if (hdate.isOmerPeriod) {
+    infoLines.push(isHe ? '🌾 ספירת העומר — לַמְנַצֵּחַ + אָנָּא בְּכֹחַ לפני ברוך שאמר' : '🌾 Sefirat HaOmer — Lamnatséa\'h + Ana Békhoa\'h ajoutes avant Baroukh cheAmar');
   }
   if (hdate.isShabbat) {
     infoLines.push(isHe ? '🕯 שבת' : '🕯 Chabbat');
