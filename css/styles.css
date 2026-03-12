@@ -240,6 +240,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .obj-item.checked .obj-check-svg { opacity:1; transform:scale(1); }
 .obj-item.checked { background:#fff; }
 .obj-item.checked .obj-label { color:var(--gray-2); }
+.obj-item-full { grid-column:1 / -1; }
+.obj-item-full .obj-emoji-wrap { height:140px; }
 .obj-time { font-size:10px; color:var(--gray-4); font-weight:600; flex-shrink:0; }
 .obj-reset-wrap { text-align:center; padding:0 0 4px; }
 .obj-reset-btn { background:none; border:none; color:var(--gray-4); font-size:11px; cursor:pointer; font-family:var(--font); font-weight:600; padding:4px 12px; }

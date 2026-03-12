@@ -6220,7 +6220,7 @@ var DAILY_PERIODS = [
     bg: 'linear-gradient(135deg,#667eea,#764ba2)', dark: true,
     msg: 'Le matin est le fondement de la journée. Commence par remercier Hachem, donner la Tsédaka et prier avec ferveur.',
     items: [
-      { id: 'modeh', emoji: '', img: 'assets/mode-ani.jpg', label: 'Modé Ani', bg: 'linear-gradient(135deg,#ff9a56,#ff6f61)' },
+      { id: 'modeh', emoji: '🌅', img: 'assets/obj-modeh.jpeg', label: 'Modé Ani', bg: 'linear-gradient(135deg,#ff9a56,#ff6f61)' },
       { id: 'brakhot', emoji: '🙌', label: 'Brakhot du matin', bg: 'linear-gradient(135deg,#56ccf2,#2f80ed)' },
       { id: 'tsedaka_am', emoji: '🪙', label: 'Tsédaka', bg: 'linear-gradient(135deg,#f7d86e,#e8b923)' },
       { id: 'tefila', emoji: '🙏', label: 'Cha\'harit', bg: 'linear-gradient(135deg,#a78bfa,#7c3aed)' },
@@ -6654,11 +6654,16 @@ function renderObjectives() {
     html += '<span class="obj-period-count">' + periodDone + '/' + periodTotal + '</span>';
     html += '</div>';
     html += '<div class="obj-grid">';
-    period.items.forEach(function(it) {
+    period.items.forEach(function(it, ii) {
       var done = !!state[it.id];
-      html += '<div class="obj-item' + (done ? ' checked' : '') + '" onclick="toggleObjective(\'' + it.id + '\')">';
-      var emojiContent = it.img ? '<img src="' + it.img + '" style="width:48px;height:48px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)">' : it.emoji;
-      html += '<div class="obj-emoji-wrap" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + '">' + emojiContent;
+      var isLast = (pi === DAILY_PERIODS.length - 1 && ii === period.items.length - 1);
+      html += '<div class="obj-item' + (done ? ' checked' : '') + (isLast ? ' obj-item-full' : '') + '" onclick="toggleObjective(\'' + it.id + '\')">';
+      if (it.img) {
+        html += '<div class="obj-emoji-wrap" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + ';padding:0;overflow:hidden">';
+        html += '<img src="' + it.img + '" style="width:100%;height:100%;object-fit:cover;display:block">';
+      } else {
+        html += '<div class="obj-emoji-wrap" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + '">' + it.emoji;
+      }
       html += '<div class="obj-checkbox"><svg class="obj-check-svg" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
       html += '</div>';
       html += '<div class="obj-label-wrap"><span class="obj-label">' + it.label + '</span></div>';
