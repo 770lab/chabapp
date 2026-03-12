@@ -115,6 +115,7 @@ function _pushCheckAdmin() {
 }
 
 // Envoyer une notification in-app (Firestore) a tous les utilisateurs
+// + push FCM via Apps Script
 function pushSendToAll() {
   var title = document.getElementById('push-admin-title').value.trim();
   var body = document.getElementById('push-admin-body').value.trim();
@@ -126,12 +127,12 @@ function pushSendToAll() {
 
   // Recuperer tous les utilisateurs
   usersCol.get().then(function(snap) {
-    var batch = fbDb.batch();
-    var count = 0;
+    // Construire la liste des docs a creer + tokens FCM
+    var docs = [];
+    var fcmTokens = [];
     snap.forEach(function(doc) {
       if (doc.id === chabUser.uid) return;
-      var ref = notifsCol.doc();
-      batch.set(ref, {
+      docs.push({
         toUid: doc.id,
         fromUid: chabUser.uid,
         fromName: 'Chab\'app',
@@ -143,20 +144,49 @@ function pushSendToAll() {
         read: false,
         createdAt: fbTimestamp()
       });
-      count++;
+      var d = doc.data();
+      if (d.fcmToken) fcmTokens.push(d.fcmToken);
     });
-    return batch.commit().then(function() { return count; });
+
+    // Ecrire en batches de 499 max (limite Firestore = 500)
+    var batches = [];
+    for (var i = 0; i < docs.length; i += 499) {
+      var batch = fbDb.batch();
+      var chunk = docs.slice(i, i + 499);
+      chunk.forEach(function(notifData) {
+        batch.set(notifsCol.doc(), notifData);
+      });
+      batches.push(batch.commit());
+    }
+
+    return Promise.all(batches).then(function() {
+      // Envoyer les push FCM via Apps Script
+      if (fcmTokens.length > 0) {
+        _pushSendFcmViaAppsScript(title, body, fcmTokens);
+      }
+      return docs.length;
+    });
   }).then(function(count) {
     btn.disabled = false;
     btn.textContent = 'Envoyer la notification';
     document.getElementById('push-admin-title').value = '';
     document.getElementById('push-admin-body').value = '';
     alert('Notification envoyee a ' + count + ' utilisateurs !');
+    _pushLoadHistory();
   }).catch(function(err) {
     btn.disabled = false;
     btn.textContent = 'Envoyer la notification';
     alert('Erreur: ' + err.message);
+    console.error('[Push] pushSendToAll error:', err);
   });
+}
+
+// Envoyer les push FCM via Apps Script (fire-and-forget)
+function _pushSendFcmViaAppsScript(title, body, tokens) {
+  fetch(KOULAM_BO_API_URL + '?action=sendKoulamPush&title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body) + '&tokens=' + encodeURIComponent(JSON.stringify(tokens)))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) { console.log('[Push] FCM via Apps Script:', resp.message || resp.error || resp); })
+    .catch(function(err) { console.log('[Push] FCM Apps Script err:', err); });
 }
 
 // Rendre le panel admin notifications
@@ -217,5 +247,8 @@ function _pushLoadHistory() {
       });
       el.innerHTML = html;
     })
-    .catch(function() { el.innerHTML = '<div style="color:var(--gray-4);">Erreur chargement.</div>'; });
+    .catch(function(err) {
+      console.error('[Push] History load error:', err);
+      el.innerHTML = '<div style="color:var(--gray-4);">Erreur chargement historique.</div>';
+    });
 }
