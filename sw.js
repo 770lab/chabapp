@@ -1,5 +1,43 @@
 // sw.js — Service Worker KOULAM
-// PWA Cache + Web Push natif (via Cloudflare Worker)
+// PWA Cache + FCM Push Notifications
+
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
+
+// ═══ Firebase Messaging (background) ═══
+firebase.initializeApp({
+  apiKey: "AIzaSyBRVG8tGej-3EGI2AXH1Gmpa10GTVA22tk",
+  authDomain: "chabapp-5fc3b.firebaseapp.com",
+  projectId: "chabapp-5fc3b",
+  storageBucket: "chabapp-5fc3b.firebasestorage.app",
+  messagingSenderId: "587299342390",
+  appId: "1:587299342390:web:278a1c63936d6a14e7b097"
+});
+
+var messaging = firebase.messaging();
+
+// Handle background messages from FCM
+messaging.onBackgroundMessage(function(payload) {
+  console.log('[SW] Background message:', payload);
+  var data = payload.data || {};
+  var notifTitle = data.title || payload.notification?.title || 'KOULAM';
+  var notifBody = data.body || payload.notification?.body || '';
+  var notifUrl = data.url || self.registration.scope;
+
+  return self.registration.showNotification(notifTitle, {
+    body: notifBody,
+    icon: self.registration.scope + 'icons/icon-192x192.png',
+    badge: self.registration.scope + 'icons/icon-72x72.png',
+    vibrate: [200, 100, 200],
+    tag: 'koulam-notification',
+    renotify: true,
+    data: { url: notifUrl },
+    actions: [
+      { action: 'open', title: 'Ouvrir' },
+      { action: 'close', title: 'Fermer' }
+    ]
+  });
+});
 
 // ═══ PWA CACHE ═══
 var CACHE_NAME = 'koulam-v5';

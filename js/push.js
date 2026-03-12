@@ -1,12 +1,13 @@
-// push.js — Web Push + Admin notification sender
-// Enregistrement du Service Worker, permission push, stockage subscription Firestore
+// push.js — FCM Push + Admin notification sender
+// Enregistrement du Service Worker, permission push via FCM, stockage token Firestore + Apps Script
 // Panel admin pour envoyer des notifications a tous les utilisateurs
 
-var VAPID_PUBLIC_KEY = 'BAQNk40Rg1rp1qN7OGEQAzK1RR_9UJW9_HpP5CYNCrkZxMVOSsyYfuliK7lJVruTLGYNW6XbFRaOzAUL-rFqjNg';
-var _pushSubscription = null;
+var KOULAM_VAPID_KEY = 'BNGqqm2LcUBSBui_fcmX9_SLMmcVH7gMtldqlbuW6KBow7Q3uzb5ER3YTANOTH0h9WlYukjsTsGZbzGjOh1YE_w';
+var KOULAM_BO_API_URL = 'https://script.google.com/macros/s/AKfycbzdftvc5apXhrG596oR5H_OcveeH1GfJoQLlRwsLd-wnWPIMC4Ihzjq3Jjy4ss51OlE/exec';
+var _pushFcmToken = null;
 var _pushIsAdmin = false;
 
-// ─── Init: enregistrer le SW et s'abonner au push ────────
+// ─── Init: enregistrer le SW et obtenir le token FCM ────────
 function pushInit() {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     console.log('[Push] Non supporte sur ce navigateur');
@@ -15,13 +16,10 @@ function pushInit() {
   navigator.serviceWorker.register('sw.js')
     .then(function(reg) {
       console.log('[Push] SW enregistre');
-      return reg.pushManager.getSubscription().then(function(sub) {
-        if (sub) {
-          _pushSubscription = sub;
-          _savePushSubscription(sub);
-        }
-        return reg;
-      });
+      // Si la permission est deja accordee, obtenir le token FCM
+      if (Notification.permission === 'granted') {
+        _getFcmToken(reg);
+      }
     })
     .catch(function(err) { console.log('[Push] SW erreur:', err); });
 }
@@ -34,39 +32,50 @@ function pushRequestPermission() {
   Notification.requestPermission().then(function(perm) {
     if (perm === 'granted') {
       navigator.serviceWorker.ready.then(function(reg) {
-        var key = _urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
-        return reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: key
-        });
-      }).then(function(sub) {
-        _pushSubscription = sub;
-        _savePushSubscription(sub);
-        _updatePushUI(true);
-        console.log('[Push] Abonne!');
-      }).catch(function(err) {
-        console.log('[Push] Erreur subscribe:', err);
+        _getFcmToken(reg);
       });
     }
   });
 }
 
-function _savePushSubscription(sub) {
-  if (!chabUser || !sub) return;
-  var data = sub.toJSON();
-  usersCol.doc(chabUser.uid).update({
-    pushSubscription: data,
-    pushUpdated: fbTimestamp()
-  }).catch(function(err) { console.log('[Push] Save sub err:', err); });
+function _getFcmToken(reg) {
+  if (typeof firebase === 'undefined' || !firebase.messaging) {
+    console.log('[Push] Firebase Messaging non charge');
+    return;
+  }
+  var fbMessaging = firebase.messaging();
+  fbMessaging.getToken({
+    vapidKey: KOULAM_VAPID_KEY,
+    serviceWorkerRegistration: reg
+  }).then(function(token) {
+    if (token) {
+      console.log('[Push] FCM Token:', token.substring(0, 20) + '...');
+      _pushFcmToken = token;
+      _saveFcmToken(token);
+      _updatePushUI(true);
+    } else {
+      console.log('[Push] Pas de token FCM');
+    }
+  }).catch(function(err) {
+    console.log('[Push] Erreur FCM getToken:', err);
+  });
 }
 
-function _urlBase64ToUint8Array(base64String) {
-  var padding = '='.repeat((4 - base64String.length % 4) % 4);
-  var base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-  var raw = atob(base64);
-  var arr = new Uint8Array(raw.length);
-  for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
-  return arr;
+function _saveFcmToken(token) {
+  if (!chabUser || !token) return;
+
+  // 1. Sauvegarder dans Firestore
+  usersCol.doc(chabUser.uid).update({
+    fcmToken: token,
+    fcmUpdated: fbTimestamp()
+  }).catch(function(err) { console.log('[Push] Save Firestore err:', err); });
+
+  // 2. Sauvegarder via Apps Script (sheet Koulam_FCM)
+  var userName = (chabUser.displayName || chabUser.email || chabUser.uid);
+  fetch(KOULAM_BO_API_URL + '?action=saveKoulamFcmToken&user=' + encodeURIComponent(userName) + '&token=' + encodeURIComponent(token))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) { console.log('[Push] Apps Script save:', resp.message || resp.error); })
+    .catch(function(err) { console.log('[Push] Apps Script save err:', err); });
 }
 
 function _updatePushUI(enabled) {
