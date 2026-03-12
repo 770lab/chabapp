@@ -243,6 +243,22 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .obj-item.checked .obj-label { color:var(--gray-2); }
 .obj-item-full { grid-column:1 / -1; }
 .obj-item-full .obj-emoji-wrap { height:180px; aspect-ratio:auto; }
+/* Notification settings */
+.obj-notif-settings { padding:12px; margin-top:4px; }
+.obj-notif-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.obj-notif-title { font-size:14px; font-weight:700; color:var(--black); }
+.obj-notif-toggle-all { background:none; border:1px solid var(--gray-5); border-radius:8px; padding:4px 10px; font-size:11px; font-weight:600; color:var(--gray-3); cursor:pointer; font-family:var(--font); }
+.obj-notif-list { display:flex; flex-direction:column; gap:2px; }
+.obj-notif-row { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:10px; background:var(--gray-6); cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.obj-notif-info { display:flex; flex-direction:column; gap:1px; }
+.obj-notif-name { font-size:13px; font-weight:600; color:var(--black); }
+.obj-notif-time { font-size:11px; color:var(--gray-3); }
+.obj-notif-switch { width:40px; height:24px; border-radius:12px; background:var(--gray-5); position:relative; transition:background 0.2s; flex-shrink:0; }
+.obj-notif-switch.on { background:#16a34a; }
+.obj-notif-switch-dot { width:20px; height:20px; border-radius:50%; background:#fff; position:absolute; top:2px; left:2px; transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.15); }
+.obj-notif-switch.on .obj-notif-switch-dot { transform:translateX(16px); }
+.obj-notif-perm { text-align:center; padding:12px; font-size:13px; color:var(--gray-3); }
+.obj-notif-perm-btn { background:var(--black); color:#fff; border:none; border-radius:10px; padding:10px 20px; font-size:13px; font-weight:700; cursor:pointer; font-family:var(--font); }
 .obj-item-full .obj-emoji-wrap.has-img { height:180px; aspect-ratio:auto; }
 .obj-time { font-size:10px; color:var(--gray-4); font-weight:600; flex-shrink:0; }
 .obj-reset-wrap { text-align:center; padding:0 0 4px; }

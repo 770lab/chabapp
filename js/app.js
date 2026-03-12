@@ -4063,6 +4063,7 @@ function showHome() {
   loadShabbatTimes();
   updateBigObjSub();
   cleanOldObjectives();
+  if (typeof scheduleObjNotifs === 'function') scheduleObjNotifs();
   updateBirthdaySub();
   setTimeout(checkBirthdayPopup, 1000);
   setTimeout(checkSharedChain, 500);
@@ -6707,6 +6708,7 @@ function renderObjectives() {
   var homePct = document.getElementById('obj-progress-home-pct');
   if (homePct) { homePct.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; homePct.style.color = checked === TOTAL_OBJ ? '#16a34a' : '#fff'; }
   renderObjStoryBar();
+  if (typeof renderObjNotifSettings === 'function') renderObjNotifSettings();
 }
 
 function toggleObjective(id) {
@@ -6714,6 +6716,7 @@ function toggleObjective(id) {
   if (state[id]) { delete state[id]; } else { state[id] = new Date().toISOString(); }
   saveObjState(state);
   renderObjectives();
+  if (typeof scheduleObjNotifs === 'function') scheduleObjNotifs();
 }
 
 function resetObjectives() {
