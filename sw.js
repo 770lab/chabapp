@@ -1,10 +1,9 @@
-// sw.js — Service Worker KOULAM
+// sw.js — Service Worker KOULAM v2
 // PWA Cache + FCM Push Notifications
 
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
-// ═══ Firebase Messaging (background) ═══
 firebase.initializeApp({
   apiKey: "AIzaSyBRVG8tGej-3EGI2AXH1Gmpa10GTVA22tk",
   authDomain: "chabapp-5fc3b.firebaseapp.com",
@@ -16,31 +15,10 @@ firebase.initializeApp({
 
 var messaging = firebase.messaging();
 
-// Handle background messages from FCM
-messaging.onBackgroundMessage(function(payload) {
-  console.log('[SW] Background message:', payload);
-  var data = payload.data || {};
-  var notifTitle = data.title || payload.notification?.title || 'KOULAM';
-  var notifBody = data.body || payload.notification?.body || '';
-  var notifUrl = data.url || self.registration.scope;
-
-  return self.registration.showNotification(notifTitle, {
-    body: notifBody,
-    icon: self.registration.scope + 'icons/icon-192x192.png',
-    badge: self.registration.scope + 'icons/icon-72x72.png',
-    vibrate: [200, 100, 200],
-    tag: 'koulam-notification',
-    renotify: true,
-    data: { url: notifUrl },
-    actions: [
-      { action: 'open', title: 'Ouvrir' },
-      { action: 'close', title: 'Fermer' }
-    ]
-  });
-});
+var KOULAM_URL = self.registration ? self.registration.scope : 'https://770lab.github.io/chabapp/';
 
 // ═══ PWA CACHE ═══
-var CACHE_NAME = 'koulam-v5';
+var CACHE_NAME = 'koulam-v6';
 var ASSETS = [
   './',
   './index.html',
@@ -49,11 +27,13 @@ var ASSETS = [
 ];
 
 self.addEventListener('install', function(e) {
+  console.log('[SW v2] Installing');
   e.waitUntil(caches.open(CACHE_NAME).then(function(c) { return c.addAll(ASSETS); }));
   self.skipWaiting();
 });
 
 self.addEventListener('activate', function(e) {
+  console.log('[SW v2] Activating');
   e.waitUntil(
     caches.keys().then(function(keys) {
       return Promise.all(keys.filter(function(k) { return k !== CACHE_NAME; }).map(function(k) { return caches.delete(k); }));
@@ -63,7 +43,7 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  if (e.request.url.indexOf('workers.dev') !== -1) return; // ne pas cacher les appels au Worker
+  if (e.request.url.indexOf('workers.dev') !== -1) return;
   e.respondWith(
     fetch(e.request).then(function(r) {
       var cl = r.clone();
@@ -73,37 +53,39 @@ self.addEventListener('fetch', function(e) {
   );
 });
 
-// ═══ PUSH NOTIFICATIONS ═══
+// ═══ PUSH NOTIFICATIONS — Single handler via push event ═══
 self.addEventListener('push', function(event) {
-  var base = self.registration.scope;
-  var data = {
-    title: "KOULAM",
-    body: "Machia'h arrive, soyons prêts !",
-    icon: base + 'icons/icon-192x192.png',
-    badge: base + 'icons/icon-72x72.png',
-    url: base
-  };
+  console.log('[SW v2] Push received');
+
+  var title = 'KOULAM';
+  var body = '';
+  var url = KOULAM_URL;
 
   if (event.data) {
     try {
-      var payload = event.data.json();
-      data.title = payload.title || data.title;
-      data.body = payload.body || data.body;
-      if (payload.data && payload.data.url) data.url = payload.data.url;
-    } catch (e) {
-      data.body = event.data.text();
+      var raw = event.data.json();
+      console.log('[SW v2] Push JSON:', JSON.stringify(raw));
+      var d = raw.data || {};
+      var n = raw.notification || {};
+      title = d.title || n.title || raw.title || title;
+      body = d.body || n.body || raw.body || body;
+      url = d.url || n.url || raw.url || url;
+    } catch(e) {
+      try { body = event.data.text(); } catch(e2) {}
     }
   }
 
+  console.log('[SW v2] Showing:', title, '|', body);
+
   event.waitUntil(
-    self.registration.showNotification(data.title, {
-      body: data.body,
-      icon: data.icon,
-      badge: data.badge,
+    self.registration.showNotification(title, {
+      body: body,
+      icon: KOULAM_URL + 'icons/icon-192x192.png',
+      badge: KOULAM_URL + 'icons/icon-72x72.png',
       vibrate: [200, 100, 200],
-      tag: 'koulam-notification',
+      tag: 'koulam-' + Date.now(),
       renotify: true,
-      data: { url: data.url },
+      data: { url: url },
       actions: [
         { action: 'open', title: 'Ouvrir' },
         { action: 'close', title: 'Fermer' }
@@ -117,11 +99,11 @@ self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   if (event.action === 'close') return;
 
-  var url = (event.notification.data && event.notification.data.url) || self.registration.scope;
+  var url = (event.notification.data && event.notification.data.url) || KOULAM_URL;
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(list) {
       for (var i = 0; i < list.length; i++) {
-        if (list[i].url.indexOf(self.registration.scope) !== -1) return list[i].focus();
+        if (list[i].url.indexOf('chabapp') !== -1 || list[i].url.indexOf('koulam') !== -1) return list[i].focus();
       }
       return clients.openWindow(url);
     })
