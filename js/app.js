@@ -6659,8 +6659,8 @@ function renderObjectives() {
       var isLast = (pi === DAILY_PERIODS.length - 1 && ii === period.items.length - 1);
       html += '<div class="obj-item' + (done ? ' checked' : '') + (isLast ? ' obj-item-full' : '') + '" onclick="toggleObjective(\'' + it.id + '\')">';
       if (it.img) {
-        html += '<div class="obj-emoji-wrap" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + ';padding:0;overflow:hidden">';
-        html += '<img src="' + it.img + '" style="width:100%;height:100%;object-fit:cover;display:block">';
+        html += '<div class="obj-emoji-wrap has-img" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + ';padding:0;overflow:hidden">';
+        html += '<img src="' + it.img + '" style="width:100%;height:100%;object-fit:contain;display:block">';
       } else {
         html += '<div class="obj-emoji-wrap" style="background:' + (it.bg || 'rgba(255,255,255,0.3)') + '">' + it.emoji;
       }

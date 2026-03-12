@@ -232,6 +232,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .obj-item { display:flex; flex-direction:column; align-items:center; border-radius:14px; cursor:pointer; transition:all 0.2s; -webkit-tap-highlight-color:transparent; background:#fff; box-shadow:0 1px 6px rgba(0,0,0,0.08); overflow:hidden; position:relative; }
 .obj-item:active { transform:scale(0.97); }
 .obj-item .obj-emoji-wrap { width:100%; height:80px; display:flex; align-items:center; justify-content:center; font-size:42px; position:relative; border-radius:12px 12px 0 0; }
+.obj-item .obj-emoji-wrap.has-img { height:auto; aspect-ratio:1; }
 .obj-item .obj-label-wrap { width:100%; padding:6px 8px 8px; }
 .obj-item .obj-label { font-size:12px; color:var(--gray-1); font-weight:600; line-height:1.3; display:block; }
 .obj-item .obj-checkbox { position:absolute; bottom:6px; right:6px; width:26px; height:26px; border-radius:50%; border:2px solid rgba(0,0,0,0.15); background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; transition:all 0.25s; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
@@ -241,7 +242,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .obj-item.checked { background:#fff; }
 .obj-item.checked .obj-label { color:var(--gray-2); }
 .obj-item-full { grid-column:1 / -1; }
-.obj-item-full .obj-emoji-wrap { height:140px; }
+.obj-item-full .obj-emoji-wrap { height:180px; aspect-ratio:auto; }
+.obj-item-full .obj-emoji-wrap.has-img { height:180px; aspect-ratio:auto; }
 .obj-time { font-size:10px; color:var(--gray-4); font-weight:600; flex-shrink:0; }
 .obj-reset-wrap { text-align:center; padding:0 0 4px; }
 .obj-reset-btn { background:none; border:none; color:var(--gray-4); font-size:11px; cursor:pointer; font-family:var(--font); font-weight:600; padding:4px 12px; }
