@@ -13,12 +13,17 @@ function pushInit() {
     console.log('[Push] Non supporte sur ce navigateur');
     return;
   }
-  navigator.serviceWorker.register('sw.js')
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
     .then(function(reg) {
+      reg.update();
       console.log('[Push] SW enregistre');
-      // Si la permission est deja accordee, obtenir le token FCM
       if (Notification.permission === 'granted') {
         _getFcmToken(reg);
+      } else if (Notification.permission !== 'denied') {
+        // Demander la permission automatiquement
+        Notification.requestPermission().then(function(perm) {
+          if (perm === 'granted') _getFcmToken(reg);
+        });
       }
     })
     .catch(function(err) { console.log('[Push] SW erreur:', err); });
@@ -39,26 +44,32 @@ function pushRequestPermission() {
 }
 
 function _getFcmToken(reg) {
+  console.log('[Push] _getFcmToken called, firebase:', typeof firebase, 'messaging:', typeof firebase !== 'undefined' && typeof firebase.messaging);
   if (typeof firebase === 'undefined' || !firebase.messaging) {
     console.log('[Push] Firebase Messaging non charge');
     return;
   }
-  var fbMessaging = firebase.messaging();
-  fbMessaging.getToken({
-    vapidKey: KOULAM_VAPID_KEY,
-    serviceWorkerRegistration: reg
-  }).then(function(token) {
-    if (token) {
-      console.log('[Push] FCM Token:', token.substring(0, 20) + '...');
-      _pushFcmToken = token;
-      _saveFcmToken(token);
-      _updatePushUI(true);
-    } else {
-      console.log('[Push] Pas de token FCM');
-    }
-  }).catch(function(err) {
-    console.log('[Push] Erreur FCM getToken:', err);
-  });
+  try {
+    var fbMessaging = firebase.messaging();
+    console.log('[Push] Getting token with VAPID:', KOULAM_VAPID_KEY.substring(0, 20) + '...');
+    fbMessaging.getToken({
+      vapidKey: KOULAM_VAPID_KEY,
+      serviceWorkerRegistration: reg
+    }).then(function(token) {
+      if (token) {
+        console.log('[Push] FCM Token OK:', token.substring(0, 30) + '...');
+        _pushFcmToken = token;
+        _saveFcmToken(token);
+        _updatePushUI(true);
+      } else {
+        console.log('[Push] Pas de token FCM (null)');
+      }
+    }).catch(function(err) {
+      console.log('[Push] Erreur FCM getToken:', err.message || err);
+    });
+  } catch(e) {
+    console.log('[Push] Exception getToken:', e.message);
+  }
 }
 
 function _saveFcmToken(token) {
