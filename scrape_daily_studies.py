@@ -121,7 +121,22 @@ EXTRACT_JS = """
         return /S'abonner|Connexion|sélectionner un pays|Trouver un centre|Magazine|Afrique du Sud|Allemagne|Andorre/i.test(text);
     }
     function isBoilerplate(text) {
-        return /forthcoming English Chumash|Chabad House Publications|Lessons In Tanya|Plus d'options d'abonnement|email_placeholder|Nous ne communiquerons pas/i.test(text);
+        // Only flag as boilerplate if the MAJORITY of the text is boilerplate (short text with boilerplate markers)
+        const markers = ['forthcoming English Chumash','Chabad House Publications','Lessons In Tanya',"Plus d'options d'abonnement",'email_placeholder','Nous ne communiquerons pas'];
+        const hits = markers.filter(m => text.includes(m)).length;
+        return hits >= 2 && text.length < 300;
+    }
+    function stripBoilerplate(text) {
+        return text
+            .replace(/Lessons In Tanya[\\s\\S]{0,200}$/i, '')
+            .replace(/forthcoming English Chumash[\\s\\S]{0,200}$/i, '')
+            .replace(/Chabad House Publications[\\s\\S]{0,200}$/i, '')
+            .replace(/Plus d'options d'abonnement[\\s\\S]{0,200}$/i, '')
+            .replace(/Nous ne communiquerons pas[\\s\\S]{0,200}$/i, '')
+            .replace(/email_placeholder[\\s\\S]{0,200}$/i, '')
+            .replace(/S'abonner[\\s\\S]{0,100}$/i, '')
+            .replace(/Restez connect[\\s\\S]{0,200}$/i, '')
+            .trim();
     }
 
     const selectors = [
@@ -136,7 +151,7 @@ EXTRACT_JS = """
         if (!el) continue;
         const text = el.innerText.trim();
         if (text.length > 50 && latinRatio(text) > 0.3 && !isNavContent(text) && !isBoilerplate(text)) {
-            return { text: text, method: 'selector-fr:' + sel };
+            return { text: stripBoilerplate(text), method: 'selector-fr:' + sel };
         }
     }
 
@@ -167,7 +182,7 @@ EXTRACT_JS = """
         }
     }
     if (bestFr && bestFrLen > 100) {
-        return { text: bestFr.text, method: 'largest-french', latin: bestFr.latin, hebrew: bestFr.hebrew, len: bestFrLen };
+        return { text: stripBoilerplate(bestFr.text), method: 'largest-french', latin: bestFr.latin, hebrew: bestFr.hebrew, len: bestFrLen };
     }
 
     // PRIORITY 2: any non-nav, non-boilerplate block
@@ -178,7 +193,7 @@ EXTRACT_JS = """
         }
     }
     if (bestAny && bestAnyLen > 100) {
-        return { text: bestAny.text, method: 'largest-any', latin: bestAny.latin, hebrew: bestAny.hebrew, len: bestAnyLen };
+        return { text: stripBoilerplate(bestAny.text), method: 'largest-any', latin: bestAny.latin, hebrew: bestAny.hebrew, len: bestAnyLen };
     }
 
     return { text: '', method: 'none', debug: allBlocks.slice(0,5).map(b => ({len:b.len, lat:b.latin.toFixed(2), heb:b.hebrew.toFixed(2), nav:b.isNav, boiler:b.isBoiler, preview:b.text.substring(0,80)})) };
@@ -372,24 +387,30 @@ def _clean_scraped_text(text):
     text = re.sub(r'\nCette page comporte des textes sacrés[\s\S]*$', '', text)
     text = re.sub(r'\nEtudes quotidiennes[\s\S]*$', '', text)
     text = re.sub(r'\nAu sujet de l.éditeur[\s\S]*$', '', text)
+    text = re.sub(r'Lessons In Tanya[\s\S]{0,200}$', '', text)
+    text = re.sub(r'forthcoming English Chumash[\s\S]{0,200}$', '', text)
+    text = re.sub(r'Chabad House Publications[\s\S]{0,200}$', '', text)
+    text = re.sub(r"Plus d'options d'abonnement[\s\S]{0,200}$", '', text)
+    text = re.sub(r"S'abonner[\s\S]{0,100}$", '', text)
+    text = re.sub(r"Restez connecté[\s\S]{0,200}$", '', text)
+    text = re.sub(r"Chaque semaine, dans votre boîte mail[\s\S]{0,200}$", '', text)
+    text = re.sub(r'Kehot Publication Society[\s\S]{0,200}$', '', text)
     return text.strip()
 
 def _is_garbage_text(text):
     """Detect garbage text (subscription forms, publisher info, etc)."""
     if not text or len(text) < 50:
         return True
-    garbage = [
-        "S'abonner", "Restez connecté", "Chaque semaine, dans votre boîte mail",
-        "forthcoming English Chumash", "Chabad House Publications",
-        "Lessons In Tanya", "Plus d'options d'abonnement",
+    # Only reject very short texts that are mostly boilerplate
+    garbage_only = [
         "email_placeholder", "Nous ne communiquerons pas votre adresse"
     ]
-    for g in garbage:
-        if g in text:
+    for g in garbage_only:
+        if g in text and len(text) < 300:
             return True
     footer_markers = ["Au sujet de l'éditeur", "Acheter le livre", "Voir le site", "Kehot Publication Society"]
     footer_hits = sum(1 for m in footer_markers if m in text)
-    if footer_hits >= 2 and len(text) < 800:
+    if footer_hits >= 2 and len(text) < 300:
         return True
     return False
 
