@@ -8696,6 +8696,55 @@ function openTefilaDirect(key) {
 // ====== HALAKHA IA ======
 var OPENAI_API_KEY = window.OPENAI_API_KEY || '';
 
+// Speech-to-text pour Halakh'IA
+var halakhaMicRecognition = null;
+var halakhaMicActive = false;
+
+function toggleHalakhaMic() {
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('La reconnaissance vocale n\'est pas supportee par votre navigateur. Utilisez Chrome ou Safari.');
+    return;
+  }
+  var btn = document.getElementById('halakha-mic-btn');
+  if (halakhaMicActive && halakhaMicRecognition) {
+    halakhaMicRecognition.stop();
+    return;
+  }
+  halakhaMicRecognition = new SpeechRecognition();
+  halakhaMicRecognition.lang = 'fr-FR';
+  halakhaMicRecognition.continuous = true;
+  halakhaMicRecognition.interimResults = true;
+  var input = document.getElementById('halakha-input');
+  var baseText = input.value;
+  halakhaMicActive = true;
+  btn.style.background = '#e53935';
+  btn.style.animation = 'pulse-mic 1.2s infinite';
+  halakhaMicRecognition.onresult = function(e) {
+    var transcript = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      transcript += e.results[i][0].transcript;
+    }
+    input.value = baseText + (baseText ? ' ' : '') + transcript;
+  };
+  halakhaMicRecognition.onend = function() {
+    halakhaMicActive = false;
+    btn.style.background = 'linear-gradient(135deg,#0f3460,#16213e)';
+    btn.style.animation = 'none';
+    halakhaMicRecognition = null;
+  };
+  halakhaMicRecognition.onerror = function(e) {
+    halakhaMicActive = false;
+    btn.style.background = 'linear-gradient(135deg,#0f3460,#16213e)';
+    btn.style.animation = 'none';
+    halakhaMicRecognition = null;
+    if (e.error === 'not-allowed') {
+      alert('Veuillez autoriser l\'acces au microphone dans les parametres de votre navigateur.');
+    }
+  };
+  halakhaMicRecognition.start();
+}
+
 function askHalakha() {
   var input = document.getElementById('halakha-input');
   var btn = document.getElementById('halakha-btn');
