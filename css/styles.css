@@ -97,8 +97,10 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 .hyy-icon svg { width:18px; height:18px; }
 .hyy-title { font-size:14px; font-weight:700; color:var(--black); flex:1; }
 .hyy-date { font-size:11px; color:var(--gray-3); font-weight:600; }
-.hyy-text { font-family:'EB Garamond',Georgia,serif; font-size:15px; line-height:1.7; color:var(--gray-1); max-height:120px; overflow:hidden; transition:max-height 0.4s ease; position:relative; }
-.hyy-text.expanded { max-height:2000px; }
+.hyy-text { font-family:'EB Garamond',Georgia,serif; font-size:15px; line-height:1.7; color:var(--gray-1); max-height:120px; overflow:hidden; transition:max-height 0.4s ease; position:relative; -webkit-mask-image:linear-gradient(to bottom, #000 60%, transparent 100%); mask-image:linear-gradient(to bottom, #000 60%, transparent 100%); }
+.hyy-text.expanded { max-height:5000px; -webkit-mask-image:none; mask-image:none; }
+.etude-toggle { font-size:13px; color:var(--gray-3); font-weight:600; margin-top:6px; text-align:center; padding:6px 0; cursor:pointer; transition:color 0.2s; }
+.etude-toggle:active { color:var(--black); }
 .hyy-expand { font-size:11px; color:var(--gray-3); font-weight:600; margin-top:8px; text-align:right; }
 .hyy-loading { font-size:13px; color:var(--gray-3); font-style:italic; }
 .hyy-link { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; padding-top:10px; border-top:1px solid var(--gray-6); font-size:11px; color:var(--gray-3); font-weight:600; letter-spacing:0.5px; }

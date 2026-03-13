@@ -7789,6 +7789,21 @@ function syncEtudesPanel() {
   // Cette fonction est conservee pour compatibilite avec switchTab
 }
 
+function toggleEtudeCard(key, e) {
+  if (e) e.stopPropagation();
+  var textEl = document.getElementById('etudes-' + key + '-text');
+  var toggleEl = document.getElementById('etude-toggle-' + key);
+  if (!textEl || !toggleEl) return;
+  var isExpanded = textEl.classList.contains('expanded');
+  if (isExpanded) {
+    textEl.classList.remove('expanded');
+    toggleEl.textContent = 'Lire la suite \u25BE';
+  } else {
+    textEl.classList.add('expanded');
+    toggleEl.textContent = 'R\u00e9duire \u25B4';
+  }
+}
+
 function loadHayomYom() {
   var d = new Date();
   var dateKey = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
