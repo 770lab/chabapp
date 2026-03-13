@@ -8220,7 +8220,8 @@ function displayTanyaFallback() {
   var heb = gregToHebrew(d.getFullYear(), d.getMonth()+1, d.getDate());
   if (dateEl) dateEl.textContent = heb.mName + ' ' + heb.hd;
   if (etudesDateEl) etudesDateEl.textContent = heb.mName + ' ' + heb.hd;
-  el.innerHTML = '<span style="color:var(--gray-3);font-style:italic;font-size:13px;">Le texte du Tanya sera bientôt disponible</span>';
+  var tanyaUrl = 'https://fr.chabad.org/dailystudy/tanya.asp?tdate=' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
+  el.innerHTML = '<div style="text-align:center;padding:12px 0;"><a href="' + tanyaUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:10px;text-decoration:none;font-size:13px;font-weight:600;">Lire le Tanya du jour sur Chabad.org</a></div>';
 }
 
 var _tanyaExpanded = false;
