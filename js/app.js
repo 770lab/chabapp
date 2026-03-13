@@ -4121,7 +4121,7 @@ function goHome() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
@@ -4133,6 +4133,7 @@ function switchTab(tab) {
   if (tab === "cemetery") renderCemetery();
   if (tab === "sub-objectifs") { renderObjectives(); renderObjStoryBar(); }
   if (tab === "sub-etudes") { syncEtudesPanel(); }
+  if (tab === "sub-houmash") { if (typeof initHoumashPanel === "function") initHoumashPanel(); }
   if (tab === "sub-halakha") { if (typeof renderHalakhaExamples === "function") renderHalakhaExamples(); }
   if (tab === "sub-tefila-siddur") { setTimeout(function(){ if (typeof window.siddurRender === "function") window.siddurRender(); }, 50); }
   if (tab === "menu") { renderObjStoryBar(); updateBigObjSub(); }
@@ -8372,6 +8373,154 @@ function shareHoumash(e) {
   var content = text ? (text.innerText || text.textContent || '').replace('Chargement…','').replace('Lire la suite ▾','').trim() : '';
   var msg = "📖 'Houmach" + (date ? ' — ' + date : '') + '\n\n' + content;
   appShare("'Houmach", msg);
+}
+
+
+// ====== PANEL HOUMASH : onglets + Gueoula.com ======
+
+var _houmashActiveTab = 'lecture';
+var _gueulaLoaded = false;
+
+function switchHoumashTab(tab) {
+  _houmashActiveTab = tab;
+  var lecBtn = document.getElementById('houmash-tab-lecture');
+  var gueBtn = document.getElementById('houmash-tab-gueoula');
+  var lecDiv = document.getElementById('houmash-content-lecture');
+  var gueDiv = document.getElementById('houmash-content-gueoula');
+  if (!lecBtn || !gueBtn || !lecDiv || !gueDiv) return;
+
+  if (tab === 'lecture') {
+    lecBtn.style.background = 'var(--black)'; lecBtn.style.color = 'var(--white)';
+    gueBtn.style.background = 'var(--white)'; gueBtn.style.color = 'var(--gray-2)';
+    lecDiv.style.display = ''; gueDiv.style.display = 'none';
+    // Recopier le contenu du Houmash depuis le panel etudes
+    _syncHoumashPanel();
+  } else {
+    gueBtn.style.background = 'var(--black)'; gueBtn.style.color = 'var(--white)';
+    lecBtn.style.background = 'var(--white)'; lecBtn.style.color = 'var(--gray-2)';
+    gueDiv.style.display = ''; lecDiv.style.display = 'none';
+    if (!_gueulaLoaded) loadGueulaArticles();
+  }
+}
+
+function _syncHoumashPanel() {
+  // Copier le texte et la date depuis les elements du panel etudes
+  var srcText = document.getElementById('etudes-houmash-text');
+  var srcDate = document.getElementById('etudes-houmash-date');
+  var dstText = document.getElementById('houmash-panel-text');
+  var dstDate = document.getElementById('houmash-panel-date');
+  if (srcText && dstText) dstText.innerHTML = srcText.innerHTML;
+  if (srcDate && dstDate) dstDate.textContent = srcDate.textContent;
+}
+
+// Articles Gueoula.com organises par Sefer
+var GUEOULA_ARTICLES = [
+  { sefer: "Sefer Shemot", articles: [
+    { url: "/paracha/vayakhel-pekoudey-himi.html", title: "Vayakhel-Pekoudei", sub: "Le Michkan : Prevu ou Improvisation ?" },
+    { url: "/paracha/vayakhel-himi.html", title: "Vayakhel", sub: "La Brisure des Tables" },
+    { url: "/paracha/ki-tissa-himi2.html", title: "Ki Tissa", sub: "Kesher Tefilin" },
+    { url: "/paracha/ki-tissa-himi.html", title: "Ki Tissa", sub: "Karnei Hod" },
+    { url: "/paracha/pourim-sod-ha-ahdout.html", title: "Pourim", sub: "Le Secret de l'Unite" },
+    { url: "/paracha/paracha-tetsave-himi3.html", title: "Tetsave", sub: "Le Secret de la Ketoret" },
+    { url: "/paracha/paracha-tetsave-himi2.html", title: "Tetsave", sub: "Mitsva : etre dans l'equipe de Hachem" },
+    { url: "/paracha/paracha-tetsave-himi1.html", title: "Tetsave", sub: "Pourquoi le nom de Moshe est absent ?" },
+    { url: "/paracha/mahatsit.html", title: "Ma'hatsit HaShekel", sub: "Pourquoi la Torah ne demande qu'une moitie ?" },
+    { url: "/paracha/paracha-terouma-himi3.html", title: "Terouma", sub: "Du Ta'hash au Aron — L'Anava" },
+    { url: "/paracha/paracha-terouma-himi2.html", title: "Terouma", sub: "Le Secret du Michkan" },
+    { url: "/paracha/paracha-terouma-himi1.html", title: "Terouma", sub: "Le Secret de la Menorah" },
+    { url: "/paracha/paracha-mishpatim2.html", title: "Mishpatim", sub: "La Cle de la Torah Orale" },
+    { url: "/paracha/paracha-mishpatim.html", title: "Mishpatim", sub: "Le Secret de la Brique de Saphir" },
+    { url: "/paracha/paracha-ytro-himi3.html", title: "Yitro", sub: "La Seoudat Yitro des Tunisiens" },
+    { url: "/paracha/paracha-ytro-himi2.html", title: "Yitro", sub: "Le Secret de Anokhi" },
+    { url: "/paracha/paracha-ytro-himi.html", title: "Yitro", sub: "La Torah et l'Humilite" },
+    { url: "/paracha/paracha-bechalakh2.html", title: "Bechalakh", sub: "L'Humilite des Justes" },
+    { url: "/paracha/paracha-bechalakh.html", title: "Bechalakh", sub: "Mardi Bechalakh - Jour de Segoula" },
+    { url: "/paracha/paracha-bo-2.html", title: "Bo", sub: "Armees de Hachem" },
+    { url: "/paracha/Paracha-bo.html", title: "Bo", sub: "Pourquoi Bo" },
+    { url: "/paracha/paracha-vaera-MHIMI3.html", title: "Vaera", sub: "La reconnaissance du bien" },
+    { url: "/paracha/paracha-vaera-MHIMI2.html", title: "Vaera", sub: "Les 4 langages de la Gueoula" },
+    { url: "/paracha/paracha-vaera-MHIMI1.html", title: "Vaera", sub: "Le Din et la Ra'hamim" },
+    { url: "/paracha/Paracha-ch\u00e9mot-HIMI2.html", title: "Shemot", sub: "La Shekhina en Exil" },
+    { url: "/paracha/Paracha-ch\u00e9mot-HIMI1.html", title: "Shemot", sub: "Les Maisons d'Israel" }
+  ]},
+  { sefer: "Sefer Bereshit", articles: [
+    { url: "/paracha/paracha-vayekhi-rv-rosemblum.html", title: "Vaye'hi", sub: "Le Secret du Premier Mot" },
+    { url: "/paracha/paracha-vayekhi-rv-rosemblum1.html", title: "Vaye'hi", sub: "Jacob et Joseph : Une Meme Ame" },
+    { url: "/paracha/paracha-vayekhi-MHIMI1.html", title: "Vaye'hi", sub: "Yossef et la Paix" },
+    { url: "/paracha/Haftara-Vayigash.html", title: "Vayigash", sub: "Les Deux Batons et la Reunification" },
+    { url: "/paracha/paracha-vayigash3.html", title: "Vayigash", sub: "Malheur a Nous au Jour du Jugement" },
+    { url: "/paracha/paracha-vayigash2.html", title: "Vayigash", sub: "Le Temple qui Relie Ciel et Terre" },
+    { url: "/paracha/paracha-vayigash1.html", title: "Vayigash", sub: "L'Annulation de l'Ego" },
+    { url: "/paracha/paracha-mikets1.html", title: "Miketz", sub: "Joseph interprete les reves de Pharaon" },
+    { url: "/paracha/paracha-vayeshev.html", title: "Vayeshev", sub: "Joseph et ses freres" },
+    { url: "/paracha/paracha-vayetse4.html", title: "Vayetse", sub: "Tromperie et Reparation" },
+    { url: "/paracha/paracha-vayetse3.html", title: "Vayetse", sub: "La Valeur Intrinseque de la Femme" },
+    { url: "/paracha/paracha-vayetse1.html", title: "Vayetse", sub: "L'Echelle de Yaakov" },
+    { url: "/paracha/paracha-toldot3.html", title: "Toldot", sub: "Les benedictions de Yits'hak" },
+    { url: "/paracha/paracha-toldot2.html", title: "Toldot", sub: "Yaakov et Essav" },
+    { url: "/paracha/paracha-toldot1.html", title: "Toldot", sub: "Le Secret de la Lettre Youd" },
+    { url: "/paracha/paracha-haye-sarah2.html", title: "'Haye Sarah", sub: "Eliezer : du maudit au Baroukh Hachem" },
+    { url: "/paracha/paracha-haye-sarah1.html", title: "'Haye Sarah", sub: "Mearat HaMakhpela" },
+    { url: "/paracha/Paracha-Vayera-Akedat-Yitzhak.html", title: "Vayera", sub: "Akedat Yits'hak" },
+    { url: "/paracha/Paracha-Vayera-gareshe.html", title: "Vayera", sub: "Chasse cette servante" },
+    { url: "/paracha/Paracha-Vayera-riredesarah.html", title: "Vayera", sub: "Le rire de Sarah" },
+    { url: "/paracha/Paracha-Lekh-Lekha3.html", title: "Lekh Lekha", sub: "Les actions des peres (3)" },
+    { url: "/paracha/Paracha-Lekh-Lekha2.html", title: "Lekh Lekha", sub: "Les actions des peres (2)" },
+    { url: "/paracha/Paracha-Lekh-Lekha.html", title: "Lekh Lekha", sub: "Abram, le depart de Kharan" },
+    { url: "/paracha/Paracha-noah-5.html", title: "Noa'h", sub: "Noe (5)" },
+    { url: "/paracha/Paracha-noah-4.html", title: "Noa'h", sub: "Noe (4)" },
+    { url: "/paracha/Paracha-noah-3.html", title: "Noa'h", sub: "L'Histoire de 'Ham" },
+    { url: "/paracha/Paracha-noah.html", title: "Noa'h", sub: "Noe, le deluge et l'alliance" },
+    { url: "/paracha/Paracha-berechit.html", title: "Bereshit", sub: "La Joie de Recommencer" }
+  ]},
+  { sefer: "Sefer Devarim", articles: [
+    { url: "/paracha/paracha-nitsavim.html", title: "Nitsavim", sub: "La Force de la Techouva" },
+    { url: "/paracha/Paracha-ki-tavo4.html", title: "Ki Tavo", sub: "Les Maledictions sont des Benedictions Cachees" },
+    { url: "/paracha/Paracha-ki-tetse.html", title: "Ki Tetse", sub: "Les lois de la guerre" },
+    { url: "/paracha/Paracha-shoftim.html", title: "Shoftim", sub: "Les juges et la justice divine" },
+    { url: "/paracha/Paracha-reeh.html", title: "Reeh", sub: "Voir la benediction et la malediction" },
+    { url: "/paracha/Paracha-ekev.html", title: "Ekev", sub: "Les recompenses de l'obeissance" },
+    { url: "/paracha/Paracha-vaetchanan.html", title: "Vaet'hanane", sub: "Le Shema et les Dix Commandements" },
+    { url: "/paracha/Paracha-Devarim.html", title: "Devarim", sub: "Les paroles de Moshe au peuple" }
+  ]},
+  { sefer: "Sefer Bamidbar", articles: [
+    { url: "/paracha/paracha-balak.html", title: "Balak", sub: "Balaam et l'anesse qui parle" },
+    { url: "/paracha/Paracha-pinchas.html", title: "Pin'has", sub: "Le zele de Pin'has" },
+    { url: "/paracha/Paracha-matot-massei.html", title: "Matot-Massei", sub: "Les tribus et les etapes du voyage" }
+  ]},
+  { sefer: "Fetes", articles: [
+    { url: "/paracha/hannouka.html", title: "'Hanouka", sub: "La fete des lumieres" },
+    { url: "/paracha/100-Brahot.html", title: "Les 100 Brakhot", sub: "L'importance des benedictions quotidiennes" },
+    { url: "/paracha/dix-martyrs.html", title: "Les Dix Martyrs", sub: "Histoire des dix sages martyrises" },
+    { url: "/paracha/kaddish.html", title: "Le Kaddish", sub: "Signification et importance du Kaddish" }
+  ]}
+];
+
+function loadGueulaArticles() {
+  var container = document.getElementById('gueoula-articles');
+  if (!container) return;
+
+  var html = '';
+  GUEOULA_ARTICLES.forEach(function(sefer) {
+    html += '<div style="margin-bottom:16px;">';
+    html += '<div style="font-size:13px;font-weight:800;color:var(--black);margin-bottom:8px;padding-left:2px;">' + sefer.sefer + '</div>';
+    sefer.articles.forEach(function(a) {
+      html += '<a href="https://www.gueoula.com' + a.url + '" target="_blank" rel="noopener" style="text-decoration:none;display:block;">';
+      html += '<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:10px;padding:12px 14px;margin-bottom:6px;transition:background .15s;">';
+      html += '<div style="font-size:14px;font-weight:700;color:var(--gray-1);">' + a.title + '</div>';
+      html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">' + a.sub + '</div>';
+      html += '</div></a>';
+    });
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+  _gueulaLoaded = true;
+}
+
+// Initialiser le panel Houmash quand on l'ouvre
+function initHoumashPanel() {
+  _syncHoumashPanel();
 }
 
 
