@@ -677,6 +677,119 @@ def bulk_scrape_all(days_ahead):
     print("  hayom_yom: %d | rambam: %d | tanya: %d | houmash: %d" % (hyy_count, ram_count, tan_count, hou_count))
 
 
+# --- Bulk Tanya (slow, fresh context per request) ---
+
+TANYA_DELAY = 30  # seconds between requests
+TANYA_USER_AGENTS = [
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
+]
+
+def bulk_scrape_tanya(days_ahead):
+    """Scrape Tanya with a fresh browser context per request to avoid rate-limiting."""
+    from datetime import timedelta
+    import random
+
+    if not USE_PLAYWRIGHT:
+        print("Requires Playwright.")
+        sys.exit(1)
+
+    data = load_data()
+    start = date.today()
+    dates_to_scrape = []
+    for i in range(days_ahead):
+        d = start + timedelta(days=i)
+        date_key = "%d-%d-%d" % (d.year, d.month, d.day)
+        if date_key not in data.get('tanya', {}):
+            dates_to_scrape.append(d)
+
+    print("=== Bulk Tanya (slow mode): %d to scrape ===" % len(dates_to_scrape))
+    if not dates_to_scrape:
+        print("All Tanya entries already present!")
+        return
+
+    scraped = 0
+    failed = 0
+
+    with sync_playwright() as p:
+        for idx, target_date in enumerate(dates_to_scrape):
+            m, d, y = target_date.month, target_date.day, target_date.year
+            tdate = "%d/%d/%d" % (m, d, y)
+            date_key = "%d-%d-%d" % (y, m, d)
+            ua = TANYA_USER_AGENTS[idx % len(TANYA_USER_AGENTS)]
+
+            print("\n[%d/%d] Tanya %s" % (idx+1, len(dates_to_scrape), target_date))
+
+            browser = p.chromium.launch(headless=True)
+            context = browser.new_context(user_agent=ua, locale="fr-FR")
+            page = context.new_page()
+
+            try:
+                # Fresh warmup each time
+                print("  Warmup...")
+                page.goto("https://fr.chabad.org/dailystudy/", wait_until="networkidle", timeout=90000)
+                if not wait_for_cloudflare(page, max_wait=40):
+                    print("  x Cloudflare stuck on warmup")
+                    browser.close()
+                    failed += 1
+                    time.sleep(TANYA_DELAY)
+                    continue
+                time.sleep(3)
+
+                url = "%s/tanya.asp?tdate=%s" % (BASE_URL, tdate)
+                print("  Fetching: %s" % url)
+                page.goto(url, wait_until="networkidle", timeout=90000)
+                if not wait_for_cloudflare(page, max_wait=30):
+                    print("  x Cloudflare stuck")
+                    browser.close()
+                    failed += 1
+                    time.sleep(TANYA_DELAY)
+                    continue
+
+                time.sleep(3)
+                result = page.evaluate(EXTRACT_JS)
+                text = result.get('text', '')
+                method = result.get('method', '')
+
+                if text and len(text) > 50:
+                    title = page.title()
+                    clean_title = re.sub(r'\s*-\s*fr\.chabad\.org.*', '', title, flags=re.IGNORECASE).strip()
+                    cleaned = _clean_scraped_text(text)
+
+                    if _is_garbage_text(cleaned):
+                        print("  x Garbage (%d chars, method=%s)" % (len(cleaned), method))
+                        print("    Preview: %s" % cleaned[:120])
+                        failed += 1
+                    else:
+                        data.setdefault('tanya', {})[date_key] = {'text': cleaned, 'title': clean_title}
+                        scraped += 1
+                        print("  OK: %d chars - %s" % (len(cleaned), clean_title[:50]))
+
+                        if scraped % 5 == 0:
+                            save_data(data)
+                            print("  [checkpoint]")
+                else:
+                    print("  x No content (method=%s)" % method)
+                    failed += 1
+
+            except Exception as e:
+                print("  x Error: %s" % str(e))
+                failed += 1
+
+            browser.close()
+            if idx < len(dates_to_scrape) - 1:
+                wait = TANYA_DELAY + random.randint(0, 10)
+                print("  Waiting %ds..." % wait)
+                time.sleep(wait)
+
+    save_data(data)
+    print("\n=== Tanya done: %d scraped, %d failed, %d total ===" % (
+        scraped, failed, len(data.get('tanya', {}))))
+
+
 # --- Main ---
 
 def _parse_arg(flag):
@@ -691,6 +804,15 @@ def main():
         bulk_scrape_hayom_yom()
         return
 
+    tanya_arg = _parse_arg('--tanya')
+    if tanya_arg:
+        try:
+            days = int(tanya_arg)
+        except ValueError:
+            print("Invalid --tanya value: %s" % tanya_arg); sys.exit(1)
+        bulk_scrape_tanya(days)
+        return
+
     days_arg = _parse_arg('--days')
     if days_arg:
         try:
@@ -700,7 +822,7 @@ def main():
         bulk_scrape_all(days)
         return
 
-    print("Usage: python scrape_daily_studies.py --bulk-hyy | --days N")
+    print("Usage: python scrape_daily_studies.py --bulk-hyy | --days N | --tanya N")
     sys.exit(1)
 
 if __name__ == '__main__':
