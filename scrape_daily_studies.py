@@ -408,6 +408,15 @@ def _is_garbage_text(text):
     for g in garbage_only:
         if g in text and len(text) < 300:
             return True
+    # Short texts with subscription/publisher markers are garbage
+    if len(text) < 300:
+        short_garbage = [
+            "S'abonner", "Restez connecté", "Chaque semaine, dans votre boîte mail",
+            "Plus d'options d'abonnement",
+        ]
+        for g in short_garbage:
+            if g in text:
+                return True
     footer_markers = ["Au sujet de l'éditeur", "Acheter le livre", "Voir le site", "Kehot Publication Society"]
     footer_hits = sum(1 for m in footer_markers if m in text)
     if footer_hits >= 2 and len(text) < 300:
