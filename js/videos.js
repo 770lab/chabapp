@@ -196,6 +196,9 @@ function ytFilterChannel(name) {
   _ytRender();
 }
 
+// ─── Timer pour le hint de scroll ───────────────────────────
+var _ytScrollHintTimer = null;
+
 // ─── Lire une vidéo ────────────────────────────────────────
 function ytPlayVideo(index) {
   var v = _ytVideos[index];
@@ -204,21 +207,61 @@ function ytPlayVideo(index) {
   var wrap      = document.getElementById("yt-player-wrap");
   var container = document.getElementById("yt-player-container");
   var title     = document.getElementById("yt-player-title");
+  var suggestions = document.getElementById("yt-player-suggestions");
 
   if (!wrap || !container) return;
 
   container.innerHTML = '<iframe src="https://www.youtube.com/embed/' + v.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border-radius:12px;"></iframe>';
   if (title) title.textContent = v.title + (v.channel ? " · " + v.channel : "");
+
+  // Suggestions : autres vidéos (même chaîne en priorité, puis le reste)
+  if (suggestions) {
+    var others = _ytVideos.filter(function (_, i) { return i !== index; });
+    // Même chaîne d'abord
+    var sameChannel = others.filter(function (o) { return o.channel === v.channel; });
+    var diffChannel = others.filter(function (o) { return o.channel !== v.channel; });
+    var sorted = sameChannel.concat(diffChannel).slice(0, 15);
+
+    var sHtml = '<div class="yt-player-suggestions-title">Suggestions</div>';
+    sorted.forEach(function (s) {
+      var si = _ytVideos.indexOf(s);
+      var thumb = "https://img.youtube.com/vi/" + s.id + "/mqdefault.jpg";
+      sHtml += '<div class="yt-suggestion-card" onclick="ytPlayVideo(' + si + ')">';
+      sHtml += '<img class="yt-suggestion-thumb" src="' + thumb + '" alt="" loading="lazy" />';
+      sHtml += '<div class="yt-suggestion-info">';
+      sHtml += '<div class="yt-suggestion-title">' + _ytEsc(s.title) + '</div>';
+      sHtml += '<div class="yt-suggestion-channel">' + _ytEsc(s.channel) + '</div>';
+      sHtml += '</div></div>';
+    });
+    suggestions.innerHTML = sHtml;
+    suggestions.scrollTop = 0;
+
+    // Hint de scroll : petit bounce après 3 secondes
+    if (_ytScrollHintTimer) clearTimeout(_ytScrollHintTimer);
+    _ytScrollHintTimer = setTimeout(function () {
+      if (!suggestions || wrap.style.display === "none") return;
+      suggestions.scrollTo({ top: 40, behavior: "smooth" });
+      setTimeout(function () {
+        suggestions.scrollTo({ top: 0, behavior: "smooth" });
+      }, 400);
+    }, 3000);
+  }
+
+  // Bloquer le scroll du body
+  document.body.style.overflow = "hidden";
   wrap.style.display = "";
-  wrap.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // ─── Fermer le lecteur ─────────────────────────────────────
 function ytClosePlayer() {
-  var wrap      = document.getElementById("yt-player-wrap");
-  var container = document.getElementById("yt-player-container");
+  var wrap        = document.getElementById("yt-player-wrap");
+  var container   = document.getElementById("yt-player-container");
+  var suggestions = document.getElementById("yt-player-suggestions");
+  if (_ytScrollHintTimer) { clearTimeout(_ytScrollHintTimer); _ytScrollHintTimer = null; }
   if (container) container.innerHTML = "";
+  if (suggestions) suggestions.innerHTML = "";
   if (wrap) wrap.style.display = "none";
+  document.body.style.overflow = "";
 }
 
 // ─── Page profil in-app ──────────────────────────────────

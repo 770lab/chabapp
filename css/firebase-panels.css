@@ -535,28 +535,65 @@ video.feed-post-media { cursor: default; }
 
 /* Lecteur vidéo */
 .yt-player-wrap {
-  position: relative;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: #000;
-  border-bottom: 1px solid #222;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  margin: 0 auto;
 }
 .yt-player-container {
   width: 100%;
   aspect-ratio: 16 / 9;
+  flex-shrink: 0;
 }
 .yt-player-close {
-  position: absolute; top: 8px; right: 8px;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(0,0,0,0.6); color: #fff;
-  font-size: 16px; border: none; cursor: pointer;
+  position: absolute; top: 12px; right: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); color: #fff;
+  font-size: 18px; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   z-index: 10;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 .yt-player-title {
-  padding: 12px 16px;
-  font-size: 15px; font-weight: 700;
+  padding: 14px 16px;
+  font-size: 16px; font-weight: 700;
   color: #fff; background: #111;
   font-family: var(--font, 'EB Garamond', serif);
 }
+.yt-player-suggestions {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #111;
+  padding: 0 12px 24px;
+}
+.yt-player-suggestions-title {
+  font-size: 13px; font-weight: 700; color: #aaa;
+  padding: 12px 4px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.yt-suggestion-card {
+  display: flex; gap: 10px;
+  padding: 8px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.yt-suggestion-card:active { opacity: 0.7; }
+.yt-suggestion-thumb {
+  width: 140px; min-width: 140px; aspect-ratio: 16/9;
+  border-radius: 8px; object-fit: cover; background: #222;
+}
+.yt-suggestion-info { display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+.yt-suggestion-title {
+  font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.yt-suggestion-channel { font-size: 11px; color: #888; }
 
 /* Grille de vignettes */
 .yt-grid {
