@@ -4133,6 +4133,7 @@ function switchTab(tab) {
   if (tab === "cemetery") renderCemetery();
   if (tab === "sub-objectifs") { renderObjectives(); renderObjStoryBar(); }
   if (tab === "sub-etudes") { syncEtudesPanel(); }
+  if (tab === "sub-halakha") { if (typeof renderHalakhaExamples === "function") renderHalakhaExamples(); }
   if (tab === "sub-tefila-siddur") { setTimeout(function(){ if (typeof window.siddurRender === "function") window.siddurRender(); }, 50); }
   if (tab === "menu") { renderObjStoryBar(); updateBigObjSub(); }
   if (tab === "auth")    { if (typeof _renderAuth === "function") _renderAuth(); }
@@ -8760,6 +8761,45 @@ function toggleHalakhaMic() {
   halakhaMicRecognition.start();
 }
 
+var HALAKHA_EXAMPLES = [
+  "Peut-on rechauffer de la nourriture pendant Chabbat ?",
+  "Quelles sont les regles de Netilat Yadayim le matin ?",
+  "Peut-on se couper les ongles le meme jour que les cheveux ?",
+  "A-t-on le droit d'ecouter de la musique pendant le Omer ?",
+  "Quand doit-on faire la Havdala si on a oublie samedi soir ?",
+  "Peut-on manger avant la priere du matin ?",
+  "Quelles sont les lois du Bitul Be'hira (annulation dans 60) ?",
+  "Doit-on attendre entre le poisson et la viande ?",
+  "Peut-on etudier la Torah apres 'Hatsot (minuit) ?",
+  "Quelles sont les regles de Tsniout pour les hommes ?",
+  "Comment faire si on a oublie de compter le Omer un soir ?",
+  "Peut-on dire une Berakha sur un aliment dont on doute ?",
+  "Quelles sont les regles du Mouktsé pendant Chabbat ?",
+  "A quel age un enfant doit-il jeuner a Kippour ?",
+  "Peut-on travailler pendant 'Hol Hamoed ?"
+];
+
+function renderHalakhaExamples() {
+  var container = document.getElementById('halakha-examples-list');
+  if (!container) return;
+  // Melanger et prendre 5 exemples au hasard
+  var shuffled = HALAKHA_EXAMPLES.slice().sort(function() { return 0.5 - Math.random(); });
+  var picks = shuffled.slice(0, 5);
+  var html = '';
+  picks.forEach(function(q) {
+    html += '<button onclick="halakhaPickExample(this)" style="background:var(--gray-6);border:1px solid var(--gray-5);border-radius:20px;padding:7px 14px;font-size:12px;color:var(--gray-1);cursor:pointer;font-family:var(--font);font-weight:500;text-align:left;line-height:1.4;transition:all 0.2s;-webkit-tap-highlight-color:transparent;">' + q + '</button>';
+  });
+  container.innerHTML = html;
+}
+
+function halakhaPickExample(btn) {
+  var input = document.getElementById('halakha-input');
+  if (input) {
+    input.value = btn.textContent;
+    input.focus();
+  }
+}
+
 function askHalakha() {
   var input = document.getElementById('halakha-input');
   var btn = document.getElementById('halakha-btn');
@@ -8773,6 +8813,8 @@ function askHalakha() {
   btn.style.opacity = '0.5';
   loading.style.display = 'block';
   result.style.display = 'none';
+  var examples = document.getElementById('halakha-examples');
+  if (examples) examples.style.display = 'none';
 
   var systemPrompt = "Tu es un expert en Halakha (loi juive). Tu reponds aux questions halakhiques en francais de maniere claire et structuree.\n\nRegles :\n- Cite TOUJOURS les sources du Choulkhan Aroukh (Ora'h 'Haim, Yore Dea, Even HaEzer ou 'Hochen Michpat) avec le siman et le seif quand c'est possible.\n- Cite aussi le Michna Beroura, le Rama ou d'autres poskim majeurs si pertinent.\n- Structure ta reponse avec : 1) La reponse principale, 2) L'explication, 3) Les sources.\n- Termine toujours par un rappel qu'il faut consulter un Rav pour une decision halakhique concrete.\n- Reponds en francais uniquement.\n- Sois precis et concis.";
 
