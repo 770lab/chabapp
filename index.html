@@ -293,30 +293,14 @@
 <div style="color:rgba(255,255,255,0.6);font-size:24px;">&#x203A;</div>
 </div>
 </div>
-<!-- Calculateur dates hebraiques -->
-<div style="background:var(--white);border-radius:16px;padding:20px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-<div style="font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;">Dates hebraiques</div>
-<div style="font-size:12px;color:var(--gray-3);margin-bottom:16px;">Anniversaire hebraique, Bar/Bat Mitsva, Paracha</div>
-<div style="display:flex;flex-direction:column;gap:12px;">
-<div>
-<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Date de naissance (civile)</label>
-<input type="date" id="rabbi-calc-date" onchange="rabbiCalcDate()" oninput="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+<!-- Hero dates hebraiques -->
+<div onclick="switchTab('sub-dates')" style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);border-radius:16px;overflow:hidden;position:relative;cursor:pointer;margin-bottom:12px;display:flex;align-items:stretch;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+<div style="flex:1;padding:16px 0 16px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
 </div>
-<div>
-<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Heure de naissance (optionnel)</label>
-<input type="time" id="rabbi-calc-time" onchange="rabbiCalcDate()" oninput="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
-<div style="font-size:11px;color:var(--gray-4);margin-top:4px;">Si ne(e) apres le coucher du soleil, la date hebraique sera le jour suivant</div>
-</div>
-<div>
-<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Sexe</label>
-<div style="display:flex;gap:8px;">
-<button id="rabbi-calc-boy" onclick="rabbiCalcSetGender('boy')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Garcon</button>
-<button id="rabbi-calc-girl" onclick="rabbiCalcSetGender('girl')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Fille</button>
-</div>
-</div>
-<button onclick="rabbiCalcDate()" style="width:100%;padding:12px;background:var(--black);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px;">Calculer</button>
-</div>
-<div id="rabbi-calc-result" style="margin-top:16px;"></div>
+<img src="assets/dates-hero.webp" alt="" style="width:120px;height:auto;object-fit:contain;align-self:flex-end;" loading="lazy" />
 </div>
 <div class="club-hero" onclick="switchTab('sub-club')" style="display:none;" data-hidden-temp style="background:url('assets/card-club.webp') center/cover no-repeat; border:none; padding:0; position:relative; overflow:hidden; border-radius:16px; aspect-ratio:1/1; cursor:pointer; flex:1; min-width:0;">
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%);"></div>
@@ -807,6 +791,44 @@ Partager
 </div>
 <div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
 </div>
+</div>
+</div>
+<!-- SUB-PANEL: DATES HEBRAIQUES -->
+<div id="panel-sub-dates" style="display:none">
+<div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
+<div style="position:relative;overflow:hidden;">
+<div style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);display:flex;align-items:stretch;">
+<div style="flex:1;padding:16px 0 16px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
+</div>
+<img src="assets/dates-hero.webp" alt="" style="width:140px;height:auto;object-fit:contain;align-self:flex-end;" loading="lazy" />
+</div>
+</div>
+<div style="padding:16px;">
+<div style="font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;">Dates hebraiques</div>
+<div style="font-size:12px;color:var(--gray-3);margin-bottom:16px;">Anniversaire hebraique, Bar/Bat Mitsva, Paracha</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Date de naissance (civile)</label>
+<input type="date" id="rabbi-calc-date" onchange="rabbiCalcDate()" oninput="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Heure de naissance (optionnel)</label>
+<input type="time" id="rabbi-calc-time" onchange="rabbiCalcDate()" oninput="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+<div style="font-size:11px;color:var(--gray-4);margin-top:4px;">Si ne(e) apres le coucher du soleil, la date hebraique sera le jour suivant</div>
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Sexe</label>
+<div style="display:flex;gap:8px;">
+<button id="rabbi-calc-boy" onclick="rabbiCalcSetGender('boy')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Garcon</button>
+<button id="rabbi-calc-girl" onclick="rabbiCalcSetGender('girl')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Fille</button>
+</div>
+</div>
+<button onclick="rabbiCalcDate()" style="width:100%;padding:12px;background:var(--black);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px;">Calculer</button>
+</div>
+<div id="rabbi-calc-result" style="margin-top:16px;"></div>
 </div>
 </div>
 <!-- SUB-PANEL: DONS -->

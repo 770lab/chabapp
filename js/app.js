@@ -4274,38 +4274,39 @@ function rabbiCalcDate() {
     }
 
     // Trouver la paracha du Shabbat de la Bar/Bat Mitsva
-    // Le Shabbat le plus proche apres la date = jour de la lecture de la Torah
-    var bmDayOfWeek = (bmJD + 1) % 7; // 0=dim, 6=sam
+    // Calculer le prochain Shabbat (samedi) apres la date
+    // JD % 7: 0=Lun, 1=Mar, 2=Mer, 3=Jeu, 4=Ven, 5=Sam, 6=Dim
+    var bmDow = bmJD % 7;
     var shabbatJD = bmJD;
-    if (bmDayOfWeek !== 6) {
-      shabbatJD = bmJD + (6 - bmDayOfWeek); // prochain samedi
+    if (bmDow !== 5) {
+      shabbatJD = bmJD + ((5 - bmDow + 7) % 7); // prochain samedi
     }
     var shabbatGreg = jdToGregorian(shabbatJD);
 
-    // Utiliser Hebcal API pour trouver la paracha de ce Shabbat
-    var shabbatDateStr = shabbatGreg.year + '-' + _pad(shabbatGreg.month) + '-' + _pad(shabbatGreg.day);
     html += '<div id="rabbi-calc-parasha" style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.7);">Recherche de la Paracha...</div>';
     html += '</div>';
 
-    // Fetch paracha via Hebcal
+    // Fetch paracha via Hebcal sedrot API (fiable pour toute date)
     setTimeout(function() {
       var pEl = document.getElementById('rabbi-calc-parasha');
       if (!pEl) return;
-      var apiUrl = 'https://www.hebcal.com/shabbat?cfg=json&date=' + shabbatDateStr + '&geo=pos&latitude=48.8566&longitude=2.3522&tzid=Europe/Paris';
+      var apiUrl = 'https://www.hebcal.com/converter?cfg=json&gy=' + shabbatGreg.year + '&gm=' + shabbatGreg.month + '&gd=' + shabbatGreg.day + '&g2h=1';
       fetch(apiUrl).then(function(r) { return r.json(); }).then(function(data) {
-        var items = data.items || [];
+        // Le converter retourne la sedra dans le champ "events"
+        var events = data.events || [];
         var parashaName = '';
         var parashaHe = '';
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].category === 'parashat') {
-            parashaName = (items[i].title || '').replace('Parashat ', '');
-            parashaHe = items[i].hebrew || '';
+        for (var i = 0; i < events.length; i++) {
+          if (events[i].indexOf('Parashat ') === 0) {
+            parashaName = events[i].replace('Parashat ', '');
             break;
           }
         }
+        // Chercher le nom hebreu dans hpieces si dispo
+        if (data.hpieces) parashaHe = '';
         if (parashaName && pEl) {
           var fr = getParashaFr(parashaName);
-          pEl.innerHTML = 'Paracha : <strong style="color:#f9ce34;">Parashat ' + fr + '</strong>' + (parashaHe ? ' <span style="font-family:serif;">' + parashaHe + '</span>' : '') + '<br><span style="font-size:11px;">Shabbat ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year + '</span>';
+          pEl.innerHTML = 'Paracha : <strong style="color:#f9ce34;">Parashat ' + fr + '</strong><br><span style="font-size:11px;">Shabbat ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year + '</span>';
         } else if (pEl) {
           pEl.textContent = 'Shabbat le ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year;
         }
@@ -4384,7 +4385,7 @@ function switchTab(tab, skipHistory) {
     history.pushState({ tab: tab }, '');
   }
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-rabbi","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-rabbi","sub-dates","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";
