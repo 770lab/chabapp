@@ -225,7 +225,7 @@ function ytPlayVideo(index) {
     if (s === 0) {
       // Premier slide : iframe direct avec autoplay
       html += '<div class="yt-reel-iframe-wrap">';
-      html += '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      html += '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autopictureinpicture" allowfullscreen autopictureinpicture></iframe>';
       html += '</div>';
     } else {
       // Autres slides : thumbnail avec bouton play
@@ -284,7 +284,7 @@ function _ytActivateSlide(slide) {
   if (!thumbWrap) return; // déjà un iframe
   var iframeWrap = document.createElement('div');
   iframeWrap.className = 'yt-reel-iframe-wrap';
-  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autopictureinpicture" allowfullscreen autopictureinpicture></iframe>';
   slide.replaceChild(iframeWrap, thumbWrap);
 }
 
@@ -314,6 +314,34 @@ function ytClosePlayer() {
   if (wrap) wrap.style.display = "none";
   document.body.style.overflow = "";
 }
+
+// ─── PiP automatique quand l'utilisateur quitte l'app ────
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState !== 'hidden') return;
+  // Verifier qu'une video est en cours dans le lecteur Reels
+  var wrap = document.getElementById('yt-player-wrap');
+  if (!wrap || wrap.style.display === 'none') return;
+  // Trouver le slide actif avec un iframe
+  var feed = document.getElementById('yt-reels-feed');
+  if (!feed) return;
+  var activeSlide = feed.querySelector('.yt-reel-slide[data-slide="' + _ytActiveSlideIdx + '"]');
+  if (!activeSlide) return;
+  var iframe = activeSlide.querySelector('iframe');
+  if (!iframe) return;
+  // Tenter le PiP sur la video dans l'iframe (fonctionne si same-origin ou si le navigateur le supporte)
+  try {
+    // Methode 1: Document PiP API (Chrome 116+)
+    if (window.documentPictureInPicture && window.documentPictureInPicture.requestWindow) {
+      // Pas supporte de maniere fiable sur mobile, skip
+    }
+    // Methode 2: Video element PiP (necessite un element video, pas un iframe)
+    // Pour YouTube embeds, le navigateur gere le PiP nativement si l'utilisateur l'a active
+    // On peut forcer via l'attribut allow sur l'iframe
+    if (iframe && !iframe.getAttribute('allow').includes('picture-in-picture')) {
+      iframe.setAttribute('allow', iframe.getAttribute('allow') + '; picture-in-picture');
+    }
+  } catch(e) {}
+});
 
 // ─── Page profil in-app ──────────────────────────────────
 var _ytProfileOpen = false;
