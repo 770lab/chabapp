@@ -6224,7 +6224,7 @@ var DAILY_PERIODS = [
     msg: 'Le matin est le fondement de la journée. Commence par remercier Hachem, donner la Tsédaka et prier avec ferveur.',
     items: [
       { id: 'modeh', emoji: '🌅', img: 'assets/obj-modeh.jpeg', label: 'Modé Ani', bg: 'linear-gradient(135deg,#ff9a56,#ff6f61)' },
-      { id: 'brakhot', emoji: '🙌', label: 'Brakhot du matin', bg: 'linear-gradient(135deg,#56ccf2,#2f80ed)' },
+      { id: 'brakhot', emoji: '🙌', img: 'assets/obj-brakhot.webp', label: 'Brakhot du matin', bg: 'linear-gradient(135deg,#56ccf2,#2f80ed)' },
       { id: 'tsedaka_am', emoji: '🪙', label: 'Tsédaka', bg: 'linear-gradient(135deg,#f7d86e,#e8b923)' },
       { id: 'tefila', emoji: '🙏', label: 'Cha\'harit', bg: 'linear-gradient(135deg,#a78bfa,#7c3aed)' },
       { id: 'tehilim', emoji: '📖', label: 'Tehilim du jour', bg: 'linear-gradient(135deg,#6ee7b7,#059669)' },
