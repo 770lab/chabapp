@@ -397,10 +397,11 @@ body { font-family: var(--font); background: var(--bg); color: var(--gray-1); ov
 /* PERSISTENT INSTA NAV */
 .insta-bottom-nav { display:flex; align-items:flex-end; justify-content:space-around; padding:6px 0 max(6px, env(safe-area-inset-bottom)); background:var(--white); border-top:1px solid var(--gray-5); flex-shrink:0; position:sticky; bottom:0; z-index:200; }
 #reading .insta-bottom-nav { position:relative; }
-.insta-nav-item { display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; cursor:pointer; color:var(--gray-3); padding:6px 12px; -webkit-tap-highlight-color:transparent; transition:color 0.15s; }
+.insta-nav-item { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:1px; background:none; border:none; cursor:pointer; color:var(--gray-3); padding:6px 12px; -webkit-tap-highlight-color:transparent; transition:color 0.15s; }
 .insta-nav-item:active { transform:scale(0.92); }
 .insta-nav-item svg { width:24px; height:24px; }
-.insta-nav-item span { font-size:13px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); }
+.insta-nav-item img { display:block; }
+.insta-nav-item span { font-size:13px; font-weight:600; letter-spacing:0.3px; font-family:var(--font); line-height:1; margin-top:2px; }
 .insta-nav-item.active { color:var(--black); }
 .insta-nav-item.active svg { stroke-width:2.2; }
 .insta-nav-center { position:relative; display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; cursor:pointer; padding:6px 12px; -webkit-tap-highlight-color:transparent; }

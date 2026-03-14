@@ -4118,6 +4118,32 @@ function goHome() {
   currentScreen = "home";
 }
 
+// Scroll vers le bloc Rabbi sur la page d'accueil
+function scrollToRabbi() {
+  switchTab('menu');
+  setTimeout(function() {
+    var el = document.getElementById('rabbi-card');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
+}
+
+// Ouvrir le Ohel (Ecrire au Rabbi) en in-app
+function openOhelInApp() {
+  var existing = document.getElementById('ohel-inapp-overlay');
+  if (existing) { existing.style.display = ''; return; }
+  var overlay = document.createElement('div');
+  overlay.id = 'ohel-inapp-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#fff;display:flex;flex-direction:column;';
+  var header = document.createElement('div');
+  header.style.cssText = 'display:flex;align-items:center;padding:12px 16px;background:#1a1a4e;color:#fff;gap:12px;flex-shrink:0;padding-top:max(12px,env(safe-area-inset-top));';
+  header.innerHTML = '<button onclick="document.getElementById(\'ohel-inapp-overlay\').style.display=\'none\'" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer;padding:4px 8px;">←</button><span style="font-size:16px;font-weight:700;flex:1;">Ecrire au Rabbi</span>';
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://www.loubavitch.fr/pratique/le-ohel';
+  iframe.style.cssText = 'flex:1;border:none;width:100%;';
+  overlay.appendChild(header);
+  overlay.appendChild(iframe);
+  document.body.appendChild(overlay);
+}
 
 function switchTab(tab) {
   activeTab = tab;
