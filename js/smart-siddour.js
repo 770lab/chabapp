@@ -28,7 +28,7 @@ var state = {
 // ── Données téfilot ────────────────────────────────────────────────────────
 var TEFILOT = {
   shacharit: {
-    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Avraham.png', imagePosition: 'center 30%',
+    label: 'שַׁחֲרִית', labelPhonetic: 'Cha\'harit', labelFr: 'Priere du matin', sublabel: 'Shacharit', icon: '🌅', image: 'assets/Avraham.webp', imagePosition: 'center 30%',
     sections: [
       { id: 'modeh', title: 'מודה אני', titlePhonetic: 'Modé Ani', titleFemale: 'מודָה אני', titlePhoneticFemale: 'Moda Ani', always: true,
         text: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.',
@@ -104,7 +104,7 @@ var TEFILOT = {
     ]
   },
   mincha: {
-    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.png?v=2', imagePosition: 'center 15%',
+    label: 'מִנְחָה', labelPhonetic: 'Min\'ha', labelFr: 'Priere de l\'apres-midi', sublabel: 'Mincha', icon: '☀️', image: 'assets/Itshak.webp', imagePosition: 'center 15%',
     sections: [
       { id: 'patakh-eliyahou-m', title: 'פָּתַח אֵלִיָּהוּ', titlePhonetic: "Pata'h Eliyahou", always: true, nusach_only: 'mizrach',
         text: (window.SIDDUR_PATAKH_ELIYAHOU || {}).text || '',
@@ -128,7 +128,7 @@ var TEFILOT = {
     ]
   },
   arvit: {
-    label: 'עַרְבִית', labelPhonetic: 'Arvit', labelFr: 'Priere du soir', sublabel: 'Arvit', icon: '🌙', image: 'assets/Yaakov.png?v=2', imagePosition: 'center 70%',
+    label: 'עַרְבִית', labelPhonetic: 'Arvit', labelFr: 'Priere du soir', sublabel: 'Arvit', icon: '🌙', image: 'assets/Yaakov.webp', imagePosition: 'center 70%',
     sections: [
       { id: 'barchu', title: 'בָּרְכוּ', titlePhonetic: 'Barékhou', always: true,
         text: 'בָּרְכוּ אֶת יְיָ הַמְּבֹרָךְ.\nבָּרוּךְ יְיָ הַמְּבֹרָךְ לְעוֹלָם וָעֶד.\n\nבָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים, בְּחׇכְמָה פּוֹתֵחַ שְׁעָרִים, וּבִתְבוּנָה מְשַׁנֶּה עִתִּים, וּמַחֲלִיף אֶת הַזְּמַנִּים, וּמְסַדֵּר אֶת הַכּוֹכָבִים בְּמִשְׁמְרוֹתֵיהֶם בָּרָקִיעַ כִּרְצוֹנוֹ. בּוֹרֵא יוֹם וָלָיְלָה, גּוֹלֵל אוֹר מִפְּנֵי חֹשֶׁךְ וְחֹשֶׁךְ מִפְּנֵי אוֹר, וּמַעֲבִיר יוֹם וּמֵבִיא לָיְלָה, וּמַבְדִּיל בֵּין יוֹם וּבֵין לָיְלָה, יְיָ צְבָאוֹת שְׁמוֹ. אֵל חַי וְקַיָּם, תָּמִיד יִמְלוֹךְ עָלֵינוּ לְעוֹלָם וָעֶד. בָּרוּךְ אַתָּה יְיָ, הַמַּעֲרִיב עֲרָבִים.',
@@ -590,8 +590,8 @@ function renderLangSwitcher() {
 
 function renderNusachim() {
   var images = {
-    chabad: 'assets/tehilat-hachem-cover.png',
-    mizrach: 'assets/patah-eliyahou-cover.png'
+    chabad: 'assets/tehilat-hachem-cover.webp',
+    mizrach: 'assets/patah-eliyahou-cover.webp'
   };
   // Cartes nusachim uniquement (tehilat + patakh)
   return NUSACHIM.map(function(n) {
@@ -606,8 +606,8 @@ function renderNusachim() {
 // Ancien renderNusachim en mode pill (pour fallback si besoin)
 function renderNusachimPills() {
   var images = {
-    chabad: 'assets/tehilat-hachem-cover.png',
-    mizrach: 'assets/patah-eliyahou-cover.png'
+    chabad: 'assets/tehilat-hachem-cover.webp',
+    mizrach: 'assets/patah-eliyahou-cover.webp'
   };
   return NUSACHIM.map(function(n) {
     var img = images[n.id];
