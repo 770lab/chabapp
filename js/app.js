@@ -4136,6 +4136,191 @@ function openOhelInApp() {
   document.body.appendChild(overlay);
 }
 
+// ====== CALCULATEUR DATES HEBRAIQUES / BAR MITSVA ======
+var _rabbiCalcGender = null;
+
+function jdToGregorian(jd) {
+  var l = jd + 68569;
+  var n = Math.floor(4 * l / 146097);
+  l = l - Math.floor((146097 * n + 3) / 4);
+  var i = Math.floor(4000 * (l + 1) / 1461001);
+  l = l - Math.floor(1461 * i / 4) + 31;
+  var j = Math.floor(80 * l / 2447);
+  var day = l - Math.floor(2447 * j / 80);
+  l = Math.floor(j / 11);
+  var month = j + 2 - 12 * l;
+  var year = 100 * (n - 49) + i + l;
+  return { year: year, month: month, day: day };
+}
+
+function rabbiCalcSetGender(g) {
+  _rabbiCalcGender = g;
+  var boyBtn = document.getElementById('rabbi-calc-boy');
+  var girlBtn = document.getElementById('rabbi-calc-girl');
+  if (boyBtn) {
+    boyBtn.style.background = g === 'boy' ? 'var(--black)' : 'var(--white)';
+    boyBtn.style.color = g === 'boy' ? '#fff' : 'var(--gray-2)';
+  }
+  if (girlBtn) {
+    girlBtn.style.background = g === 'girl' ? 'var(--black)' : 'var(--white)';
+    girlBtn.style.color = g === 'girl' ? '#fff' : 'var(--gray-2)';
+  }
+  rabbiCalcDate();
+}
+
+function rabbiCalcDate() {
+  var input = document.getElementById('rabbi-calc-date');
+  var timeInput = document.getElementById('rabbi-calc-time');
+  var result = document.getElementById('rabbi-calc-result');
+  if (!input || !input.value || !result) return;
+
+  var parts = input.value.split('-');
+  var gYear = parseInt(parts[0]);
+  var gMonth = parseInt(parts[1]);
+  var gDay = parseInt(parts[2]);
+
+  // Si heure apres coucher du soleil (~19h30 par defaut), ajouter 1 jour
+  var afterSunset = false;
+  if (timeInput && timeInput.value) {
+    var timeParts = timeInput.value.split(':');
+    var hour = parseInt(timeParts[0]);
+    if (hour >= 20) afterSunset = true; // approximation coucher du soleil
+  }
+
+  var d = new Date(gYear, gMonth - 1, gDay);
+  if (afterSunset) d.setDate(d.getDate() + 1);
+
+  var heb = getHebrewDate(d);
+  var monthInfo = HEBREW_MONTHS_LIST.find(function(m) { return m.value === heb.month; });
+  var monthHeb = monthInfo ? monthInfo.heb : '';
+  var monthName = monthInfo ? monthInfo.name : '';
+
+  // Format date civile
+  var _pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+  var gregStr = _pad(d.getDate()) + '/' + _pad(d.getMonth() + 1) + '/' + d.getFullYear();
+
+  var html = '';
+
+  // Anniversaire hebraique
+  html += '<div style="background:linear-gradient(135deg,#f8f4ef,#f0e8db);border-radius:12px;padding:16px;margin-bottom:12px;">';
+  html += '<div style="font-size:14px;font-weight:700;color:var(--black);margin-bottom:8px;">Anniversaire hebraique</div>';
+  html += '<div style="font-size:22px;font-weight:800;color:#1a1a4e;">' + heb.day + ' ' + monthHeb + ' ' + heb.year + '</div>';
+  html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">' + heb.day + ' ' + monthName + ' ' + heb.year + '</div>';
+  if (afterSunset) {
+    html += '<div style="font-size:11px;color:var(--gray-4);margin-top:6px;">Naissance apres le coucher du soleil : date hebraique = jour suivant</div>';
+  }
+
+  // Prochain anniversaire
+  var daysUntil = daysUntilHebrewBirthday(heb.month, heb.day);
+  if (daysUntil === 0) {
+    html += '<div style="margin-top:8px;font-size:13px;font-weight:700;color:#1a1a4e;">Anniversaire aujourd\'hui !</div>';
+  } else {
+    // Calculer la date grégorienne du prochain anniversaire
+    var today = getHebrewDate(new Date());
+    var nextBdayYear = today.year;
+    var nextBdayJD = hebrewToJD(nextBdayYear, heb.month, Math.min(heb.day, hebrewMonthLength(nextBdayYear, heb.month) || 29));
+    var todayJD = hebrewToJD(today.year, today.month, today.day);
+    if (nextBdayJD < todayJD) {
+      nextBdayYear = today.year + 1;
+      var mLen = hebrewMonthLength(nextBdayYear, heb.month);
+      if (mLen === 0) {
+        nextBdayJD = hebrewToJD(nextBdayYear, 7, Math.min(heb.day, hebrewMonthLength(nextBdayYear, 7)));
+      } else {
+        nextBdayJD = hebrewToJD(nextBdayYear, heb.month, Math.min(heb.day, mLen));
+      }
+    }
+    var nextGreg = jdToGregorian(nextBdayJD);
+    html += '<div style="margin-top:8px;font-size:13px;color:var(--gray-2);">Prochain anniversaire dans <strong>' + daysUntil + ' jour' + (daysUntil > 1 ? 's' : '') + '</strong> (' + _pad(nextGreg.day) + '/' + _pad(nextGreg.month) + '/' + nextGreg.year + ')</div>';
+  }
+  html += '</div>';
+
+  // Bar/Bat Mitsva
+  if (_rabbiCalcGender) {
+    var milestoneName = _rabbiCalcGender === 'boy' ? 'Bar Mitsva' : 'Bat Mitsva';
+    var milestoneYears = _rabbiCalcGender === 'boy' ? 13 : 12;
+    var bmYear = heb.year + milestoneYears;
+    var bmMonth = heb.month;
+    var bmDay = heb.day;
+
+    // Gerer le cas ou le mois n'existe pas (Adar I en annee non-bissextile)
+    var bmMonthLen = hebrewMonthLength(bmYear, bmMonth);
+    if (bmMonthLen === 0) {
+      bmMonth = 7; // Adar
+      bmMonthLen = hebrewMonthLength(bmYear, bmMonth);
+    }
+    if (bmDay > bmMonthLen) bmDay = bmMonthLen;
+
+    var bmJD = hebrewToJD(bmYear, bmMonth, bmDay);
+    var bmGreg = jdToGregorian(bmJD);
+    var bmMonthInfo = HEBREW_MONTHS_LIST.find(function(m) { return m.value === bmMonth; });
+    var bmMonthHeb = bmMonthInfo ? bmMonthInfo.heb : '';
+
+    var age = calcHebrewAge(heb.month, heb.day, heb.year);
+    var bmPassed = age >= milestoneYears;
+
+    html += '<div style="background:linear-gradient(135deg,#1a1a4e,#2d1b69);border-radius:12px;padding:16px;margin-bottom:12px;">';
+    html += '<div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;">' + milestoneName + '</div>';
+    html += '<div style="font-size:18px;font-weight:800;color:#fff;">' + bmDay + ' ' + bmMonthHeb + ' ' + bmYear + '</div>';
+    html += '<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:2px;">' + _pad(bmGreg.day) + '/' + _pad(bmGreg.month) + '/' + bmGreg.year + '</div>';
+
+    if (bmPassed) {
+      html += '<div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.7);">Deja passe(e)</div>';
+    } else {
+      var daysUntilBM = bmJD - gregorianToJD(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
+      if (daysUntilBM > 0) {
+        html += '<div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.85);">Dans <strong style="color:#f9ce34;">' + daysUntilBM + ' jour' + (daysUntilBM > 1 ? 's' : '') + '</strong></div>';
+      }
+    }
+
+    // Trouver la paracha du Shabbat de la Bar/Bat Mitsva
+    // Le Shabbat le plus proche apres la date = jour de la lecture de la Torah
+    var bmDayOfWeek = (bmJD + 1) % 7; // 0=dim, 6=sam
+    var shabbatJD = bmJD;
+    if (bmDayOfWeek !== 6) {
+      shabbatJD = bmJD + (6 - bmDayOfWeek); // prochain samedi
+    }
+    var shabbatGreg = jdToGregorian(shabbatJD);
+
+    // Utiliser Hebcal API pour trouver la paracha de ce Shabbat
+    var shabbatDateStr = shabbatGreg.year + '-' + _pad(shabbatGreg.month) + '-' + _pad(shabbatGreg.day);
+    html += '<div id="rabbi-calc-parasha" style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.7);">Recherche de la Paracha...</div>';
+    html += '</div>';
+
+    // Fetch paracha via Hebcal
+    setTimeout(function() {
+      var pEl = document.getElementById('rabbi-calc-parasha');
+      if (!pEl) return;
+      var apiUrl = 'https://www.hebcal.com/shabbat?cfg=json&date=' + shabbatDateStr + '&geo=pos&latitude=48.8566&longitude=2.3522&tzid=Europe/Paris';
+      fetch(apiUrl).then(function(r) { return r.json(); }).then(function(data) {
+        var items = data.items || [];
+        var parashaName = '';
+        var parashaHe = '';
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].category === 'parashat') {
+            parashaName = (items[i].title || '').replace('Parashat ', '');
+            parashaHe = items[i].hebrew || '';
+            break;
+          }
+        }
+        if (parashaName && pEl) {
+          var fr = getParashaFr(parashaName);
+          pEl.innerHTML = 'Paracha : <strong style="color:#f9ce34;">Parashat ' + fr + '</strong>' + (parashaHe ? ' <span style="font-family:serif;">' + parashaHe + '</span>' : '') + '<br><span style="font-size:11px;">Shabbat ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year + '</span>';
+        } else if (pEl) {
+          pEl.textContent = 'Shabbat le ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year;
+        }
+      }).catch(function() {
+        if (pEl) pEl.textContent = 'Shabbat le ' + _pad(shabbatGreg.day) + '/' + _pad(shabbatGreg.month) + '/' + shabbatGreg.year;
+      });
+    }, 100);
+  } else {
+    html += '<div style="background:var(--gray-6);border-radius:12px;padding:16px;text-align:center;">';
+    html += '<div style="font-size:13px;color:var(--gray-3);">Selectionne garcon ou fille pour calculer la date de Bar/Bat Mitsva</div>';
+    html += '</div>';
+  }
+
+  result.innerHTML = html;
+}
+
 function switchTab(tab) {
   activeTab = tab;
   var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-rabbi","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];

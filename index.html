@@ -782,6 +782,30 @@ Partager
 </div>
 <div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
 </div>
+<!-- Calculateur dates hebraiques -->
+<div style="background:var(--white);border-radius:16px;padding:20px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+<div style="font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;">Dates hebraiques</div>
+<div style="font-size:12px;color:var(--gray-3);margin-bottom:16px;">Anniversaire hebraique, Bar/Bat Mitsva, Paracha</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Date de naissance (civile)</label>
+<input type="date" id="rabbi-calc-date" onchange="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Heure de naissance (optionnel)</label>
+<input type="time" id="rabbi-calc-time" onchange="rabbiCalcDate()" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+<div style="font-size:11px;color:var(--gray-4);margin-top:4px;">Si ne(e) apres le coucher du soleil, la date hebraique sera le jour suivant</div>
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Sexe</label>
+<div style="display:flex;gap:8px;">
+<button id="rabbi-calc-boy" onclick="rabbiCalcSetGender('boy')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Garcon</button>
+<button id="rabbi-calc-girl" onclick="rabbiCalcSetGender('girl')" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Fille</button>
+</div>
+</div>
+</div>
+<div id="rabbi-calc-result" style="margin-top:16px;"></div>
+</div>
 </div>
 </div>
 <!-- SUB-PANEL: DONS -->
