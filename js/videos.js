@@ -196,55 +196,77 @@ function ytFilterChannel(name) {
   _ytRender();
 }
 
-// ─── Timer pour le hint de scroll ───────────────────────────
-var _ytScrollHintTimer = null;
+// ─── Reels-style player state ───────────────────────────────
+var _ytReelsObserver = null;
+var _ytActiveSlideIdx = -1;
 
-// ─── Lire une vidéo ────────────────────────────────────────
+// ─── Lire une vidéo (mode Reels) ────────────────────────────
 function ytPlayVideo(index) {
   var v = _ytVideos[index];
   if (!v) return;
 
-  var wrap      = document.getElementById("yt-player-wrap");
-  var container = document.getElementById("yt-player-container");
-  var title     = document.getElementById("yt-player-title");
-  var suggestions = document.getElementById("yt-player-suggestions");
+  var wrap = document.getElementById("yt-player-wrap");
+  var feed = document.getElementById("yt-reels-feed");
+  if (!wrap || !feed) return;
 
-  if (!wrap || !container) return;
+  // Ordonner : vidéo cliquée en premier, puis les autres dans l'ordre
+  var ordered = [index];
+  for (var i = 0; i < _ytVideos.length; i++) {
+    if (i !== index) ordered.push(i);
+  }
 
-  container.innerHTML = '<iframe src="https://www.youtube.com/embed/' + v.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border-radius:12px;"></iframe>';
-  if (title) title.textContent = v.title + (v.channel ? " · " + v.channel : "");
+  // Construire les slides
+  var html = '';
+  for (var s = 0; s < ordered.length; s++) {
+    var vi = ordered[s];
+    var vid = _ytVideos[vi];
+    var thumb = "https://img.youtube.com/vi/" + vid.id + "/mqdefault.jpg";
+    html += '<div class="yt-reel-slide" data-video-idx="' + vi + '" data-slide="' + s + '">';
+    if (s === 0) {
+      // Premier slide : iframe direct avec autoplay
+      html += '<div class="yt-reel-iframe-wrap">';
+      html += '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      html += '</div>';
+    } else {
+      // Autres slides : thumbnail avec bouton play
+      html += '<div class="yt-reel-thumb-wrap" onclick="_ytActivateSlide(this.parentNode)">';
+      html += '<img src="' + thumb + '" alt="" loading="lazy" />';
+      html += '<div class="yt-reel-play-btn"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>';
+      html += '</div>';
+    }
+    html += '<div class="yt-reel-info">';
+    html += '<div class="yt-reel-title">' + _ytEsc(vid.title) + '</div>';
+    if (vid.channel) html += '<div class="yt-reel-channel">' + _ytEsc(vid.channel) + '</div>';
+    html += '</div>';
+    html += '</div>';
+  }
+  html += '<div class="yt-reel-hint">Swipe vers le haut pour la suite</div>';
+  feed.innerHTML = html;
+  feed.scrollTop = 0;
+  _ytActiveSlideIdx = 0;
 
-  // Suggestions : autres vidéos (même chaîne en priorité, puis le reste)
-  if (suggestions) {
-    var others = _ytVideos.filter(function (_, i) { return i !== index; });
-    // Même chaîne d'abord
-    var sameChannel = others.filter(function (o) { return o.channel === v.channel; });
-    var diffChannel = others.filter(function (o) { return o.channel !== v.channel; });
-    var sorted = sameChannel.concat(diffChannel).slice(0, 15);
+  // IntersectionObserver pour détecter le slide visible
+  if (_ytReelsObserver) _ytReelsObserver.disconnect();
+  _ytReelsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var slide = entry.target;
+      var slideIdx = parseInt(slide.getAttribute('data-slide'));
+      if (slideIdx === _ytActiveSlideIdx) return;
 
-    var sHtml = '<div class="yt-player-suggestions-title">Suggestions</div>';
-    sorted.forEach(function (s) {
-      var si = _ytVideos.indexOf(s);
-      var thumb = "https://img.youtube.com/vi/" + s.id + "/mqdefault.jpg";
-      sHtml += '<div class="yt-suggestion-card" onclick="ytPlayVideo(' + si + ')">';
-      sHtml += '<img class="yt-suggestion-thumb" src="' + thumb + '" alt="" loading="lazy" />';
-      sHtml += '<div class="yt-suggestion-info">';
-      sHtml += '<div class="yt-suggestion-title">' + _ytEsc(s.title) + '</div>';
-      sHtml += '<div class="yt-suggestion-channel">' + _ytEsc(s.channel) + '</div>';
-      sHtml += '</div></div>';
+      // Désactiver l'ancien slide (iframe → thumbnail)
+      var oldSlide = feed.querySelector('.yt-reel-slide[data-slide="' + _ytActiveSlideIdx + '"]');
+      if (oldSlide) _ytDeactivateSlide(oldSlide);
+
+      // Activer le nouveau slide (thumbnail → iframe)
+      _ytActivateSlide(slide);
+      _ytActiveSlideIdx = slideIdx;
     });
-    suggestions.innerHTML = sHtml;
-    suggestions.scrollTop = 0;
+  }, { root: feed, threshold: 0.6 });
 
-    // Hint de scroll : petit bounce après 3 secondes
-    if (_ytScrollHintTimer) clearTimeout(_ytScrollHintTimer);
-    _ytScrollHintTimer = setTimeout(function () {
-      if (!suggestions || wrap.style.display === "none") return;
-      suggestions.scrollTo({ top: 40, behavior: "smooth" });
-      setTimeout(function () {
-        suggestions.scrollTo({ top: 0, behavior: "smooth" });
-      }, 400);
-    }, 3000);
+  var slides = feed.querySelectorAll('.yt-reel-slide');
+  for (var j = 0; j < slides.length; j++) {
+    _ytReelsObserver.observe(slides[j]);
   }
 
   // Bloquer le scroll du body
@@ -252,14 +274,43 @@ function ytPlayVideo(index) {
   wrap.style.display = "";
 }
 
+// Activer un slide : remplacer thumbnail par iframe
+function _ytActivateSlide(slide) {
+  if (!slide) return;
+  var vi = parseInt(slide.getAttribute('data-video-idx'));
+  var vid = _ytVideos[vi];
+  if (!vid) return;
+  var thumbWrap = slide.querySelector('.yt-reel-thumb-wrap');
+  if (!thumbWrap) return; // déjà un iframe
+  var iframeWrap = document.createElement('div');
+  iframeWrap.className = 'yt-reel-iframe-wrap';
+  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  slide.replaceChild(iframeWrap, thumbWrap);
+}
+
+// Désactiver un slide : remplacer iframe par thumbnail
+function _ytDeactivateSlide(slide) {
+  if (!slide) return;
+  var vi = parseInt(slide.getAttribute('data-video-idx'));
+  var vid = _ytVideos[vi];
+  if (!vid) return;
+  var iframeWrap = slide.querySelector('.yt-reel-iframe-wrap');
+  if (!iframeWrap) return; // déjà une thumbnail
+  var thumb = "https://img.youtube.com/vi/" + vid.id + "/mqdefault.jpg";
+  var thumbWrap = document.createElement('div');
+  thumbWrap.className = 'yt-reel-thumb-wrap';
+  thumbWrap.setAttribute('onclick', '_ytActivateSlide(this.parentNode)');
+  thumbWrap.innerHTML = '<img src="' + thumb + '" alt="" /><div class="yt-reel-play-btn"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>';
+  slide.replaceChild(thumbWrap, iframeWrap);
+}
+
 // ─── Fermer le lecteur ─────────────────────────────────────
 function ytClosePlayer() {
-  var wrap        = document.getElementById("yt-player-wrap");
-  var container   = document.getElementById("yt-player-container");
-  var suggestions = document.getElementById("yt-player-suggestions");
-  if (_ytScrollHintTimer) { clearTimeout(_ytScrollHintTimer); _ytScrollHintTimer = null; }
-  if (container) container.innerHTML = "";
-  if (suggestions) suggestions.innerHTML = "";
+  var wrap = document.getElementById("yt-player-wrap");
+  var feed = document.getElementById("yt-reels-feed");
+  if (_ytReelsObserver) { _ytReelsObserver.disconnect(); _ytReelsObserver = null; }
+  _ytActiveSlideIdx = -1;
+  if (feed) feed.innerHTML = "";
   if (wrap) wrap.style.display = "none";
   document.body.style.overflow = "";
 }
