@@ -4118,15 +4118,6 @@ function goHome() {
   currentScreen = "home";
 }
 
-// Scroll vers le bloc Rabbi sur la page d'accueil
-function scrollToRabbi() {
-  switchTab('menu');
-  setTimeout(function() {
-    var el = document.getElementById('rabbi-card');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
-}
-
 // Ouvrir le Ohel (Ecrire au Rabbi) en in-app
 function openOhelInApp() {
   var existing = document.getElementById('ohel-inapp-overlay');
@@ -4147,7 +4138,7 @@ function openOhelInApp() {
 
 function switchTab(tab) {
   activeTab = tab;
-  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
+  var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-rabbi","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
   panels.forEach(function(p) {
     var el = document.getElementById("panel-" + p);
     if (el) el.style.display = p === tab ? "block" : "none";

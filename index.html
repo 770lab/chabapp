@@ -738,6 +738,52 @@ Partager
 <div style="margin:24px 16px;text-align:center;"><button onclick="openOhelInApp()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#1a1a4e,#2d1b69);color:#fff;border-radius:12px;border:none;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.2);cursor:pointer;">&#x2709;&#xFE0F; Ecrire au Rabbi</button></div>
 </div>
 </div>
+<!-- SUB-PANEL: RABBI -->
+<div id="panel-sub-rabbi" style="display:none">
+<div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
+<div style="padding:0 16px 16px;">
+<div style="position:relative;border-radius:16px;overflow:hidden;margin-bottom:20px;">
+<img src="assets/cards/rabbi.jpg" alt="Rabbi" style="width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;display:block;" loading="lazy" />
+<div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 60%);"></div>
+<div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;">
+<div style="font-size:22px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Le Rabbi</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.85);margin-top:4px;text-shadow:0 1px 3px rgba(0,0,0,0.5);">Rabbi Mena'hem Mendel Schneerson</div>
+</div>
+</div>
+<div onclick="openOhelInApp()" style="background:linear-gradient(135deg,#1a1a4e,#2d1b69);border-radius:16px;padding:20px;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;gap:16px;">
+<div style="font-size:36px;">&#x2709;&#xFE0F;</div>
+<div style="flex:1;">
+<div style="font-size:17px;font-weight:700;color:#fff;">Ecrire au Rabbi</div>
+<div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Envoyer une lettre au Ohel</div>
+</div>
+<div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
+</div>
+<div onclick="switchTab('sub-etudes')" style="background:linear-gradient(135deg,#0d2137,#163a5c);border-radius:16px;padding:20px;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;gap:16px;">
+<div style="font-size:36px;">&#x1F4D6;</div>
+<div style="flex:1;">
+<div style="font-size:17px;font-weight:700;color:#fff;">Hayom Yom</div>
+<div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Enseignement quotidien du Rabbi</div>
+</div>
+<div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
+</div>
+<div onclick="switchTab('sub-videos')" style="background:linear-gradient(135deg,#1a0a2e,#3b1d5e);border-radius:16px;padding:20px;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;gap:16px;">
+<div style="font-size:36px;">&#x1F3AC;</div>
+<div style="flex:1;">
+<div style="font-size:17px;font-weight:700;color:#fff;">JewTube</div>
+<div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Videos du Rabbi et Torah</div>
+</div>
+<div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
+</div>
+<div onclick="switchTab('sub-houmash')" style="background:linear-gradient(135deg,#2a1a0a,#5c3a1d);border-radius:16px;padding:20px;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;gap:16px;">
+<div style="font-size:36px;">&#x1F4DC;</div>
+<div style="flex:1;">
+<div style="font-size:17px;font-weight:700;color:#fff;">'Houmach</div>
+<div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Paracha de la semaine</div>
+</div>
+<div style="color:rgba(255,255,255,0.5);font-size:22px;">›</div>
+</div>
+</div>
+</div>
 <!-- SUB-PANEL: DONS -->
 <div id="panel-sub-don" style="display:none">
 <div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
@@ -1293,7 +1339,7 @@ Partager
 <button class="insta-nav-item active" onclick="switchTab('menu')"><img src="assets/splash-logo.webp" style="width:48px;height:48px;object-fit:contain;border-radius:8px"><span>Accueil</span></button>
 <button class="insta-nav-item" onclick="switchTab('sub-tefila')"><img src="assets/tefila-hero.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:8px" loading="lazy"><span>Prières</span></button>
 <button class="insta-nav-center" onclick="switchTab('sub-objectifs')"><div class="insta-nav-center-ring"><div class="insta-nav-center-inner"><img alt="Objectifs" src="assets/icon-objectifs-nav2.webp" style="width:30px;height:30px;border-radius:5px;object-fit:cover;"loading="lazy" /></div></div><span>Objectifs</span></button>
-<button class="insta-nav-item" onclick="scrollToRabbi()"><img src="assets/rabbi.jpg" style="width:48px;height:48px;object-fit:cover;object-position:top;border-radius:8px" loading="lazy"><span>Rabbi</span></button>
+<button class="insta-nav-item" onclick="switchTab('sub-rabbi')"><img src="assets/rabbi.jpg" style="width:48px;height:48px;object-fit:cover;object-position:top;border-radius:8px" loading="lazy"><span>Rabbi</span></button>
 <button class="insta-nav-item" onclick="switchTab('sub-etudes')"><img src="assets/etude-houmach.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:8px" loading="lazy"><span>Études</span></button>
 </div>
 </div>
@@ -1311,7 +1357,7 @@ Partager
 <button class="insta-nav-item" onclick="goHome()"><img src="assets/splash-logo.webp" style="width:48px;height:48px;object-fit:contain;border-radius:8px"><span>Accueil</span></button>
 <button class="insta-nav-item" onclick="goHome();switchTab('sub-tefila')"><img src="assets/tefila-hero.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:8px" loading="lazy"><span>Prières</span></button>
 <button class="insta-nav-center" onclick="goHome();switchTab('sub-objectifs')"><div class="insta-nav-center-ring"><div class="insta-nav-center-inner"><img alt="Objectifs" src="assets/icon-objectifs-nav.webp" style="width:30px;height:30px;border-radius:5px;object-fit:cover;"loading="lazy" /></div></div><span>Objectifs</span></button>
-<button class="insta-nav-item" onclick="goHome();scrollToRabbi()"><img src="assets/rabbi.jpg" style="width:48px;height:48px;object-fit:cover;object-position:top;border-radius:8px" loading="lazy"><span>Rabbi</span></button>
+<button class="insta-nav-item" onclick="goHome();switchTab('sub-rabbi')"><img src="assets/rabbi.jpg" style="width:48px;height:48px;object-fit:cover;object-position:top;border-radius:8px" loading="lazy"><span>Rabbi</span></button>
 <button class="insta-nav-item" onclick="goHome();switchTab('sub-etudes')"><img src="assets/etude-houmach.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:8px" loading="lazy"><span>Études</span></button>
 </div>
 </div>
