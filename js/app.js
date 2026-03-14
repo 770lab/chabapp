@@ -4053,7 +4053,15 @@ function showHome() {
     homeEl.style.display = "block";
     homeEl.classList.add("visible");
     document.getElementById("reading").style.display = "none";
-    switchTab("auth");
+    // Forcer le panel auth en fullscreen fixe pour eviter tout probleme d'affichage
+    var authPanel = document.getElementById("panel-auth");
+    if (authPanel) {
+      authPanel.style.display = "block";
+      authPanel.classList.add("auth-fullscreen");
+    }
+    // Cacher le footer nav
+    var homeNav = document.getElementById("home-nav");
+    if (homeNav) homeNav.style.display = "none";
     if (typeof _renderAuth === "function") _renderAuth();
     return;
   }

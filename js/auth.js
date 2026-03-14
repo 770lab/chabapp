@@ -250,6 +250,11 @@ function _loadUserProfile(firebaseUser) {
 function _onLogin() {
   // Analytics
   if (typeof fbLogEvent === "function") fbLogEvent("login", { method: chabUser.provider || "email" });
+  // Retirer le mode auth fullscreen
+  var authPanel = document.getElementById("panel-auth");
+  if (authPanel) authPanel.classList.remove("auth-fullscreen");
+  var homeNav = document.getElementById("home-nav");
+  if (homeNav) homeNav.style.display = "";
   // Relancer showHome si c'etait bloque par l'auth obligatoire
   window._homeShown = false;
   if (typeof showHome === "function") showHome();
@@ -285,7 +290,15 @@ function _onLogout() {
   if (heroActu) heroActu.style.display = "none";
   // Rediriger vers l'ecran de connexion
   window._homeShown = false;
-  if (typeof switchTab === "function") switchTab("auth");
+  // Forcer auth fullscreen
+  var authPanel = document.getElementById("panel-auth");
+  if (authPanel) {
+    authPanel.style.display = "block";
+    authPanel.classList.add("auth-fullscreen");
+  }
+  var homeNav = document.getElementById("home-nav");
+  if (homeNav) homeNav.style.display = "none";
+  if (typeof _renderAuth === "function") _renderAuth();
 }
 
 // Afficher le bloc Actualites uniquement si admin

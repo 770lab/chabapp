@@ -93,7 +93,8 @@
   max-width: 380px; margin: 0 auto;
   padding: 24px 20px;
 }
-#panel-auth { background: #fff !important; }
+#panel-auth { background: #fff !important; min-height: 100vh; min-height: 100dvh; }
+#panel-auth.auth-fullscreen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 500; overflow-y: auto; display: flex !important; flex-direction: column; }
 .auth-crown-logo { mix-blend-mode: multiply; }
 .auth-logo {
   text-align: center; margin-bottom: 28px;
