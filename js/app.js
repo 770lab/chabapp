@@ -4380,14 +4380,31 @@ function calcYahrzeit() {
 
   result.innerHTML = '<div style="text-align:center;padding:16px;color:var(--gray-3);">Recherche des dates...</div>';
 
+  // Calculer les periodes de deuil
+  var deathDate = new Date(d.getTime());
+  var _pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+  var _fmtDate = function(dt) { return _pad(dt.getDate()) + '/' + _pad(dt.getMonth() + 1) + '/' + dt.getFullYear(); };
+  var _fmtDay = function(dt) { return dt.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); };
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+
+  // Periodes de deuil
+  var shloshim3 = new Date(deathDate); shloshim3.setDate(shloshim3.getDate() + 3);
+  var shivaEnd = new Date(deathDate); shivaEnd.setDate(shivaEnd.getDate() + 7);
+  var shloshimEnd = new Date(deathDate); shloshimEnd.setDate(shloshimEnd.getDate() + 30);
+  var kaddishEnd = new Date(deathDate); kaddishEnd.setMonth(kaddishEnd.getMonth() + 11);
+
+  var isRecent = deathDate <= today;
+  var d3Active = isRecent && today <= shloshim3;
+  var shivaActive = isRecent && today > shloshim3 && today <= shivaEnd;
+  var shloshimActive = isRecent && today > shivaEnd && today <= shloshimEnd;
+  var kaddishActive = isRecent && today > shloshimEnd && today <= kaddishEnd;
+
   // Utiliser l'API Hebcal Yahrzeit
   var sunset = _yahrzeitSunset ? '&s1=on' : '';
   var apiUrl = 'https://www.hebcal.com/yahrzeit?cfg=json&v=yahrzeit&y1=' + gy + '&m1=' + gm + '&d1=' + gd + sunset + '&t1=Yahrzeit&n1=' + encodeURIComponent(name || 'Proche') + '&years=5';
 
   fetch(apiUrl).then(function(r) { return r.json(); }).then(function(data) {
     var items = data.items || [];
-    var _pad = function(n) { return n < 10 ? '0' + n : '' + n; };
-
     var html = '';
 
     // Date hebraique du deces
@@ -4395,15 +4412,79 @@ function calcYahrzeit() {
     html += '<div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;">Date hebraique du deces</div>';
     html += '<div style="font-size:20px;font-weight:800;color:#fff;">' + heb.day + ' ' + monthHeb + ' ' + heb.year + '</div>';
     html += '<div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">' + heb.day + ' ' + monthName + ' ' + heb.year + '</div>';
-    if (name) html += '<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">' + name + ' ז״ל</div>';
+    if (name) html += '<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">' + name + ' \u05D6\u05F4\u05DC</div>';
     html += '</div>';
 
+    // ═══ PERIODES DE DEUIL ═══
+    html += '<div style="font-size:14px;font-weight:700;color:var(--black);margin-bottom:10px;">Periodes de deuil</div>';
+
+    // --- 3 premiers jours ---
+    var d3Past = isRecent && today > shloshim3;
+    html += '<div style="background:' + (d3Active ? '#fef3c7' : 'var(--white)') + ';border:1.5px solid ' + (d3Active ? '#d97706' : 'var(--gray-5)') + ';border-radius:12px;padding:14px;margin-bottom:8px;' + (d3Past ? 'opacity:0.5;' : '') + '">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">';
+    html += '<div style="flex:1;">';
+    html += '<div style="font-size:14px;font-weight:700;color:var(--black);">3 premiers jours</div>';
+    html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">Fin : ' + _fmtDay(shloshim3) + '</div>';
+    html += '</div>';
+    if (d3Active) html += '<div style="background:#d97706;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap;">EN COURS</div>';
+    html += '</div>';
+    html += '<div style="font-size:12px;color:var(--gray-2);margin-top:8px;line-height:1.5;border-top:1px solid ' + (d3Active ? '#fde68a' : 'var(--gray-6)') + ';padding-top:8px;">';
+    html += "Deuil le plus intense. Les endeuilles restent assis a terre ou sur des sieges bas. Pas de travail, pas de toilette de confort, pas de chaussures en cuir. Les proches apportent les repas (<em>seoudat havra'a</em>).";
+    html += '</div></div>';
+
+    // --- Shiv'a (7 jours) ---
+    var shivaPast = isRecent && today > shivaEnd;
+    html += '<div style="background:' + (shivaActive ? '#fef3c7' : 'var(--white)') + ';border:1.5px solid ' + (shivaActive ? '#d97706' : 'var(--gray-5)') + ';border-radius:12px;padding:14px;margin-bottom:8px;' + (shivaPast ? 'opacity:0.5;' : '') + '">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">';
+    html += '<div style="flex:1;">';
+    html += "<div style=\"font-size:14px;font-weight:700;color:var(--black);\">Shiv'a <span style=\"font-weight:400;color:var(--gray-3);\">(7 jours)</span></div>";
+    html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">Fin : ' + _fmtDay(shivaEnd) + '</div>';
+    html += '</div>';
+    if (shivaActive) html += '<div style="background:#d97706;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap;">EN COURS</div>';
+    html += '</div>';
+    html += '<div style="font-size:12px;color:var(--gray-2);margin-top:8px;line-height:1.5;border-top:1px solid ' + (shivaActive ? '#fde68a' : 'var(--gray-6)') + ';padding-top:8px;">';
+    html += "On reste a la maison, on ne travaille pas, on ne se lave pas par plaisir, on ne porte pas de chaussures en cuir, on ne s'assied pas sur une chaise normale. ";
+    html += "Les visiteurs viennent consoler. On recite le <em>Kaddish</em> 3 fois par jour. ";
+    html += "Interdit de se couper les cheveux, de se raser, d'etudier la Torah (sauf les lois de deuil), de saluer.";
+    html += '</div></div>';
+
+    // --- Shloshim (30 jours) ---
+    var shloshimPast = isRecent && today > shloshimEnd;
+    html += '<div style="background:' + (shloshimActive ? '#dbeafe' : 'var(--white)') + ';border:1.5px solid ' + (shloshimActive ? '#2563eb' : 'var(--gray-5)') + ';border-radius:12px;padding:14px;margin-bottom:8px;' + (shloshimPast ? 'opacity:0.5;' : '') + '">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">';
+    html += '<div style="flex:1;">';
+    html += '<div style="font-size:14px;font-weight:700;color:var(--black);">Shloshim <span style="font-weight:400;color:var(--gray-3);">(30 jours)</span></div>';
+    html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">Fin : ' + _fmtDay(shloshimEnd) + '</div>';
+    html += '</div>';
+    if (shloshimActive) html += '<div style="background:#2563eb;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap;">EN COURS</div>';
+    html += '</div>';
+    html += '<div style="font-size:12px;color:var(--gray-2);margin-top:8px;line-height:1.5;border-top:1px solid ' + (shloshimActive ? '#bfdbfe' : 'var(--gray-6)') + ';padding-top:8px;">';
+    html += "On reprend le travail mais les restrictions continuent partiellement. ";
+    html += "Interdit de se couper les cheveux et de se raser. Pas de vetements neufs, pas de musique, pas de fetes ou celebrations. ";
+    html += "On continue le <em>Kaddish</em>. Pour un parent (pere/mere), ces restrictions durent 12 mois.";
+    html += '</div></div>';
+
+    // --- 11 mois (Kaddish) ---
+    var kaddishPast = isRecent && today > kaddishEnd;
+    html += '<div style="background:' + (kaddishActive ? '#ede9fe' : 'var(--white)') + ';border:1.5px solid ' + (kaddishActive ? '#7c3aed' : 'var(--gray-5)') + ';border-radius:12px;padding:14px;margin-bottom:12px;' + (kaddishPast ? 'opacity:0.5;' : '') + '">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;">';
+    html += '<div style="flex:1;">';
+    html += '<div style="font-size:14px;font-weight:700;color:var(--black);">11 mois <span style="font-weight:400;color:var(--gray-3);">(Kaddish)</span></div>';
+    html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">Fin : ' + _fmtDay(kaddishEnd) + '</div>';
+    html += '</div>';
+    if (kaddishActive) html += '<div style="background:#7c3aed;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap;">EN COURS</div>';
+    html += '</div>';
+    html += '<div style="font-size:12px;color:var(--gray-2);margin-top:8px;line-height:1.5;border-top:1px solid ' + (kaddishActive ? '#ddd6fe' : 'var(--gray-6)') + ';padding-top:8px;">';
+    html += "Le <em>Kaddish</em> est recite pendant 11 mois (et non 12, pour ne pas considerer le defunt comme un impie). ";
+    html += "Pour un pere ou une mere : pas de musique, pas de fetes, pas de vetements neufs pendant 12 mois. ";
+    html += "On peut se couper les cheveux apres les Shloshim si on recoit des remarques.";
+    html += '</div></div>';
+
+    // ═══ PROCHAINS YAHRZEITS ═══
     if (items.length === 0) {
-      html += '<div style="text-align:center;padding:16px;color:var(--gray-3);">Aucune date trouvee</div>';
+      html += '<div style="text-align:center;padding:16px;color:var(--gray-3);">Aucune date de Yahrzeit trouvee</div>';
     } else {
-      html += '<div style="font-size:14px;font-weight:700;color:var(--black);margin-bottom:8px;">Prochains Yahrzeits</div>';
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
+      html += '<div style="font-size:14px;font-weight:700;color:var(--black);margin-bottom:8px;margin-top:4px;">Prochains Yahrzeits</div>';
 
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
@@ -4416,7 +4497,7 @@ function calcYahrzeit() {
         html += '<div style="background:' + bgColor + ';border:1.5px solid ' + borderColor + ';border-radius:12px;padding:14px;margin-bottom:8px;' + (isPast ? 'opacity:0.5;' : '') + '">';
         html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
         html += '<div>';
-        html += '<div style="font-size:15px;font-weight:700;color:var(--black);">' + _pad(itemDate.getDate()) + '/' + _pad(itemDate.getMonth() + 1) + '/' + itemDate.getFullYear() + '</div>';
+        html += '<div style="font-size:15px;font-weight:700;color:var(--black);">' + _fmtDate(itemDate) + '</div>';
         html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">' + (item.hdate || '') + '</div>';
         html += '</div>';
         html += '<div style="text-align:right;">';
@@ -4430,7 +4511,19 @@ function calcYahrzeit() {
         html += '</div>';
       }
 
-      html += '<div style="font-size:11px;color:var(--gray-4);margin-top:8px;text-align:center;">La bougie se allume la veille au soir du Yahrzeit</div>';
+      // Regles du Yahrzeit
+      html += '<div style="background:var(--white);border:1.5px solid var(--gray-5);border-radius:12px;padding:14px;margin-bottom:8px;">';
+      html += '<div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:6px;">Regles du Yahrzeit</div>';
+      html += '<div style="font-size:12px;color:var(--gray-2);line-height:1.5;">';
+      html += "\u2022 Allumer une bougie de 24h la veille au soir<br>";
+      html += "\u2022 Reciter le Kaddish aux 3 offices<br>";
+      html += "\u2022 Monter a la Torah (si possible)<br>";
+      html += "\u2022 Etudier la Michna (lettres du nom du defunt + \u05DE.\u05E0.\u05E6.\u05E4)<br>";
+      html += "\u2022 Donner la Tsedaka en memoire du defunt<br>";
+      html += "\u2022 Visiter le cimetiere si possible";
+      html += '</div></div>';
+
+      html += "<div style=\"font-size:11px;color:var(--gray-4);margin-top:8px;text-align:center;\">La bougie s'allume la veille au soir du Yahrzeit</div>";
     }
 
     result.innerHTML = html;
