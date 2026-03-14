@@ -139,6 +139,21 @@ EXTRACT_JS = """
             .trim();
     }
 
+    // Tanya-specific selectors (may contain Hebrew + French)
+    const tanyaSelectors = ['.js-tanya-body', '#ContentBody .co_body.article-body', '#ContentBody'];
+    for (const sel of tanyaSelectors) {
+        const el = document.querySelector(sel);
+        if (!el) continue;
+        const text = el.innerText.trim();
+        if (text.length > 100 && !isNavContent(text) && !isBoilerplate(text)) {
+            const hr = hebrewRatio(text);
+            const lr = latinRatio(text);
+            if (hr > 0.05 || lr > 0.1) {
+                return { text: stripBoilerplate(text), method: 'tanya-selector:' + sel, hebrew: hr, latin: lr };
+            }
+        }
+    }
+
     const selectors = [
         '#TextContent', '#textContent', '.article-text',
         '.page-text-content', '#contentArea', '#pageTextArea',
@@ -408,11 +423,18 @@ def _is_garbage_text(text):
     for g in garbage_only:
         if g in text and len(text) < 300:
             return True
+    # Subscription/Cloudflare interstitial markers — always garbage regardless of length
+    always_garbage = [
+        "Restez connecté avec le meilleur de Chabad.org",
+        "Chaque semaine, dans votre boîte mail",
+    ]
+    for g in always_garbage:
+        if g in text:
+            return True
     # Short texts with subscription/publisher markers are garbage
     if len(text) < 300:
         short_garbage = [
-            "S'abonner", "Restez connecté", "Chaque semaine, dans votre boîte mail",
-            "Plus d'options d'abonnement",
+            "S'abonner", "Plus d'options d'abonnement",
         ]
         for g in short_garbage:
             if g in text:
@@ -723,7 +745,7 @@ def bulk_scrape_tanya(days_ahead):
 
             print("\n[%d/%d] Tanya %s" % (idx+1, len(dates_to_scrape), target_date))
 
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(headless=False)
             context = browser.new_context(user_agent=ua, locale="fr-FR")
             page = context.new_page()
 
@@ -749,7 +771,30 @@ def bulk_scrape_tanya(days_ahead):
                     time.sleep(TANYA_DELAY)
                     continue
 
-                time.sleep(3)
+                # Attendre que le vrai contenu apparaisse (pas juste le formulaire Cloudflare)
+                print("  Waiting for content...")
+                content_selectors = ['#TextContent', '#textContent', '.article-text', '.page-text-content', '#contentArea', '#pageTextArea']
+                found_content = False
+                for _wait in range(15):
+                    for sel in content_selectors:
+                        try:
+                            el = page.query_selector(sel)
+                            if el:
+                                txt = el.inner_text().strip()
+                                if len(txt) > 100 and "Restez connect" not in txt:
+                                    found_content = True
+                                    print("  Content found via %s (%d chars)" % (sel, len(txt)))
+                                    break
+                        except:
+                            pass
+                    if found_content:
+                        break
+                    time.sleep(2)
+
+                if not found_content:
+                    # Dernier recours : attendre encore un peu
+                    time.sleep(5)
+
                 result = page.evaluate(EXTRACT_JS)
                 text = result.get('text', '')
                 method = result.get('method', '')
