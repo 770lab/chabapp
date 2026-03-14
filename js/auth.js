@@ -35,7 +35,7 @@ function authSignup() {
           return _createUserDoc(cred.user, role.value, name);
         });
     })
-    .then(function () { _authLoading(false); })
+    .then(function () { _authLoading(false); _bioSaveCredential(email, pass); })
     .catch(function (err) { _authLoading(false); _authError(_friendlyError(err)); });
 }
 
@@ -47,8 +47,47 @@ function authLogin() {
   _authLoading(true);
 
   fbAuth.signInWithEmailAndPassword(email, pass)
-    .then(function () { _authLoading(false); })
+    .then(function () {
+      _authLoading(false);
+      // Sauvegarder les identifiants pour la biometrie
+      _bioSaveCredential(email, pass);
+    })
     .catch(function (err) { _authLoading(false); _authError(_friendlyError(err)); });
+}
+
+// ─── Biometrie : sauvegarde / recuperation ─────────────────
+function _bioIsAvailable() {
+  return window.PublicKeyCredential !== undefined || (navigator.credentials && navigator.credentials.create);
+}
+
+function _bioSaveCredential(email, pass) {
+  if (!navigator.credentials || !navigator.credentials.store || !window.PasswordCredential) return;
+  try {
+    var cred = new PasswordCredential({ id: email, password: pass, name: 'KOULAM' });
+    navigator.credentials.store(cred).catch(function() {});
+  } catch(e) {}
+}
+
+function authBiometric() {
+  if (!navigator.credentials || !navigator.credentials.get) {
+    _authError("Biometrie non disponible sur cet appareil.");
+    return;
+  }
+  _authLoading(true);
+  navigator.credentials.get({ password: true, mediation: 'optional' })
+    .then(function(cred) {
+      if (!cred || cred.type !== 'password') {
+        _authLoading(false);
+        _authError("Aucun identifiant sauvegarde. Connectez-vous d'abord avec email/mot de passe.");
+        return;
+      }
+      return fbAuth.signInWithEmailAndPassword(cred.id, cred.password)
+        .then(function() { _authLoading(false); });
+    })
+    .catch(function(err) {
+      _authLoading(false);
+      _authError("Echec biometrie. Connectez-vous avec email/mot de passe.");
+    });
 }
 
 // ─── Connexion Google ───────────────────────────────────────
@@ -349,6 +388,13 @@ function _renderAuth() {
 
   if (!isSignup) {
     html += '<div class="auth-forgot" onclick="authResetPassword()">Mot de passe oublié ?</div>';
+  }
+
+  // Bouton biometrie (empreinte/visage) si disponible et mode login
+  if (!isSignup && navigator.credentials && navigator.credentials.get) {
+    html += '<button class="chab-btn chab-btn-social" onclick="authBiometric()" style="margin-top:8px;background:linear-gradient(135deg,#1a1a4e,#2d1b69);color:#fff;border:none;">';
+    html += '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
+    html += ' Connexion biometrique</button>';
   }
 
   html += '<div class="auth-separator"><span>ou</span></div>';
