@@ -4049,9 +4049,12 @@ function init() {
 function showHome() {
   // Connexion obligatoire : si pas connecte, afficher l'ecran auth
   if (!fbAuth.currentUser) {
-    document.getElementById("home").style.display = "block";
+    var homeEl = document.getElementById("home");
+    homeEl.style.display = "block";
+    homeEl.classList.add("visible");
     document.getElementById("reading").style.display = "none";
     switchTab("auth");
+    if (typeof _renderAuth === "function") _renderAuth();
     return;
   }
   if (window._homeShown) return;
