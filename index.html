@@ -294,13 +294,15 @@
 </div>
 </div>
 <!-- Hero dates hebraiques -->
-<div onclick="switchTab('sub-dates')" style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);border-radius:16px;overflow:hidden;position:relative;cursor:pointer;margin-bottom:12px;display:flex;align-items:stretch;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-<div style="flex:1;padding:16px 0 16px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
+<div onclick="switchTab('sub-dates')" style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);border-radius:16px;overflow:hidden;position:relative;cursor:pointer;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+<div style="display:flex;align-items:flex-end;">
+<div style="flex:1;padding:20px 0 20px 16px;display:flex;flex-direction:column;gap:7px;">
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
 </div>
-<img src="assets/dates-hero.webp" alt="" style="width:120px;height:auto;object-fit:contain;align-self:flex-end;" loading="lazy" />
+<img src="assets/dates-hero.webp" alt="" style="width:160px;height:auto;object-fit:contain;flex-shrink:0;" loading="lazy" />
+</div>
 </div>
 <div class="club-hero" onclick="switchTab('sub-club')" style="display:none;" data-hidden-temp style="background:url('assets/card-club.webp') center/cover no-repeat; border:none; padding:0; position:relative; overflow:hidden; border-radius:16px; aspect-ratio:1/1; cursor:pointer; flex:1; min-width:0;">
 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%);"></div>
@@ -796,16 +798,16 @@ Partager
 <!-- SUB-PANEL: DATES HEBRAIQUES -->
 <div id="panel-sub-dates" style="display:none">
 <div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
-<div style="position:relative;overflow:hidden;">
-<div style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);display:flex;align-items:stretch;">
-<div style="flex:1;padding:16px 0 16px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
-<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:6px 10px;font-size:11px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
+<!-- Header hero -->
+<div style="background:linear-gradient(135deg,#e8f0fe,#d4e4fc);display:flex;align-items:flex-end;">
+<div style="flex:1;padding:20px 0 20px 16px;display:flex;flex-direction:column;gap:7px;">
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand mon vrai anniversaire ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">C'est quand ma Bar Mitsva ?</div>
+<div style="background:#fff;border-radius:12px 12px 12px 2px;padding:7px 12px;font-size:12px;color:#1a1a4e;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);width:fit-content;">Ce sera quelle Paracha B"H ?</div>
 </div>
-<img src="assets/dates-hero.webp" alt="" style="width:140px;height:auto;object-fit:contain;align-self:flex-end;" loading="lazy" />
+<img src="assets/dates-hero.webp" alt="" style="width:180px;height:auto;object-fit:contain;flex-shrink:0;" loading="lazy" />
 </div>
-</div>
+<!-- Calculateur naissance -->
 <div style="padding:16px;">
 <div style="font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;">Dates hebraiques</div>
 <div style="font-size:12px;color:var(--gray-3);margin-bottom:16px;">Anniversaire hebraique, Bar/Bat Mitsva, Paracha</div>
@@ -829,6 +831,30 @@ Partager
 <button onclick="rabbiCalcDate()" style="width:100%;padding:12px;background:var(--black);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px;">Calculer</button>
 </div>
 <div id="rabbi-calc-result" style="margin-top:16px;"></div>
+<!-- Separateur -->
+<div style="height:1px;background:var(--gray-5);margin:24px 0;"></div>
+<!-- Yahrzeit -->
+<div style="font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;">Anniversaire de deces</div>
+<div style="font-size:12px;color:var(--gray-3);margin-bottom:16px;">Calculer les dates de Yahrzeit pour allumer une bougie et dire le Kaddich</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Prenom du defunt(e)</label>
+<input type="text" id="yahrzeit-name" placeholder="Ex: Moche ben David" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Date de deces (civile)</label>
+<input type="date" id="yahrzeit-date" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:15px;font-family:var(--font);box-sizing:border-box;background:var(--white);color:var(--black);">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:var(--gray-2);display:block;margin-bottom:6px;">Apres le coucher du soleil ?</label>
+<div style="display:flex;gap:8px;">
+<button id="yahrzeit-sunset-no" onclick="yahrzeitSetSunset(false)" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--black);color:#fff;font-family:var(--font);transition:all .2s;">Non</button>
+<button id="yahrzeit-sunset-yes" onclick="yahrzeitSetSunset(true)" style="flex:1;padding:10px;border:1.5px solid var(--gray-5);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--white);color:var(--gray-2);font-family:var(--font);transition:all .2s;">Oui</button>
+</div>
+</div>
+<button onclick="calcYahrzeit()" style="width:100%;padding:12px;background:var(--black);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px;">Calculer les Yahrzeits</button>
+</div>
+<div id="yahrzeit-result" style="margin-top:16px;"></div>
 </div>
 </div>
 <!-- SUB-PANEL: DONS -->

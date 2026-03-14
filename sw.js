@@ -18,7 +18,7 @@ var messaging = firebase.messaging();
 var KOULAM_URL = self.registration ? self.registration.scope : 'https://770lab.github.io/chabapp/';
 
 // ═══ PWA CACHE ═══
-var CACHE_NAME = 'koulam-v7';
+var CACHE_NAME = 'koulam-v8';
 var ASSETS = [
   './',
   './index.html',

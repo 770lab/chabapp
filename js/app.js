@@ -4323,6 +4323,104 @@ function rabbiCalcDate() {
   result.innerHTML = html;
 }
 
+// ====== YAHRZEIT ======
+var _yahrzeitSunset = false;
+
+function yahrzeitSetSunset(val) {
+  _yahrzeitSunset = val;
+  var noBtn = document.getElementById('yahrzeit-sunset-no');
+  var yesBtn = document.getElementById('yahrzeit-sunset-yes');
+  if (noBtn) {
+    noBtn.style.background = val ? 'var(--white)' : 'var(--black)';
+    noBtn.style.color = val ? 'var(--gray-2)' : '#fff';
+  }
+  if (yesBtn) {
+    yesBtn.style.background = val ? 'var(--black)' : 'var(--white)';
+    yesBtn.style.color = val ? '#fff' : 'var(--gray-2)';
+  }
+}
+
+function calcYahrzeit() {
+  var dateInput = document.getElementById('yahrzeit-date');
+  var nameInput = document.getElementById('yahrzeit-name');
+  var result = document.getElementById('yahrzeit-result');
+  if (!dateInput || !dateInput.value || !result) return;
+
+  var parts = dateInput.value.split('-');
+  var gy = parseInt(parts[0]);
+  var gm = parseInt(parts[1]);
+  var gd = parseInt(parts[2]);
+  var name = (nameInput && nameInput.value) ? nameInput.value.trim() : '';
+
+  // Convertir en date hebraique
+  var d = new Date(gy, gm - 1, gd);
+  if (_yahrzeitSunset) d.setDate(d.getDate() + 1);
+  var heb = getHebrewDate(d);
+  var monthInfo = HEBREW_MONTHS_LIST.find(function(m) { return m.value === heb.month; });
+  var monthHeb = monthInfo ? monthInfo.heb : '';
+  var monthName = monthInfo ? monthInfo.name : '';
+
+  result.innerHTML = '<div style="text-align:center;padding:16px;color:var(--gray-3);">Recherche des dates...</div>';
+
+  // Utiliser l'API Hebcal Yahrzeit
+  var sunset = _yahrzeitSunset ? '&s1=on' : '';
+  var apiUrl = 'https://www.hebcal.com/yahrzeit?cfg=json&v=yahrzeit&y1=' + gy + '&m1=' + gm + '&d1=' + gd + sunset + '&t1=Yahrzeit&n1=' + encodeURIComponent(name || 'Proche') + '&years=5';
+
+  fetch(apiUrl).then(function(r) { return r.json(); }).then(function(data) {
+    var items = data.items || [];
+    var _pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+
+    var html = '';
+
+    // Date hebraique du deces
+    html += '<div style="background:linear-gradient(135deg,#2a2a2a,#1a1a1a);border-radius:12px;padding:16px;margin-bottom:12px;">';
+    html += '<div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;">Date hebraique du deces</div>';
+    html += '<div style="font-size:20px;font-weight:800;color:#fff;">' + heb.day + ' ' + monthHeb + ' ' + heb.year + '</div>';
+    html += '<div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">' + heb.day + ' ' + monthName + ' ' + heb.year + '</div>';
+    if (name) html += '<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">' + name + ' ז״ל</div>';
+    html += '</div>';
+
+    if (items.length === 0) {
+      html += '<div style="text-align:center;padding:16px;color:var(--gray-3);">Aucune date trouvee</div>';
+    } else {
+      html += '<div style="font-size:14px;font-weight:700;color:var(--black);margin-bottom:8px;">Prochains Yahrzeits</div>';
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var itemDate = new Date(item.date);
+        var isPast = itemDate < today;
+        var isNext = !isPast && (i === 0 || new Date(items[i - 1].date) < today);
+        var borderColor = isNext ? '#1a1a4e' : 'var(--gray-5)';
+        var bgColor = isNext ? '#f8f4ef' : 'var(--white)';
+
+        html += '<div style="background:' + bgColor + ';border:1.5px solid ' + borderColor + ';border-radius:12px;padding:14px;margin-bottom:8px;' + (isPast ? 'opacity:0.5;' : '') + '">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+        html += '<div>';
+        html += '<div style="font-size:15px;font-weight:700;color:var(--black);">' + _pad(itemDate.getDate()) + '/' + _pad(itemDate.getMonth() + 1) + '/' + itemDate.getFullYear() + '</div>';
+        html += '<div style="font-size:12px;color:var(--gray-3);margin-top:2px;">' + (item.hdate || '') + '</div>';
+        html += '</div>';
+        html += '<div style="text-align:right;">';
+        if (item.anniversary) html += '<div style="font-size:12px;font-weight:600;color:#1a1a4e;">' + item.anniversary + 'e annee</div>';
+        if (isNext) {
+          var diff = Math.ceil((itemDate - today) / 86400000);
+          html += '<div style="font-size:11px;color:var(--gray-3);margin-top:2px;">dans ' + diff + ' jour' + (diff > 1 ? 's' : '') + '</div>';
+        }
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+      }
+
+      html += '<div style="font-size:11px;color:var(--gray-4);margin-top:8px;text-align:center;">La bougie se allume la veille au soir du Yahrzeit</div>';
+    }
+
+    result.innerHTML = html;
+  }).catch(function(err) {
+    result.innerHTML = '<div style="text-align:center;padding:16px;color:var(--gray-3);">Erreur lors du calcul. Verifiez votre connexion.</div>';
+  });
+}
+
 // ====== NAVIGATION BACK — History API ======
 // Utilise history.pushState/popstate pour que le bouton retour Android
 // et le geste retour naviguent dans l'app au lieu de sortir
