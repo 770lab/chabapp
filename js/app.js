@@ -4321,7 +4321,68 @@ function rabbiCalcDate() {
   result.innerHTML = html;
 }
 
-function switchTab(tab) {
+// ====== NAVIGATION HISTORY + SWIPE BACK ======
+var _navHistory = ['menu'];
+var _swipeStartX = 0;
+var _swipeStartY = 0;
+var _swipeStartTime = 0;
+
+function navGoBack() {
+  if (_navHistory.length > 1) {
+    _navHistory.pop(); // retire le tab courant
+    var prev = _navHistory[_navHistory.length - 1];
+    // Cas special : si on est sur reading screen
+    if (document.getElementById('reading').style.display !== 'none') {
+      goHome();
+      return;
+    }
+    // Cas special : fermer overlay ohel
+    var ohel = document.getElementById('ohel-inapp-overlay');
+    if (ohel && ohel.style.display !== 'none') {
+      ohel.style.display = 'none';
+      return;
+    }
+    switchTab(prev, true); // true = skip history push
+  } else {
+    // Deja sur l'accueil, ou reading screen
+    if (document.getElementById('reading').style.display !== 'none') {
+      goHome();
+    } else if (activeTab !== 'menu') {
+      switchTab('menu', true);
+    }
+  }
+}
+
+document.addEventListener('touchstart', function(e) {
+  if (e.touches.length !== 1) return;
+  _swipeStartX = e.touches[0].clientX;
+  _swipeStartY = e.touches[0].clientY;
+  _swipeStartTime = Date.now();
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) {
+  if (!_swipeStartTime) return;
+  var dx = e.changedTouches[0].clientX - _swipeStartX;
+  var dy = e.changedTouches[0].clientY - _swipeStartY;
+  var dt = Date.now() - _swipeStartTime;
+  _swipeStartTime = 0;
+  // Swipe droite : dx > 80px, plus horizontal que vertical, rapide (<400ms)
+  // Seulement si le swipe commence depuis le bord gauche (< 40px)
+  if (_swipeStartX < 40 && dx > 80 && Math.abs(dy) < Math.abs(dx) && dt < 400) {
+    // Ne pas intercepter si un overlay fullscreen est ouvert (reels, story, etc.)
+    var reels = document.getElementById('yt-player-wrap');
+    if (reels && reels.style.display !== 'none') return;
+    var storyOv = document.getElementById('obj-story-overlay');
+    if (storyOv && storyOv.style.display !== 'none') return;
+    navGoBack();
+  }
+}, { passive: true });
+
+function switchTab(tab, skipHistory) {
+  if (!skipHistory && activeTab !== tab) {
+    _navHistory.push(tab);
+    if (_navHistory.length > 20) _navHistory.shift();
+  }
   activeTab = tab;
   var panels = ["menu","sub-objectifs","sub-tehilim","sub-club","sub-beth","sub-halakha","sub-tefila","sub-tefila-chema-hamita","sub-tefila-brachot","sub-tefila-siddur","sub-etudes","sub-houmash","sub-rabbi","sub-don","sub-videos","sub-simha","jour","perek","birthday","chains","chain-detail","t119","cemetery","auth","profile","feed","notifs","following","dashboard"];
   panels.forEach(function(p) {
