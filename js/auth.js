@@ -211,8 +211,9 @@ function _loadUserProfile(firebaseUser) {
 function _onLogin() {
   // Analytics
   if (typeof fbLogEvent === "function") fbLogEvent("login", { method: chabUser.provider || "email" });
-  // Retourner au menu principal
-  if (typeof switchTab === "function") switchTab("menu");
+  // Relancer showHome si c'etait bloque par l'auth obligatoire
+  window._homeShown = false;
+  if (typeof showHome === "function") showHome();
   var homeEl2 = document.getElementById("home");
   if (homeEl2) homeEl2.classList.remove("auth-open");
   // Actualiser le profil si visible
@@ -243,7 +244,9 @@ function _onLogout() {
   if (blocActu) blocActu.style.display = "none";
   var heroActu = document.querySelector(".feed-hero-admin");
   if (heroActu) heroActu.style.display = "none";
-  if (typeof switchTab === "function") switchTab("menu");
+  // Rediriger vers l'ecran de connexion
+  window._homeShown = false;
+  if (typeof switchTab === "function") switchTab("auth");
 }
 
 // Afficher le bloc Actualites uniquement si admin
