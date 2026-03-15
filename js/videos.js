@@ -105,7 +105,8 @@ var YT_PROFILES = [
 function _ytFetchRSS() {
   var promises = YT_PROFILES.map(function(profile) {
     var feedUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=" + profile.channelId;
-    return fetch(feedUrl)
+    var proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(feedUrl);
+    return fetch(proxyUrl)
       .then(function(r) { return r.text(); })
       .then(function(xml) {
         var parser = new DOMParser();
