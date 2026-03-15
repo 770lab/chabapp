@@ -9174,8 +9174,7 @@ function setBethFilter(filter) {
 
 function _bethFetchGooglePlaces(lat, lng, type, keyword, callback) {
   var body = {
-    includedTypes: [type],
-    textQuery: keyword,
+    textQuery: keyword + ' ' + type,
     locationBias: {
       circle: {
         center: { latitude: lat, longitude: lng },
