@@ -1031,6 +1031,21 @@ function render() {
   initPinchZoom();
   // Swipe sur le hero pour changer de tefila
   initHeroSwipe();
+  // Kaddish minyan toggle-all : ouvrir un kaddish = ouvrir tous
+  initKaddishToggle();
+}
+
+function initKaddishToggle() {
+  var wrap = document.querySelector('.ss-wrap');
+  if (!wrap) return;
+  wrap.addEventListener('toggle', function(e) {
+    if (!e.target.classList.contains('kaddish-minyan')) return;
+    var open = e.target.open;
+    var all = wrap.querySelectorAll('.kaddish-minyan');
+    for (var i = 0; i < all.length; i++) {
+      all[i].open = open;
+    }
+  }, true);
 }
 
 function initHeroSwipe() {
