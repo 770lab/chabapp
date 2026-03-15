@@ -159,25 +159,18 @@ function simhaMusicToggle(artist, platform) {
   var apple = document.getElementById(artist + '-apple');
   var spotifyBtn = document.getElementById(artist + '-spotify-btn');
   var appleBtn = document.getElementById(artist + '-apple-btn');
-  if (!spotify || !apple) return;
+  if (!spotify || !apple || !spotifyBtn || !appleBtn) return;
+  var inactiveStyle = 'flex:1;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;';
   if (platform === 'spotify') {
     spotify.style.display = 'block';
     apple.style.display = 'none';
-    spotifyBtn.style.background = '#1DB954';
-    spotifyBtn.style.borderColor = '#1DB954';
-    spotifyBtn.style.color = '#fff';
-    appleBtn.style.background = 'var(--white)';
-    appleBtn.style.borderColor = 'var(--gray-5)';
-    appleBtn.style.color = 'var(--gray-2)';
+    spotifyBtn.setAttribute('style', inactiveStyle + 'border:1.5px solid #1DB954;background:#1DB954;color:#fff;');
+    appleBtn.setAttribute('style', inactiveStyle + 'border:1.5px solid #e5e7eb;background:#fff;color:#6b7280;');
   } else {
     spotify.style.display = 'none';
     apple.style.display = 'block';
-    appleBtn.style.background = '#fc3c44';
-    appleBtn.style.borderColor = '#fc3c44';
-    appleBtn.style.color = '#fff';
-    spotifyBtn.style.background = 'var(--white)';
-    spotifyBtn.style.borderColor = 'var(--gray-5)';
-    spotifyBtn.style.color = 'var(--gray-2)';
+    appleBtn.setAttribute('style', inactiveStyle + 'border:1.5px solid #fc3c44;background:#fc3c44;color:#fff;');
+    spotifyBtn.setAttribute('style', inactiveStyle + 'border:1.5px solid #e5e7eb;background:#fff;color:#6b7280;');
   }
 }
 
