@@ -40,8 +40,8 @@ var YT_PROFILES = [
   },
   {
     name: "Torah-Box",
-    handle: "@TorahBox",
-    url: "https://youtube.com/TorahBox",
+    handle: "@torahbox",
+    url: "https://youtube.com/@torahbox",
     avatar: "assets/yt-torahbox.jpg",
     banner: "",
     description: "L'association de diffusion du Judaisme aux francophones",
