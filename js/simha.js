@@ -153,4 +153,32 @@ function simhaClosePlayer() {
   if (wrap) wrap.style.display = 'none';
 }
 
+// Toggle Spotify / Apple Music
+function simhaMusicToggle(artist, platform) {
+  var spotify = document.getElementById(artist + '-spotify');
+  var apple = document.getElementById(artist + '-apple');
+  var spotifyBtn = document.getElementById(artist + '-spotify-btn');
+  var appleBtn = document.getElementById(artist + '-apple-btn');
+  if (!spotify || !apple) return;
+  if (platform === 'spotify') {
+    spotify.style.display = 'block';
+    apple.style.display = 'none';
+    spotifyBtn.style.background = '#1DB954';
+    spotifyBtn.style.borderColor = '#1DB954';
+    spotifyBtn.style.color = '#fff';
+    appleBtn.style.background = 'var(--white)';
+    appleBtn.style.borderColor = 'var(--gray-5)';
+    appleBtn.style.color = 'var(--gray-2)';
+  } else {
+    spotify.style.display = 'none';
+    apple.style.display = 'block';
+    appleBtn.style.background = '#fc3c44';
+    appleBtn.style.borderColor = '#fc3c44';
+    appleBtn.style.color = '#fff';
+    spotifyBtn.style.background = 'var(--white)';
+    spotifyBtn.style.borderColor = 'var(--gray-5)';
+    spotifyBtn.style.color = 'var(--gray-2)';
+  }
+}
+
 console.log("[KOULAM] Simha module charge");
