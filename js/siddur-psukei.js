@@ -1,5 +1,5 @@
 // Textes complets Pessouké déZimra — Tehilat Hashem
-// Contient : Hodou, Mizmor léToda, Yéhi Khvod, Lamnatséa'h,
+// Contient : Hodou, Mizmor léToda, Hachem Melekh, Lamnatséa'h,
 // Leshem Yi'houd, Ana Békhoa'h, Baroukh chéAmar,
 // Achré, Tehilim 146-150, Vayévarèkh David, Az Yachir, Yichtaba'h
 window.SIDDUR_PSUKEI = {
@@ -45,7 +45,7 @@ text: _kaddishDerabbanane(false) + '\n\n\
 בֹּאוּ שְׁעָרָיו בְּתוֹדָה, חֲצֵרֹתָיו בִּתְהִלָּה, הוֹדוּ לוֹ בָּרְכוּ שְׁמוֹ.\n\
 כִּי טוֹב יְיָ, לְעוֹלָם חַסְדּוֹ, וְעַד דֹּר וָדֹר אֱמוּנָתוֹ.\n\
 \n\
-— יְהִי כְבוֹד —\n\
+— ה׳ מֶלֶךְ —\n\
 \n\
 יְהִי כְבוֹד יְיָ לְעוֹלָם, יִשְׂמַח יְיָ בְּמַעֲשָׂיו.\n\
 יְהִי שֵׁם יְיָ מְבֹרָךְ, מֵעַתָּה וְעַד עוֹלָם.\n\
@@ -287,7 +287,7 @@ Dé\'ou ki Ado-naï hou Elohim, hou assanou vélo ana\'hnou, amo vétson mar\'it
 Bo\'ou chéarav bétoda, \'hatsèrotav bitéhila, hodou lo barékhou chémo.\n\
 Ki tov Ado-naï, léolam \'hasdo, véad dor vador émounato.\n\
 \n\
-— Yéhi Khvod —\n\
+— Hachem Melekh —\n\
 \n\
 Yéhi khvod Ado-naï léolam, yisma\'h Ado-naï bémaassav.\n\
 Yéhi chèm Ado-naï mévorakh, méata véad olam.\n\
