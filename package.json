@@ -4,6 +4,10 @@
   "description": "",
   "main": "sw.js",
   "scripts": {
+    "build": "rm -rf www && mkdir -p www && cp -r index.html sw.js manifest.json css js assets icons data www/ && cp -r *.json www/ 2>/dev/null; rm -f www/package.json www/package-lock.json www/capacitor.config.json www/firebase.json www/firestore.indexes.json www/firestore.rules www/storage.rules",
+    "cap:sync": "npm run build && npx cap sync",
+    "cap:android": "npm run build && npx cap sync android && npx cap open android",
+    "cap:ios": "npm run build && npx cap sync ios && npx cap open ios",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,7 +1,7 @@
 {
   "appId": "com.koulam.app",
   "appName": "KOULAM",
-  "webDir": ".",
+  "webDir": "www",
   "server": {
     "androidScheme": "https"
   },
