@@ -1,5 +1,5 @@
 // Textes complets Pessouké déZimra — Tehilat Hashem
-// Contient : Hodou, Mizmor léToda, Hachem Melekh, Lamnatséa'h,
+// Contient : Hodou, Hachem Melekh, Mizmor léToda, Lamnatséa'h,
 // Leshem Yi'houd, Ana Békhoa'h, Baroukh chéAmar,
 // Achré, Tehilim 146-150, Vayévarèkh David, Az Yachir, Yichtaba'h
 window.SIDDUR_PSUKEI = {
@@ -37,14 +37,6 @@ text: _kaddishDerabbanane(false) + '\n\n\
 וְאִמְרוּ, הוֹשִׁיעֵנוּ אֱלֹהֵי יִשְׁעֵנוּ, וְקַבְּצֵנוּ וְהַצִּילֵנוּ מִן הַגּוֹיִם, לְהוֹדוֹת לְשֵׁם קׇדְשֶׁךָ, לְהִשְׁתַּבֵּחַ בִּתְהִלָּתֶךָ.\n\
 בָּרוּךְ יְיָ אֱלֹהֵי יִשְׂרָאֵל, מִן הָעוֹלָם וְעַד הָעוֹלָם, וַיֹּאמְרוּ כׇל הָעָם אָמֵן וְהַלֵּל לַיְיָ.\n\
 \n\
-— מִזְמוֹר לְתוֹדָה (תהלים ק) —\n\
-\n\
-מִזְמוֹר לְתוֹדָה, הָרִיעוּ לַיְיָ כׇּל הָאָרֶץ.\n\
-עִבְדוּ אֶת יְיָ בְּשִׂמְחָה, בֹּאוּ לְפָנָיו בִּרְנָנָה.\n\
-דְּעוּ כִּי יְיָ הוּא אֱלֹהִים, הוּא עָשָׂנוּ וְלוֹ אֲנַחְנוּ, עַמּוֹ וְצֹאן מַרְעִיתוֹ.\n\
-בֹּאוּ שְׁעָרָיו בְּתוֹדָה, חֲצֵרֹתָיו בִּתְהִלָּה, הוֹדוּ לוֹ בָּרְכוּ שְׁמוֹ.\n\
-כִּי טוֹב יְיָ, לְעוֹלָם חַסְדּוֹ, וְעַד דֹּר וָדֹר אֱמוּנָתוֹ.\n\
-\n\
 — ה׳ מֶלֶךְ —\n\
 \n\
 יְהִי כְבוֹד יְיָ לְעוֹלָם, יִשְׂמַח יְיָ בְּמַעֲשָׂיו.\n\
@@ -65,6 +57,14 @@ text: _kaddishDerabbanane(false) + '\n\n\
 כִּי לֹא יִטֹּשׁ יְיָ עַמּוֹ, וְנַחֲלָתוֹ לֹא יַעֲזֹב.\n\
 וְהוּא רַחוּם יְכַפֵּר עָוֹן וְלֹא יַשְׁחִית, וְהִרְבָּה לְהָשִׁיב אַפּוֹ, וְלֹא יָעִיר כׇּל חֲמָתוֹ.\n\
 יְיָ הוֹשִׁיעָה, הַמֶּלֶךְ יַעֲנֵנוּ בְיוֹם קׇרְאֵנוּ.\n\
+\n\
+— מִזְמוֹר לְתוֹדָה (תהלים ק) —\n\
+\n\
+מִזְמוֹר לְתוֹדָה, הָרִיעוּ לַיְיָ כׇּל הָאָרֶץ.\n\
+עִבְדוּ אֶת יְיָ בְּשִׂמְחָה, בֹּאוּ לְפָנָיו בִּרְנָנָה.\n\
+דְּעוּ כִּי יְיָ הוּא אֱלֹהִים, הוּא עָשָׂנוּ וְלוֹ אֲנַחְנוּ, עַמּוֹ וְצֹאן מַרְעִיתוֹ.\n\
+בֹּאוּ שְׁעָרָיו בְּתוֹדָה, חֲצֵרֹתָיו בִּתְהִלָּה, הוֹדוּ לוֹ בָּרְכוּ שְׁמוֹ.\n\
+כִּי טוֹב יְיָ, לְעוֹלָם חַסְדּוֹ, וְעַד דֹּר וָדֹר אֱמוּנָתוֹ.\n\
 \n\
 — לַמְנַצֵּחַ בִּנְגִינוֹת (תהלים סז) —\n\
 \n\
@@ -279,14 +279,6 @@ Hodou lAdo-naï ki tov, ki léolam \'hasdo.\n\
 Véimrou, hochi\'énou Élo-hé ych\'énou, vékabétsénou véhatsilénou mine hagoïm, léhodot léchèm kodchékha, léhichtabéa\'h bitéhilatékha.\n\
 Baroukh Ado-naï Élo-hé Israël, mine haolam véad haolam, vayomrou khol haam amène véhalèl lAdo-naï.\n\
 \n\
-— Mizmor léToda (Psaume 100) —\n\
-\n\
-Mizmor léToda, hari\'ou lAdo-naï kol haarèts.\n\
-Ivdou ète Ado-naï bésim\'ha, bo\'ou léfanav birnana.\n\
-Dé\'ou ki Ado-naï hou Elohim, hou assanou vélo ana\'hnou, amo vétson mar\'ito.\n\
-Bo\'ou chéarav bétoda, \'hatsèrotav bitéhila, hodou lo barékhou chémo.\n\
-Ki tov Ado-naï, léolam \'hasdo, véad dor vador émounato.\n\
-\n\
 — Hachem Melekh —\n\
 \n\
 Yéhi khvod Ado-naï léolam, yisma\'h Ado-naï bémaassav.\n\
@@ -307,6 +299,14 @@ Ki Yaakov ba\'har lo Ya, Israël lisgoulato.\n\
 Ki lo yitoch Ado-naï amo, véna\'halato lo yaazov.\n\
 Véhou ra\'houm yékhapèr avone vélo yach\'hit, véhirba léhachiv apo, vélo yair kol \'hamato.\n\
 Ado-naï hochi\'a, haMélekh yaanénou véyom korénou.\n\
+\n\
+— Mizmor léToda (Psaume 100) —\n\
+\n\
+Mizmor léToda, hari\'ou lAdo-naï kol haarèts.\n\
+Ivdou ète Ado-naï bésim\'ha, bo\'ou léfanav birnana.\n\
+Dé\'ou ki Ado-naï hou Elohim, hou assanou vélo ana\'hnou, amo vétson mar\'ito.\n\
+Bo\'ou chéarav bétoda, \'hatsèrotav bitéhila, hodou lo barékhou chémo.\n\
+Ki tov Ado-naï, léolam \'hasdo, véad dor vador émounato.\n\
 \n\
 — Lamnatséa\'h Bineguinot (Téhilim 67) —\n\
 \n\
