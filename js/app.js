@@ -9008,6 +9008,14 @@ function _loadChabadCenters(cb) {
   }).catch(function() { CHABAD_CENTERS = []; cb([]); });
 }
 
+var KOSHER_RESTAURANTS = null;
+function _loadKosherRestaurants(cb) {
+  if (KOSHER_RESTAURANTS) { cb(KOSHER_RESTAURANTS); return; }
+  fetch('data/kosher-restaurants.json').then(function(r) { return r.json(); }).then(function(d) {
+    KOSHER_RESTAURANTS = d; cb(d);
+  }).catch(function() { KOSHER_RESTAURANTS = []; cb([]); });
+}
+
 var GOOGLE_MAPS_API_KEY = 'AIzaSyCwh7st3LNSyg9yNdFR1P_Eed_FhHKrmiM';
 var _bethMap = null;
 var _bethMarkers = [];
@@ -9136,7 +9144,7 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
     places.sort(function(a, b) { return a.dist - b.dist; });
     if (filter === 'all') {
       // Also fetch restaurants + minyanim for "Tout"
-      _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(rPlaces) {
+      _bethFetchAllRestaurants(lat, lng, function(rPlaces) {
         _bethFetchGooglePlaces(lat, lng, 'synagogue', 'synagogue minyan miniane', function(mPlaces) {
           var all = places.concat(rPlaces).concat(mPlaces);
           all.sort(function(a, b) { return a.dist - b.dist; });
@@ -9149,7 +9157,7 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
     }
   } else if (filter === 'restaurant') {
     if (info) info.textContent = 'Recherche des restaurants cach\u00e8res\u2026';
-    _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(places) {
+    _bethFetchAllRestaurants(lat, lng, function(places) {
       if (info) info.textContent = places.length + ' restaurant' + (places.length > 1 ? 's' : '') + ' cach\u00e8re' + (places.length > 1 ? 's' : '') + ' trouv\u00e9' + (places.length > 1 ? 's' : '');
       displayBethResults(places, lat, lng);
     });
@@ -9170,6 +9178,41 @@ function setBethFilter(filter) {
     else c.classList.remove('beth-filter-active');
   });
   _bethLoadFilter(filter);
+}
+
+function _bethFetchAllRestaurants(lat, lng, callback) {
+  var radiusKm = 50;
+  _loadKosherRestaurants(function(locals) {
+    // Local restaurants within radius
+    var localPlaces = [];
+    locals.forEach(function(r) {
+      var dist = haversine(lat, lng, r.lat, r.lng);
+      if (dist <= radiusKm) {
+        localPlaces.push({
+          name: r.name, lat: r.lat, lng: r.lng, dist: dist,
+          addr: r.addr, city: r.city, cp: r.cp, phone: r.phone,
+          cuisine: r.cuisine, certification: r.certification,
+          _source: 'restaurant'
+        });
+      }
+    });
+    // Also fetch from Google Places and merge
+    _bethFetchGooglePlaces(lat, lng, 'restaurant', 'kosher casher cacher', function(googlePlaces) {
+      // Deduplicate: skip Google results too close to a local one
+      var merged = localPlaces.slice();
+      googlePlaces.forEach(function(gp) {
+        var dominated = false;
+        for (var i = 0; i < localPlaces.length; i++) {
+          if (haversine(gp.lat, gp.lng, localPlaces[i].lat, localPlaces[i].lng) < 0.05) {
+            dominated = true; break;
+          }
+        }
+        if (!dominated) merged.push(gp);
+      });
+      merged.sort(function(a, b) { return a.dist - b.dist; });
+      callback(merged);
+    });
+  });
 }
 
 function _bethFetchGooglePlaces(lat, lng, type, keyword, callback) {
