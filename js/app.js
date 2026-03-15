@@ -4029,12 +4029,17 @@ function init() {
     updateQuote();
     scheduleNextQuote();
 
-    // Auto transition - wait for first quote to be read
-    const firstDuration = getQuoteDuration(QUOTES[0]);
-    window._splashTimer = setTimeout(() => {
+    // Skip splash si deja connecte (refresh), sinon transition apres citation
+    if (localStorage.getItem('koulam_auth')) {
       document.getElementById("splash").classList.add("hidden");
       showHome();
-    }, firstDuration + 1500);
+    } else {
+      const firstDuration = getQuoteDuration(QUOTES[0]);
+      window._splashTimer = setTimeout(() => {
+        document.getElementById("splash").classList.add("hidden");
+        showHome();
+      }, firstDuration + 1500);
+    }
 
     // T119 keyboard targets active field
     document.getElementById('t119-input').addEventListener('focus', function() { _t119ActiveField = 't119-input'; });

@@ -248,6 +248,8 @@ function _loadUserProfile(firebaseUser) {
 }
 
 function _onLogin() {
+  // Flag pour skip splash au prochain refresh
+  try { localStorage.setItem('koulam_auth', '1'); } catch(e) {}
   // Analytics
   if (typeof fbLogEvent === "function") fbLogEvent("login", { method: chabUser.provider || "email" });
   // Retirer le mode auth fullscreen
@@ -278,6 +280,7 @@ function _onLogin() {
 }
 
 function _onLogout() {
+  try { localStorage.removeItem('koulam_auth'); } catch(e) {}
   _updateAuthNav(false);
   var profilePanel = document.getElementById("panel-profile");
   if (profilePanel) profilePanel.style.display = "none";
