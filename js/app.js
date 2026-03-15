@@ -9145,7 +9145,7 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
     if (filter === 'all') {
       // Also fetch restaurants + hardcoded minyan for "Tout"
       _bethFetchAllRestaurants(lat, lng, function(rPlaces) {
-        var mPlaces = [{name:'Habad Ternes Maillot - Elhanan Meir',lat:48.8783,lng:2.2950,address:'Paris 17e',_source:'minyan'}];
+        var mPlaces = [{name:'Habad Ternes Maillot - Elhanan Meir',lat:48.8783,lng:2.2950,addr:'Paris 17e',city:'',_source:'minyan',isOpen:null,rating:null}];
         mPlaces.forEach(function(m){m.dist=_bethHaversine(lat,lng,m.lat,m.lng);});
         var all = places.concat(rPlaces).concat(mPlaces);
         all.sort(function(a, b) { return a.dist - b.dist; });
@@ -9165,8 +9165,11 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
     var minyanList = [{
       name: 'Habad Ternes Maillot - Elhanan Meir',
       lat: 48.8783, lng: 2.2950,
-      address: 'Paris 17e',
-      _source: 'minyan'
+      addr: 'Paris 17e',
+      city: '',
+      _source: 'minyan',
+      isOpen: null,
+      rating: null
     }];
     minyanList.forEach(function(m) { m.dist = _bethHaversine(lat, lng, m.lat, m.lng); });
     if (info) info.textContent = minyanList.length + ' minyan trouv\u00e9';
