@@ -120,8 +120,7 @@ window.SIDDUR_BRACHOT = {
     'אֲבָל אֲנַחְנוּ עַמְּךָ בְּנֵי בְרִיתֶךָ, בְּנֵי אַבְרָהָם אֹהַבְךָ שֶׁנִּשְׁבַּעְתָּ לוֹ בְּהַר הַמּוֹרִיָּה, זֶרַע יִצְחָק יְחִידוֹ שֶׁנֶּעֱקַד עַל גַּבֵּי הַמִּזְבֵּחַ, עֲדַת יַעֲקֹב בִּנְךָ בְּכוֹרֶךָ, שֶׁמֵּאַהֲבָתְךָ שֶׁאָהַבְתָּ אוֹתוֹ וּמִשִּׂמְחָתְךָ שֶׁשָּׂמַחְתָּ בּוֹ, קָרָאתָ אֶת שְׁמוֹ יִשְׂרָאֵל וִישֻׁרוּן.\n\n' +
     'לְפִיכָךְ אֲנַחְנוּ חַיָּבִים לְהוֹדוֹת לְךָ וּלְשַׁבֵּחֲךָ וּלְפָאֶרְךָ, וּלְבָרֵךְ וּלְקַדֵּשׁ וְלָתֵת שֶׁבַח וְהוֹדָאָה לִשְׁמֶךָ. אַשְׁרֵינוּ, מַה טּוֹב חֶלְקֵנוּ, וּמַה נָּעִים גּוֹרָלֵנוּ, וּמַה יָּפָה יְרֻשָּׁתֵנוּ. אַשְׁרֵינוּ שֶׁאָנוּ מַשְׁכִּימִים וּמַעֲרִיבִים, עֶרֶב וָבֹקֶר, וְאוֹמְרִים פַּעֲמַיִם בְּכׇל יוֹם:\n\n' +
     'שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד.\n\n' +
-    'אַתָּה הוּא עַד שֶׁלֹּא נִבְרָא הָעוֹלָם, אַתָּה הוּא מִשֶּׁנִּבְרָא הָעוֹלָם, אַתָּה הוּא בָּעוֹלָם הַזֶּה, וְאַתָּה הוּא לָעוֹלָם הַבָּא. קַדֵּשׁ אֶת שִׁמְךָ עַל מַקְדִּישֵׁי שְׁמֶךָ, וְקַדֵּשׁ אֶת שִׁמְךָ בְּעוֹלָמֶךָ, וּבִישׁוּעָתְךָ תָּרִים וְתַגְבִּיהַּ קַרְנֵנוּ. בָּרוּךְ אַתָּה יְיָ, הַמְקַדֵּשׁ אֶת שִׁמְךָ בָּרַבִּים.\n\n' +
-    _kaddishDerabbanane(false),
+    'אַתָּה הוּא עַד שֶׁלֹּא נִבְרָא הָעוֹלָם, אַתָּה הוּא מִשֶּׁנִּבְרָא הָעוֹלָם, אַתָּה הוּא בָּעוֹלָם הַזֶּה, וְאַתָּה הוּא לָעוֹלָם הַבָּא. קַדֵּשׁ אֶת שִׁמְךָ עַל מַקְדִּישֵׁי שְׁמֶךָ, וְקַדֵּשׁ אֶת שִׁמְךָ בְּעוֹלָמֶךָ, וּבִישׁוּעָתְךָ תָּרִים וְתַגְבִּיהַּ קַרְנֵנוּ. בָּרוּךְ אַתָּה יְיָ, הַמְקַדֵּשׁ אֶת שִׁמְךָ בָּרַבִּים.',
 
   phonetic:
     // ── Note avant les 15 brachot ──
@@ -174,6 +173,5 @@ window.SIDDUR_BRACHOT = {
     'Aval ana\'hnou am\u00e9kha b\u00e9n\u00e9 v\u00e9rit\u00e8kha, b\u00e9n\u00e9 Avraham ohavkha ch\u00e9nichbata lo b\u00e9har hamoriya, z\u00e9ra Yits\'hak y\u00e9\'hido ch\u00e9n\u00e9\u00e9kad al gab\u00e9 hamizb\u00e9a\'h, adat Yaakov binkha b\u00e9khor\u00e8kha, ch\u00e9m\u00e9ahavatkha ch\u00e9ahavta oto oumissim\'hatkha ch\u00e9ssama\'hta bo, karata \u00e8te ch\u00e9mo Isra\u00ebl viChouroune.\n\n' +
     'L\u00e9fikhakh ana\'hnou \'hayavim l\u00e9hodot l\u00e9kha oul\u00e9chab\u00e9\'hakha oul\u00e9fa\u00e8r\u00e9kha, oul\u00e9var\u00e8kh oul\u00e9kad\u00e8ch v\u00e9lat\u00e8t ch\u00e9va\'h v\u00e9hodaa lich\u00e9m\u00e8kha. Achr\u00e9inou, ma tov \'helk\u00e9nou, ouma naim goral\u00e9nou, ouma yafa y\u00e9rouchat\u00e9nou. Achr\u00e9inou ch\u00e9anou machkimim oumaarivim, \u00e8r\u00e8v vavok\u00e8r, v\u00e9omrim paama\u00efm b\u00e9khol yom :\n\n' +
     'Ch\u00e9ma Isra\u00ebl, Ado-na\u00ef Elo-h\u00e9nou, Ado-na\u00ef E\'had.\n\n' +
-    'Ata hou ad ch\u00e9lo nivra haolam, ata hou mich\u00e9nivra haolam, ata hou baolam haz\u00e8, v\u00e9ata hou laolam haba. Kad\u00e8ch \u00e8te chimkha al makdich\u00e9 ch\u00e9m\u00e8kha, v\u00e9kad\u00e8ch \u00e8te chimkha b\u00e9olam\u00e8kha, ouvichouatkha tarim v\u00e9tagbia karn\u00e9nou. Baroukh ata Ado-na\u00ef, hamkad\u00e8ch \u00e8te chimkha barabim.\n\n' +
-    _kaddishDerabbanane(true),
+    'Ata hou ad ch\u00e9lo nivra haolam, ata hou mich\u00e9nivra haolam, ata hou baolam haz\u00e8, v\u00e9ata hou laolam haba. Kad\u00e8ch \u00e8te chimkha al makdich\u00e9 ch\u00e9m\u00e8kha, v\u00e9kad\u00e8ch \u00e8te chimkha b\u00e9olam\u00e8kha, ouvichouatkha tarim v\u00e9tagbia karn\u00e9nou. Baroukh ata Ado-na\u00ef, hamkad\u00e8ch \u00e8te chimkha barabim.',
 };
