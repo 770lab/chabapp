@@ -8998,7 +8998,7 @@ function initHoumashPanel() {
 }
 
 
-// ====== BETH CHABAD (Leaflet + Base locale 180 centres) ======
+// ====== BETH CHABAD (Google Maps + Base locale 180 centres) ======
 // ====== 180 CHABAD CENTERS IN FRANCE (charge a la demande) ======
 var CHABAD_CENTERS = null;
 function _loadChabadCenters(cb) {
@@ -9053,35 +9053,51 @@ function showBethMap(lat, lng) {
   window._bethUserLng = lng;
 
   // Clear old user marker
-  if (_bethUserMarker && _bethMap) {
-    _bethMap.removeLayer(_bethUserMarker);
+  if (_bethUserMarker) {
+    _bethUserMarker.setMap(null);
     _bethUserMarker = null;
   }
 
+  var center = { lat: lat, lng: lng };
+
   if (!_bethMap) {
-    _bethMap = L.map('beth-map', { zoomControl: false }).setView([lat, lng], 13);
-    // CartoDB Voyager tiles - clean Maps-like style
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '\u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a> \u00a9 <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(_bethMap);
-    L.control.zoom({ position: 'bottomright' }).addTo(_bethMap);
-    setTimeout(function(){ _bethMap.invalidateSize(); }, 300);
+    _bethMap = new google.maps.Map(document.getElementById('beth-map'), {
+      center: center,
+      zoom: 13,
+      zoomControl: true,
+      zoomControlOptions: { position: google.maps.ControlPosition.RIGHT_BOTTOM },
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      styles: [
+        { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }
+      ]
+    });
   } else {
-    _bethMap.setView([lat, lng], 13);
-    _bethMap.invalidateSize();
+    _bethMap.setCenter(center);
+    _bethMap.setZoom(13);
   }
 
-  // Pulsing blue dot for user location (Apple/Google Maps style)
-  var blueDotHtml = '<div style="position:relative;width:22px;height:22px;">' +
-    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;background:rgba(0,122,255,0.15);border-radius:50%;animation:bethPulse 2s ease-out infinite;"></div>' +
-    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:#007AFF;border-radius:50%;border:3px solid white;box-shadow:0 1px 6px rgba(0,0,0,0.3);"></div>' +
-    '</div>';
-  _bethUserMarker = L.marker([lat, lng], {
-    icon: L.divIcon({ className:'', html: blueDotHtml, iconSize:[22,22], iconAnchor:[11,11] }),
-    zIndexOffset: 1000
-  }).addTo(_bethMap).bindPopup('<b>Votre position</b>');
+  // Pulsing blue dot for user location
+  _bethUserMarker = new google.maps.Marker({
+    position: center,
+    map: _bethMap,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 8,
+      fillColor: '#007AFF',
+      fillOpacity: 1,
+      strokeColor: '#ffffff',
+      strokeWeight: 3
+    },
+    zIndex: 1000,
+    title: 'Votre position'
+  });
+
+  var userInfoWindow = new google.maps.InfoWindow({ content: '<b>Votre position</b>' });
+  _bethUserMarker.addListener('click', function() {
+    userInfoWindow.open(_bethMap, _bethUserMarker);
+  });
 
   _bethLoadFilter(_bethActiveFilter);
 }
@@ -9214,28 +9230,45 @@ function _bethFetchGooglePlaces(lat, lng, type, keyword, callback) {
 
 function displayBethResults(places, userLat, userLng) {
   var results = document.getElementById('beth-results');
-  _bethMarkers.forEach(function(m) { _bethMap.removeLayer(m); });
+  _bethMarkers.forEach(function(m) { m.setMap(null); });
   _bethMarkers = [];
 
-  function _makeIcon(bg, emoji) {
-    return L.divIcon({
-      className: '',
-      html: '<div style="width:32px;height:40px;position:relative;">' +
-        '<div style="width:32px;height:32px;background:' + bg + ';border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);">' +
-        '<span style="transform:rotate(45deg);font-size:16px;line-height:1;">' + emoji + '</span></div>' +
-        '<div style="width:8px;height:8px;background:rgba(0,0,0,0.15);border-radius:50%;margin:-2px auto 0;"></div></div>',
-      iconSize: [32, 40],
-      iconAnchor: [16, 40],
-      popupAnchor: [0, -40]
-    });
-  }
-  var iconChabad = _makeIcon('#1a73e8', '\ud83d\udd4d');
-  var iconRestaurant = _makeIcon('#e8631a', '\ud83c\udf7d\ufe0f');
-  var iconMinyan = _makeIcon('#6a1b9a', '\ud83e\udd32');
+  // Shared InfoWindow (only one open at a time, Google Maps style)
+  var _bethInfoWindow = new google.maps.InfoWindow();
 
-  places.forEach(function(p) {
-    var icon = p._source === 'restaurant' ? iconRestaurant : (p._source === 'minyan' ? iconMinyan : iconChabad);
-    var m = L.marker([p.lat, p.lng], { icon: icon }).addTo(_bethMap);
+  function _markerColor(source) {
+    if (source === 'restaurant') return '#e8631a';
+    if (source === 'minyan') return '#6a1b9a';
+    return '#1a73e8';
+  }
+
+  function _markerLabel(source) {
+    if (source === 'restaurant') return '\ud83c\udf7d';
+    if (source === 'minyan') return '\ud83e\udd32';
+    return '\ud83d\udd4d';
+  }
+
+  places.forEach(function(p, idx) {
+    var color = _markerColor(p._source);
+    var m = new google.maps.Marker({
+      position: { lat: p.lat, lng: p.lng },
+      map: _bethMap,
+      label: {
+        text: _markerLabel(p._source),
+        fontSize: '16px'
+      },
+      icon: {
+        path: 'M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 2,
+        scale: 1.4,
+        anchor: new google.maps.Point(12, 36),
+        labelOrigin: new google.maps.Point(12, 11)
+      }
+    });
+
     var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
     var popup = '<div style="min-width:180px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;">';
     popup += '<div style="font-size:14px;font-weight:700;margin-bottom:4px;">' + p.name + '</div>';
@@ -9252,7 +9285,11 @@ function displayBethResults(places, userLat, userLng) {
       popup += '<a href="tel:+' + tel + '" style="flex:1;display:block;text-align:center;padding:7px 0;background:#34a853;color:white;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;">\ud83d\udcde Appeler</a>';
     }
     popup += '</div></div>';
-    m.bindPopup(popup, { maxWidth: 260 });
+
+    m.addListener('click', function() {
+      _bethInfoWindow.setContent(popup);
+      _bethInfoWindow.open(_bethMap, m);
+    });
     _bethMarkers.push(m);
   });
 
@@ -9262,7 +9299,7 @@ function displayBethResults(places, userLat, userLng) {
       var itUrl = p.googleMapsUri || _bethItineraryUrl(userLat, userLng, p.lat, p.lng, p.name);
       var badgeColor = p._source === 'restaurant' ? '#e8631a' : (p._source === 'minyan' ? '#6a1b9a' : '#1a73e8');
       html += '<div style="background:var(--white);border:1px solid var(--gray-5);border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);">';
-      html += '<div style="display:flex;gap:10px;cursor:pointer;" onclick="_bethMap.setView([' + p.lat + ',' + p.lng + '],15);_bethMarkers[' + idx + '].openPopup();">';
+      html += '<div style="display:flex;gap:10px;cursor:pointer;" onclick="_bethMap.setCenter({lat:' + p.lat + ',lng:' + p.lng + '});_bethMap.setZoom(15);google.maps.event.trigger(_bethMarkers[' + idx + '],\'click\');">';
       html += '<div style="min-width:28px;height:28px;background:' + badgeColor + ';color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">' + (idx+1) + '</div>';
       html += '<div style="flex:1;min-width:0;">';
       html += '<div style="font-size:14px;font-weight:700;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.name + '</div>';
@@ -9318,10 +9355,12 @@ function haversine(lat1,lon1,lat2,lon2) {
 }
 
 function refreshBethMap() {
-  // Destroy map completely to force fresh state
-  if (_bethMap) { _bethMap.remove(); _bethMap = null; }
+  // Clear markers and reset map
+  _bethMarkers.forEach(function(m) { m.setMap(null); });
   _bethMarkers = [];
-  _bethUserMarker = null;
+  if (_bethUserMarker) { _bethUserMarker.setMap(null); _bethUserMarker = null; }
+  _bethMap = null;
+  document.getElementById('beth-map').innerHTML = '';
   var r = document.getElementById('beth-results');
   if (r) r.innerHTML = '';
   var recenterBtn = document.getElementById('beth-recenter-btn');
