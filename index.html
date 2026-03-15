@@ -1419,7 +1419,7 @@ Partager
 <!-- ═══ PANEL JEWTUBE ═══ -->
 <div id="panel-sub-videos" style="display:none;" class="chab-panel">
 <div class="panel-top-bar">
-<div class="panel-back" onclick="switchTab('menu')">‹</div>
+<div class="panel-back" onclick="if(typeof _ytProfileOpen!=='undefined'&&_ytProfileOpen){ytCloseProfile();}else{switchTab('menu');}">‹</div>
 <div class="panel-title" style="display:flex;align-items:center;gap:6px;">
 <svg width="22" height="16" viewBox="0 0 36 26" fill="none"><rect width="36" height="26" rx="6" fill="#ff0033"/><polygon points="14,6 26,13 14,20" fill="#fff"/></svg>
 <span style="font-weight:900;letter-spacing:-0.3px;">Jew<span style="color:#ff0033;">Tube</span></span>

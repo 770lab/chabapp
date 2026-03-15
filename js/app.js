@@ -4565,6 +4565,14 @@ window.addEventListener('popstate', function(e) {
     return;
   }
 
+  // Fermer le profil chaine JewTube (retour a l'accueil JewTube)
+  if (typeof _ytProfileOpen !== 'undefined' && _ytProfileOpen) {
+    ytCloseProfile();
+    history.pushState({ tab: activeTab }, '');
+    _navHandlingPop = false;
+    return;
+  }
+
   // Fermer le story overlay
   var storyOv = document.getElementById('obj-story-overlay');
   if (storyOv && storyOv.style.display !== 'none') {

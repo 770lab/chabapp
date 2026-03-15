@@ -504,11 +504,7 @@ function ytOpenProfile(idx) {
 
   grid.innerHTML = html;
 
-  // Mettre a jour le top bar : bouton retour vers JewTube
-  var backBtn = document.querySelector('#panel-sub-videos .panel-back');
-  if (backBtn) {
-    backBtn.setAttribute('onclick', 'ytCloseProfile()');
-  }
+  // Mettre a jour le titre du top bar
   var titleEl = document.querySelector('#panel-sub-videos .panel-title span');
   if (titleEl) {
     titleEl.innerHTML = _ytEsc(p.name);
@@ -520,11 +516,7 @@ function ytOpenProfile(idx) {
 
 function ytCloseProfile() {
   _ytProfileOpen = false;
-  // Restaurer le top bar
-  var backBtn = document.querySelector('#panel-sub-videos .panel-back');
-  if (backBtn) {
-    backBtn.setAttribute('onclick', "switchTab('menu')");
-  }
+  // Restaurer le titre du top bar
   var titleEl = document.querySelector('#panel-sub-videos .panel-title span');
   if (titleEl) {
     titleEl.innerHTML = 'Jew<span style="color:#ff0033;">Tube</span>';
