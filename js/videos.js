@@ -101,41 +101,42 @@ var YT_PROFILES = [
   }
 ];
 
-// ─── Charger les vidéos depuis les flux RSS YouTube ──────
+// ─── Charger les vidéos depuis l'API YouTube Data v3 ──────
 function _ytFetchRSS() {
-  var channelIds = YT_PROFILES.map(function(p) { return p.channelId; }).join(",");
-  var channelMap = {};
-  YT_PROFILES.forEach(function(p) { channelMap[p.channelId] = p.channelFilter; });
+  var apiKey = 'AIzaSyAe_jEp71kN1N3yrdzyk6Ya3EWgLX4ZSZ8';
+  if (!apiKey) {
+    console.warn("[Videos] Pas de cle API Google");
+    return Promise.resolve([]);
+  }
 
-  var url = "https://us-central1-chabapp-5fc3b.cloudfunctions.net/ytFeed?channels=" + channelIds;
-  return fetch(url)
-    .then(function(r) { return r.json(); })
-    .then(function(results) {
-      var all = [];
-      results.forEach(function(item) {
-        if (!item.xml) return;
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(item.xml, "text/xml");
-        var entries = doc.querySelectorAll("entry");
-        var channelName = channelMap[item.channelId] || "Autre";
-        entries.forEach(function(entry) {
-          var videoId = entry.querySelector("yt\\:videoId, videoId");
-          var title = entry.querySelector("title");
-          if (videoId && title) {
-            all.push({
-              id: videoId.textContent,
-              title: title.textContent,
-              channel: channelName
-            });
-          }
-        });
-      });
-      return all;
-    })
-    .catch(function(err) {
-      console.error("[Videos] RSS fetch error:", err);
-      return [];
-    });
+  var fetches = YT_PROFILES.map(function(p) {
+    var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" +
+      p.channelId + "&maxResults=15&order=date&type=video&key=" + apiKey;
+    return fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var videos = [];
+        if (data.items) {
+          data.items.forEach(function(item) {
+            if (item.id && item.id.videoId && item.snippet) {
+              videos.push({
+                id: item.id.videoId,
+                title: item.snippet.title,
+                channel: p.channelFilter
+              });
+            }
+          });
+        }
+        return videos;
+      })
+      .catch(function() { return []; });
+  });
+
+  return Promise.all(fetches).then(function(results) {
+    var all = [];
+    results.forEach(function(vids) { all = all.concat(vids); });
+    return all;
+  });
 }
 
 // ─── Extraire l'ID YouTube d'une URL ───────────────────────

@@ -28,7 +28,10 @@ exports.ytFeed = functions.https.onRequest((req, res) => {
   const fetches = channels.map((chId) => {
     return new Promise((resolve) => {
       const url = "https://www.youtube.com/feeds/videos.xml?channel_id=" + chId;
-      https.get(url, (resp) => {
+      const opts = {
+        headers: { "User-Agent": "Mozilla/5.0 (compatible; KoulamApp/1.0)" }
+      };
+      https.get(url, opts, (resp) => {
         let data = "";
         resp.on("data", (c) => { data += c; });
         resp.on("end", () => { resolve({ channelId: chId, xml: data }); });
