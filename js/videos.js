@@ -5,20 +5,30 @@
 
 // ─── Vidéos par défaut (fallback si Firestore vide) ────────
 var YT_DEFAULT_VIDEOS = [
-  // JEM - Jewish Educational Media
+  // JEM Francais
   { id: "iHUjCKdS63E", title: "How to Bring More Blessing Into Your Life", channel: "JEM" },
   { id: "swOXU9s-joc", title: "Rebbe, You're AMAZING!", channel: "JEM" },
   { id: "gD1kOqonLOk", title: "What the Rebbe Told Him After 19 Years", channel: "JEM" },
-  { id: "PFZ8kcvQsCo", title: "Warning: Extreme Joy Ahead", channel: "JEM" },
-  { id: "nUEYatkSOYA", title: "The Sincerity of a Child", channel: "JEM" },
-  { id: "zs2FLYhj3xE", title: "A Declaration of Absolute Faith", channel: "JEM" },
   // Torah-Box
   { id: "LxBD5FpAIMU", title: "Écouter la Méguila sur internet ???", channel: "Torah-Box" },
-  { id: "k1VZ2Rtsz24", title: "L'amour par le corps... pas conseillé (Rav Sitruk)", channel: "Torah-Box" },
   { id: "OGlZy9l4QS8", title: "Ali, le cruel passeur des Juifs iraniens", channel: "Torah-Box" },
   { id: "vZyIxfD3Mwg", title: "Toulal - Le Film", channel: "Torah-Box" },
-  { id: "mtuprbt6_SU", title: "Comment critiquer ? Rav Cremisi", channel: "Torah-Box" },
-  { id: "eU2ty_yndR8", title: "La moquerie n'est pas dans l'ADN du Juif", channel: "Torah-Box" }
+  // Chabad.org
+  { id: "XVHUSab2ggo", title: "Pourquoi célébrer son anniversaire juif ?", channel: "Chabad.org" },
+  { id: "CIKUnz3e5f8", title: "Êtes-vous un Joshnik ?", channel: "Chabad.org" },
+  { id: "O4VPLKUb03E", title: "Comment la science m'a fait croire en Dieu", channel: "Chabad.org" },
+  // Rav Touitou
+  { id: "ufcZYwwiT80", title: "Peut-on garder du hametz à la maison pendant Pessah ?", channel: "Rav Touitou" },
+  { id: "3ZYFMDjcxaI", title: "Face au danger, la Torah nous apprend à rester vigilants", channel: "Rav Touitou" },
+  { id: "4dNfwHVhQxo", title: "Vayakel Pekoude", channel: "Rav Touitou" },
+  // Project Likkutei Sichos
+  { id: "FJ1diI9EWL8", title: "Vol 27 - Beit Nissan - Francais", channel: "Likkutei Sichos" },
+  { id: "6WJspTxdlX0", title: "Chelek 27, Vayikra 3 - Rabbi Moshe Gourarie", channel: "Likkutei Sichos" },
+  { id: "iNsS9-WurlE", title: "Chelek 31, Vayakhel 1 - Mrs. Rivky Slonim", channel: "Likkutei Sichos" },
+  // MyJLI
+  { id: "aCJQh9zn694", title: "The Most Difficult Rule in Judaism", channel: "MyJLI" },
+  { id: "Nsgr1puuFOI", title: "6 raisons juives de croire en Dieu", channel: "MyJLI" },
+  { id: "KfLaJy7a_Cg", title: "Qu'est-ce qui distingue le judaïsme des autres religions ?", channel: "MyJLI" }
 ];
 
 var _ytVideos    = [];
