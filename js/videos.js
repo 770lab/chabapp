@@ -103,36 +103,39 @@ var YT_PROFILES = [
 
 // ─── Charger les vidéos depuis les flux RSS YouTube ──────
 function _ytFetchRSS() {
-  var promises = YT_PROFILES.map(function(profile) {
-    var feedUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=" + profile.channelId;
-    var proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(feedUrl);
-    return fetch(proxyUrl)
-      .then(function(r) { return r.text(); })
-      .then(function(xml) {
+  var channelIds = YT_PROFILES.map(function(p) { return p.channelId; }).join(",");
+  var channelMap = {};
+  YT_PROFILES.forEach(function(p) { channelMap[p.channelId] = p.channelFilter; });
+
+  var url = "https://us-central1-chabapp-5fc3b.cloudfunctions.net/ytFeed?channels=" + channelIds;
+  return fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(results) {
+      var all = [];
+      results.forEach(function(item) {
+        if (!item.xml) return;
         var parser = new DOMParser();
-        var doc = parser.parseFromString(xml, "text/xml");
+        var doc = parser.parseFromString(item.xml, "text/xml");
         var entries = doc.querySelectorAll("entry");
-        var videos = [];
+        var channelName = channelMap[item.channelId] || "Autre";
         entries.forEach(function(entry) {
           var videoId = entry.querySelector("yt\\:videoId, videoId");
           var title = entry.querySelector("title");
           if (videoId && title) {
-            videos.push({
+            all.push({
               id: videoId.textContent,
               title: title.textContent,
-              channel: profile.channelFilter
+              channel: channelName
             });
           }
         });
-        return videos;
-      })
-      .catch(function() { return []; });
-  });
-  return Promise.all(promises).then(function(results) {
-    var all = [];
-    results.forEach(function(vids) { all = all.concat(vids); });
-    return all;
-  });
+      });
+      return all;
+    })
+    .catch(function(err) {
+      console.error("[Videos] RSS fetch error:", err);
+      return [];
+    });
 }
 
 // ─── Extraire l'ID YouTube d'une URL ───────────────────────

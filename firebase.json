@@ -5,5 +5,17 @@
   },
   "storage": {
     "rules": "storage.rules"
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "main",
+      "runtime": "nodejs20"
+    },
+    {
+      "source": "functions-public",
+      "codebase": "public",
+      "runtime": "nodejs20"
+    }
+  ]
 }
