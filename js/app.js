@@ -7179,10 +7179,10 @@ function renderObjectives() {
   if (circleSub) circleSub.textContent = checked + '/' + TOTAL_OBJ;
   var bigSub = document.getElementById('big-obj-sub');
   if (bigSub) bigSub.textContent = checked + '/' + TOTAL_OBJ + ' accomplis';
-  var homeFill = document.getElementById('obj-progress-home-fill');
-  if (homeFill) { homeFill.style.width = (checked / TOTAL_OBJ * 100) + '%'; homeFill.style.background = checked === TOTAL_OBJ ? '#16a34a' : ''; }
-  var homePct = document.getElementById('obj-progress-home-pct');
-  if (homePct) { homePct.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; homePct.style.color = checked === TOTAL_OBJ ? '#16a34a' : '#fff'; }
+  var homeCircle = document.getElementById('obj-home-circle-fill');
+  if (homeCircle) { var pct = checked / TOTAL_OBJ; var circ = 2 * Math.PI * 52; homeCircle.style.strokeDashoffset = circ * (1 - pct); if (checked === TOTAL_OBJ) homeCircle.style.stroke = '#16a34a'; else homeCircle.style.stroke = ''; }
+  var homeCircleText = document.getElementById('obj-home-circle-text');
+  if (homeCircleText) { homeCircleText.textContent = Math.round(checked / TOTAL_OBJ * 100) + '%'; homeCircleText.style.color = checked === TOTAL_OBJ ? '#16a34a' : '#fff'; }
   renderObjStoryBar();
   if (typeof renderObjNotifSettings === 'function') renderObjNotifSettings();
 }
@@ -9143,14 +9143,14 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
     });
     places.sort(function(a, b) { return a.dist - b.dist; });
     if (filter === 'all') {
-      // Also fetch restaurants + minyanim for "Tout"
+      // Also fetch restaurants + hardcoded minyan for "Tout"
       _bethFetchAllRestaurants(lat, lng, function(rPlaces) {
-        _bethFetchGooglePlaces(lat, lng, 'synagogue', 'synagogue minyan miniane', function(mPlaces) {
-          var all = places.concat(rPlaces).concat(mPlaces);
-          all.sort(function(a, b) { return a.dist - b.dist; });
-          if (info) info.textContent = all.length + ' r\u00e9sultat' + (all.length > 1 ? 's' : '') + ' trouv\u00e9' + (all.length > 1 ? 's' : '');
-          displayBethResults(all, lat, lng);
-        });
+        var mPlaces = [{name:'Habad Ternes Maillot - Elhanan Meir',lat:48.8783,lng:2.2950,address:'Paris 17e',_source:'minyan'}];
+        mPlaces.forEach(function(m){m.dist=_bethHaversine(lat,lng,m.lat,m.lng);});
+        var all = places.concat(rPlaces).concat(mPlaces);
+        all.sort(function(a, b) { return a.dist - b.dist; });
+        if (info) info.textContent = all.length + ' r\u00e9sultat' + (all.length > 1 ? 's' : '') + ' trouv\u00e9' + (all.length > 1 ? 's' : '');
+        displayBethResults(all, lat, lng);
       });
     } else {
       displayBethResults(places, lat, lng);
@@ -9162,11 +9162,15 @@ function _bethLoadFilterWithData(filter, lat, lng, info, CHABAD_CENTERS) {
       displayBethResults(places, lat, lng);
     });
   } else if (filter === 'minyan') {
-    if (info) info.textContent = 'Recherche des minianim proches\u2026';
-    _bethFetchGooglePlaces(lat, lng, 'synagogue', 'synagogue minyan miniane', function(places) {
-      if (info) info.textContent = places.length + ' miniane' + (places.length > 1 ? 's' : '') + ' trouv\u00e9' + (places.length > 1 ? 's' : '');
-      displayBethResults(places, lat, lng);
-    });
+    var minyanList = [{
+      name: 'Habad Ternes Maillot - Elhanan Meir',
+      lat: 48.8783, lng: 2.2950,
+      address: 'Paris 17e',
+      _source: 'minyan'
+    }];
+    minyanList.forEach(function(m) { m.dist = _bethHaversine(lat, lng, m.lat, m.lng); });
+    if (info) info.textContent = minyanList.length + ' minyan trouv\u00e9';
+    displayBethResults(minyanList, lat, lng);
   }
 }
 

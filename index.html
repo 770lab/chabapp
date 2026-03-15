@@ -188,11 +188,19 @@
 <div class="big-card" onclick="switchTab('sub-objectifs')" style="background:url('assets/card-objectifs.webp') center/cover no-repeat; border:none; padding:0; position:relative; overflow:hidden; border-radius:16px; aspect-ratio:1/1; cursor:pointer;">
 <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);"></div>
 <div onclick="event.stopPropagation();shareObjectifs(event)" style="position:absolute;top:8px;right:8px;z-index:2;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg fill="none" height="15" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="15"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div>
-<div style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;width:100%;height:100%;box-sizing:border-box;">
+<div style="position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;padding:12px;width:100%;height:100%;box-sizing:border-box;">
+<div style="flex:1;min-width:0;">
 <div class="big-card-title" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Objectifs du jour</div>
 <div class="big-card-sub" id="big-obj-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">0/13 accomplis</div>
-<div class="obj-progress-home" style="margin-top:6px;"><div class="obj-progress-home-fill" id="obj-progress-home-fill"></div></div>
-<div class="obj-progress-home-pct" id="obj-progress-home-pct" style="color:rgba(255,255,255,0.7);font-size:10px;margin-top:2px;">0%</div>
+</div>
+<div class="obj-home-circle" style="width:44px;height:44px;flex-shrink:0;margin-left:8px;position:relative;">
+<svg viewBox="0 0 120 120" style="width:100%;height:100%;transform:rotate(-90deg);">
+<circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+<circle id="obj-home-circle-fill" cx="60" cy="60" r="52" fill="none" stroke="url(#obj-grad-home)" stroke-width="8" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+<defs><linearGradient id="obj-grad-home" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6228d7"/><stop offset="50%" stop-color="#ee2a7b"/><stop offset="100%" stop-color="#f9ce34"/></linearGradient></defs>
+</svg>
+<div id="obj-home-circle-text" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:11px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,0.5);">0%</div>
+</div>
 </div>
 </div>
 <div class="big-card tefila-hero-card" onclick="switchTab('sub-tefila')" style="background:url('assets/card-tefila.webp') center/cover no-repeat; border:none; padding:0; position:relative; overflow:hidden; border-radius:16px; aspect-ratio:1/1; cursor:pointer;">
@@ -200,7 +208,7 @@
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;">
 <div class="big-card-title" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Téfila</div>
-<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Tehilat Hachem</div>
+<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Tehilat Hachem, Patakh Eliyahou</div>
 </div>
 </div>
 </div>
@@ -267,7 +275,7 @@
 <div style="position:relative;z-index:1;display:flex;align-items:flex-end;padding:14px;width:100%;height:100%;box-sizing:border-box;">
 <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;">
 <div class="big-card-title" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Ayeka</div>
-<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Complete un miniane pres de toi</div>
+<div class="big-card-sub" style="color:rgba(255,255,255,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.5);">Complete un minyan pres de toi</div>
 </div>
 </div>
 </div>
@@ -378,13 +386,6 @@
 </div>
 </a>
 </div>
-<div class="daily-quote">
-<div class="quote-decor">✦</div>
-<p class="quote-text" id="home-quote"></p>
-<p class="quote-source" id="home-source"></p>
-<div class="quote-dots" id="home-dots"></div>
-<button class="insta-share-btn" onclick="shareQuote()" style="margin:10px auto 0;"><svg viewBox="0 0 24 24"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
-</div>
 </div>
 <!-- SUB-PANEL: OBJECTIFS -->
 <div id="panel-sub-objectifs" style="display:none">
@@ -415,6 +416,13 @@
 <div id="panel-sub-tehilim" style="display:none">
 <div class="panel-back-wrap"><button class="panel-back" onclick="switchTab('menu')">← Accueil</button></div>
 <div class="sub-panel-header">Tehilim</div>
+<div class="daily-quote" style="margin:0 16px 16px;">
+<div class="quote-decor">✦</div>
+<p class="quote-text" id="home-quote"></p>
+<p class="quote-source" id="home-source"></p>
+<div class="quote-dots" id="home-dots"></div>
+<button class="insta-share-btn" onclick="shareQuote()" style="margin:10px auto 0;"><svg viewBox="0 0 24 24"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+</div>
 <div class="menu-cards">
 <button class="menu-card card-jour" onclick="openJourReading()">
 <span class="menu-card-icon">📅</span>
@@ -526,7 +534,7 @@
 <button class="beth-filter-chip beth-filter-active" onclick="setBethFilter('all')" data-filter="all">Tout</button>
 <button class="beth-filter-chip" onclick="setBethFilter('chabad')" data-filter="chabad">🕍 Beth Chabad</button>
 <button class="beth-filter-chip" onclick="setBethFilter('restaurant')" data-filter="restaurant">🍽️ Restaurants cachères</button>
-<button class="beth-filter-chip" onclick="setBethFilter('minyan')" data-filter="minyan">🤲 Miniane</button>
+<button class="beth-filter-chip" onclick="setBethFilter('minyan')" data-filter="minyan">🤲 Minyan</button>
 </div>
 <div id="beth-location-info" style="font-size:11px;color:var(--gray-3);margin-bottom:10px;">Localisation en cours…</div>
 <div id="beth-map-container" style="width:100%;height:55vh;border-radius:14px;overflow:hidden;background:#e8e8e8;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
