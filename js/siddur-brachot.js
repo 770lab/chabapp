@@ -3,7 +3,7 @@
 // entre Netilat Yadayim et les 15 brachot dans l'ordre du siddour.
 
 // Helper pour les explications repliables
-var _det = 'style="direction:ltr;font-family:system-ui,sans-serif;font-size:14px;line-height:1.6;color:#888;margin:12px 0;white-space:normal;"';
+var _det = 'style="direction:ltr;font-family:system-ui,sans-serif;font-size:14px;line-height:1.6;color:#888;margin:2px 0 6px 0;white-space:normal;"';
 var _sum = 'style="cursor:pointer;font-size:13px;color:#aaa;outline:none;"';
 function _expl(txt) { return '<details ' + _det + '><summary ' + _sum + '>Explications</summary>' + txt + '</details>'; }
 

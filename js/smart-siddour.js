@@ -52,10 +52,11 @@ var TEFILOT = {
 
       { id: 'tsitsit', title: 'צִיצִית וְטַלִּית', titlePhonetic: 'Tsitsit véTalit', always: true, male_only: true,
         text:
+          '— טַּלִּית קָטָן —\n' +
           _expl('Chaque jour, au moment de rev\u00eatir les Tsitsit, il convient d\u2019en examiner les franges afin de v\u00e9rifier si elles ne se sont pas rompues. Les jours de semaine, il convient de d\u00e9m\u00ealer les franges. Si l\u2019on se rev\u00eat du Talit pour la pri\u00e8re, on ne r\u00e9cite pas de b\u00e9n\u00e9diction sur le Talit katane. (Voir Recueil de lois, page 636.)') + '\n\n' +
           _expl('On se tient debout et l\u2019on tient les Tsitsit dans la main droite (gauche pour un gaucher), on r\u00e9cite la b\u00e9n\u00e9diction suivante, puis on embrasse le Talit avant de les enfiler\u00a0:') + '\n\n' +
           'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת צִיצִת.\n\n' +
-          '— הַטַּלִּית —\n\n' +
+          '— טַּלִּית גָּדוֹל —\n' +
           _expl('Le Talit reposant pli\u00e9 sur l\u2019\u00e9paule droite, les franges sur le devant, on examine les franges pour v\u00e9rifier qu\u2019elles ne se sont pas rompues et on r\u00e9cite le verset suivant\u00a0:') + '\n\n' +
           'בָּרְכִי נַפְשִׁי אֶת יְיָ, יְיָ אֱלֹהַי גָּדַלְתָּ מְּאֹד, הוֹד וְהָדָר לָבָשְׁתָּ. עֹטֶה אוֹר כַּשַּׂלְמָה, נוֹטֶה שָׁמַיִם כַּיְרִיעָה.\n\n' +
           _expl('En se levant debout, on d\u00e9ploie le Talit devant soi et on embrasse son bord sup\u00e9rieur, puis on le retourne pour s\u2019en rev\u00eatir le dos. On r\u00e9cite alors la b\u00e9n\u00e9diction. Pendant que l\u2019on s\u2019enveloppe du Talit, il faut avoir \u00e0 l\u2019esprit que le Saint b\u00e9ni soit-Il nous demande de nous en rev\u00eatir afin de nous rappeler \u00e0 l\u2019accomplissement de tous Ses commandements, car il est \u00e9crit\u00a0: \u00ab\u00a0Vous les verrez et vous vous souviendrez de tous les commandements de Dieu et vous les accomplirez...\u00a0\u00bb (Nombres 15,39).') + '\n\n' +
@@ -64,10 +65,11 @@ var TEFILOT = {
           _expl('On reste envelopp\u00e9 du Talit apr\u00e8s la b\u00e9n\u00e9diction, le temps n\u00e9cessaire \u00e0 franchir quatre coud\u00e9es (environ 3 secondes), puis on r\u00e9cite les versets suivants\u00a0:') + '\n\n' +
           'מַה יָּקָר חַסְדְּךָ אֱלֹהִים, וּבְנֵי אָדָם בְּצֵל כְּנָפֶיךָ יֶחֱסָיוּן. יִרְוְיֻן מִדֶּשֶׁן בֵּיתְךָ, וְנַחַל עֲדָנֶיךָ תַשְׁקֵם. כִּי עִמְּךָ מְקוֹר חַיִּים, בְּאוֹרְךָ נִרְאֶה אוֹר. מְשֹׁךְ חַסְדְּךָ לְיֹדְעֶיךָ, וְצִדְקָתְךָ לְיִשְׁרֵי לֵב.',
         phonetic:
+          '— Talit Katane —\n' +
           _expl('Chaque jour, au moment de rev\u00eatir les Tsitsit, il convient d\u2019en examiner les franges afin de v\u00e9rifier si elles ne se sont pas rompues. Les jours de semaine, il convient de d\u00e9m\u00ealer les franges. Si l\u2019on se rev\u00eat du Talit pour la pri\u00e8re, on ne r\u00e9cite pas de b\u00e9n\u00e9diction sur le Talit katane. (Voir Recueil de lois, page 636.)') + '\n\n' +
           _expl('On se tient debout et l\u2019on tient les Tsitsit dans la main droite (gauche pour un gaucher), on r\u00e9cite la b\u00e9n\u00e9diction suivante, puis on embrasse le Talit avant de les enfiler\u00a0:') + '\n\n' +
           'Baroukh ata Ado-na\u00ef Elo-h\u00e9nou M\u00e9lekh haolam, ach\u00e8re kid\u00e9chanou b\u00e9mitsvotav, v\u00e9tsivanou al mitsvat tsitsit.\n\n' +
-          '— HaTalit —\n\n' +
+          '— Talit Gadol —\n' +
           _expl('Le Talit reposant pli\u00e9 sur l\u2019\u00e9paule droite, les franges sur le devant, on examine les franges pour v\u00e9rifier qu\u2019elles ne se sont pas rompues et on r\u00e9cite le verset suivant\u00a0:') + '\n\n' +
           'Bar\u00e9khi nafchi \u00e8te Ado-na\u00ef, Ado-na\u00ef Elo-ha\u00ef gadalta m\u00e9od, hod v\u00e9hadar lavachta. Ot\u00e9 or kassalma, not\u00e9 chama\u00efm kayri\u00e0.\n\n' +
           _expl('En se levant debout, on d\u00e9ploie le Talit devant soi et on embrasse son bord sup\u00e9rieur, puis on le retourne pour s\u2019en rev\u00eatir le dos. On r\u00e9cite alors la b\u00e9n\u00e9diction. Pendant que l\u2019on s\u2019enveloppe du Talit, il faut avoir \u00e0 l\u2019esprit que le Saint b\u00e9ni soit-Il nous demande de nous en rev\u00eatir afin de nous rappeler \u00e0 l\u2019accomplissement de tous Ses commandements, car il est \u00e9crit\u00a0: \u00ab\u00a0Vous les verrez et vous vous souviendrez de tous les commandements de Dieu et vous les accomplirez...\u00a0\u00bb (Nombres 15,39).') + '\n\n' +
@@ -80,9 +82,11 @@ var TEFILOT = {
         text:
           _expl('La coutume \u2019Habad est de mettre les T\u00e9filines avant la r\u00e9citation de \u05d4\u05d5\u05b9\u05d3 \u05d5\u05b0\u05d4\u05b8\u05d3\u05b8\u05e8 (page 22).') + '\n\n' +
           _expl('Lorsque l\u2019on met les T\u00e9filines, il convient d\u2019avoir \u00e0 l\u2019esprit que le Saint b\u00e9ni soit-Il nous a ordonn\u00e9 de placer les T\u00e9filines sur le bras, en regard du c\u0153ur et sur la t\u00eate, en regard du cerveau, afin d\u2019assujettir notre \u00e2me \u2013 laquelle a son si\u00e8ge dans le cerveau \u2013, ainsi que les d\u00e9sirs de notre c\u0153ur, \u00e0 Son culte. Ainsi, en mettant les T\u00e9filines, on se souviendra du Cr\u00e9ateur et l\u2019on mod\u00e9rera ses app\u00e9tits.') + '\n\n' +
+          '— תְּפִלִּין שֶׁל יָד —\n' +
           _expl('Avant d\u2019attacher la T\u00e9filine du bras, on r\u00e9cite la b\u00e9n\u00e9diction suivante en pensant \u00e0 s\u2019acquitter par elle de la r\u00e9citation de la b\u00e9n\u00e9diction sur la T\u00e9filine de la t\u00eate.') + '\n\n' +
           'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ לְהָנִיחַ תְּפִלִּין.\n\n' +
           _expl('On ne doit pas effectuer la moindre interruption entre la pose de la T\u00e9filine du bras et la pose de la T\u00e9filine de la t\u00eate.') + '\n\n' +
+          '— תְּפִלִּין שֶׁל רֹאשׁ —\n' +
           _expl('La b\u00e9n\u00e9diction suivante ne doit \u00eatre r\u00e9cit\u00e9e que si, apr\u00e8s avoir attach\u00e9 la T\u00e9filine du bras, on a prononc\u00e9 des paroles sans lien avec la mise des T\u00e9filines (comme la r\u00e9ponse au Kaddich). Si les paroles prononc\u00e9es \u00e9taient dues \u00e0 une n\u00e9cessit\u00e9 li\u00e9e \u00e0 la mise des T\u00e9filines, il n\u2019est alors pas n\u00e9cessaire de r\u00e9citer la b\u00e9n\u00e9diction suppl\u00e9mentaire sur la T\u00e9filine de la t\u00eate. Toutefois, il est a priori pr\u00e9f\u00e9rable de ne pas s\u2019interrompre, sauf s\u2019il est impossible de faire autrement.') + '\n\n' +
           _expl('Si l\u2019on a effectu\u00e9 une interruption, on r\u00e9cite la b\u00e9n\u00e9diction suivante avant de mettre la T\u00e9filine de la t\u00eate.') + '\n\n' +
           'בָּרוּךְ אַתָּה יְיָ, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין.\n' +
@@ -94,9 +98,11 @@ var TEFILOT = {
         phonetic:
           _expl('La coutume \u2019Habad est de mettre les T\u00e9filines avant la r\u00e9citation de \u05d4\u05d5\u05b9\u05d3 \u05d5\u05b0\u05d4\u05b8\u05d3\u05b8\u05e8 (page 22).') + '\n\n' +
           _expl('Lorsque l\u2019on met les T\u00e9filines, il convient d\u2019avoir \u00e0 l\u2019esprit que le Saint b\u00e9ni soit-Il nous a ordonn\u00e9 de placer les T\u00e9filines sur le bras, en regard du c\u0153ur et sur la t\u00eate, en regard du cerveau, afin d\u2019assujettir notre \u00e2me \u2013 laquelle a son si\u00e8ge dans le cerveau \u2013, ainsi que les d\u00e9sirs de notre c\u0153ur, \u00e0 Son culte. Ainsi, en mettant les T\u00e9filines, on se souviendra du Cr\u00e9ateur et l\u2019on mod\u00e9rera ses app\u00e9tits.') + '\n\n' +
+          '— Téfiline chèl Yad —\n' +
           _expl('Avant d\u2019attacher la T\u00e9filine du bras, on r\u00e9cite la b\u00e9n\u00e9diction suivante en pensant \u00e0 s\u2019acquitter par elle de la r\u00e9citation de la b\u00e9n\u00e9diction sur la T\u00e9filine de la t\u00eate.') + '\n\n' +
           'Baroukh ata Ado-na\u00ef Elo-h\u00e9nou M\u00e9lekh haolam, ach\u00e8re kid\u00e9chanou b\u00e9mitsvotav, v\u00e9tsivanou l\u00e9hania\'h t\u00e9filine.\n\n' +
           _expl('On ne doit pas effectuer la moindre interruption entre la pose de la T\u00e9filine du bras et la pose de la T\u00e9filine de la t\u00eate.') + '\n\n' +
+          '— Téfiline chèl Roch —\n' +
           _expl('La b\u00e9n\u00e9diction suivante ne doit \u00eatre r\u00e9cit\u00e9e que si, apr\u00e8s avoir attach\u00e9 la T\u00e9filine du bras, on a prononc\u00e9 des paroles sans lien avec la mise des T\u00e9filines (comme la r\u00e9ponse au Kaddich). Si les paroles prononc\u00e9es \u00e9taient dues \u00e0 une n\u00e9cessit\u00e9 li\u00e9e \u00e0 la mise des T\u00e9filines, il n\u2019est alors pas n\u00e9cessaire de r\u00e9citer la b\u00e9n\u00e9diction suppl\u00e9mentaire sur la T\u00e9filine de la t\u00eate. Toutefois, il est a priori pr\u00e9f\u00e9rable de ne pas s\u2019interrompre, sauf s\u2019il est impossible de faire autrement.') + '\n\n' +
           _expl('Si l\u2019on a effectu\u00e9 une interruption, on r\u00e9cite la b\u00e9n\u00e9diction suivante avant de mettre la T\u00e9filine de la t\u00eate.') + '\n\n' +
           'Baroukh ata Ado-na\u00ef Elo-h\u00e9nou M\u00e9lekh haolam, ach\u00e8re kid\u00e9chanou b\u00e9mitsvotav, v\u00e9tsivanou al mitsvat t\u00e9filine.\n' +
@@ -1091,6 +1097,17 @@ window.siddurSetNusach = function(id) {
   render();
 };
 window.siddurSetLang = function(lang) {
+  // Trouver la section visible avant le re-render
+  var visibleId = null;
+  var header = document.querySelector('.ss-header');
+  var hh = header ? header.offsetHeight : 0;
+  var secs = document.querySelectorAll('[id^="ss-sec-"]');
+  for (var i = secs.length - 1; i >= 0; i--) {
+    if (secs[i].getBoundingClientRect().top <= hh + 20) {
+      visibleId = secs[i].id;
+      break;
+    }
+  }
   state.lang = lang;
   if (window._femmeTimer) clearTimeout(window._femmeTimer);
   if (lang === 'phonetic') {
@@ -1104,6 +1121,15 @@ window.siddurSetLang = function(lang) {
   } else {
     state._showFemmeLabel = false;
     render();
+  }
+  // Restaurer la position sur la meme section
+  if (visibleId) {
+    var el = document.getElementById(visibleId);
+    if (el) {
+      var hdr = document.querySelector('.ss-header');
+      var off = hdr ? hdr.offsetHeight : 0;
+      window.scrollTo({ top: el.offsetTop - off, behavior: 'instant' });
+    }
   }
 };
 window.siddurToggle = function(key) {
