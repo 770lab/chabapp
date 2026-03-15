@@ -46,7 +46,8 @@ var YT_PROFILES = [
     avatar: "assets/yt-jem.jpg",
     banner: "",
     description: "Contenu du Rabbi de Loubavitch en francais",
-    channelFilter: "JEM"
+    channelFilter: "JEM",
+    channelId: "UCqxhJ0eBEcK-OVydaAxo6aw"
   },
   {
     name: "Torah-Box",
@@ -55,7 +56,8 @@ var YT_PROFILES = [
     avatar: "assets/yt-torahbox.jpg",
     banner: "",
     description: "L'association de diffusion du Judaisme aux francophones",
-    channelFilter: "Torah-Box"
+    channelFilter: "Torah-Box",
+    channelId: "UCNgEEqkr9UeSqxJAHxe6-KA"
   },
   {
     name: "Chabad.org",
@@ -64,7 +66,8 @@ var YT_PROFILES = [
     avatar: "assets/yt-chabadorg.jpg",
     banner: "",
     description: "Le mouvement Loubavitch dans le monde",
-    channelFilter: "Chabad.org"
+    channelFilter: "Chabad.org",
+    channelId: "UCc0y_E87EUnOW2m2mGJU9Gg"
   },
   {
     name: "Rav Touitou",
@@ -73,7 +76,8 @@ var YT_PROFILES = [
     avatar: "assets/yt-ravtouitou.jpg",
     banner: "",
     description: "Cours de Torah en francais - torathaim.net",
-    channelFilter: "Rav Touitou"
+    channelFilter: "Rav Touitou",
+    channelId: "UCgKxJNdzZ2Z4hXVeOMaPfAQ"
   },
   {
     name: "Project Likkutei Sichos",
@@ -82,7 +86,8 @@ var YT_PROFILES = [
     avatar: "assets/yt-likkuteisichos.jpg",
     banner: "",
     description: "Etude approfondie des Likkutei Sichos du Rabbi",
-    channelFilter: "Likkutei Sichos"
+    channelFilter: "Likkutei Sichos",
+    channelId: "UC8X3Vt5Cq6rwldlhfAj3KsQ"
   },
   {
     name: "MyJLI",
@@ -91,9 +96,43 @@ var YT_PROFILES = [
     avatar: "assets/yt-myjli.jpg",
     banner: "",
     description: "Jewish Learning Institute - Cours et conferences",
-    channelFilter: "MyJLI"
+    channelFilter: "MyJLI",
+    channelId: "UCESz8P8IVAdOV-vcfavS1qA"
   }
 ];
+
+// ─── Charger les vidéos depuis les flux RSS YouTube ──────
+function _ytFetchRSS() {
+  var promises = YT_PROFILES.map(function(profile) {
+    var feedUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=" + profile.channelId;
+    return fetch(feedUrl)
+      .then(function(r) { return r.text(); })
+      .then(function(xml) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(xml, "text/xml");
+        var entries = doc.querySelectorAll("entry");
+        var videos = [];
+        entries.forEach(function(entry) {
+          var videoId = entry.querySelector("yt\\:videoId, videoId");
+          var title = entry.querySelector("title");
+          if (videoId && title) {
+            videos.push({
+              id: videoId.textContent,
+              title: title.textContent,
+              channel: profile.channelFilter
+            });
+          }
+        });
+        return videos;
+      })
+      .catch(function() { return []; });
+  });
+  return Promise.all(promises).then(function(results) {
+    var all = [];
+    results.forEach(function(vids) { all = all.concat(vids); });
+    return all;
+  });
+}
 
 // ─── Extraire l'ID YouTube d'une URL ───────────────────────
 function _ytExtractId(url) {
@@ -146,20 +185,31 @@ function ytLoadVideos() {
       _ytVideos.push(Object.assign({ docId: doc.id }, doc.data()));
     });
 
-    // Si aucune vidéo en Firestore, utiliser les vidéos par défaut
-    if (!_ytVideos.length) {
-      _ytVideos = YT_DEFAULT_VIDEOS.map(function (v) {
-        return { id: v.id, title: v.title, channel: v.channel };
-      });
-    }
-
-    _ytLoaded = true;
-    _ytRender();
+    // Charger les vidéos depuis les flux RSS YouTube
+    _ytFetchRSS().then(function(rssVideos) {
+      if (rssVideos.length) {
+        // Ajouter les vidéos RSS (sans doublons avec Firestore)
+        var existingIds = {};
+        _ytVideos.forEach(function(v) { existingIds[v.id] = true; });
+        rssVideos.forEach(function(v) {
+          if (!existingIds[v.id]) _ytVideos.push(v);
+        });
+      }
+      if (!_ytVideos.length) {
+        _ytVideos = YT_DEFAULT_VIDEOS.map(function (v) {
+          return { id: v.id, title: v.title, channel: v.channel };
+        });
+      }
+      _ytLoaded = true;
+      _ytRender();
+    });
   }).catch(function (err) {
     console.error("[Videos] Erreur chargement:", err);
-    _ytVideos = YT_DEFAULT_VIDEOS.slice();
-    _ytLoaded = true;
-    _ytRender();
+    _ytFetchRSS().then(function(rssVideos) {
+      _ytVideos = rssVideos.length ? rssVideos : YT_DEFAULT_VIDEOS.slice();
+      _ytLoaded = true;
+      _ytRender();
+    });
   });
 }
 
@@ -194,12 +244,15 @@ function _ytRender() {
     html += '</div>';
   }
 
-  // Filtres par chaîne
-  if (_ytChannels.length) {
+  // Filtres par chaîne (depuis YT_PROFILES + Firestore)
+  var filterNames = [];
+  YT_PROFILES.forEach(function(p) { if (filterNames.indexOf(p.channelFilter) === -1) filterNames.push(p.channelFilter); });
+  _ytChannels.forEach(function(c) { if (filterNames.indexOf(c.name) === -1) filterNames.push(c.name); });
+  if (filterNames.length) {
     html += '<div class="yt-channel-filters">';
     html += '<button class="yt-channel-filter' + (_ytActiveChannel === "all" ? ' active' : '') + '" onclick="ytFilterChannel(\'all\')">Toutes</button>';
-    _ytChannels.forEach(function (c) {
-      html += '<button class="yt-channel-filter' + (_ytActiveChannel === c.name ? ' active' : '') + '" onclick="ytFilterChannel(\'' + _ytEsc(c.name).replace(/'/g, "\\'") + '\')">' + _ytEsc(c.name) + '</button>';
+    filterNames.forEach(function (name) {
+      html += '<button class="yt-channel-filter' + (_ytActiveChannel === name ? ' active' : '') + '" onclick="ytFilterChannel(\'' + _ytEsc(name).replace(/'/g, "\\'") + '\')">' + _ytEsc(name) + '</button>';
     });
     html += '</div>';
   }
