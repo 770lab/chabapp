@@ -46,6 +46,42 @@ var YT_PROFILES = [
     banner: "",
     description: "L'association de diffusion du Judaisme aux francophones",
     channelFilter: "Torah-Box"
+  },
+  {
+    name: "Chabad.org",
+    handle: "@chabadorg",
+    url: "https://youtube.com/@chabadorg",
+    avatar: "assets/yt-chabadorg.jpg",
+    banner: "",
+    description: "Le mouvement Loubavitch dans le monde",
+    channelFilter: "Chabad.org"
+  },
+  {
+    name: "Rav Touitou",
+    handle: "@ravtouitou",
+    url: "https://youtube.com/@ravtouitou",
+    avatar: "assets/yt-ravtouitou.jpg",
+    banner: "",
+    description: "Cours de Torah en francais - torathaim.net",
+    channelFilter: "Rav Touitou"
+  },
+  {
+    name: "Project Likkutei Sichos",
+    handle: "@ProjectLikkuteiSichos",
+    url: "https://youtube.com/@ProjectLikkuteiSichos",
+    avatar: "assets/yt-likkuteisichos.jpg",
+    banner: "",
+    description: "Etude approfondie des Likkutei Sichos du Rabbi",
+    channelFilter: "Likkutei Sichos"
+  },
+  {
+    name: "MyJLI",
+    handle: "@MyJLI",
+    url: "https://youtube.com/@MyJLI",
+    avatar: "assets/yt-myjli.jpg",
+    banner: "",
+    description: "Jewish Learning Institute - Cours et conferences",
+    channelFilter: "MyJLI"
   }
 ];
 
